@@ -173,7 +173,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 17.771389
+  orthographic size: 28.614466
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -232,8 +232,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e3dffb2f1ef0d44b9f5148c1b5ad6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 7
-  tilePrefab: {fileID: 5901571504402044590, guid: 6424c84758b07dc488f90e0678a7d542,
+  size: 4
+  puzzleTilePrefab: {fileID: 191189271365482392, guid: 163b5144731bdd0409281d47ae7a9c85,
+    type: 3}
+  sideHintTilePrefab: {fileID: 191189271365482392, guid: 7f00df06de32ce84bad70bff2bb6481a,
     type: 3}
 --- !u!4 &1301818363
 Transform:

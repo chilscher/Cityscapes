@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Puzzle{
-//public class Puzzle : MonoBehaviour {
 
     public int size = 5;
-    public int[,] puzzle;
+    public int[,] solution;
     public int[] topNums;
     public int[] bottomNums;
     public int[] leftNums;
@@ -19,44 +18,22 @@ public class Puzzle{
         generatePuzzle();
         generateSideNumbers();
     }
-    
-
-    /*
-    private void Start() {
-
-        generatePuzzle();
-
-        print2dList(puzzle);
-        generateSideNumbers();
-        
-        print("top:");
-        printList(topNums);
-        print("bottom");
-        printList(bottomNums);
-        print("left:");
-        printList(leftNums);
-        print("right");
-        printList(rightNums);
-        
-    }
-    */
-    
 
     private void generatePuzzle() {
         int max_height = size;
 
         try {
             //create empty puzzle, made of all zeroes
-            puzzle = new int[size, size];
-            for (int i = 0; i < puzzle.GetLength(0); i++) {
-                for (int j = 0; j < puzzle.GetLength(0); j++) {
-                    puzzle[i, j] = 0;
+            solution = new int[size, size];
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    solution[i, j] = 0;
                 }
             }
 
-            for (int i = 0; i < puzzle.GetLength(0); i++) {
-                for (int j = 0; j < puzzle.GetLength(0); j++) {
-                    puzzle[i, j] = pickValue(i, j);
+            for (int i = 0; i < size; i++) {
+                for (int j = 0; j < size; j++) {
+                    solution[i, j] = pickValue(i, j);
                 }
             }
         }
@@ -75,13 +52,13 @@ public class Puzzle{
         }
         
         for (int k = 0; k < i; k++) {
-            if (puzzle[k,j] != 0) {
-                freeValues.Remove(puzzle[k, j]);
+            if (solution[k,j] != 0) {
+                freeValues.Remove(solution[k, j]);
             }
         }
         for (int l = 0; l < j; l++) {
-            if (puzzle[i, l] != 0) {
-                freeValues.Remove(puzzle[i, l]);
+            if (solution[i, l] != 0) {
+                freeValues.Remove(solution[i, l]);
             }
         }
 
@@ -89,39 +66,7 @@ public class Puzzle{
         int index = random.Next(freeValues.Count);
         return((int)freeValues[index]);
     }
-    /*
-    private void printArrayList(ArrayList a) {
-        string output = "";
-        foreach (int element in a) {
-            output += element;
-            output += ", ";
-        }
-        print(output);
-    }
-    
-    private void printList(int[] l) {
-        string output = "";
-        foreach (int element in l) {
-            output += element;
-            output += ", ";
-        }
-        print(output);
-    }
-    
-    
-    private void print2dList(int[,] l) {
-        string output = "";
 
-        for (int i = 0; i < puzzle.GetLength(0); i++) {
-            for (int j = 0; j < puzzle.GetLength(0); j++) {
-                output += puzzle[i, j];
-            }
-            output += "-";
-        }
-        output = output.Substring(0, (output.Length - 1));
-        print(output);
-    }
-    */
     private void generateSideNumbers() {
         topNums = new int[size];
         bottomNums = new int[size];
@@ -133,7 +78,7 @@ public class Puzzle{
             int[] row = new int[size];
             
             for (int j = 0; j < size; j++) {
-                row[j] = puzzle[index, j];
+                row[j] = solution[index, j];
             }
             leftNums[index] = getSideNum(row);
             rightNums[index] = getSideNum(reverseList(row));
@@ -142,7 +87,7 @@ public class Puzzle{
         for (int index = 0; index < size; index++) {
             int[] column = new int[size];
             for (int i = 0; i < size; i++) {
-                column[i] = puzzle[i, index];
+                column[i] = solution[i, index];
             }
             topNums[index] = getSideNum(column);
             bottomNums[index] = getSideNum(reverseList(column));
