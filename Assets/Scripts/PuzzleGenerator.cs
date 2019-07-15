@@ -8,17 +8,32 @@ public class PuzzleGenerator : MonoBehaviour{
     private Puzzle puzzle;
     public GameObject puzzleTilePrefab;
     public GameObject sideHintTilePrefab;
+    private List<PuzzleTile> puzzleTiles;
+    private bool hasWonYet = false;
 
     void Start(){
         if (size < 2 || size > 7) {
             print("the puzzle size has to be between 2 and 7. It is currently " + size);
         }
         else {
+            puzzleTiles = new List<PuzzleTile>();
             puzzle = new Puzzle(size);
             drawPuzzle(Vector2.zero, 3);
             drawSideHints(Vector2.zero, 3);
             //printPuzzle();
+            //print(checkPuzzle());
         }
+    }
+
+    private void Update() {
+        if (!hasWonYet && checkPuzzle()) {
+            hasWonYet = true;
+            foreach (PuzzleTile t in puzzleTiles) {
+                t.canClickTile = false;
+            }
+            print("you win!");
+        }
+        //print(checkPuzzle());
     }
 
     private void drawPuzzle(Vector2 center, float tileSize) {
@@ -30,7 +45,8 @@ public class PuzzleGenerator : MonoBehaviour{
                 //Vector2 pos = new Vector2(center.x - (totalSize / 2) + (tileSize * defaultTileScale * i), center.y - (totalSize / 2) + (tileSize * defaultTileScale * j));
                 Vector2 pos = new Vector2(center.x - (totalSize / 2) + (tileSize * defaultTileScale * (j + 0.5f)), center.y + (totalSize / 2) - (tileSize * defaultTileScale * (i + 0.5f)));
                 GameObject tile = Instantiate(puzzleTilePrefab);
-                tile.GetComponent<PuzzleTile>().initialize(pos, tileSize, puzzle.solution[i, j], this.transform);
+                tile.GetComponent<PuzzleTile>().initialize(pos, tileSize, puzzle.solution[i, j], this.transform, puzzle.size);
+                puzzleTiles.Add(tile.GetComponent<PuzzleTile>());
                 //print(puzzle.solution[i, j]);
                 //print(pos.x + " " + pos.y);
                 
@@ -104,6 +120,16 @@ public class PuzzleGenerator : MonoBehaviour{
         //cut off last letter
         output = output.Substring(0, (output.Length - 1));
         print(output);
+    }
+
+    private bool checkPuzzle() {
+        bool isCorrect = true;
+        foreach (PuzzleTile t in puzzleTiles) {
+            if (!t.checkIfNumIsCorrect()) {
+                isCorrect = false;
+            }
+        }
+        return isCorrect;
     }
 
 

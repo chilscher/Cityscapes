@@ -29,7 +29,7 @@ public class SideHintTile : MonoBehaviour {
     }
 
     public void clicked() {
-        print(hintValue);
+        //print(hintValue);
     }
 
     private void OnMouseDown() {

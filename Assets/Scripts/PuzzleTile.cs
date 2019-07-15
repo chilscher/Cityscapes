@@ -14,14 +14,18 @@ public class PuzzleTile : MonoBehaviour {
     public GameObject num5Prefab;
     public GameObject num6Prefab;
     public GameObject num7Prefab;
-    private GameObject shownNumber;
+    private GameObject shownNumberObject;
+    private int shownNumber = 0;
+    private int maxValue;
+    public bool canClickTile = true;
 
 
-    public void initialize(Vector2 position, float tileSize, int solution, Transform parent) {
+    public void initialize(Vector2 position, float tileSize, int solution, Transform parent, int maxValue) {
         this.position = position;
         this.tileSize = tileSize;
         this.solution = solution;
         this.transform.parent = parent;
+        this.maxValue = maxValue;
 
         transform.position = position;
         transform.localScale *= tileSize;
@@ -33,20 +37,26 @@ public class PuzzleTile : MonoBehaviour {
             n1.transform.parent = this.transform;
         }
         */
-        addNumberToTile(solution);
+        //print(shownNumberObject == null);
+        //addNumberToTile(solution);
     }
 
     public void clicked() {
-        print(solution);
+        //print(solution);
+        //removeNumberFromTile();
+        //print(shownNumberObject == null);
+        rotateToNextNumber();
     }
 
     private void OnMouseDown() {
-        clicked();
+        if (canClickTile) {
+            clicked();
+        }
     }
 
     private void addNumberToTile(int num) {
-        if (shownNumber != null) {
-            Destroy(shownNumber);
+        if (shownNumberObject != null) {
+            Destroy(shownNumberObject);
         }
         GameObject relevantPrefab = num1Prefab;
         switch (num) {
@@ -72,15 +82,36 @@ public class PuzzleTile : MonoBehaviour {
                 relevantPrefab = num7Prefab;
                 break;
         }
-        shownNumber = Instantiate(relevantPrefab);
-        shownNumber.transform.position = this.transform.position;
-        shownNumber.transform.parent = this.transform;
+        shownNumberObject = Instantiate(relevantPrefab);
+        shownNumberObject.transform.position = this.transform.position;
+        shownNumberObject.transform.parent = this.transform;
 
-        Vector3 pos = shownNumber.transform.position;
+        Vector3 pos = shownNumberObject.transform.position;
         pos.z -= 1;
-        shownNumber.transform.position = pos;
+        shownNumberObject.transform.position = pos;
+
+        shownNumber = num;
     }
 
+    public bool checkIfNumIsCorrect() {
+        return (shownNumber == solution);
+    }
 
+    private void removeNumberFromTile() {
+        if (shownNumberObject != null) {
+            Destroy(shownNumberObject);
+        }
+        shownNumberObject = null;
+        shownNumber = 0;
+    }
+
+    private void rotateToNextNumber() {
+        if (shownNumber == maxValue) {
+            removeNumberFromTile();
+        }
+        else {
+            addNumberToTile(shownNumber + 1);
+        }
+    }
 
 }
