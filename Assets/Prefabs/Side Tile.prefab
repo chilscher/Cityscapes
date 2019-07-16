@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4555962349407009132}
   - component: {fileID: 6004542571710102954}
-  - component: {fileID: 2315027710982192419}
+  - component: {fileID: -5334666288911748976}
   m_Layer: 0
-  m_Name: Side Tile
+  m_Name: Side Tile 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -59,7 +59,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 3}
   m_EdgeRadius: 0
---- !u!114 &2315027710982192419
+--- !u!114 &-5334666288911748976
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,9 +68,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 191189271365482392}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22db671f2435a8044906e6f62ec79128, type: 3}
+  m_Script: {fileID: 11500000, guid: 2c66f92f9264bc9448c51b59f5c6c005, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position: {x: 0, y: 0}
+  tileSize: 0
   num1Prefab: {fileID: 7404936744469136690, guid: de79104f2bbfe68478ae7a1412bd4298,
     type: 3}
   num2Prefab: {fileID: 347678588482088387, guid: 246073d9aa8748b4180f7745679eae1b,
@@ -85,6 +87,8 @@ MonoBehaviour:
     type: 3}
   num7Prefab: {fileID: 2670715479375420578, guid: 899b9389d58f6de4eb3aa9319568290b,
     type: 3}
+  shownNumberObject: {fileID: 0}
+  tileScaleFactor: 0
 --- !u!1 &8030812954592266071
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,7 +134,6 @@ SpriteRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

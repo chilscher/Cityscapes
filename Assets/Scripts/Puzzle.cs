@@ -31,6 +31,7 @@ public class Puzzle{
                 }
             }
 
+            //attempt to make the actual puzzle
             for (int i = 0; i < size; i++) {
                 for (int j = 0; j < size; j++) {
                     solution[i, j] = pickValue(i, j);
@@ -38,6 +39,7 @@ public class Puzzle{
             }
         }
         catch {
+            //if the puzzle generation failed, try again
             generatePuzzle();
         }
         

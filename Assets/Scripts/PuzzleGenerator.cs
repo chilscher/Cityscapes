@@ -10,6 +10,10 @@ public class PuzzleGenerator : MonoBehaviour{
     public GameObject sideHintTilePrefab;
     private List<PuzzleTile> puzzleTiles;
     private bool hasWonYet = false;
+    [Range(0.75f, 1f)]
+    public float relativeWidth = 0.75f; //the width of the puzzle relative to the total screen width
+    [Range(-1f, 1f)]
+    public float relativeHeight = 0f; //how high up the screen the center of the puzzle is
 
     void Start(){
         if (size < 2 || size > 7) {
@@ -18,10 +22,8 @@ public class PuzzleGenerator : MonoBehaviour{
         else {
             puzzleTiles = new List<PuzzleTile>();
             puzzle = new Puzzle(size);
-            drawPuzzle(Vector2.zero, 3);
-            drawSideHints(Vector2.zero, 3);
-            //printPuzzle();
-            //print(checkPuzzle());
+            drawFullPuzzle();
+            //showPuzzleSolutionOnTiles();
         }
     }
 
@@ -33,7 +35,6 @@ public class PuzzleGenerator : MonoBehaviour{
             }
             print("you win!");
         }
-        //print(checkPuzzle());
     }
 
     private void drawPuzzle(Vector2 center, float tileSize) {
@@ -42,13 +43,10 @@ public class PuzzleGenerator : MonoBehaviour{
 
         for (int i = 0; i < puzzle.size; i++) {
             for (int j = 0; j < puzzle.size; j++) {
-                //Vector2 pos = new Vector2(center.x - (totalSize / 2) + (tileSize * defaultTileScale * i), center.y - (totalSize / 2) + (tileSize * defaultTileScale * j));
                 Vector2 pos = new Vector2(center.x - (totalSize / 2) + (tileSize * defaultTileScale * (j + 0.5f)), center.y + (totalSize / 2) - (tileSize * defaultTileScale * (i + 0.5f)));
                 GameObject tile = Instantiate(puzzleTilePrefab);
                 tile.GetComponent<PuzzleTile>().initialize(pos, tileSize, puzzle.solution[i, j], this.transform, puzzle.size);
                 puzzleTiles.Add(tile.GetComponent<PuzzleTile>());
-                //print(puzzle.solution[i, j]);
-                //print(pos.x + " " + pos.y);
                 
             }
         }
@@ -75,53 +73,6 @@ public class PuzzleGenerator : MonoBehaviour{
         }
     }
 
-
-    public void printPuzzle() {
-        printCore();
-        //print("top: " + formatListToString(puzzle.topNums) + " bottom: " + formatListToString(puzzle.bottomNums) + "left: " + formatListToString(puzzle.leftNums) + "right: " + formatListToString(puzzle.rightNums));
-
-        print("top: " + formatListToString(puzzle.topNums));
-        print("bottom: " + formatListToString(puzzle.bottomNums));
-        print("left: " + formatListToString(puzzle.leftNums));
-        print("right: " + formatListToString(puzzle.rightNums));
-        /*
-            ; printList(puzzle.topNums);
-        print("bottom");
-        printList(puzzle.bottomNums);
-        print("left:");
-        printList(puzzle.leftNums);
-        print("right");
-        printList(puzzle.rightNums);
-        */
-    }
-
-    private string formatListToString(int[] l) {
-        string output = "";
-        foreach (int element in l) {
-            output += element;
-            output += ", ";
-        }
-
-        //cut off last 2 letters
-        output = output.Substring(0, (output.Length - 2));
-        //print(output);
-        return output;
-    }
-
-    private void printCore() {
-        string output = "";
-
-        for (int i = 0; i < puzzle.size; i++) {
-            for (int j = 0; j < puzzle.size; j++) {
-                output += puzzle.solution[i, j];
-            }
-            output += "-";
-        }
-        //cut off last letter
-        output = output.Substring(0, (output.Length - 1));
-        print(output);
-    }
-
     private bool checkPuzzle() {
         bool isCorrect = true;
         foreach (PuzzleTile t in puzzleTiles) {
@@ -132,8 +83,24 @@ public class PuzzleGenerator : MonoBehaviour{
         return isCorrect;
     }
 
+    private void showPuzzleSolutionOnTiles() {
+        foreach(PuzzleTile t in puzzleTiles) {
+            t.showSolutionOnTile();
+        }
+    }
 
+    private void drawFullPuzzle() {
+        float totalScreenWidth = Camera.main.orthographicSize * 2f * Screen.width / Screen.height;
+        float desiredPuzzleSize = totalScreenWidth * relativeWidth;
+        float currentPuzzleSize = (puzzle.size + 2) * puzzleTilePrefab.GetComponent<BoxCollider2D>().size.x;
+        float scaleFactor = desiredPuzzleSize / currentPuzzleSize;
 
+        float totalScreenHeight = Camera.main.orthographicSize * 2f;
+        float maximumCenterHeight = totalScreenHeight - (desiredPuzzleSize); // the maximum height of the screen that can be the center of the puzzle, while still allowing the full puzzle to fit
+        float heightCenter = (maximumCenterHeight * relativeHeight) / 2;
+        Vector2 puzzleCenter = new Vector2(0, heightCenter);
 
-
+        drawPuzzle(puzzleCenter, scaleFactor);
+        drawSideHints(puzzleCenter, scaleFactor);
+    }
 }
