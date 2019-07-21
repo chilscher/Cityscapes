@@ -17,10 +17,18 @@ public class Puzzle{
         this.size = size;
         generatePuzzle();
         generateSideNumbers();
+        hasUniqueSolution();
+    }
+
+    public Puzzle(int[,] predeterminedSolution) {
+        this.size = (int)Mathf.Sqrt(predeterminedSolution.Length);
+        solution = predeterminedSolution;
+        //Debug.Log(predeterminedSolution[0, 3]);
+        generateSideNumbers();
+        hasUniqueSolution();
     }
 
     private void generatePuzzle() {
-        int max_height = size;
 
         try {
             //create empty puzzle, made of all zeroes
@@ -37,11 +45,18 @@ public class Puzzle{
                     solution[i, j] = pickValue(i, j);
                 }
             }
+
+            /*
+            if (!hasUniqueSolution()) {
+                generatePuzzle();
+            }
+            */
         }
         catch {
             //if the puzzle generation failed, try again
             generatePuzzle();
         }
+
         
     }
 
@@ -116,6 +131,25 @@ public class Puzzle{
             newList[i] = original[oppositeIndex - 1];
         }
         return newList;
+    }
+
+    private bool hasUniqueSolution() {
+        solvePuzzle();
+        return true;
+    }
+
+    private void solvePuzzle() {
+        PuzzleSolver p = new PuzzleSolver();
+        p.solvePuzzle(topNums, bottomNums, leftNums, rightNums, solution);
+        //puzzleSolver.GetComponent<PuzzleSolver>();
+    }
+
+    public void getUniqueSolution() {
+        //returns the unique solution, if there is one, or returns the most complete the puzzle can be without a unique solution
+        
+        PuzzleSolver p = new PuzzleSolver();
+        solution = p.getUniqueSolution(topNums, bottomNums, leftNums, rightNums, solution);
+
     }
 
 }

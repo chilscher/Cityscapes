@@ -15,15 +15,60 @@ public class PuzzleGenerator : MonoBehaviour{
     [Range(-1f, 1f)]
     public float relativeHeight = 0f; //how high up the screen the center of the puzzle is
 
+    public bool usePredeterminedSolution;
+    public string predeterminedSolution;
+
+    public bool showUniqueSolution;
+    public bool testUniqueness;
+    public bool randomSize;
+
     void Start(){
-        if (size < 2 || size > 7) {
-            print("the puzzle size has to be between 2 and 7. It is currently " + size);
+        if (randomSize) {
+            System.Random random = new System.Random();
+            int x = random.Next(2);
+            size = 4 + x;
+        }
+        puzzleTiles = new List<PuzzleTile>();
+        bool drawPuzzle = true;
+        if (usePredeterminedSolution && predeterminedSolution != "") {
+            size = (int)Mathf.Sqrt(predeterminedSolution.Length);
+            int[,] x = new int[size, size];
+            for (int i = 0; i < predeterminedSolution.Length; i++) {
+                char c = predeterminedSolution[i];
+                int ind1 = i % size;
+                int ind2 = (i - ind1) / size;
+                x[ind2, ind1] = (int)char.GetNumericValue(c);
+            }
+            puzzle = new Puzzle(x);
         }
         else {
-            puzzleTiles = new List<PuzzleTile>();
+            if (size < 2 || size > 7) {
+                print("the puzzle size has to be between 2 and 7. It is currently " + size);
+                drawPuzzle = false;
+            }
             puzzle = new Puzzle(size);
-            drawFullPuzzle();
-            //showPuzzleSolutionOnTiles();
+        }
+
+        if (drawPuzzle) {
+            if (testUniqueness) {
+                relativeWidth = 0.9f;
+                relativeHeight = -0.85f;
+                drawFullPuzzle();
+                showPuzzleSolutionOnTiles();
+                relativeHeight = 0.85f;
+                puzzle.getUniqueSolution();
+                drawFullPuzzle();
+                showPuzzleSolutionOnTiles();
+            }
+            else if (showUniqueSolution) {
+                puzzle.getUniqueSolution();
+                drawFullPuzzle();
+                showPuzzleSolutionOnTiles();
+            }
+            else {
+                drawFullPuzzle();
+                showPuzzleSolutionOnTiles();
+            }
         }
     }
 
@@ -47,7 +92,7 @@ public class PuzzleGenerator : MonoBehaviour{
                 GameObject tile = Instantiate(puzzleTilePrefab);
                 tile.GetComponent<PuzzleTile>().initialize(pos, tileSize, puzzle.solution[i, j], this.transform, puzzle.size);
                 puzzleTiles.Add(tile.GetComponent<PuzzleTile>());
-                
+                //print(puzzle.solution[i, j]);
             }
         }
     }

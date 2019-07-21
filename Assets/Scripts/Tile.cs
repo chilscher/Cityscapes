@@ -34,7 +34,7 @@ public class Tile : MonoBehaviour {
         if (shownNumberObject != null) {
             Destroy(shownNumberObject);
         }
-        GameObject relevantPrefab = num1Prefab;
+        GameObject relevantPrefab = null;
         switch (num) {
             case 1:
                 relevantPrefab = num1Prefab;
@@ -58,14 +58,16 @@ public class Tile : MonoBehaviour {
                 relevantPrefab = num7Prefab;
                 break;
         }
-        shownNumberObject = Instantiate(relevantPrefab);
-        shownNumberObject.transform.position = this.transform.position;
-        shownNumberObject.transform.parent = this.transform;
-        shownNumberObject.transform.localScale *= tileScaleFactor;
+        if (relevantPrefab != null) {
+            shownNumberObject = Instantiate(relevantPrefab);
+            shownNumberObject.transform.position = this.transform.position;
+            shownNumberObject.transform.parent = this.transform;
+            shownNumberObject.transform.localScale *= tileScaleFactor;
 
-        Vector3 pos = shownNumberObject.transform.position;
-        pos.z -= 1;
-        shownNumberObject.transform.position = pos;
+            Vector3 pos = shownNumberObject.transform.position;
+            pos.z -= 1;
+            shownNumberObject.transform.position = pos;
+        }
     }
 
 }

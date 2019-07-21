@@ -232,13 +232,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6e3dffb2f1ef0d44b9f5148c1b5ad6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  size: 5
+  size: 4
   puzzleTilePrefab: {fileID: 191189271365482392, guid: 3f95daeb27c5e73458b50a1389b14cbb,
     type: 3}
   sideHintTilePrefab: {fileID: 191189271365482392, guid: 06361174bc9f1334cb0d13a23cdb1936,
     type: 3}
-  relativeWidth: 0.869
-  relativeHeight: 0.78
+  relativeWidth: 0.9
+  relativeHeight: 0.85
+  usePredeterminedSolution: 1
+  predeterminedSolution: 
+  showUniqueSolution: 1
+  testUniqueness: 1
+  randomSize: 1
 --- !u!4 &1301818363
 Transform:
   m_ObjectHideFlags: 0
