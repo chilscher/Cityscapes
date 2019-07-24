@@ -25,6 +25,7 @@ public class PuzzleTile : Tile {
         if (canClickTile) {
             clicked();
         }
+        
     }
 
     public bool checkIfNumIsCorrect() {

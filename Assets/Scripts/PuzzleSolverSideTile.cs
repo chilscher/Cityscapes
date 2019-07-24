@@ -81,6 +81,17 @@ public class PuzzleSolverSideTile {
         return highest;
     }
 
+    public bool isHighestValueInRow() {
+        int highestVal = row.Length;
+        bool c = false;
+        foreach (PuzzleSolverTile t in row) {
+            if (t.value == highestVal) {
+                c = true;
+            }
+        }
+        return c;
+    }
+
 
     
 

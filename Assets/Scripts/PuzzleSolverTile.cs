@@ -15,7 +15,7 @@ public class PuzzleSolverTile {
     public int yValue; //i
 
     public void prohibitValue(int x) {
-        if (!populated && (!prohibitedValues.Contains(x))) {
+        if ((!prohibitedValues.Contains(x))) {
             prohibitedValues.Add(x);
         }
     }

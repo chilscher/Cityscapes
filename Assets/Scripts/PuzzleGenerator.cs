@@ -24,9 +24,12 @@ public class PuzzleGenerator : MonoBehaviour{
 
     void Start(){
         if (randomSize) {
+            /*
             System.Random random = new System.Random();
             int x = random.Next(2);
             size = 4 + x;
+            */
+            size = 5;
         }
         puzzleTiles = new List<PuzzleTile>();
         bool drawPuzzle = true;

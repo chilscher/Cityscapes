@@ -39,8 +39,9 @@ public class PuzzleSolver{
             }
         }
 
+        //printProhibitedValues();
         //print("iterations have ended.");
-        
+
     }
 
 
@@ -182,6 +183,7 @@ public class PuzzleSolver{
 
     private void immediateProhibition() {
         foreach(PuzzleSolverSideTile h in hintsList) {
+            //if hint is between 1 and the max number (exclusive), the tiles next to it cannot be high numbers
             if ((h.hint > 1) && (h.hint < size)) {
                 int numTiles = h.hint - 1;
                 for(int i=0; i<numTiles; i++) {
@@ -192,14 +194,12 @@ public class PuzzleSolver{
                     }
                 }
             }
-
-
-
         }
     }
 
     private void iterativeProhibition() {
         foreach (PuzzleSolverSideTile h in hintsList) {
+            //go through every row, and add all used values as prohibited to other tiles
             List<int> containedValues = new List<int>();
             foreach (PuzzleSolverTile t in h.row) {
                 if (t.value != 0) { containedValues.Add(t.value); }
@@ -207,11 +207,50 @@ public class PuzzleSolver{
             foreach (PuzzleSolverTile t in h.row) {
                 t.prohibitValues(containedValues);
             }
-            /*
-            if ((h.hint > 1) && (h.hint < size)) {
+            
+            //if hint is between 1 and size (exclusive) and the row is already populated, you can prohibit high values on tiles near the hint
+            if ((h.hint > 1) && (h.hint < size) && h.hasATileInRowBeenPopulated() && (!h.row[0].populated)) {
+                List<int> unusedNumbers = h.getUnusedNumbers();//assumes unusedNumbers is sorted
+                List<int> unusedNumbersHighToLow = reverseList(unusedNumbers);
+                int numVisible = h.numBuildingsCurrentlyVisible();
+                int numYetToBeVisible = h.hint - numVisible;
+                int tilesToProhibit = numYetToBeVisible - 1;
+                for (int i = 0; i< tilesToProhibit; i++) {
+                    PuzzleSolverTile t = h.row[i];
+                    int prohibitHighestX = tilesToProhibit - i;
 
+                    List<int> valuesToProhibit = new List<int>();
+                    for (int j = 0; j < prohibitHighestX; j++) {
+                        valuesToProhibit.Add(unusedNumbersHighToLow[j]);
+                    }
+                    t.prohibitValues(valuesToProhibit);
+                }
             }
-            */
+            //if hint is 2, the highest remaining number in the row can't be between the adjacent tile and the highest value
+            if ((h.hint == 2) && (!h.row[0].populated) && (h.isHighestValueInRow())) {
+                List<int> u = h.getUnusedNumbers();
+                int highestUnusedVal = u[u.Count - 1];
+                bool foundMax = false;
+                foreach (PuzzleSolverTile t in h.row) {
+                    if (t.value == size) {
+                        foundMax = true;
+                    }
+                    if ((!foundMax) && (t != h.row[0])) {
+                        t.prohibitValue(highestUnusedVal);
+                    }
+                }
+            }
+
+        }
+
+        foreach (PuzzleSolverTile t in tilesList) {
+            //if a tile is populated, add all other numbers to its prohibited list
+            if (t.populated) {
+                for (int i = 1; i <= size; i++) {
+                    t.prohibitValue(i);
+                    //t.prohibitedValues.Add(i);
+                }
+            }
         }
     }
 
@@ -223,9 +262,9 @@ public class PuzzleSolver{
         }
 
         foreach (PuzzleSolverSideTile h in hintsList) {
+            //if hint is between 1 and size (exclusive) and it is next to the only contiguous space in the row, you might be able to populate the row in ascending or descending order
             if ((h.hint > 1) && (h.hint < size) && h.hasATileInRowBeenPopulated() && h.isHintNextToContiguousUnpopulatedArea()) {
-                //print("found a tile");
-                List<int> unusedNumbers = h.getUnusedNumbers();
+                List<int> unusedNumbers = h.getUnusedNumbers();//assumes unusedNumbers is sorted
                 int numVisible = h.numBuildingsCurrentlyVisible();
                 int numVisibleToFill = h.hint - numVisible;
                 if (numVisibleToFill == 1) {
@@ -240,12 +279,31 @@ public class PuzzleSolver{
                     }
                 }
                 else if (numVisibleToFill == unusedNumbers.Count) {
-                    //assumes unusedNumbers is sorted
                     for (int i = 0; i<unusedNumbers.Count; i++) {
                         h.row[i].populate(unusedNumbers[i]);
                     }
                 }
             }
+            //if row has size - 1 occurrences of the same value in its prohibited tiles, then the last unprohibited tile has to contain the value
+            int[] valueCount = new int[size + 1];
+            foreach (PuzzleSolverTile t in h.row) {
+                foreach (int p in t.prohibitedValues) {
+                    valueCount[p]++;
+                }
+            }
+            for (int i = 1; i < valueCount.Length; i++) {
+                int value = i;
+                int count = valueCount[value];
+                if (count == size - 1) {
+                    foreach (PuzzleSolverTile t in h.row) {
+                        if (!t.prohibitedValues.Contains(value)) {
+                            t.populate(value);
+                        }
+                    }
+                }
+            
+            }
+
         }
     }
 
@@ -288,6 +346,34 @@ public class PuzzleSolver{
             }
         }
         return count;
+    }
+
+    private int[] reverseList(int[] original) {
+        int[] newList = new int[size];
+        for (int i = 0; i < original.Length; i++) {
+            int oppositeIndex = original.Length - i;
+            newList[i] = original[oppositeIndex - 1];
+        }
+        return newList;
+    }
+
+    private List<int> reverseList(List<int> original) {
+        List<int> newList = new List<int>();
+        for (int i = 0; i < original.Count; i++) {
+            int oppositeIndex = original.Count - i;
+            newList.Add(original[oppositeIndex - 1]);
+        }
+        return newList;
+    }
+
+    private void printProhibitedValues() {
+        foreach (PuzzleSolverTile t in tilesList) {
+            string o = "coordinates: " + t.xValue + ", " + t.yValue + " ---  prohibited values: ";
+            foreach (int p in t.prohibitedValues) {
+                o += (p + " ");
+            }
+            print(o);
+        }
     }
 
 
