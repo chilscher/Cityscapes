@@ -18,19 +18,30 @@ public class PuzzleGenerator : MonoBehaviour{
     public bool usePredeterminedSolution;
     public string predeterminedSolution;
 
-    public bool showUniqueSolution;
-    public bool testUniqueness;
-    public bool randomSize;
+    //public bool showUniqueSolution;
+    //public bool testUniqueness;
+    //public bool randomSize;
+    
+    private SideHintTile[] topHints;
+    private SideHintTile[] bottomHints;
+    private SideHintTile[] leftHints;
+    private SideHintTile[] rightHints;
+
+    private SideHintTile[] allHints;
+    private PuzzleTile[,] tilesArray;
+    
 
     void Start(){
+        /*
         if (randomSize) {
-            /*
+            
             System.Random random = new System.Random();
             int x = random.Next(2);
             size = 4 + x;
-            */
+            
             size = 5;
         }
+        */
         puzzleTiles = new List<PuzzleTile>();
         bool drawPuzzle = true;
         if (usePredeterminedSolution && predeterminedSolution != "") {
@@ -52,7 +63,35 @@ public class PuzzleGenerator : MonoBehaviour{
             puzzle = new Puzzle(size);
         }
 
+
         if (drawPuzzle) {
+            drawFullPuzzle();
+        }
+        
+
+
+        //if (drawPuzzle) {
+            /*
+            topHints = new SideHintTile[size];
+            bottomHints = new SideHintTile[size];
+            leftHints = new SideHintTile[size];
+            rightHints = new SideHintTile[size];
+            */
+            //addRowsToSideHints();
+            /*
+            if (true) {
+                relativeWidth = 0.9f;
+                relativeHeight = -0.85f;
+                drawFullPuzzle();
+                showPuzzleSolutionOnTiles();
+
+                relativeHeight = 0.85f;
+                puzzle.getUniqueSolution();
+                drawFullPuzzle();
+                showPuzzleSolutionOnTiles();
+            }
+            */
+            /*
             if (testUniqueness) {
                 relativeWidth = 0.9f;
                 relativeHeight = -0.85f;
@@ -63,39 +102,45 @@ public class PuzzleGenerator : MonoBehaviour{
                 drawFullPuzzle();
                 showPuzzleSolutionOnTiles();
             }
+            */
+            /*
             else if (showUniqueSolution) {
                 puzzle.getUniqueSolution();
                 drawFullPuzzle();
                 showPuzzleSolutionOnTiles();
             }
-            else {
-                drawFullPuzzle();
-                showPuzzleSolutionOnTiles();
-            }
-        }
+            */
+            //else {
+            //    drawFullPuzzle();
+                //showPuzzleSolutionOnTiles();
+            //}
+        // }
+        
     }
 
     private void Update() {
+        
         if (!hasWonYet && checkPuzzle()) {
             hasWonYet = true;
             foreach (PuzzleTile t in puzzleTiles) {
-                t.canClickTile = false;
             }
             print("you win!");
         }
+        
+        //print(checkPuzzle());
     }
 
     private void drawPuzzle(Vector2 center, float tileSize) {
         float defaultTileScale = puzzleTilePrefab.GetComponent<BoxCollider2D>().size.x;
         float totalSize = puzzle.size * tileSize * defaultTileScale;
-
+        tilesArray = new PuzzleTile[size, size];
         for (int i = 0; i < puzzle.size; i++) {
             for (int j = 0; j < puzzle.size; j++) {
                 Vector2 pos = new Vector2(center.x - (totalSize / 2) + (tileSize * defaultTileScale * (j + 0.5f)), center.y + (totalSize / 2) - (tileSize * defaultTileScale * (i + 0.5f)));
                 GameObject tile = Instantiate(puzzleTilePrefab);
                 tile.GetComponent<PuzzleTile>().initialize(pos, tileSize, puzzle.solution[i, j], this.transform, puzzle.size);
                 puzzleTiles.Add(tile.GetComponent<PuzzleTile>());
-                //print(puzzle.solution[i, j]);
+                tilesArray[i, j] = tile.GetComponent<PuzzleTile>();
             }
         }
     }
@@ -107,6 +152,10 @@ public class PuzzleGenerator : MonoBehaviour{
         float bottomy = center.y - ((puzzleTotalSize) / 2) - (tileSize * defaultTileScale * 0.5f);
         float leftx = center.x - (puzzleTotalSize / 2) - (tileSize * defaultTileScale * (0.5f));
         float rightx = center.x + (puzzleTotalSize / 2) + (tileSize * defaultTileScale * (0.5f));
+        topHints = new SideHintTile[size];
+        bottomHints = new SideHintTile[size];
+        leftHints = new SideHintTile[size];
+        rightHints = new SideHintTile[size];
         for (int i = 0; i < puzzle.size; i++) {
             float tbx = center.x - (puzzleTotalSize / 2) + (tileSize * defaultTileScale * (i + 0.5f));
             float lry = center.y + ((puzzleTotalSize) / 2) - (tileSize * defaultTileScale * (i + 0.5f));
@@ -118,13 +167,19 @@ public class PuzzleGenerator : MonoBehaviour{
             bottomTile.GetComponent<SideHintTile>().initialize(new Vector2(tbx, bottomy), tileSize, puzzle.bottomNums[i], this.transform);
             leftTile.GetComponent<SideHintTile>().initialize(new Vector2(leftx, lry), tileSize, puzzle.leftNums[i], this.transform);
             rightTile.GetComponent<SideHintTile>().initialize(new Vector2(rightx, lry), tileSize, puzzle.rightNums[i], this.transform);
+            
+            topHints[i] = topTile.GetComponent<SideHintTile>();
+            bottomHints[i] = bottomTile.GetComponent<SideHintTile>();
+            leftHints[i] = leftTile.GetComponent<SideHintTile>();
+            rightHints[i] = rightTile.GetComponent<SideHintTile>(); 
         }
+        addRowsToSideHints();
     }
 
     private bool checkPuzzle() {
         bool isCorrect = true;
-        foreach (PuzzleTile t in puzzleTiles) {
-            if (!t.checkIfNumIsCorrect()) {
+        foreach (SideHintTile h in allHints) {
+            if (!h.isRowValid()) {
                 isCorrect = false;
             }
         }
@@ -137,6 +192,7 @@ public class PuzzleGenerator : MonoBehaviour{
         }
     }
 
+    
     private void drawFullPuzzle() {
         float totalScreenWidth = Camera.main.orthographicSize * 2f * Screen.width / Screen.height;
         float desiredPuzzleSize = totalScreenWidth * relativeWidth;
@@ -151,4 +207,42 @@ public class PuzzleGenerator : MonoBehaviour{
         drawPuzzle(puzzleCenter, scaleFactor);
         drawSideHints(puzzleCenter, scaleFactor);
     }
+    
+    private void addRowsToSideHints() {
+        createHintsList();
+        foreach(SideHintTile h in allHints) {
+            h.row = new PuzzleTile[size];
+        }
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                topHints[j].row[i] = tilesArray[i, j];
+                leftHints[i].row[j] = tilesArray[i, j];
+            }
+
+        }
+        for (int i = 0; i < size; i++) {
+            bottomHints[i].row = reverseList(topHints[i].row);
+            rightHints[i].row = reverseList(leftHints[i].row);
+        }
+    }
+
+    private PuzzleTile[] reverseList(PuzzleTile[] original) {
+        PuzzleTile[] newList = new PuzzleTile[size];
+        for (int i = 0; i < original.Length; i++) {
+            int oppositeIndex = original.Length - i;
+            newList[i] = original[oppositeIndex - 1];
+        }
+        return newList;
+    }
+
+    private void createHintsList() {
+        allHints = new SideHintTile[size * 4];
+        for (int i = 0; i < size; i++) {
+            allHints[i] = topHints[i];
+            allHints[size + i] = bottomHints[i];
+            allHints[size + size + i] = leftHints[i];
+            allHints[size + size + size + i] = rightHints[i];
+        }
+    }
+
 }

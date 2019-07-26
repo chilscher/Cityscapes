@@ -13,11 +13,18 @@ public class Puzzle{
     private System.Random random = new System.Random();
 
     
+
+
     public Puzzle(int size) {
         this.size = size;
-        generatePuzzle();
-        generateSideNumbers();
-        hasUniqueSolution();
+        bool cont = true;
+        while (cont) {
+            generatePuzzle();
+            generateSideNumbers();
+            if (isPuzzleValid()) {
+                cont = false;
+            }
+        }
     }
 
     public Puzzle(int[,] predeterminedSolution) {
@@ -150,6 +157,12 @@ public class Puzzle{
         PuzzleSolver p = new PuzzleSolver();
         solution = p.getUniqueSolution(topNums, bottomNums, leftNums, rightNums, solution);
 
+    }
+
+    public bool isPuzzleValid() {
+        //returns true if the puzzle has exactly one unique solution
+        PuzzleSolver p = new PuzzleSolver();
+        return p.isPuzzleValid(topNums, bottomNums, leftNums, rightNums, solution);
     }
 
 }

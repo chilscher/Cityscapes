@@ -16,6 +16,8 @@ public class PuzzleSolver{
 
     public PuzzleSolverSideTile[] hintsList;
 
+    private int[,] rightAnswer;
+
     public void solvePuzzle(int[] topHints, int[] bottomHints, int[] leftHints, int[] rightHints, int[,] puzzle) {
         setUp(topHints, bottomHints, leftHints, rightHints, puzzle);
         //printHints();
@@ -34,14 +36,22 @@ public class PuzzleSolver{
             if (beforeCount == afterCount) {
                 cont = false;
             }
-            else {
-                //printCore();
-            }
+            //printCore();
         }
 
-        //printProhibitedValues();
-        //print("iterations have ended.");
+    }
 
+    public bool isPuzzleValid(int[] topHints, int[] bottomHints, int[] leftHints, int[] rightHints, int[,] puzzle) {
+        solvePuzzle(topHints, bottomHints, leftHints, rightHints, puzzle);
+        if ((getNumEmptyTiles() <7)) {
+        
+        //if(!areCompletedTilesRight()) { 
+        
+            return true;
+        }
+        return false;
+        
+        //return true;
     }
 
 
@@ -75,6 +85,7 @@ public class PuzzleSolver{
 
     private void setUp(int[] topHints, int[] bottomHints, int[] leftHints, int[] rightHints, int[,] puzzle) {
         size = topHints.Length;
+        this.rightAnswer = puzzle;
         this.topHints = createHintTiles(topHints);
         this.bottomHints = createHintTiles(bottomHints);
         this.leftHints = createHintTiles(leftHints);
@@ -255,6 +266,7 @@ public class PuzzleSolver{
     }
 
     private void iterativePopulation() {
+        //if size - 1 values are prohibited on a tile, then the tile can be populated with the last unprohibited value
         foreach(PuzzleSolverTile t in tilesList) {
             if (t.prohibitedValues.Count == size - 1) {
                 t.populateLastValue();
@@ -263,19 +275,22 @@ public class PuzzleSolver{
 
         foreach (PuzzleSolverSideTile h in hintsList) {
             //if hint is between 1 and size (exclusive) and it is next to the only contiguous space in the row, you might be able to populate the row in ascending or descending order
-            if ((h.hint > 1) && (h.hint < size) && h.hasATileInRowBeenPopulated() && h.isHintNextToContiguousUnpopulatedArea()) {
+            if ((h.hint > 1) && (h.hint < size) && h.isHintNextToContiguousUnpopulatedArea() && (h.isHighestValueInRow()) && (!h.isAnyUnusedNumHigherThanLowestVisible())) {
+                //print(h.hint);
+                //print(h.row[0].xValue + ", " + h.row[0].yValue);
                 List<int> unusedNumbers = h.getUnusedNumbers();//assumes unusedNumbers is sorted
                 int numVisible = h.numBuildingsCurrentlyVisible();
+                int lowestVisible = h.lowestBuildingCurrentlyVisible();
                 int numVisibleToFill = h.hint - numVisible;
                 if (numVisibleToFill == 1) {
-                    int highestUnusedNum = 0;
+                    int highestAllowedNum = 0;
                     foreach (int n in unusedNumbers) {
-                        if (n > highestUnusedNum) {
-                            highestUnusedNum = n;
+                        if ((n > highestAllowedNum) && n < lowestVisible) {
+                            highestAllowedNum = n;
                         }
                     }
-                    if (highestUnusedNum < h.getHighestNumInRow()) {
-                        h.row[0].populate(highestUnusedNum);
+                    if (highestAllowedNum < h.getHighestNumInRow()) {
+                        h.row[0].populate(highestAllowedNum);
                     }
                 }
                 else if (numVisibleToFill == unusedNumbers.Count) {
@@ -376,5 +391,25 @@ public class PuzzleSolver{
         }
     }
 
+    private int getNumEmptyTiles() {
+        int count = 0;
+        foreach (PuzzleSolverTile t in tilesList) {
+            if (!t.populated) {
+                count++;
+            }
+        }
+        return count;
+    }
 
+    private bool areCompletedTilesRight() {
+        bool isRight = true;
+        for (int i = 0; i<size; i++) {
+            for (int j = 0; j<size; j++) {
+                if ((tilesArray[i,j].value != rightAnswer[i, j]) && !(tilesArray[i,j].value == 0)){
+                    isRight = false;
+                }
+            }
+        }
+        return isRight;
+    }
 }

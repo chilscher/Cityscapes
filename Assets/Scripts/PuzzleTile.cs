@@ -6,9 +6,11 @@ public class PuzzleTile : Tile {
     
     private int solution;
     private int maxValue;
-    private int shownNumber = 0;
+    public int shownNumber = 0;
     [HideInInspector]
     public bool canClickTile = true;
+
+    
 
 
     public void initialize(Vector2 position, float tileSize, int solution, Transform parent, int maxValue) {

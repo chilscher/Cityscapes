@@ -38,8 +38,9 @@ public class PuzzleSolverSideTile {
                     }
                 }
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
     public List<int> getUnusedNumbers() {
@@ -92,7 +93,24 @@ public class PuzzleSolverSideTile {
         return c;
     }
 
+    public int lowestBuildingCurrentlyVisible() {
+        foreach (PuzzleSolverTile t in row) {
+            if (t.populated) {
+                return t.value;
+            }
+        }
+        return 0;
+    }
 
-    
+    public bool isAnyUnusedNumHigherThanLowestVisible() {
+        int b = lowestBuildingCurrentlyVisible();
+        List<int> h = getUnusedNumbers();
+        foreach( int i in h) {
+            if (i > b) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
