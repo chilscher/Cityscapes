@@ -6,9 +6,8 @@ public class SideHintTile : Tile {
     
     private int hintValue;
     public PuzzleTile[] row;
-
-    public void initialize(Vector2 position, float tileSize, int hintValue, Transform parent) {
-        setValues(position, tileSize, parent);
+    
+    public void initialize(int hintValue) {
         this.hintValue = hintValue;
         addNumberToTile(hintValue);
     }
@@ -35,5 +34,9 @@ public class SideHintTile : Tile {
             }
         }
         return (numBuildingsCurrentlyVisible() == hintValue);
+    }
+
+    public void addHint() {
+        addNumberToTile(hintValue);
     }
 }
