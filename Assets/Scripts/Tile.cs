@@ -27,6 +27,11 @@ public class Tile : MonoBehaviour {
         this.tileScaleFactor = tileSize;
         transform.position = position;
         transform.localScale *= tileScaleFactor;
+        /*
+        Vector3 pos = position;
+        pos.z = 0;
+        transform.position = pos;
+        */
     }
 
 
@@ -62,13 +67,12 @@ public class Tile : MonoBehaviour {
             shownNumberObject = Instantiate(relevantPrefab);
             shownNumberObject.transform.position = this.transform.position;
             shownNumberObject.transform.parent = this.transform;
+            //shownNumberObject.transform.localScale *= transform.localScale.x;
 
+            shownNumberObject.transform.localScale *= tileScaleFactor;
             Vector3 pos = shownNumberObject.transform.position;
             pos.z -= 1;
             shownNumberObject.transform.position = pos;
-
-            Vector3 scale = new Vector3(1, 1, 1);
-
         }
     }
 

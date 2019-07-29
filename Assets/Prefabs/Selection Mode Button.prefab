@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4555962349407009132}
   - component: {fileID: 6004542571710102954}
-  - component: {fileID: 6776540910296164129}
+  - component: {fileID: 7670176835061632147}
   m_Layer: 0
-  m_Name: Puzzle Tile
+  m_Name: Number Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,7 +29,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7870294294230345314}
+  - {fileID: 57754487413264439}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -59,7 +59,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 3, y: 3}
   m_EdgeRadius: 0
---- !u!114 &6776540910296164129
+--- !u!114 &7670176835061632147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 191189271365482392}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c83bbb959401d0940ad2690f2deaed80, type: 3}
+  m_Script: {fileID: 11500000, guid: d8815d967b817dd48bfa4c3ec5086309, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}
@@ -89,40 +89,8 @@ MonoBehaviour:
     type: 3}
   shownNumberObject: {fileID: 0}
   tileScaleFactor: 0
-  shownNumber: 0
-  canClickTile: 1
-  gameManager: {fileID: 0}
-  redHints: 
-  greenHints: 
-  red1Prefab: {fileID: 7404936744469136690, guid: aa5f2b5215a2e4f4aa50e8579807a36a,
-    type: 3}
-  red2Prefab: {fileID: 347678588482088387, guid: 378c907cb2e5da447bc18dfc47398807,
-    type: 3}
-  red3Prefab: {fileID: 6174674994747555635, guid: ed606153fd5123147ad0adff68ff0a35,
-    type: 3}
-  red4Prefab: {fileID: 988858036176450226, guid: f5a11cdacab5c90429c7d88d20143d91,
-    type: 3}
-  red5Prefab: {fileID: 4312837850592442007, guid: f6331700c9b583a46a4229c418db98e4,
-    type: 3}
-  red6Prefab: {fileID: 7711484754715463395, guid: eec92baa6eb858a4dbe90b277cb12846,
-    type: 3}
-  red7Prefab: {fileID: 2670715479375420578, guid: ad7db84386ec0dd4a9dd3a0ccb71645e,
-    type: 3}
-  green1Prefab: {fileID: 7404936744469136690, guid: 104563fd82f7d3640a4f6f126eea5a1d,
-    type: 3}
-  green2Prefab: {fileID: 347678588482088387, guid: cbf018f211bb01d469e24daeda3edc3e,
-    type: 3}
-  green3Prefab: {fileID: 6174674994747555635, guid: e43d87bec48010f4d9a38ea7b59e1f15,
-    type: 3}
-  green4Prefab: {fileID: 988858036176450226, guid: 726560536a2500541afe9e937e0e59f5,
-    type: 3}
-  green5Prefab: {fileID: 4312837850592442007, guid: 6cd4a16af947138408e99cf5ebdfa8b5,
-    type: 3}
-  green6Prefab: {fileID: 7711484754715463395, guid: 1917f1195b8e74244a05d0a1cdc6c86d,
-    type: 3}
-  green7Prefab: {fileID: 2670715479375420578, guid: 6a389a4a61e027247b8582b9a49f4d15,
-    type: 3}
---- !u!1 &4740479724442174421
+  value: 0
+--- !u!1 &827535504699601855
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -130,8 +98,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7870294294230345314}
-  - component: {fileID: 5201507927492582109}
+  - component: {fileID: 57754487413264439}
+  - component: {fileID: 3325313414918407646}
   m_Layer: 0
   m_Name: skyscraper tile v1
   m_TagString: Untagged
@@ -139,13 +107,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7870294294230345314
+--- !u!4 &57754487413264439
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4740479724442174421}
+  m_GameObject: {fileID: 827535504699601855}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -153,13 +121,13 @@ Transform:
   m_Father: {fileID: 4555962349407009132}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &5201507927492582109
+--- !u!212 &3325313414918407646
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4740479724442174421}
+  m_GameObject: {fileID: 827535504699601855}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0

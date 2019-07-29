@@ -19,6 +19,46 @@ public class NumberButton: Tile {
         gameManager.switchNumber(value);
     }
 
-    
+
+    public void addNumberToTile(int num) {
+        if (shownNumberObject != null) {
+            Destroy(shownNumberObject);
+        }
+        GameObject relevantPrefab = null;
+        switch (num) {
+            case 1:
+                relevantPrefab = num1Prefab;
+                break;
+            case 2:
+                relevantPrefab = num2Prefab;
+                break;
+            case 3:
+                relevantPrefab = num3Prefab;
+                break;
+            case 4:
+                relevantPrefab = num4Prefab;
+                break;
+            case 5:
+                relevantPrefab = num5Prefab;
+                break;
+            case 6:
+                relevantPrefab = num6Prefab;
+                break;
+            case 7:
+                relevantPrefab = num7Prefab;
+                break;
+        }
+        if (relevantPrefab != null) {
+            shownNumberObject = Instantiate(relevantPrefab);
+            shownNumberObject.transform.position = this.transform.position;
+            shownNumberObject.transform.parent = this.transform;
+            shownNumberObject.transform.localScale *= transform.localScale.x;
+
+            //shownNumberObject.transform.localScale *= tileScaleFactor;
+            Vector3 pos = shownNumberObject.transform.position;
+            pos.z -= 1;
+            shownNumberObject.transform.position = pos;
+        }
+    }
 
 }
