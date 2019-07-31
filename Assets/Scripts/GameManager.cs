@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
     
@@ -31,6 +32,14 @@ public class GameManager : MonoBehaviour {
     public GameObject numbersPositioning;
     public GameObject numbersPositioningImage;
     public GameObject canvas;
+    public GameObject winCanvas;
+    private NumberButton prevClickedNumButton;
+    public GameObject buildButton;
+    public GameObject redButton;
+    public GameObject greenButton;
+    private GameObject prevNumberSelectionButton;
+    public Sprite selectionModeOn;
+    public Sprite selectionModeOff;
 
     //public GameObject button;
 
@@ -38,24 +47,21 @@ public class GameManager : MonoBehaviour {
 
 
     private void Start() {
+        size = StaticVariables.size;
         puzzleGenerator.createPuzzle(size);
         drawFullPuzzle();
         drawNumberButtons();
         hidePositioningObjects();
+
+
     }
 
     private void Update() {
-        //print(button.transform.parent.GetComponent<Canvas>().scaleFactor);
-        /*
-        foreach (Transform c in canvas.transform) {
-            Vector3 s = c.position;
-            s.z = 0;
-            c.position = s;
-        }
-        */
+
         if (!hasWonYet && puzzleGenerator.checkPuzzle()) {
             hasWonYet = true;
-            print("you win!");
+            //print("you win!");
+            winCanvas.SetActive(true);
         }
     }
 
@@ -66,10 +72,6 @@ public class GameManager : MonoBehaviour {
     }
 
     private void drawFullPuzzle() {
-        //assumes puzzlePositioning object is a square
-        //float totalScreenWidth = Camera.main.orthographicSize * 2f * Screen.width / Screen.height;
-        //float desiredPuzzleSize = totalScreenWidth * relativeWidth;
-        
         float desiredPuzzleSize = puzzlePositioning.transform.localScale.x;
         
         if (canvas.GetComponent<RectTransform>().rect.height > canvas.GetComponent<CanvasScaler>().referenceResolution.y) {
@@ -80,26 +82,7 @@ public class GameManager : MonoBehaviour {
         float defaultTileScale = puzzleGenerator.puzzleTilePrefab.GetComponent<BoxCollider2D>().size.x;
         float currentPuzzleSize = (size + 2) * defaultTileScale;
         float scaleFactor = desiredPuzzleSize / currentPuzzleSize;
-        /*
-        float totalScreenHeight = Camera.main.orthographicSize * 2f;
-        float maximumCenterHeight = totalScreenHeight - (desiredPuzzleSize); // the maximum height of the screen that can be the center of the puzzle, while still allowing the full puzzle to fit
-        float heightCenter = (maximumCenterHeight * relativeHeight) / 2;
-        */
-        //Vector2 puzzleCenter = new Vector2(0, heightCenter);
         Vector2 puzzleCenter = puzzlePositioning.transform.position;
-
-
-        /*
-        //get puzzle positioning data from the puzzlePositioning object
-
-        float desiredPuzzleSize = puzzlePositioning.transform.localScale.x;
-        Vector2 puzzleCenter = puzzlePositioning.transform.position;
-
-        float defaultTileScale = puzzleGenerator.puzzleTilePrefab.GetComponent<BoxCollider2D>().size.x;
-        float currentPuzzleSize = (size + 2) * defaultTileScale;
-        float scaleFactor = desiredPuzzleSize / currentPuzzleSize;
-        */
-
 
         //draw puzzle
 
@@ -145,6 +128,14 @@ public class GameManager : MonoBehaviour {
             totalWidth *= (canvas.GetComponent<CanvasScaler>().referenceResolution.y / canvas.GetComponent<RectTransform>().rect.height);
             numberSize *= (canvas.GetComponent<CanvasScaler>().referenceResolution.y / canvas.GetComponent<RectTransform>().rect.height);
         }
+
+        //rescale so the numbers aren't jammed together
+        float minSpacing = numberSize * 0.2f;
+        if (totalWidth < numberSize * size) {
+            numberSize = (totalWidth - (minSpacing * (size - 1)))/ size;
+        }
+
+
         float spaceWidth = (totalWidth - (numberSize * size)) / (size - 1);
         Vector2 center = numbersPositioning.transform.position;
         float defaultButtonScale = numberButtonPrefab.GetComponent<BoxCollider2D>().size.x;
@@ -160,32 +151,6 @@ public class GameManager : MonoBehaviour {
             button.initialize(i + 1, this);
             button.setValues(pos, scaleFactor, parent);
         }
-        
-        /*
-        float totalScreenWidth = Camera.main.orthographicSize * 2f * Screen.width / Screen.height;
-        float desiredWidth = totalScreenWidth * numberButtonWidth;
-        float buttonSpacing = 0.2f;
-        float defaultButtonScale = numberButtonPrefab.GetComponent<BoxCollider2D>().size.x;
-        float currentPuzzleSize = (size + (buttonSpacing * (size - 1))) * defaultButtonScale;
-        float scaleFactor = desiredWidth / currentPuzzleSize;
-
-        float totalScreenHeight = Camera.main.orthographicSize * 2f;
-        float heightCenter = (totalScreenHeight * numberButtonHeight) / 2;
-        //Vector2 numberButtonCenter = new Vector2(0, heightCenter);
-        Vector2 numberButtonCenter = numbersPositioning.transform.position;
-
-        Transform parent = numbersPositioning.transform;
-
-        float totalSize = (size + (buttonSpacing * (size - 1))) * scaleFactor * defaultButtonScale;
-        for (int i = 0; i < size; i++) {
-            Vector2 pos = new Vector2(numberButtonCenter.x - (totalSize / 2) + (scaleFactor * defaultButtonScale * (i + 0.5f + (i * buttonSpacing))), numberButtonCenter.y);
-
-            GameObject b = Instantiate(numberButtonPrefab);
-            NumberButton button = b.GetComponent<NumberButton>();
-            button.initialize(i + 1, this);
-            button.setValues(pos, scaleFactor, parent);
-        }
-        */
     }
 
     public void switchNumber(int num) {
@@ -194,15 +159,57 @@ public class GameManager : MonoBehaviour {
 
     public void hitBuildButton() {
         clickTileAction = "Apply Selected";
+        showNumberSelectionButtonClicked(buildButton);
     }
     public void hitRedButton() {
         clickTileAction = "Toggle Red Hint";
+        showNumberSelectionButtonClicked(redButton);
     }
 
     public void hitGreenButton() {
         clickTileAction = "Toggle Green Hint";
+        showNumberSelectionButtonClicked(greenButton);
     }
 
+    public void goToMainMenu() {
+        SceneManager.LoadScene("MainMenu");
+    }
+
+    public void generateNewPuzzleSameSize() {
+        SceneManager.LoadScene("InPuzzle");
+    }
+
+    public void showNumberButtonClicked(NumberButton nb) {
+        if (prevClickedNumButton != null) {
+            disselectNumber(prevClickedNumButton);
+        }
+        prevClickedNumButton = nb;
+        selectNumber(nb);
+    }
+
+    public void showNumberSelectionButtonClicked(GameObject btn) {
+        if (prevNumberSelectionButton != null) {
+            disselectButton(prevNumberSelectionButton);
+        }
+        prevNumberSelectionButton = btn;
+        selectButton(btn);
+    }
     
+    private void disselectButton(GameObject btn) {
+        btn.GetComponent<Image>().sprite = selectionModeOff;
+    }
+
+    private void selectButton(GameObject btn) {
+        btn.GetComponent<Image>().sprite = selectionModeOn;
+    }
+
+    private void selectNumber(NumberButton btn) {
+        btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = selectionModeOn;
+    }
+
+    private void disselectNumber(NumberButton btn) {
+        btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = selectionModeOff;
+    }
+
 
 }

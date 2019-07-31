@@ -17,10 +17,11 @@ public class NumberButton: Tile {
 
     private void OnMouseDown() {
         gameManager.switchNumber(value);
+        gameManager.showNumberButtonClicked(this);
     }
 
 
-    public void addNumberToTile(int num) {
+    public new void addNumberToTile(int num) {
         if (shownNumberObject != null) {
             Destroy(shownNumberObject);
         }
@@ -54,10 +55,10 @@ public class NumberButton: Tile {
             shownNumberObject.transform.parent = this.transform;
             shownNumberObject.transform.localScale *= transform.localScale.x;
 
-            //shownNumberObject.transform.localScale *= tileScaleFactor;
-            Vector3 pos = shownNumberObject.transform.position;
-            pos.z -= 1;
-            shownNumberObject.transform.position = pos;
+            Vector3 pos = shownNumberObject.transform.localPosition;
+            pos.z = -0.01f;
+            shownNumberObject.transform.localPosition = pos;
+
         }
     }
 

@@ -189,12 +189,10 @@ public class PuzzleTile : Tile {
                 GameObject hint = Instantiate(relevantPrefab);
                 hint.transform.position = this.transform.position;
                 hint.transform.parent = this.transform;
-                //hint.transform.localScale *= 0.4f * transform.localScale.x;
                 hint.transform.localScale *= 0.4f;
 
                 Vector3 pos = hint.transform.position;
                 pos.z -= 1;
-                //float totalTileSize = GetComponent<BoxCollider2D>().size.x * transform.localScale.x;
                 float totalTileSize = GetComponent<BoxCollider2D>().size.x;
                 pos.x -= (0.3f * totalTileSize);
                 pos.x += (0.2f * totalTileSize * i);
@@ -238,12 +236,10 @@ public class PuzzleTile : Tile {
                 GameObject hint = Instantiate(relevantPrefab);
                 hint.transform.position = this.transform.position;
                 hint.transform.parent = this.transform;
-                //hint.transform.localScale *= 0.4f * transform.localScale.x;
                 hint.transform.localScale *= 0.4f;
 
                 Vector3 pos = hint.transform.position;
                 pos.z -= 1;
-                //float totalTileSize = GetComponent<BoxCollider2D>().size.x * transform.localScale.x;
                 float totalTileSize = GetComponent<BoxCollider2D>().size.x;
                 pos.x += ((0.5f * totalTileSize) - (0.2f * totalTileSize * greenHints.Count));
                 pos.x += (0.2f * totalTileSize * i);

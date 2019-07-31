@@ -5,7 +5,7 @@ using UnityEngine;
 public class Tile : MonoBehaviour {
 
     [HideInInspector]
-    public Vector2 position;
+    public Vector3 position;
     [HideInInspector]
     public float tileSize;
     public GameObject num1Prefab;
@@ -23,15 +23,18 @@ public class Tile : MonoBehaviour {
     public void setValues(Vector2 position, float tileSize, Transform parent) {
         this.position = position;
         this.tileSize = tileSize;
-        this.transform.parent = parent;
+        this.transform.SetParent(parent);
         this.tileScaleFactor = tileSize;
         transform.position = position;
+
         transform.localScale *= tileScaleFactor;
-        /*
-        Vector3 pos = position;
+
+        Vector3 pos = transform.localPosition;
         pos.z = 0;
-        transform.position = pos;
-        */
+        transform.localPosition = pos;
+
+        
+        
     }
 
 
@@ -67,12 +70,13 @@ public class Tile : MonoBehaviour {
             shownNumberObject = Instantiate(relevantPrefab);
             shownNumberObject.transform.position = this.transform.position;
             shownNumberObject.transform.parent = this.transform;
-            //shownNumberObject.transform.localScale *= transform.localScale.x;
 
             shownNumberObject.transform.localScale *= tileScaleFactor;
-            Vector3 pos = shownNumberObject.transform.position;
-            pos.z -= 1;
-            shownNumberObject.transform.position = pos;
+            
+            Vector3 pos = shownNumberObject.transform.localPosition;
+            pos.z = -0.01f;
+            shownNumberObject.transform.localPosition = pos;
+            
         }
     }
 
