@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour {
     public Sprite selectionModeOn;
     public Sprite selectionModeOff;
     public GameObject streetCorner;
+
+    [HideInInspector]
+    public bool canClick = true;
     
     private bool hasWonYet = false;
 
@@ -52,6 +55,7 @@ public class GameManager : MonoBehaviour {
         if (!hasWonYet && puzzleGenerator.checkPuzzle()) {
             hasWonYet = true;
             winCanvas.SetActive(true);
+            canClick = false;
         }
     }
 
@@ -155,11 +159,6 @@ public class GameManager : MonoBehaviour {
 
     public void switchNumber(int num) {
         selectedNumber = num;
-        /*
-        foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
-            t.highlightNumberIfMatch(num);
-        }
-        */
     }
 
     public void hitBuildButton() {

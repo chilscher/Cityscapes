@@ -31,6 +31,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 57754487413264439}
+  - {fileID: 2795973414976437539}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -79,23 +80,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0, z: 0}
   tileSize: 0
-  num1Prefab: {fileID: 7404936744469136690, guid: de79104f2bbfe68478ae7a1412bd4298,
-    type: 3}
-  num2Prefab: {fileID: 347678588482088387, guid: 246073d9aa8748b4180f7745679eae1b,
-    type: 3}
-  num3Prefab: {fileID: 6174674994747555635, guid: 3b1113982cdcadf4cb84734c1bf103a7,
-    type: 3}
-  num4Prefab: {fileID: 988858036176450226, guid: 1c6ecdc424dbff441a5ca07b3b0e49e8,
-    type: 3}
-  num5Prefab: {fileID: 4312837850592442007, guid: d50125f4e4f142c4a9be05249a3d9a98,
-    type: 3}
-  num6Prefab: {fileID: 7711484754715463395, guid: cb6df782905d4b543b1c7c34f6c897aa,
-    type: 3}
-  num7Prefab: {fileID: 2670715479375420578, guid: 899b9389d58f6de4eb3aa9319568290b,
-    type: 3}
-  shownNumberObject: {fileID: 0}
   tileScaleFactor: 0
   value: 0
+  numberSprites:
+  - {fileID: 21300000, guid: 0e5cd33a7a4ebe449b2db796fd7c559b, type: 3}
+  - {fileID: 21300000, guid: a160f273ba917774fb458d205968b471, type: 3}
+  - {fileID: 21300000, guid: 96abc72456928a646b5e13ef60dc8d97, type: 3}
+  - {fileID: 21300000, guid: e124a8f5a2193144ca026d00a7a9462b, type: 3}
+  - {fileID: 21300000, guid: 3291b3b13bd7f9c47985ff716983d77f, type: 3}
+  - {fileID: 21300000, guid: b67922636b06c3f459a66bb9cec79051, type: 3}
+  - {fileID: 21300000, guid: 7a50ec299ed3ec44ba37309b5eac6c1c, type: 3}
 --- !u!222 &498116819668328654
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -173,7 +167,87 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3fc7d8be198877742b12eba6c02470c1, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2204789858b781745a47c0643e0c35e0, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 3, y: 3}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!1 &1449120270518185097
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2795973414976437539}
+  - component: {fileID: 3425168738765204494}
+  m_Layer: 0
+  m_Name: Number
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2795973414976437539
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449120270518185097}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.002}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7572619124184075041}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!212 &3425168738765204494
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1449120270518185097}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 137ba9f99792bcb49b140e68937bb6e5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

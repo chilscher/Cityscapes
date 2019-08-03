@@ -9,8 +9,6 @@ public class Tile : MonoBehaviour {
     [HideInInspector]
     public float tileSize;
     [HideInInspector]
-    public GameObject shownNumberObject;
-    [HideInInspector]
     public float tileScaleFactor;
 
 
@@ -26,8 +24,5 @@ public class Tile : MonoBehaviour {
         Vector3 pos = transform.localPosition;
         pos.z = 0;
         transform.localPosition = pos;
-
-        
-        
     }
 }

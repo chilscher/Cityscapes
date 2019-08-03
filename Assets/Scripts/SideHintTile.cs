@@ -5,28 +5,16 @@ using UnityEngine;
 public class SideHintTile : Tile {
 
     private int hintValue;
+    [HideInInspector]
     public PuzzleTile[] row;
     private SpriteRenderer background;
     private SpriteRenderer number;
 
-    public Sprite number1Sprite;
-    public Sprite number2Sprite;
-    public Sprite number3Sprite;
-    public Sprite number4Sprite;
-    public Sprite number5Sprite;
-    public Sprite number6Sprite;
-    public Sprite number7Sprite;
+    public Sprite[] incorrectNumberSprites;
+    public Sprite[] correctNumberSprites;
 
-    public Sprite green1Sprite;
-    public Sprite green2Sprite;
-    public Sprite green3Sprite;
-    public Sprite green4Sprite;
-    public Sprite green5Sprite;
-    public Sprite green6Sprite;
-    public Sprite green7Sprite;
-
-    private Sprite normalSprite;
-    private Sprite greenSprite;
+    private Sprite incorrectSprite;
+    private Sprite correctSprite;
 
     public void initialize(int hintValue) {
         this.hintValue = hintValue;
@@ -50,10 +38,15 @@ public class SideHintTile : Tile {
     }
 
     public bool isRowValid() {
+        List<int> usedValues = new List<int>();
         foreach (PuzzleTile t in row) {
             if (t.shownNumber == 0) {
                 return false;
             }
+            if (usedValues.Contains(t.shownNumber)) {
+                return false;
+            }
+            usedValues.Add(t.shownNumber);
         }
         return (numBuildingsCurrentlyVisible() == hintValue);
     }
@@ -63,46 +56,18 @@ public class SideHintTile : Tile {
     }
     
 
-    public new void addNumberToTile(int num) {
-        switch (num) {
-            case 1:
-                normalSprite = number1Sprite;
-                greenSprite = green1Sprite;
-                break;
-            case 2:
-                normalSprite = number2Sprite;
-                greenSprite = green2Sprite;
-                break;
-            case 3:
-                normalSprite = number3Sprite;
-                greenSprite = green3Sprite;
-                break;
-            case 4:
-                normalSprite = number4Sprite;
-                greenSprite = green4Sprite;
-                break;
-            case 5:
-                normalSprite = number5Sprite;
-                greenSprite = green5Sprite;
-                break;
-            case 6:
-                normalSprite = number6Sprite;
-                greenSprite = green6Sprite;
-                break;
-            case 7:
-                normalSprite = number7Sprite;
-                greenSprite = green7Sprite;
-                break;
-        }
-        number.sprite = normalSprite;
+    public void addNumberToTile(int num) {
+        incorrectSprite = incorrectNumberSprites[num - 1];
+        correctSprite = correctNumberSprites[num - 1];
+        number.sprite = incorrectSprite;
     }
 
     public void setSpriteToAppropriateColor() {
         if(numBuildingsCurrentlyVisible() == hintValue) {
-            number.sprite = greenSprite;
+            number.sprite = correctSprite;
         }
         else {
-            number.sprite = normalSprite;
+            number.sprite = incorrectSprite;
         }
     }
 
