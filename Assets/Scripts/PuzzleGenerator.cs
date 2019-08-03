@@ -9,7 +9,7 @@ public class PuzzleGenerator : MonoBehaviour{
     public Puzzle puzzle;
     public GameObject puzzleTilePrefab;
     public GameObject sideHintTilePrefab;
-    private List<PuzzleTile> puzzleTiles;
+    public List<PuzzleTile> puzzleTiles;
 
     public bool usePredeterminedSolution;
     public string predeterminedSolution;

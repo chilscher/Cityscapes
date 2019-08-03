@@ -11,18 +11,6 @@ public class GameManager : MonoBehaviour {
     [HideInInspector]
     public int selectedNumber = 0;
     public PuzzleGenerator puzzleGenerator;
-    /*
-    [Range(0.75f, 1f)]
-    public float relativeWidth = 0.9f; //the width of the puzzle relative to the total screen width
-    [Range(-1f, 1f)]
-    public float relativeHeight = 0.85f; //how high up the screen the center of the puzzle is
-    */
-    /*
-    [Range(0.6f, 1f)]
-    public float numberButtonWidth = 0.7f; //the width of the puzzle relative to the total screen width
-    [Range(-1f, 1f)]
-    public float numberButtonHeight = -0.2f; //how high up the screen the center of the puzzle is
-    */
     public int size;
 
     public GameObject numberButtonPrefab;
@@ -40,9 +28,8 @@ public class GameManager : MonoBehaviour {
     private GameObject prevNumberSelectionButton;
     public Sprite selectionModeOn;
     public Sprite selectionModeOff;
-
-    //public GameObject button;
-
+    public GameObject streetCorner;
+    
     private bool hasWonYet = false;
 
 
@@ -53,14 +40,17 @@ public class GameManager : MonoBehaviour {
         drawNumberButtons();
         hidePositioningObjects();
 
+        hitBuildButton();
+
 
     }
 
     private void Update() {
-
+        foreach(SideHintTile h in puzzleGenerator.allHints) {
+            h.setSpriteToAppropriateColor();
+        }
         if (!hasWonYet && puzzleGenerator.checkPuzzle()) {
             hasWonYet = true;
-            //print("you win!");
             winCanvas.SetActive(true);
         }
     }
@@ -85,7 +75,6 @@ public class GameManager : MonoBehaviour {
         Vector2 puzzleCenter = puzzlePositioning.transform.position;
 
         //draw puzzle
-
         Transform parent = puzzlePositioning.transform;
         float totalSize = size * scaleFactor * defaultTileScale;
         for (int i = 0; i < size; i++) {
@@ -111,17 +100,28 @@ public class GameManager : MonoBehaviour {
             bottomTile.setValues(new Vector2(tbx, bottomy), scaleFactor, parent);
             leftTile.setValues(new Vector2(leftx, lry), scaleFactor, parent);
             rightTile.setValues(new Vector2(rightx, lry), scaleFactor, parent);
+            topTile.rotateHint(0, (totalSize / size));
+            bottomTile.rotateHint(180, (totalSize / size));
+            leftTile.rotateHint(90, (totalSize / size));
+            rightTile.rotateHint(270, (totalSize / size));
         }
         foreach (SideHintTile h in puzzleGenerator.allHints) {
             h.addHint();
         }
+
+        //draw street corners
+        Vector2 topLeftPos = new Vector2(leftx, topy);
+        Vector2 bottomLeftPos = new Vector2(leftx, bottomy);
+        Vector2 topRightPos = new Vector2(rightx, topy);
+        Vector2 bottomRightPos = new Vector2(rightx, bottomy);
+        createCorner(topLeftPos, scaleFactor, 0, parent);
+        createCorner(bottomLeftPos, scaleFactor, 90, parent);
+        createCorner(topRightPos, scaleFactor, 270, parent);
+        createCorner(bottomRightPos, scaleFactor, 180, parent);
     }
 
     private void drawNumberButtons() {
         //assumes numbersPositioning object is a rectangle
-        
-
-        
         float numberSize = numbersPositioning.transform.localScale.y;
         float totalWidth = numbersPositioning.transform.localScale.x;
         if (canvas.GetComponent<RectTransform>().rect.height > canvas.GetComponent<CanvasScaler>().referenceResolution.y) {
@@ -155,6 +155,11 @@ public class GameManager : MonoBehaviour {
 
     public void switchNumber(int num) {
         selectedNumber = num;
+        /*
+        foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+            t.highlightNumberIfMatch(num);
+        }
+        */
     }
 
     public void hitBuildButton() {
@@ -211,5 +216,18 @@ public class GameManager : MonoBehaviour {
         btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = selectionModeOff;
     }
 
+    private void createCorner(Vector2 p, float scale, int rot, Transform parent) {
+
+        GameObject corner = Instantiate(streetCorner);
+        corner.transform.position = p;
+        corner.transform.localScale *= scale;
+        corner.transform.Rotate(new Vector3(0, 0, rot));
+        corner.transform.parent = parent;
+
+
+        Vector3 pos = corner.transform.localPosition;
+        pos.z = 0;
+        corner.transform.localPosition = pos;
+    }
 
 }

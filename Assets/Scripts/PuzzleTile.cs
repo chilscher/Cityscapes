@@ -20,27 +20,71 @@ public class PuzzleTile : Tile {
     private List<GameObject> redHintObjects = new List<GameObject>();
     private List<GameObject> greenHintObjects = new List<GameObject>();
 
+    public Sprite emptyTileSprite;
+    public Sprite fullTileSprite;
 
-    public GameObject red1Prefab;
-    public GameObject red2Prefab;
-    public GameObject red3Prefab;
-    public GameObject red4Prefab;
-    public GameObject red5Prefab;
-    public GameObject red6Prefab;
-    public GameObject red7Prefab;
+    public Sprite building1Sprite;
+    public Sprite building2Sprite;
+    public Sprite building3Sprite;
+    public Sprite building4Sprite;
+    public Sprite building5Sprite;
+    public Sprite building6Sprite;
+    public Sprite building7Sprite;
 
-    public GameObject green1Prefab;
-    public GameObject green2Prefab;
-    public GameObject green3Prefab;
-    public GameObject green4Prefab;
-    public GameObject green5Prefab;
-    public GameObject green6Prefab;
-    public GameObject green7Prefab;
+    public Sprite number1Sprite;
+    public Sprite number2Sprite;
+    public Sprite number3Sprite;
+    public Sprite number4Sprite;
+    public Sprite number5Sprite;
+    public Sprite number6Sprite;
+    public Sprite number7Sprite;
+    /*
+    public Sprite blue1Sprite;
+    public Sprite blue2Sprite;
+    public Sprite blue3Sprite;
+    public Sprite blue4Sprite;
+    public Sprite blue5Sprite;
+    public Sprite blue6Sprite;
+    public Sprite blue7Sprite;
+    */
+
+    public Sprite red1Sprite;
+    public Sprite red2Sprite;
+    public Sprite red3Sprite;
+    public Sprite red4Sprite;
+    public Sprite red5Sprite;
+    public Sprite red6Sprite;
+    public Sprite red7Sprite;
+
+    public Sprite green1Sprite;
+    public Sprite green2Sprite;
+    public Sprite green3Sprite;
+    public Sprite green4Sprite;
+    public Sprite green5Sprite;
+    public Sprite green6Sprite;
+    public Sprite green7Sprite;
+
+
+    private SpriteRenderer background;
+    private SpriteRenderer building;
+    private SpriteRenderer number;
 
     public void initialize(int solution, Transform parent, int maxValue, GameManager gameManager) {
         this.solution = solution;
         this.maxValue = maxValue;
         this.gameManager = gameManager;
+        
+        background = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        building = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        number = transform.GetChild(2).GetComponent<SpriteRenderer>();
+
+        // pick a random tile rotation direction
+        int[] directions = new int[] { 0, 90, 180, 270 };
+        //System.Random rnd = new System.Random();
+        int r = StaticVariables.rand.Next(4);
+        background.transform.Rotate(new Vector3(0,0,directions[r]));
+        building.transform.Rotate(new Vector3(0, 0, directions[r]));
+        
     }
 
     public void clicked() {
@@ -81,6 +125,11 @@ public class PuzzleTile : Tile {
         }
         shownNumberObject = null;
         shownNumber = 0;
+        
+        background.sprite = emptyTileSprite;
+        building.enabled = false;
+        number.enabled = false;
+        
     }
 
     private void rotateToNextNumber() {
@@ -152,104 +201,78 @@ public class PuzzleTile : Tile {
     private void showColoredHints() {
         redHints.Sort();
         greenHints.Sort();
-        foreach (GameObject g in redHintObjects) {
-            Destroy(g);
-        }
-        foreach (GameObject g in greenHintObjects) {
-            Destroy(g);
-        }
-        for (int i = 0; i< redHints.Count; i++) {
-            int value = redHints[i];
 
-            GameObject relevantPrefab = null;
+        Transform hintsList = transform.GetChild(3);
+
+        for (int i = 0; i<hintsList.transform.childCount; i++) {
+            SpriteRenderer s = hintsList.GetChild(i).GetComponent<SpriteRenderer>();
+            s.enabled = false;
+        }
+
+        for (int i = 0; i < redHints.Count; i++) {
+            int value = redHints[i];
+            SpriteRenderer s = hintsList.GetChild(i).GetComponent<SpriteRenderer>();
+
             switch (value) {
                 case 1:
-                    relevantPrefab = red1Prefab;
+                    s.sprite = red1Sprite;
+                    s.enabled = true;
                     break;
                 case 2:
-                    relevantPrefab = red2Prefab;
+                    s.sprite = red2Sprite;
+                    s.enabled = true;
                     break;
                 case 3:
-                    relevantPrefab = red3Prefab;
+                    s.sprite = red3Sprite;
+                    s.enabled = true;
                     break;
                 case 4:
-                    relevantPrefab = red4Prefab;
+                    s.sprite = red4Sprite;
+                    s.enabled = true;
                     break;
                 case 5:
-                    relevantPrefab = red5Prefab;
+                    s.sprite = red5Sprite;
+                    s.enabled = true;
                     break;
                 case 6:
-                    relevantPrefab = red6Prefab;
+                    s.sprite = red6Sprite;
+                    s.enabled = true;
                     break;
                 case 7:
-                    relevantPrefab = red7Prefab;
+                    s.sprite = red7Sprite;
+                    s.enabled = true;
                     break;
             }
-            if (relevantPrefab != null) {
-                GameObject hint = Instantiate(relevantPrefab);
-                hint.transform.position = this.transform.position;
-                hint.transform.parent = this.transform;
-                hint.transform.localScale *= 0.4f;
-
-                Vector3 pos = hint.transform.position;
-                pos.z -= 1;
-                float totalTileSize = GetComponent<BoxCollider2D>().size.x;
-                pos.x -= (0.3f * totalTileSize);
-                pos.x += (0.2f * totalTileSize * i);
-                pos.y += (0.25f * totalTileSize);
-
-
-
-                hint.transform.position = pos;
-
-                redHintObjects.Add(hint);
-            }
         }
+
+        int startPos = 8 - greenHints.Count;
+
         for (int i = 0; i < greenHints.Count; i++) {
             int value = greenHints[i];
-
-            GameObject relevantPrefab = null;
+            SpriteRenderer s = hintsList.GetChild(startPos + i).GetComponent<SpriteRenderer>();
+            s.enabled = true;
             switch (value) {
                 case 1:
-                    relevantPrefab = green1Prefab;
+                    s.sprite = green1Sprite;
                     break;
                 case 2:
-                    relevantPrefab = green2Prefab;
+                    s.sprite = green2Sprite;
                     break;
                 case 3:
-                    relevantPrefab = green3Prefab;
+                    s.sprite = green3Sprite;
                     break;
                 case 4:
-                    relevantPrefab = green4Prefab;
+                    s.sprite = green4Sprite;
                     break;
                 case 5:
-                    relevantPrefab = green5Prefab;
+                    s.sprite = green5Sprite;
                     break;
                 case 6:
-                    relevantPrefab = green6Prefab;
+                    s.sprite = green6Sprite;
                     break;
                 case 7:
-                    relevantPrefab = green7Prefab;
+                    s.sprite = green7Sprite;
                     break;
-            }
-            if (relevantPrefab != null) {
-                GameObject hint = Instantiate(relevantPrefab);
-                hint.transform.position = this.transform.position;
-                hint.transform.parent = this.transform;
-                hint.transform.localScale *= 0.4f;
-
-                Vector3 pos = hint.transform.position;
-                pos.z -= 1;
-                float totalTileSize = GetComponent<BoxCollider2D>().size.x;
-                pos.x += ((0.5f * totalTileSize) - (0.2f * totalTileSize * greenHints.Count));
-                pos.x += (0.2f * totalTileSize * i);
-                pos.y -= (0.25f * totalTileSize);
-
-
-
-                hint.transform.position = pos;
-
-                greenHintObjects.Add(hint);
             }
         }
     }
@@ -259,4 +282,123 @@ public class PuzzleTile : Tile {
         greenHints = new List<int>();
         showColoredHints();
     }
+
+
+    public new void addNumberToTile(int num) {
+        if (shownNumberObject != null) {
+            Destroy(shownNumberObject);
+        }
+
+
+        switch (num) {
+            case 1:
+                building.sprite = building1Sprite;
+                number.sprite = number1Sprite;
+                //number.sprite = blue1Sprite;
+                break;
+            case 2:
+                building.sprite = building2Sprite;
+                number.sprite = number2Sprite;
+                //number.sprite = blue2Sprite;
+                break;
+            case 3:
+                building.sprite = building3Sprite;
+                number.sprite = number3Sprite;
+                //number.sprite = blue3Sprite;
+                break;
+            case 4:
+                building.sprite = building4Sprite;
+                number.sprite = number4Sprite;
+                //number.sprite = blue4Sprite;
+                break;
+            case 5:
+                building.sprite = building5Sprite;
+                number.sprite = number5Sprite;
+                //number.sprite = blue5Sprite;
+                break;
+            case 6:
+                building.sprite = building6Sprite;
+                number.sprite = number6Sprite;
+                //number.sprite = blue6Sprite;
+                break;
+            case 7:
+                building.sprite = building7Sprite;
+                number.sprite = number7Sprite;
+                //number.sprite = blue7Sprite;
+                break;
+        }
+
+        if (num == 0) {
+            building.enabled = false;
+            number.enabled = false;
+        }
+        else {
+            background.sprite = fullTileSprite;
+
+        }
+
+        if (num != 0) {
+            background.sprite = fullTileSprite;
+            building.enabled = true;
+            number.enabled = true;
+        }
+    }
+    /*
+    public void highlightNumberIfMatch(int num) {
+        if (num == shownNumber) {
+            switch (shownNumber) {
+                case 1:
+                    number.sprite = blue1Sprite;
+                    break;
+                case 2:
+                    number.sprite = blue2Sprite;
+                    break;
+                case 3:
+                    number.sprite = blue3Sprite;
+                    break;
+                case 4:
+                    number.sprite = blue4Sprite;
+                    break;
+                case 5:
+                    number.sprite = blue5Sprite;
+                    break;
+                case 6:
+                    number.sprite = blue6Sprite;
+                    break;
+                case 7:
+                    number.sprite = blue7Sprite;
+                    break;
+            }
+        }
+        else {
+
+            switch (shownNumber) {
+                case 1:
+                    number.sprite = number1Sprite;
+                    break;
+                case 2:
+                    number.sprite = number2Sprite;
+                    break;
+                case 3:
+                    number.sprite = number3Sprite;
+                    break;
+                case 4:
+                    number.sprite = number4Sprite;
+                    break;
+                case 5:
+                    number.sprite = number5Sprite;
+                    break;
+                case 6:
+                    number.sprite = number6Sprite;
+                    break;
+                case 7:
+                    number.sprite = number7Sprite;
+                    break;
+            }
+        }
+    }
+    */
+
+
+
 }

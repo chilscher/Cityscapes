@@ -6,6 +6,13 @@ public class NumberButton: Tile {
 
     [HideInInspector]
     public int value;
+    public GameObject num1Prefab;
+    public GameObject num2Prefab;
+    public GameObject num3Prefab;
+    public GameObject num4Prefab;
+    public GameObject num5Prefab;
+    public GameObject num6Prefab;
+    public GameObject num7Prefab;
     private GameManager gameManager;
 
     public void initialize(int value, GameManager gm) {
