@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
     public int size;
 
     public GameObject numberButtonPrefab;
-    public GameObject selectionModeButtonPrefab;
+    //public GameObject selectionModeButtonPrefab;
     public GameObject puzzlePositioning;
     public GameObject puzzlePositioningImage;
     public GameObject numbersPositioning;
@@ -29,6 +29,9 @@ public class GameManager : MonoBehaviour {
     public Sprite selectionModeOn;
     public Sprite selectionModeOff;
     public GameObject streetCorner;
+    public bool includeGreenHintBtn;
+    public GameObject selectionModeButtons1;
+    public GameObject selectionModeButtons2;
 
     [HideInInspector]
     public bool canClick = true;
@@ -42,7 +45,7 @@ public class GameManager : MonoBehaviour {
         drawFullPuzzle();
         drawNumberButtons();
         hidePositioningObjects();
-
+        setSelectionModeButtons();
         hitBuildButton();
 
 
@@ -56,6 +59,22 @@ public class GameManager : MonoBehaviour {
             hasWonYet = true;
             winCanvas.SetActive(true);
             canClick = false;
+        }
+    }
+
+    private void setSelectionModeButtons() {
+        if (includeGreenHintBtn) {
+            selectionModeButtons1.SetActive(true);
+            selectionModeButtons2.SetActive(false);
+            buildButton = selectionModeButtons1.transform.GetChild(0).gameObject;
+            redButton = selectionModeButtons1.transform.GetChild(1).gameObject;
+            greenButton = selectionModeButtons1.transform.GetChild(2).gameObject;
+        }
+        else {
+            selectionModeButtons1.SetActive(false);
+            selectionModeButtons2.SetActive(true);
+            buildButton = selectionModeButtons2.transform.GetChild(0).gameObject;
+            redButton = selectionModeButtons2.transform.GetChild(1).gameObject;
         }
     }
 

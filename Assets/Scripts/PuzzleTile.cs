@@ -45,7 +45,7 @@ public class PuzzleTile : Tile {
         int[] directions = new int[] { 0, 90, 180, 270 };
         //System.Random rnd = new System.Random();
         int r = StaticVariables.rand.Next(4);
-        background.transform.Rotate(new Vector3(0,0,directions[r]));
+        //background.transform.Rotate(new Vector3(0,0,directions[r]));
         building.transform.Rotate(new Vector3(0, 0, directions[r]));
 
         createUsableBuildingSprites();
