@@ -8,7 +8,9 @@ public class SideHintTile : Tile {
     [HideInInspector]
     public PuzzleTile[] row;
     private SpriteRenderer background;
+    private SpriteRenderer arrow;
     private SpriteRenderer number;
+    private SpriteRenderer redBorder;
 
     public Sprite[] incorrectNumberSprites;
     public Sprite[] correctNumberSprites;
@@ -19,7 +21,9 @@ public class SideHintTile : Tile {
     public void initialize(int hintValue) {
         this.hintValue = hintValue;
         background = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        number = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        arrow = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        number = transform.GetChild(2).GetComponent<SpriteRenderer>();
+        redBorder = number.transform.GetChild(0).GetComponent<SpriteRenderer>();
         addNumberToTile(hintValue);
     }
 
@@ -63,8 +67,13 @@ public class SideHintTile : Tile {
     }
 
     public void setSpriteToAppropriateColor() {
-        if(numBuildingsCurrentlyVisible() == hintValue) {
-            number.sprite = correctSprite;
+        if (StaticVariables.changeHintColorOnCorrectRows) {
+            if (numBuildingsCurrentlyVisible() == hintValue) {
+                number.sprite = correctSprite;
+            }
+            else {
+                number.sprite = incorrectSprite;
+            }
         }
         else {
             number.sprite = incorrectSprite;
@@ -73,6 +82,7 @@ public class SideHintTile : Tile {
 
     public void rotateHint(int amt, float tileSize) {
         background.transform.Rotate(new Vector3(0, 0, amt));
+        arrow.transform.Rotate(new Vector3(0, 0, amt));
         float numberMoveAmt = tileSize / 4;
         if (amt == 0) {
             Vector3 pos = number.transform.position;
@@ -94,6 +104,14 @@ public class SideHintTile : Tile {
             pos.x += numberMoveAmt;
             number.transform.position = pos;
         }
+    }
+
+    public void addRedBorder() {
+        redBorder.gameObject.SetActive(true);
+    }
+
+    public void removeRedBorder() {
+        redBorder.gameObject.SetActive(false);
     }
 
 }

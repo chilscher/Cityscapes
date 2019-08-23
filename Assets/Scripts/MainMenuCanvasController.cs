@@ -104,6 +104,17 @@ public class MainMenuCanvasController : MonoBehaviour {
     */
     public void startPuzzle(int size) {
         StaticVariables.size = size;
+        StaticVariables.isTutorial = false;
+        StaticVariables.includeRedHintButton = true;
+        StaticVariables.includeGreenHintButton = false;
+        SceneManager.LoadScene("InPuzzle");
+    }
+
+    public void startTutorial() {
+        StaticVariables.size = 3;
+        StaticVariables.isTutorial = true;
+        StaticVariables.includeRedHintButton = false;
+        StaticVariables.includeGreenHintButton = false;
         SceneManager.LoadScene("InPuzzle");
     }
 }

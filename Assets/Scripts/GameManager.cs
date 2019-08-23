@@ -29,9 +29,15 @@ public class GameManager : MonoBehaviour {
     public Sprite selectionModeOn;
     public Sprite selectionModeOff;
     public GameObject streetCorner;
+    public bool includeRedHintBtn;
     public bool includeGreenHintBtn;
     public GameObject selectionModeButtons1;
     public GameObject selectionModeButtons2;
+
+    public TutorialManager tutorialManager;
+    public GameObject screenTappedMonitor;
+    public GameObject tutorialTextBox;
+    public GameObject redStreetBorder;
 
     [HideInInspector]
     public bool canClick = true;
@@ -41,12 +47,24 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         size = StaticVariables.size;
-        puzzleGenerator.createPuzzle(size);
-        drawFullPuzzle();
-        drawNumberButtons();
-        hidePositioningObjects();
-        setSelectionModeButtons();
-        hitBuildButton();
+        includeGreenHintBtn = StaticVariables.includeGreenHintButton;
+        includeRedHintBtn = StaticVariables.includeRedHintButton;
+
+        if (!StaticVariables.isTutorial) {
+            puzzleGenerator.createPuzzle(size);
+            drawFullPuzzle();
+            drawNumberButtons();
+            hidePositioningObjects();
+            setSelectionModeButtons();
+            hitBuildButton();
+        }
+        
+        else {
+            tutorialManager = new TutorialManager();
+            tutorialManager.gameManager = this;
+            tutorialManager.startTutorial();
+        }
+        
 
 
     }
@@ -55,20 +73,24 @@ public class GameManager : MonoBehaviour {
         foreach(SideHintTile h in puzzleGenerator.allHints) {
             h.setSpriteToAppropriateColor();
         }
-        if (!hasWonYet && puzzleGenerator.checkPuzzle()) {
+        if (!hasWonYet && puzzleGenerator.checkPuzzle() && !StaticVariables.isTutorial) {
             hasWonYet = true;
             winCanvas.SetActive(true);
             canClick = false;
         }
     }
 
-    private void setSelectionModeButtons() {
+    public void setSelectionModeButtons() {
         if (includeGreenHintBtn) {
             selectionModeButtons1.SetActive(true);
             selectionModeButtons2.SetActive(false);
             buildButton = selectionModeButtons1.transform.GetChild(0).gameObject;
             redButton = selectionModeButtons1.transform.GetChild(1).gameObject;
             greenButton = selectionModeButtons1.transform.GetChild(2).gameObject;
+        }
+        else if (!includeGreenHintBtn && !includeRedHintBtn) {
+            selectionModeButtons1.SetActive(false);
+            selectionModeButtons2.SetActive(false);
         }
         else {
             selectionModeButtons1.SetActive(false);
@@ -79,12 +101,12 @@ public class GameManager : MonoBehaviour {
     }
 
 
-    private void hidePositioningObjects() {
+    public void hidePositioningObjects() {
         puzzlePositioningImage.SetActive(false);
         numbersPositioningImage.SetActive(false);
     }
 
-    private void drawFullPuzzle() {
+    public void drawFullPuzzle() {
         float desiredPuzzleSize = puzzlePositioning.transform.localScale.x;
         
         if (canvas.GetComponent<RectTransform>().rect.height > canvas.GetComponent<CanvasScaler>().referenceResolution.y) {
@@ -143,7 +165,7 @@ public class GameManager : MonoBehaviour {
         createCorner(bottomRightPos, scaleFactor, 180, parent);
     }
 
-    private void drawNumberButtons() {
+    public void drawNumberButtons() {
         //assumes numbersPositioning object is a rectangle
         float numberSize = numbersPositioning.transform.localScale.y;
         float totalWidth = numbersPositioning.transform.localScale.x;
@@ -178,6 +200,9 @@ public class GameManager : MonoBehaviour {
 
     public void switchNumber(int num) {
         selectedNumber = num;
+        if (StaticVariables.isTutorial) {
+            tutorialManager.tappedNumberButton(num);
+        }
     }
 
     public void hitBuildButton() {
@@ -247,5 +272,52 @@ public class GameManager : MonoBehaviour {
         pos.z = 0;
         corner.transform.localPosition = pos;
     }
+
+    public void tappedScreen() {
+        tutorialManager.tappedScreen();
+    }
+
+    public void hideHints() {
+
+        foreach (SideHintTile h in puzzleGenerator.allHints) {
+
+            h.GetComponent<Transform>().GetChild(1).gameObject.SetActive(false);
+            h.GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
+        }
+    }
+
+    public void showHints() {
+        foreach (SideHintTile h in puzzleGenerator.allHints) {
+
+            h.GetComponent<Transform>().GetChild(1).gameObject.SetActive(true);
+            h.GetComponent<Transform>().GetChild(2).gameObject.SetActive(true);
+        }
+    }
+
+    public void addRedStreetBorderForTutorial(Vector3 centerPoint, int rotation) {
+        GameObject redBorder = Instantiate(redStreetBorder);
+        redBorder.transform.SetParent(puzzlePositioning.transform);
+        redBorder.transform.position = centerPoint;
+        redBorder.transform.Rotate(new Vector3(0, 0, rotation));
+    }
+
+    public void removeRedStreetBordersForTutorial() {
+        GameObject[] RedBorders = GameObject.FindGameObjectsWithTag("Red Border");
+        foreach (GameObject r in RedBorders){
+            Destroy(r);
+        }
+    }
+
+    public void deleteCityForTutorial() {
+        GameObject[] oldPuzzleTiles = GameObject.FindGameObjectsWithTag("Puzzle Tile");
+        foreach (GameObject t in oldPuzzleTiles) {
+            Destroy(t);
+        }
+        GameObject[] oldSideTiles = GameObject.FindGameObjectsWithTag("Side Tile");
+        foreach (GameObject t in oldSideTiles) {
+            Destroy(t);
+        }
+    }
+    
 
 }

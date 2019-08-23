@@ -5,7 +5,7 @@ using System;
 
 public class PuzzleTile : Tile {
     
-    private int solution;
+    public int solution;
     private int maxValue;
     [HideInInspector]
     public int shownNumber = 0;
@@ -31,6 +31,7 @@ public class PuzzleTile : Tile {
     private SpriteRenderer background;
     private SpriteRenderer building;
     private SpriteRenderer number;
+    private SpriteRenderer redBorder;
 
     public void initialize(int solution, Transform parent, int maxValue, GameManager gameManager) {
         this.solution = solution;
@@ -40,6 +41,7 @@ public class PuzzleTile : Tile {
         background = transform.GetChild(0).GetComponent<SpriteRenderer>();
         building = transform.GetChild(1).GetComponent<SpriteRenderer>();
         number = transform.GetChild(2).GetComponent<SpriteRenderer>();
+        redBorder = transform.GetChild(4).GetComponent<SpriteRenderer>();
 
         // pick a random tile rotation direction
         int[] directions = new int[] { 0, 90, 180, 270 };
@@ -74,7 +76,15 @@ public class PuzzleTile : Tile {
 
     private void OnMouseDown() {
         if (gameManager.canClick) {
-            clicked();
+            if (!StaticVariables.isTutorial) {
+                clicked();
+            }
+            else {
+                if (gameManager.tutorialManager.canPlayerClickTile(this)){
+                    clicked();
+                    gameManager.tutorialManager.clickedTile(this);
+                }
+            }
         }
         
     }
@@ -106,7 +116,7 @@ public class PuzzleTile : Tile {
         addNumberToTile(solution);
     }
 
-    private void toggleNumber(int num) {
+    public void toggleNumber(int num) {
         if (num == 0) {
             removeNumberFromTile();
         }
@@ -123,36 +133,40 @@ public class PuzzleTile : Tile {
     }
 
     private void toggleRedHint(int num) {
-        if (shownNumber == 0) { //you cant add a hint to a tile that already has a number on it
+        if (num != 0) {
+            if (shownNumber == 0) { //you cant add a hint to a tile that already has a number on it
 
-            if (redHints.Contains(num)) {
-                redHints.Remove(num);
+                if (redHints.Contains(num)) {
+                    redHints.Remove(num);
+                }
+                else {
+                    redHints.Add(num);
+                }
+                //for space reasons, there is a limit on the number of hints you can add
+                if (redHints.Count > 4) {
+                    print("you can only have 4 hints of each color!");
+                    redHints.Remove(num);
+                }
+                showColoredHints();
             }
-            else {
-                redHints.Add(num);
-            }
-            //for space reasons, there is a limit on the number of hints you can add
-            if (redHints.Count > 4) {
-                print("you can only have 4 hints of each color!");
-                redHints.Remove(num);
-            }
-            showColoredHints();
         }
     }
 
     private void toggleGreenHint(int num) {
-        if (shownNumber == 0) { //you cant add a hint to a tile that already has a number on it
-            if (greenHints.Contains(num)) {
-                greenHints.Remove(num);
+        if (num != 0) {
+            if (shownNumber == 0) { //you cant add a hint to a tile that already has a number on it
+                if (greenHints.Contains(num)) {
+                    greenHints.Remove(num);
+                }
+                else {
+                    greenHints.Add(num);
+                }
+                if (greenHints.Count > 4) {
+                    print("you can only have 4 hints of each color!");
+                    greenHints.Remove(num);
+                }
+                showColoredHints();
             }
-            else {
-                greenHints.Add(num);
-            }
-            if (greenHints.Count > 4) {
-                print("you can only have 4 hints of each color!");
-                greenHints.Remove(num);
-            }
-            showColoredHints();
         }
     }
     
@@ -225,5 +239,12 @@ public class PuzzleTile : Tile {
         }
     }
 
+    public void addRedBorder() {
+        redBorder.gameObject.SetActive(true);
+    }
+
+    public void removeRedBorder() {
+        redBorder.gameObject.SetActive(false);
+    }
 
 }
