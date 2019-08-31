@@ -359,6 +359,9 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 41:
+                if (StaticVariables.highestUnlockedSize < 3) {
+                    StaticVariables.highestUnlockedSize = 3;
+                }
                 SceneManager.LoadScene("MainMenu");
                 break;
         }
@@ -464,8 +467,10 @@ public class TutorialManager{
         }
         if (advanceRequirement == "add buildings of height 3 to tiles 2 and 6") {
             PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
-            if (ts[0, 2] == t || ts[2, 0] == t) {
-                return true;
+            if (gameManager.selectedNumber == 3) {
+                if (ts[0, 2] == t || ts[2, 0] == t) {
+                    return true;
+                }
             }
         }
         if (advanceRequirement == "complete the city") {

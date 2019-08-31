@@ -67,8 +67,8 @@ public class SideHintTile : Tile {
     }
 
     public void setSpriteToAppropriateColor() {
-        if (StaticVariables.changeHintColorOnCorrectRows) {
-            if (numBuildingsCurrentlyVisible() == hintValue) {
+        if (StaticVariables.changeResidentColorOnCorrectRows) {
+            if ((numBuildingsCurrentlyVisible() == hintValue) && (row[0].shownNumber != 0)) {
                 number.sprite = correctSprite;
             }
             else {

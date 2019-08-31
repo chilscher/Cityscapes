@@ -29,15 +29,21 @@ public class GameManager : MonoBehaviour {
     public Sprite selectionModeOn;
     public Sprite selectionModeOff;
     public GameObject streetCorner;
-    public bool includeRedHintBtn;
-    public bool includeGreenHintBtn;
+    public bool includeRedNoteBtn;
+    public bool includeGreenNoteBtn;
     public GameObject selectionModeButtons1;
     public GameObject selectionModeButtons2;
+    public GameObject selectionModeButtons3;
 
     public TutorialManager tutorialManager;
     public GameObject screenTappedMonitor;
     public GameObject tutorialTextBox;
     public GameObject redStreetBorder;
+
+    public int coinsFor3Win = 3;
+    public int coinsFor4Win = 5;
+    public int coinsFor5Win = 10;
+    public int coinsFor6Win = 20;
 
     [HideInInspector]
     public bool canClick = true;
@@ -47,8 +53,12 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         size = StaticVariables.size;
-        includeGreenHintBtn = StaticVariables.includeGreenHintButton;
-        includeRedHintBtn = StaticVariables.includeRedHintButton;
+        includeGreenNoteBtn = StaticVariables.includeGreenNoteButton;
+        includeRedNoteBtn = StaticVariables.includeRedNoteButton;
+        if (StaticVariables.isTutorial) {
+            includeGreenNoteBtn = false;
+            includeRedNoteBtn = false;
+        }
 
         if (!StaticVariables.isTutorial) {
             puzzleGenerator.createPuzzle(size);
@@ -70,6 +80,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void Update() {
+        //print(StaticVariables.coins);
         foreach(SideHintTile h in puzzleGenerator.allHints) {
             h.setSpriteToAppropriateColor();
         }
@@ -77,26 +88,37 @@ public class GameManager : MonoBehaviour {
             hasWonYet = true;
             winCanvas.SetActive(true);
             canClick = false;
+            incrementCoinsForWin();
         }
     }
 
     public void setSelectionModeButtons() {
-        if (includeGreenHintBtn) {
+        if (includeGreenNoteBtn && includeRedNoteBtn) {
             selectionModeButtons1.SetActive(true);
             selectionModeButtons2.SetActive(false);
+            selectionModeButtons3.SetActive(false);
             buildButton = selectionModeButtons1.transform.GetChild(0).gameObject;
             redButton = selectionModeButtons1.transform.GetChild(1).gameObject;
             greenButton = selectionModeButtons1.transform.GetChild(2).gameObject;
         }
-        else if (!includeGreenHintBtn && !includeRedHintBtn) {
+        else if (!includeGreenNoteBtn && !includeRedNoteBtn) {
             selectionModeButtons1.SetActive(false);
             selectionModeButtons2.SetActive(false);
+            selectionModeButtons3.SetActive(false);
         }
-        else {
+        else if (!includeGreenNoteBtn && includeRedNoteBtn){
             selectionModeButtons1.SetActive(false);
             selectionModeButtons2.SetActive(true);
+            selectionModeButtons3.SetActive(false);
             buildButton = selectionModeButtons2.transform.GetChild(0).gameObject;
             redButton = selectionModeButtons2.transform.GetChild(1).gameObject;
+        }
+        else if (includeGreenNoteBtn && !includeRedNoteBtn) {
+            selectionModeButtons1.SetActive(false);
+            selectionModeButtons2.SetActive(false);
+            selectionModeButtons3.SetActive(true);
+            buildButton = selectionModeButtons3.transform.GetChild(0).gameObject;
+            greenButton = selectionModeButtons3.transform.GetChild(1).gameObject;
         }
     }
 
@@ -318,6 +340,29 @@ public class GameManager : MonoBehaviour {
             Destroy(t);
         }
     }
-    
+
+    private void incrementCoinsForWin() {
+        int amt = size;
+        switch (size) {
+            case 3:
+                amt = coinsFor3Win;
+                break;
+            case 4:
+                amt = coinsFor4Win;
+                break;
+            case 5:
+                amt = coinsFor5Win;
+                break;
+            case 6:
+                amt = coinsFor6Win;
+                break;
+        }
+        StaticVariables.coins += amt;
+    }
+
+
+    private void OnApplicationQuit() {
+        SaveSystem.SaveGame();
+    }
 
 }
