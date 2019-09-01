@@ -9,10 +9,12 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject redNoteButton;
     public GameObject greenNoteButton;
     public GameObject changeCorrectResidentColorButton;
+    public GameObject undoRedoButton;
 
     public GameObject showMedButton;
     public GameObject showLargeButton;
     public GameObject showHugeButton;
+
 
     private void Start() {
         updateButtons();
@@ -46,6 +48,7 @@ public class SettingsCanvasController : MonoBehaviour {
         redNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeRedNoteButton);
         greenNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeGreenNoteButton);
         changeCorrectResidentColorButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.changeResidentColorOnCorrectRows);
+        undoRedoButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeUndoRedo);
 
 
         showMedButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.showMed);
@@ -70,6 +73,11 @@ public class SettingsCanvasController : MonoBehaviour {
         if (StaticVariables.showLarge && StaticVariables.showMed) {
             StaticVariables.showHuge = !StaticVariables.showHuge;
         }
+        updateButtons();
+    }
+
+    public void clickedUndoRedoButton() {
+        StaticVariables.includeUndoRedo= !StaticVariables.includeUndoRedo;
         updateButtons();
     }
 }

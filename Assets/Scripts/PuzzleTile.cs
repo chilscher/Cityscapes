@@ -54,20 +54,25 @@ public class PuzzleTile : Tile {
     }
 
     public void clicked() {
+        /*
         if (gameManager.clickTileAction == "Cycle Through"){
             rotateToNextNumber();
         }
-        else if(gameManager.clickTileAction == "Apply Selected") {
+        */
+        if(gameManager.clickTileAction == "Apply Selected") {
             int selectedNumber = gameManager.selectedNumber;
             toggleNumber(selectedNumber);
+            gameManager.addToPuzzleHistory();
         }
         else if (gameManager.clickTileAction == "Toggle Red Hint") {
             int selectedNumber = gameManager.selectedNumber;
             toggleRedHint(selectedNumber);
+            gameManager.addToPuzzleHistory();
         }
         else if (gameManager.clickTileAction == "Toggle Green Hint") {
             int selectedNumber = gameManager.selectedNumber;
             toggleGreenHint(selectedNumber);
+            gameManager.addToPuzzleHistory();
         }
         else {
             print(gameManager.clickTileAction + " is not a valid action!");
@@ -132,7 +137,7 @@ public class PuzzleTile : Tile {
         }
     }
 
-    private void toggleRedHint(int num) {
+    public void toggleRedHint(int num) {
         if (num != 0) {
             if (shownNumber == 0) { //you cant add a hint to a tile that already has a number on it
 
@@ -152,7 +157,7 @@ public class PuzzleTile : Tile {
         }
     }
 
-    private void toggleGreenHint(int num) {
+    public void toggleGreenHint(int num) {
         if (num != 0) {
             if (shownNumber == 0) { //you cant add a hint to a tile that already has a number on it
                 if (greenHints.Contains(num)) {
@@ -200,7 +205,7 @@ public class PuzzleTile : Tile {
         }
     }
 
-    private void clearColorHints() {
+    public void clearColorHints() {
         redHints = new List<int>();
         greenHints = new List<int>();
         showColoredHints();
@@ -208,8 +213,6 @@ public class PuzzleTile : Tile {
 
 
     public void addNumberToTile(int num) {
-        building.sprite = usableBuildingSprites[num - 1];
-        number.sprite = numberSprites[num - 1];
 
         if (num == 0) {
             building.enabled = false;
@@ -217,6 +220,9 @@ public class PuzzleTile : Tile {
         }
 
         if (num != 0) {
+            building.sprite = usableBuildingSprites[num - 1];
+            number.sprite = numberSprites[num - 1];
+
             building.enabled = true;
             number.enabled = true;
         }

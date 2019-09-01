@@ -29,6 +29,7 @@ public class TutorialManager{
         gameManager.tutorialTextBox.SetActive(true);
         tutorialText = gameManager.tutorialTextBox.GetComponent<Transform>().GetChild(0).GetComponent<Text>();
         continueClue = gameManager.tutorialTextBox.GetComponent<Transform>().GetChild(1).GetComponent<Text>();
+        gameManager.hideUndoAndRedo();
 
         advanceStage();
     }

@@ -10,6 +10,7 @@ public class StaticVariables{
     static public bool includeRedNoteButton = true;
     static public bool includeGreenNoteButton = false;
     static public bool changeResidentColorOnCorrectRows = false;
+    static public bool includeUndoRedo = false;
     
     static public bool showMed = true;
     static public bool showLarge = true;

@@ -34,6 +34,8 @@ public class GameManager : MonoBehaviour {
     public GameObject selectionModeButtons1;
     public GameObject selectionModeButtons2;
     public GameObject selectionModeButtons3;
+    public GameObject undoButton;
+    public GameObject redoButton;
 
     public TutorialManager tutorialManager;
     public GameObject screenTappedMonitor;
@@ -49,6 +51,10 @@ public class GameManager : MonoBehaviour {
     public bool canClick = true;
     
     private bool hasWonYet = false;
+
+    private List<PuzzleState> previousPuzzleStates = new List<PuzzleState>(); // the list of puzzle states to be restored by the undo button
+    private PuzzleState currentPuzzleState;
+    private List<PuzzleState> nextPuzzleStates = new List<PuzzleState>();// the list of puzzle states to be restored by the redo button
 
 
     private void Start() {
@@ -66,7 +72,10 @@ public class GameManager : MonoBehaviour {
             drawNumberButtons();
             hidePositioningObjects();
             setSelectionModeButtons();
+            setUndoRedoButtons();
             hitBuildButton();
+
+            currentPuzzleState = new PuzzleState(puzzleGenerator);
         }
         
         else {
@@ -122,6 +131,20 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void hideUndoAndRedo() {
+        undoButton.SetActive(false);
+        redoButton.SetActive(false);
+    }
+
+    public void setUndoRedoButtons() {
+        if (StaticVariables.includeUndoRedo) {
+            undoButton.SetActive(true);
+            redoButton.SetActive(true);
+        }
+        else {
+            hideUndoAndRedo();
+        }
+    }
 
     public void hidePositioningObjects() {
         puzzlePositioningImage.SetActive(false);
@@ -364,5 +387,48 @@ public class GameManager : MonoBehaviour {
     private void OnApplicationQuit() {
         SaveSystem.SaveGame();
     }
+    /*
+    public void savePuzzleState() {
+        PuzzleState s = new PuzzleState(puzzleGenerator);
+        puzzleState = s;
+    }
 
+    public void restorePuzzleState() {
+        puzzleState.restorePuzzleState(puzzleGenerator);
+    }
+    */
+
+    public void addToPuzzleHistory() {
+        previousPuzzleStates.Add(currentPuzzleState);
+        PuzzleState currentState = new PuzzleState(puzzleGenerator);
+        currentPuzzleState = currentState;
+        //clear all "redo" steps
+        if (nextPuzzleStates.Count > 0) {
+            nextPuzzleStates = new List<PuzzleState>();
+        }
+    }
+
+    public void pushUndoButton() {
+        if (previousPuzzleStates.Count > 0) {
+            nextPuzzleStates.Add(currentPuzzleState);
+
+            PuzzleState currentState = previousPuzzleStates[previousPuzzleStates.Count - 1];
+
+
+            currentState.restorePuzzleState(puzzleGenerator);
+
+            currentPuzzleState = currentState;
+            previousPuzzleStates.RemoveAt(previousPuzzleStates.Count - 1);
+        }
+    }
+
+    public void pushRedoButton() {
+        if (nextPuzzleStates.Count > 0) {
+            previousPuzzleStates.Add(currentPuzzleState);
+            PuzzleState currentState = nextPuzzleStates[nextPuzzleStates.Count - 1];
+            currentState.restorePuzzleState(puzzleGenerator);
+            currentPuzzleState = currentState;
+            nextPuzzleStates.RemoveAt(nextPuzzleStates.Count - 1);
+        }
+    }
 }

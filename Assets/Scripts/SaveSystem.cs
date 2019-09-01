@@ -28,16 +28,7 @@ public static class SaveSystem{
             SaveData data = formatter.Deserialize(stream) as SaveData;
             stream.Close();
 
-
-            StaticVariables.coins = data.coins;
-            StaticVariables.includeGreenNoteButton = data.includeGreenNotes;
-            StaticVariables.includeRedNoteButton = data.includeRedNotes;
-            StaticVariables.changeResidentColorOnCorrectRows = data.changeResidentColorOnCorrectRows;
-            StaticVariables.highestUnlockedSize = data.highestUnlockedSize;
-
-            StaticVariables.showMed = data.showMed;
-            StaticVariables.showLarge = data.showLarge;
-            StaticVariables.showHuge = data.showHuge;
+            data.LoadData();
 
         }
         else {
