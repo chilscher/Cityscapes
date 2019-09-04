@@ -5,10 +5,21 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class ShopCanvasController : MonoBehaviour {
+    
+    public GameObject coinsBox1s;
+    public GameObject coinsBox10s;
+    public GameObject coinsBox100s;
+    public GameObject coinsBox1000s;
+    public GameObject coinsBox10000s;
 
-    public GameObject coinsTextBox;
+    private SpriteRenderer sprite1s;
+    private SpriteRenderer sprite10s;
+    private SpriteRenderer sprite100s;
+    private SpriteRenderer sprite1000s;
+    private SpriteRenderer sprite10000s;
 
-    public GameObject hugePuzzleButton;
+    public Sprite[] numbers = new Sprite[10]; 
+    
     public GameObject redNoteButton;
     public GameObject greenNoteButton;
     public GameObject changeCorrectResidentColorButton;
@@ -19,8 +30,15 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject showHugeButton;
 
     private void Start() {
+        sprite1s = coinsBox1s.GetComponent<SpriteRenderer>();
+        sprite10s = coinsBox10s.GetComponent<SpriteRenderer>();
+        sprite100s = coinsBox100s.GetComponent<SpriteRenderer>();
+        sprite1000s = coinsBox1000s.GetComponent<SpriteRenderer>();
+        sprite10000s = coinsBox10000s.GetComponent<SpriteRenderer>();
+
         displayCoinsAmount();
         updateButtons();
+
     }
     
 
@@ -34,7 +52,29 @@ public class ShopCanvasController : MonoBehaviour {
 
 
     public void displayCoinsAmount() {
-        coinsTextBox.GetComponent<Text>().text = "Coins: " + StaticVariables.coins;
+        int value1s = StaticVariables.coins % 10;
+        int value10s = (StaticVariables.coins / 10) % 10;
+        int value100s = (StaticVariables.coins / 100) % 10;
+        int value1000s = (StaticVariables.coins / 1000) % 10;
+        int value10000s = (StaticVariables.coins / 10000) % 10;
+        sprite1s.sprite = numbers[value1s];
+        sprite10s.sprite = numbers[value10s];
+        sprite100s.sprite = numbers[value100s];
+        sprite1000s.sprite = numbers[value1000s];
+        sprite10000s.sprite = numbers[value10000s];
+
+        if (value10000s == 0) {
+            coinsBox10000s.SetActive(false);
+            if (value1000s == 0) {
+                coinsBox1000s.SetActive(false);
+                if (value100s == 0) {
+                    coinsBox100s.SetActive(false);
+                    if (value10s == 0) {
+                        coinsBox10s.SetActive(false);
+                    }
+                }
+            }
+        }
     }
 
 
@@ -48,12 +88,12 @@ public class ShopCanvasController : MonoBehaviour {
         updateButtons();
     }
 
-    public void clickedRedNoteButton() {
-        StaticVariables.includeRedNoteButton = !StaticVariables.includeRedNoteButton;
+    public void clickedNotes1Button() {
+        StaticVariables.includeNotes1Button = !StaticVariables.includeNotes1Button;
         updateButtons();
     }
-    public void clickedGreenNoteButton() {
-        StaticVariables.includeGreenNoteButton = !StaticVariables.includeGreenNoteButton;
+    public void clickedNotes2Button() {
+        StaticVariables.includeNotes2Button = !StaticVariables.includeNotes2Button;
         updateButtons();
     }
     public void clickedCorrectResidentButton() {
@@ -62,9 +102,9 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     private void updateButtons() {
-        hugePuzzleButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.highestUnlockedSize == 6);
-        redNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeRedNoteButton);
-        greenNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeGreenNoteButton);
+        //hugePuzzleButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.highestUnlockedSize == 6);
+        redNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes1Button);
+        greenNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes2Button);
         changeCorrectResidentColorButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.changeResidentColorOnCorrectRows);
         undoRedoButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeUndoRedo);
 

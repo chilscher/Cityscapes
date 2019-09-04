@@ -12,18 +12,19 @@ public class SideHintTile : Tile {
     private SpriteRenderer number;
     private SpriteRenderer redBorder;
 
-    public Sprite[] incorrectNumberSprites;
-    public Sprite[] correctNumberSprites;
+    public Sprite[] whiteSprites;
 
-    private Sprite incorrectSprite;
-    private Sprite correctSprite;
+    private Color correctColor;
+    private Color incorrectColor;
 
     public void initialize(int hintValue) {
         this.hintValue = hintValue;
         background = transform.GetChild(0).GetComponent<SpriteRenderer>();
         arrow = transform.GetChild(1).GetComponent<SpriteRenderer>();
         number = transform.GetChild(2).GetComponent<SpriteRenderer>();
-        redBorder = number.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        redBorder = transform.GetChild(3).GetComponent<SpriteRenderer>();
+
+        setNumberColors();
         addNumberToTile(hintValue);
     }
 
@@ -39,6 +40,12 @@ public class SideHintTile : Tile {
             }
         }
         return count;
+    }
+
+    public void setNumberColors() {
+
+        ColorUtility.TryParseHtmlString(StaticVariables.mintHex, out incorrectColor);
+        ColorUtility.TryParseHtmlString(StaticVariables.greenHex, out correctColor);
     }
 
     public bool isRowValid() {
@@ -61,22 +68,17 @@ public class SideHintTile : Tile {
     
 
     public void addNumberToTile(int num) {
-        incorrectSprite = incorrectNumberSprites[num - 1];
-        correctSprite = correctNumberSprites[num - 1];
-        number.sprite = incorrectSprite;
+        number.sprite = whiteSprites[num - 1];
+        number.color = incorrectColor;
+
     }
 
-    public void setSpriteToAppropriateColor() {
-        if (StaticVariables.changeResidentColorOnCorrectRows) {
+    public void setAppropriateColor() {
+        number.color = incorrectColor;
+        if (StaticVariables.changeResidentColorOnCorrectRows && !StaticVariables.isTutorial) {
             if ((numBuildingsCurrentlyVisible() == hintValue) && (row[0].shownNumber != 0)) {
-                number.sprite = correctSprite;
+                number.color = correctColor;
             }
-            else {
-                number.sprite = incorrectSprite;
-            }
-        }
-        else {
-            number.sprite = incorrectSprite;
         }
     }
 
@@ -88,21 +90,25 @@ public class SideHintTile : Tile {
             Vector3 pos = number.transform.position;
             pos.y += numberMoveAmt;
             number.transform.position = pos;
+            redBorder.transform.position = pos;
         }
         else if(amt == 180) {
             Vector3 pos = number.transform.position;
             pos.y -= numberMoveAmt;
             number.transform.position = pos;
+            redBorder.transform.position = pos;
         }
         else if (amt == 90) {
             Vector3 pos = number.transform.position;
             pos.x -= numberMoveAmt;
             number.transform.position = pos;
+            redBorder.transform.position = pos;
         }
         else if (amt == 270) {
             Vector3 pos = number.transform.position;
             pos.x += numberMoveAmt;
             number.transform.position = pos;
+            redBorder.transform.position = pos;
         }
     }
 
@@ -113,5 +119,6 @@ public class SideHintTile : Tile {
     public void removeRedBorder() {
         redBorder.gameObject.SetActive(false);
     }
+    
 
 }

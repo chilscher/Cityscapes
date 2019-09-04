@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour {
     public int size;
 
     public GameObject numberButtonPrefab;
-    //public GameObject selectionModeButtonPrefab;
     public GameObject puzzlePositioning;
     public GameObject puzzlePositioningImage;
     public GameObject numbersPositioning;
@@ -46,6 +45,14 @@ public class GameManager : MonoBehaviour {
     public int coinsFor4Win = 5;
     public int coinsFor5Win = 10;
     public int coinsFor6Win = 20;
+    
+    public GameObject blackForeground; //used to transition to/from the main menu
+    private SpriteRenderer blackSprite;
+    public float fadeOutTime;
+    public float fadeInTime;
+    private float fadeTimer;
+    //private bool fadingOut = false;
+    //private bool fadingIn = false;
 
     [HideInInspector]
     public bool canClick = true;
@@ -58,9 +65,14 @@ public class GameManager : MonoBehaviour {
 
 
     private void Start() {
+        if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
+            fadeTimer = fadeInTime;
+        }
+        blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+
         size = StaticVariables.size;
-        includeGreenNoteBtn = StaticVariables.includeGreenNoteButton;
-        includeRedNoteBtn = StaticVariables.includeRedNoteButton;
+        includeRedNoteBtn = StaticVariables.includeNotes1Button;
+        includeGreenNoteBtn = StaticVariables.includeNotes2Button;
         if (StaticVariables.isTutorial) {
             includeGreenNoteBtn = false;
             includeRedNoteBtn = false;
@@ -91,7 +103,7 @@ public class GameManager : MonoBehaviour {
     private void Update() {
         //print(StaticVariables.coins);
         foreach(SideHintTile h in puzzleGenerator.allHints) {
-            h.setSpriteToAppropriateColor();
+            h.setAppropriateColor();
         }
         if (!hasWonYet && puzzleGenerator.checkPuzzle() && !StaticVariables.isTutorial) {
             hasWonYet = true;
@@ -99,7 +111,28 @@ public class GameManager : MonoBehaviour {
             canClick = false;
             incrementCoinsForWin();
         }
+
+        if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
+            fadeTimer -= Time.deltaTime;
+            Color c = blackSprite.color;
+            c.a = (fadeTimer) / fadeInTime;
+            blackSprite.color = c;
+            if (fadeTimer <= 0f) {
+                StaticVariables.isFading = false;
+            }
+        }
+        if (StaticVariables.isFading && StaticVariables.fadingFrom == "puzzle") {
+            fadeTimer -= Time.deltaTime;
+            Color c = blackSprite.color;
+            c.a = (fadeOutTime - fadeTimer) / fadeOutTime;
+            blackSprite.color = c;
+            if (fadeTimer <= 0f) {
+                SceneManager.LoadScene("MainMenu");
+            }
+        }
     }
+
+
 
     public void setSelectionModeButtons() {
         if (includeGreenNoteBtn && includeRedNoteBtn) {
@@ -265,7 +298,14 @@ public class GameManager : MonoBehaviour {
     }
 
     public void goToMainMenu() {
-        SceneManager.LoadScene("MainMenu");
+        StaticVariables.fadingTo = "menu";
+        startFadeOut();
+        //SceneManager.LoadScene("MainMenu");
+    }
+    public void startFadeOut() {
+        fadeTimer = fadeOutTime;
+        StaticVariables.isFading = true;
+        StaticVariables.fadingFrom = "puzzle";
     }
 
     public void generateNewPuzzleSameSize() {

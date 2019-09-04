@@ -13,17 +13,12 @@ public class PuzzleTile : Tile {
     public GameManager gameManager;
 
     [HideInInspector]
-    public List<int> redHints = new List<int>();
+    public List<int> noteGroup1 = new List<int>();
     [HideInInspector]
-    public List<int> greenHints = new List<int>();
-    private List<GameObject> redHintObjects = new List<GameObject>();
-    private List<GameObject> greenHintObjects = new List<GameObject>();
+    public List<int> noteGroup2 = new List<int>();
 
     public Sprite emptyTileSprite;
-    public Sprite[] numberSprites;
     public Sprite[] buildingSprites;
-    public Sprite[] redSprites;
-    public Sprite[] greenSprites;
 
     private Sprite[] usableBuildingSprites;
 
@@ -32,6 +27,11 @@ public class PuzzleTile : Tile {
     private SpriteRenderer building;
     private SpriteRenderer number;
     private SpriteRenderer redBorder;
+
+    public Sprite[] whiteSprites;
+    private Color numberColor;
+    private Color note1Color;
+    private Color note2Color;
 
     public void initialize(int solution, Transform parent, int maxValue, GameManager gameManager) {
         this.solution = solution;
@@ -45,12 +45,16 @@ public class PuzzleTile : Tile {
 
         // pick a random tile rotation direction
         int[] directions = new int[] { 0, 90, 180, 270 };
-        //System.Random rnd = new System.Random();
         int r = StaticVariables.rand.Next(4);
-        //background.transform.Rotate(new Vector3(0,0,directions[r]));
         building.transform.Rotate(new Vector3(0, 0, directions[r]));
-
+        setNumberColors();
         createUsableBuildingSprites();
+    }
+
+    public void setNumberColors() {
+        ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out numberColor);
+        ColorUtility.TryParseHtmlString(StaticVariables.redHex, out note1Color);
+        ColorUtility.TryParseHtmlString(StaticVariables.greenHex, out note2Color);
     }
 
     public void clicked() {
@@ -66,12 +70,12 @@ public class PuzzleTile : Tile {
         }
         else if (gameManager.clickTileAction == "Toggle Red Hint") {
             int selectedNumber = gameManager.selectedNumber;
-            toggleRedHint(selectedNumber);
+            toggleNote1(selectedNumber);
             gameManager.addToPuzzleHistory();
         }
         else if (gameManager.clickTileAction == "Toggle Green Hint") {
             int selectedNumber = gameManager.selectedNumber;
-            toggleGreenHint(selectedNumber);
+            toggleNote2(selectedNumber);
             gameManager.addToPuzzleHistory();
         }
         else {
@@ -137,38 +141,38 @@ public class PuzzleTile : Tile {
         }
     }
 
-    public void toggleRedHint(int num) {
+    public void toggleNote1(int num) {
         if (num != 0) {
             if (shownNumber == 0) { //you cant add a hint to a tile that already has a number on it
 
-                if (redHints.Contains(num)) {
-                    redHints.Remove(num);
+                if (noteGroup1.Contains(num)) {
+                    noteGroup1.Remove(num);
                 }
                 else {
-                    redHints.Add(num);
+                    noteGroup1.Add(num);
                 }
                 //for space reasons, there is a limit on the number of hints you can add
-                if (redHints.Count > 4) {
+                if (noteGroup1.Count > 4) {
                     print("you can only have 4 hints of each color!");
-                    redHints.Remove(num);
+                    noteGroup1.Remove(num);
                 }
                 showColoredHints();
             }
         }
     }
 
-    public void toggleGreenHint(int num) {
+    public void toggleNote2(int num) {
         if (num != 0) {
             if (shownNumber == 0) { //you cant add a hint to a tile that already has a number on it
-                if (greenHints.Contains(num)) {
-                    greenHints.Remove(num);
+                if (noteGroup2.Contains(num)) {
+                    noteGroup2.Remove(num);
                 }
                 else {
-                    greenHints.Add(num);
+                    noteGroup2.Add(num);
                 }
-                if (greenHints.Count > 4) {
+                if (noteGroup2.Count > 4) {
                     print("you can only have 4 hints of each color!");
-                    greenHints.Remove(num);
+                    noteGroup2.Remove(num);
                 }
                 showColoredHints();
             }
@@ -177,8 +181,8 @@ public class PuzzleTile : Tile {
     
 
     private void showColoredHints() {
-        redHints.Sort();
-        greenHints.Sort();
+        noteGroup1.Sort();
+        noteGroup2.Sort();
 
         Transform hintsList = transform.GetChild(3);
 
@@ -187,27 +191,28 @@ public class PuzzleTile : Tile {
             s.enabled = false;
         }
 
-        for (int i = 0; i < redHints.Count; i++) {
-            int value = redHints[i];
+        for (int i = 0; i < noteGroup1.Count; i++) {
+            int value = noteGroup1[i];
             SpriteRenderer s = hintsList.GetChild(i).GetComponent<SpriteRenderer>();
-
-            s.sprite = redSprites[value - 1];
+            s.sprite = whiteSprites[value - 1];
+            s.color = note1Color;
             s.enabled = true;
         }
 
-        int startPos = 8 - greenHints.Count;
+        int startPos = 8 - noteGroup2.Count;
 
-        for (int i = 0; i < greenHints.Count; i++) {
-            int value = greenHints[i];
+        for (int i = 0; i < noteGroup2.Count; i++) {
+            int value = noteGroup2[i];
             SpriteRenderer s = hintsList.GetChild(startPos + i).GetComponent<SpriteRenderer>();
-            s.sprite = greenSprites[value - 1];
+            s.sprite = whiteSprites[value - 1];
+            s.color = note2Color;
             s.enabled = true;
         }
     }
 
     public void clearColorHints() {
-        redHints = new List<int>();
-        greenHints = new List<int>();
+        noteGroup1 = new List<int>();
+        noteGroup2 = new List<int>();
         showColoredHints();
     }
 
@@ -221,7 +226,8 @@ public class PuzzleTile : Tile {
 
         if (num != 0) {
             building.sprite = usableBuildingSprites[num - 1];
-            number.sprite = numberSprites[num - 1];
+            number.sprite = whiteSprites[num - 1];
+            number.color = numberColor;
 
             building.enabled = true;
             number.enabled = true;

@@ -23,14 +23,14 @@ public class PuzzleState {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                redNotes[i, j] = toList(puzzle.tilesArray[i, j].redHints);
+                redNotes[i, j] = toList(puzzle.tilesArray[i, j].noteGroup1);
             }
         }
         greenNotes = new int[size, size][];
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                greenNotes[i, j] = toList(puzzle.tilesArray[i, j].greenHints);
+                greenNotes[i, j] = toList(puzzle.tilesArray[i, j].noteGroup2);
             }
         }
 
@@ -84,10 +84,10 @@ public class PuzzleState {
             for (int j = 0; j < size; j++) {
                 puzzle.tilesArray[i, j].clearColorHints();
                 for (int k = 0; k<redNotes[i,j].Length; k++) {
-                    puzzle.tilesArray[i, j].toggleRedHint(redNotes[i, j][k]);
+                    puzzle.tilesArray[i, j].toggleNote1(redNotes[i, j][k]);
                 }
                 for (int k = 0; k < greenNotes[i, j].Length; k++) {
-                    puzzle.tilesArray[i, j].toggleGreenHint(greenNotes[i, j][k]);
+                    puzzle.tilesArray[i, j].toggleNote2(greenNotes[i, j][k]);
                 }
             }
         }

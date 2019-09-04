@@ -32,11 +32,11 @@ public class SettingsCanvasController : MonoBehaviour {
     
 
     public void clickedRedNoteButton() {
-        StaticVariables.includeRedNoteButton = !StaticVariables.includeRedNoteButton;
+        StaticVariables.includeNotes1Button = !StaticVariables.includeNotes1Button;
         updateButtons();
     }
     public void clickedGreenNoteButton() {
-        StaticVariables.includeGreenNoteButton = !StaticVariables.includeGreenNoteButton;
+        StaticVariables.includeNotes2Button = !StaticVariables.includeNotes2Button;
         updateButtons();
     }
     public void clickedCorrectResidentButton() {
@@ -45,8 +45,8 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     private void updateButtons() {
-        redNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeRedNoteButton);
-        greenNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeGreenNoteButton);
+        redNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes1Button);
+        greenNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes2Button);
         changeCorrectResidentColorButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.changeResidentColorOnCorrectRows);
         undoRedoButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeUndoRedo);
 

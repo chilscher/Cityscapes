@@ -7,8 +7,8 @@ using UnityEngine;
 public class SaveData{
 
     public int coins;
-    public bool includeRedNotes;
-    public bool includeGreenNotes;
+    public bool includeNotes1;
+    public bool includeNotes2;
     public bool changeResidentColorOnCorrectRows;
     public bool includeUndoRedo;
     public int highestUnlockedSize;
@@ -19,8 +19,8 @@ public class SaveData{
 
     public SaveData() {
         coins = StaticVariables.coins;
-        includeRedNotes = StaticVariables.includeRedNoteButton;
-        includeGreenNotes = StaticVariables.includeGreenNoteButton;
+        includeNotes1 = StaticVariables.includeNotes1Button;
+        includeNotes2 = StaticVariables.includeNotes2Button;
         changeResidentColorOnCorrectRows = StaticVariables.changeResidentColorOnCorrectRows;
         highestUnlockedSize = StaticVariables.highestUnlockedSize;
         includeUndoRedo = StaticVariables.includeUndoRedo;
@@ -34,8 +34,8 @@ public class SaveData{
     public void LoadData() {
 
         StaticVariables.coins = coins;
-        StaticVariables.includeGreenNoteButton = includeGreenNotes;
-        StaticVariables.includeRedNoteButton = includeRedNotes;
+        StaticVariables.includeNotes1Button = includeNotes1;
+        StaticVariables.includeNotes2Button = includeNotes2;
         StaticVariables.changeResidentColorOnCorrectRows = changeResidentColorOnCorrectRows;
         StaticVariables.highestUnlockedSize = highestUnlockedSize;
         StaticVariables.includeUndoRedo = includeUndoRedo;

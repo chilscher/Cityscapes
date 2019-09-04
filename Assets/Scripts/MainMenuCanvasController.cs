@@ -10,7 +10,16 @@ public class MainMenuCanvasController : MonoBehaviour {
     public GameObject smallAndMedPuzzleButtons;
     public GameObject smallMedLargePuzzleButtons;
     public GameObject smallMedLargeHugePuzzleButtons;
-    
+
+    public GameObject blackForeground; //used to transition to/from the puzzle menu
+    private SpriteRenderer blackSprite;
+    public float fadeOutTime;
+    public float fadeInTime;
+    private float fadeTimer;
+    //private bool fadingOut = false;
+    //private bool fadingIn = false;
+
+    //private int puzzleSize;
 
     private void Start() {
         if (StaticVariables.isApplicationLaunchingFirstTime) {
@@ -18,6 +27,12 @@ public class MainMenuCanvasController : MonoBehaviour {
             StaticVariables.isApplicationLaunchingFirstTime = false;
         }
 
+        blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+
+        if (StaticVariables.isFading && StaticVariables.fadingTo == "menu") {
+            fadeTimer = fadeInTime;
+        }
+        blackSprite = blackForeground.GetComponent<SpriteRenderer>();
 
         int highestUnlockedSize = 3;
         if (StaticVariables.showMed) {
@@ -35,10 +50,41 @@ public class MainMenuCanvasController : MonoBehaviour {
         smallMedLargeHugePuzzleButtons.SetActive(highestUnlockedSize == 6);
 
     }
-    
+
+    private void Update() {
+        if (StaticVariables.isFading && StaticVariables.fadingFrom == "menu") {
+            fadeTimer -= Time.deltaTime;
+            Color c = blackSprite.color;
+            c.a = (fadeOutTime - fadeTimer) / fadeOutTime;
+            blackSprite.color = c;
+            if (fadeTimer <= 0f) {
+                //StaticVariables.isFading = false;
+                if (StaticVariables.isTutorial) { SceneManager.LoadScene("InPuzzle"); }
+                SceneManager.LoadScene("InPuzzle");
+            }
+        }
+        if (StaticVariables.isFading && StaticVariables.fadingTo == "menu") {
+            fadeTimer -= Time.deltaTime;
+            Color c = blackSprite.color;
+            c.a = (fadeTimer) / fadeInTime;
+            //print(c.a);
+            blackSprite.color = c;
+            if (fadeTimer <= 0f) {
+                StaticVariables.isFading = false;
+            }
+        }
+    }
+
 
     private void OnApplicationQuit() {
         SaveSystem.SaveGame();
+    }
+
+    public void startFadeOut() {
+        fadeTimer = fadeOutTime;
+        StaticVariables.isFading = true;
+        StaticVariables.fadingFrom = "menu";
+        //fadingOut = true;
     }
 
 
@@ -145,7 +191,11 @@ public class MainMenuCanvasController : MonoBehaviour {
         StaticVariables.isTutorial = false;
         //StaticVariables.includeRedNoteButton = true;
         //StaticVariables.includeGreenNoteButton = false;
-        SceneManager.LoadScene("InPuzzle");
+        //puzzleSize = size;
+
+        StaticVariables.fadingTo = "puzzle";
+        startFadeOut();
+        //SceneManager.LoadScene("InPuzzle");
     }
 
     public void startTutorial() {
@@ -153,7 +203,9 @@ public class MainMenuCanvasController : MonoBehaviour {
         StaticVariables.isTutorial = true;
         //StaticVariables.includeRedNoteButton = false;
         //StaticVariables.includeGreenNoteButton = false;
-        SceneManager.LoadScene("InPuzzle");
+        StaticVariables.fadingTo = "puzzle";
+        startFadeOut();
+        //SceneManager.LoadScene("InPuzzle");
     }
 
     public void goToShop() {
