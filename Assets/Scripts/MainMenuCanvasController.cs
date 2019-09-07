@@ -32,7 +32,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         if (StaticVariables.isFading && StaticVariables.fadingTo == "menu") {
             fadeTimer = fadeInTime;
         }
-        blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+        //blackSprite = blackForeground.GetComponent<SpriteRenderer>();
 
         int highestUnlockedSize = 3;
         if (StaticVariables.showMed) {
@@ -59,8 +59,10 @@ public class MainMenuCanvasController : MonoBehaviour {
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
                 //StaticVariables.isFading = false;
-                if (StaticVariables.isTutorial) { SceneManager.LoadScene("InPuzzle"); }
-                SceneManager.LoadScene("InPuzzle");
+                //if (StaticVariables.isTutorial) { SceneManager.LoadScene("InPuzzle"); }
+                if (StaticVariables.fadingTo == "puzzle") { SceneManager.LoadScene("InPuzzle"); }
+                if (StaticVariables.fadingTo == "shop") { SceneManager.LoadScene("Shop"); }
+                if (StaticVariables.fadingTo == "settings") { SceneManager.LoadScene("Settings"); }
             }
         }
         if (StaticVariables.isFading && StaticVariables.fadingTo == "menu") {
@@ -209,10 +211,14 @@ public class MainMenuCanvasController : MonoBehaviour {
     }
 
     public void goToShop() {
-        SceneManager.LoadScene("Shop");
+        //SceneManager.LoadScene("Shop");
+        StaticVariables.fadingTo = "shop";
+        startFadeOut();
     }
 
     public void goToSettings() {
-        SceneManager.LoadScene("Settings");
+        //SceneManager.LoadScene("Settings");
+        StaticVariables.fadingTo = "settings";
+        startFadeOut();
     }
 }

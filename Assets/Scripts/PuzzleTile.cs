@@ -24,6 +24,7 @@ public class PuzzleTile : Tile {
 
 
     private SpriteRenderer background;
+    private SpriteRenderer road;
     private SpriteRenderer building;
     private SpriteRenderer number;
     private SpriteRenderer redBorder;
@@ -37,10 +38,11 @@ public class PuzzleTile : Tile {
         this.solution = solution;
         this.maxValue = maxValue;
         this.gameManager = gameManager;
-        
+
         background = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        building = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        number = transform.GetChild(2).GetComponent<SpriteRenderer>();
+        road = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        building = transform.GetChild(2).GetComponent<SpriteRenderer>();
+        number = transform.GetChild(3).GetComponent<SpriteRenderer>();
         redBorder = transform.GetChild(4).GetComponent<SpriteRenderer>();
 
         // pick a random tile rotation direction
@@ -184,7 +186,7 @@ public class PuzzleTile : Tile {
         noteGroup1.Sort();
         noteGroup2.Sort();
 
-        Transform hintsList = transform.GetChild(3);
+        Transform hintsList = transform.GetChild(5);
 
         for (int i = 0; i<hintsList.transform.childCount; i++) {
             SpriteRenderer s = hintsList.GetChild(i).GetComponent<SpriteRenderer>();

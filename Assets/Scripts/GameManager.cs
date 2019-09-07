@@ -471,4 +471,5 @@ public class GameManager : MonoBehaviour {
             nextPuzzleStates.RemoveAt(nextPuzzleStates.Count - 1);
         }
     }
+    
 }

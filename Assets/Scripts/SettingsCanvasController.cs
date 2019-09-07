@@ -16,20 +16,69 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject showHugeButton;
 
 
+    public GameObject blackForeground; //used to transition to/from the puzzle menu
+    private SpriteRenderer blackSprite;
+    public float fadeOutTime;
+    public float fadeInTime;
+    private float fadeTimer;
+
+
     private void Start() {
         updateButtons();
+
+
+        blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+
+        if (StaticVariables.isFading && StaticVariables.fadingTo == "settings") {
+            fadeTimer = fadeInTime;
+        }
+
     }
-    
+
+
+    private void Update() {
+        if (StaticVariables.isFading && StaticVariables.fadingFrom == "settings") {
+            fadeTimer -= Time.deltaTime;
+            Color c = blackSprite.color;
+            c.a = (fadeOutTime - fadeTimer) / fadeOutTime;
+            blackSprite.color = c;
+            if (fadeTimer <= 0f) {
+                //StaticVariables.isFading = false;
+                //if (StaticVariables.isTutorial) { SceneManager.LoadScene("InPuzzle"); }
+                if (StaticVariables.fadingTo == "menu") { SceneManager.LoadScene("MainMenu"); }
+            }
+        }
+        if (StaticVariables.isFading && StaticVariables.fadingTo == "settings") {
+            fadeTimer -= Time.deltaTime;
+            Color c = blackSprite.color;
+            c.a = (fadeTimer) / fadeInTime;
+            //print(c.a);
+            blackSprite.color = c;
+            if (fadeTimer <= 0f) {
+                StaticVariables.isFading = false;
+            }
+        }
+    }
+
 
     private void OnApplicationQuit() {
         SaveSystem.SaveGame();
     }
 
     public void goToMainMenu() {
-        SceneManager.LoadScene("MainMenu");
+        //SceneManager.LoadScene("MainMenu");
+        StaticVariables.fadingTo = "menu";
+        startFadeOut();
     }
-    
-    
+
+    public void startFadeOut() {
+        fadeTimer = fadeOutTime;
+        StaticVariables.isFading = true;
+        StaticVariables.fadingFrom = "settings";
+        //fadingOut = true;
+    }
+
+
 
     public void clickedRedNoteButton() {
         StaticVariables.includeNotes1Button = !StaticVariables.includeNotes1Button;
