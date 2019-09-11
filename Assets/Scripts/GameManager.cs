@@ -22,19 +22,26 @@ public class GameManager : MonoBehaviour {
     public GameObject winCanvas;
     private NumberButton prevClickedNumButton;
     public GameObject buildButton;
-    public GameObject redButton;
-    public GameObject greenButton;
+    public GameObject note1Button;
+    public GameObject note2Button;
     private GameObject prevNumberSelectionButton;
-    public Sprite selectionModeOn;
-    public Sprite selectionModeOff;
+
+
+    //public Sprite selectionModeOn;
+    //public Sprite selectionModeOff;
+
+    
+
+
     public GameObject streetCorner;
-    public bool includeRedNoteBtn;
-    public bool includeGreenNoteBtn;
+    public bool includeNote1Btn;
+    public bool includeNote2Btn;
     public GameObject selectionModeButtons1;
     public GameObject selectionModeButtons2;
     public GameObject selectionModeButtons3;
-    public GameObject undoButton;
-    public GameObject redoButton;
+    //public GameObject undoButton;
+    //public GameObject redoButton;
+    public GameObject undoRedoButtons;
 
     public TutorialManager tutorialManager;
     public GameObject screenTappedMonitor;
@@ -51,8 +58,8 @@ public class GameManager : MonoBehaviour {
     public float fadeOutTime;
     public float fadeInTime;
     private float fadeTimer;
-    //private bool fadingOut = false;
-    //private bool fadingIn = false;
+
+    public Skin skin;
 
     [HideInInspector]
     public bool canClick = true;
@@ -63,6 +70,11 @@ public class GameManager : MonoBehaviour {
     private PuzzleState currentPuzzleState;
     private List<PuzzleState> nextPuzzleStates = new List<PuzzleState>();// the list of puzzle states to be restored by the redo button
 
+    //public Sprite buildButtonSelected;
+    //public Sprite buildButtonNotSelected;
+
+
+
 
     private void Start() {
         if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
@@ -71,11 +83,14 @@ public class GameManager : MonoBehaviour {
         blackSprite = blackForeground.GetComponent<SpriteRenderer>();
 
         size = StaticVariables.size;
-        includeRedNoteBtn = StaticVariables.includeNotes1Button;
-        includeGreenNoteBtn = StaticVariables.includeNotes2Button;
+        includeNote1Btn = StaticVariables.includeNotes1Button;
+        includeNote2Btn = StaticVariables.includeNotes2Button;
+
+        
+
         if (StaticVariables.isTutorial) {
-            includeGreenNoteBtn = false;
-            includeRedNoteBtn = false;
+            includeNote1Btn = false;
+            includeNote2Btn = false;
         }
 
         if (!StaticVariables.isTutorial) {
@@ -135,48 +150,52 @@ public class GameManager : MonoBehaviour {
 
 
     public void setSelectionModeButtons() {
-        if (includeGreenNoteBtn && includeRedNoteBtn) {
+        if (includeNote2Btn && includeNote1Btn) {
             selectionModeButtons1.SetActive(true);
             selectionModeButtons2.SetActive(false);
             selectionModeButtons3.SetActive(false);
             buildButton = selectionModeButtons1.transform.GetChild(0).gameObject;
-            redButton = selectionModeButtons1.transform.GetChild(1).gameObject;
-            greenButton = selectionModeButtons1.transform.GetChild(2).gameObject;
+            note1Button = selectionModeButtons1.transform.GetChild(1).gameObject;
+            note2Button = selectionModeButtons1.transform.GetChild(2).gameObject;
         }
-        else if (!includeGreenNoteBtn && !includeRedNoteBtn) {
+        else if (!includeNote2Btn && !includeNote1Btn) {
             selectionModeButtons1.SetActive(false);
             selectionModeButtons2.SetActive(false);
             selectionModeButtons3.SetActive(false);
         }
-        else if (!includeGreenNoteBtn && includeRedNoteBtn){
+        else if (!includeNote2Btn && includeNote1Btn){
             selectionModeButtons1.SetActive(false);
             selectionModeButtons2.SetActive(true);
             selectionModeButtons3.SetActive(false);
             buildButton = selectionModeButtons2.transform.GetChild(0).gameObject;
-            redButton = selectionModeButtons2.transform.GetChild(1).gameObject;
+            note1Button = selectionModeButtons2.transform.GetChild(1).gameObject;
         }
-        else if (includeGreenNoteBtn && !includeRedNoteBtn) {
+        else if (includeNote2Btn && !includeNote1Btn) {
             selectionModeButtons1.SetActive(false);
             selectionModeButtons2.SetActive(false);
             selectionModeButtons3.SetActive(true);
             buildButton = selectionModeButtons3.transform.GetChild(0).gameObject;
-            greenButton = selectionModeButtons3.transform.GetChild(1).gameObject;
+            note2Button = selectionModeButtons3.transform.GetChild(1).gameObject;
         }
     }
-
+    /*
     public void hideUndoAndRedo() {
-        undoButton.SetActive(false);
-        redoButton.SetActive(false);
+        undoRedoButtons.SetActive(false);
     }
-
+    */
     public void setUndoRedoButtons() {
+        undoRedoButtons.transform.GetChild(0).GetComponent<Image>().sprite = skin.undo;
+        undoRedoButtons.transform.GetChild(1).GetComponent<Image>().sprite = skin.redo;
+
+        undoRedoButtons.SetActive(StaticVariables.includeUndoRedo);
+        /*
         if (StaticVariables.includeUndoRedo) {
-            undoButton.SetActive(true);
-            redoButton.SetActive(true);
+            undoRedoButtons.SetActive(true);
         }
         else {
             hideUndoAndRedo();
         }
+        */
     }
 
     public void hidePositioningObjects() {
@@ -273,6 +292,8 @@ public class GameManager : MonoBehaviour {
             NumberButton button = b.GetComponent<NumberButton>();
             button.initialize(i + 1, this);
             button.setValues(pos, scaleFactor, parent);
+
+            disselectNumber(button);
         }
     }
 
@@ -285,16 +306,23 @@ public class GameManager : MonoBehaviour {
 
     public void hitBuildButton() {
         clickTileAction = "Apply Selected";
-        showNumberSelectionButtonClicked(buildButton);
+        buildButton.GetComponent<Image>().sprite = skin.buildOn;
+        if (includeNote1Btn) { note1Button.GetComponent<Image>().sprite = skin.note1Off; }
+        if (includeNote2Btn) { note2Button.GetComponent<Image>().sprite = skin.note2Off; }
+        
     }
-    public void hitRedButton() {
-        clickTileAction = "Toggle Red Hint";
-        showNumberSelectionButtonClicked(redButton);
+    public void hitNote1Button() {
+        clickTileAction = "Toggle Note 1";
+        buildButton.GetComponent<Image>().sprite = skin.buildOff;
+        if (includeNote1Btn) { note1Button.GetComponent<Image>().sprite = skin.note1On; }
+        if (includeNote2Btn) { note2Button.GetComponent<Image>().sprite = skin.note2Off; }
     }
 
-    public void hitGreenButton() {
-        clickTileAction = "Toggle Green Hint";
-        showNumberSelectionButtonClicked(greenButton);
+    public void hitNote2Button() {
+        clickTileAction = "Toggle Note 2";
+        buildButton.GetComponent<Image>().sprite = skin.buildOff;
+        if (includeNote1Btn) { note1Button.GetComponent<Image>().sprite = skin.note1Off; }
+        if (includeNote2Btn) { note2Button.GetComponent<Image>().sprite = skin.note2On; }
     }
 
     public void goToMainMenu() {
@@ -329,20 +357,29 @@ public class GameManager : MonoBehaviour {
     }
     
     private void disselectButton(GameObject btn) {
-        btn.GetComponent<Image>().sprite = selectionModeOff;
+        //btn.GetComponent<Image>().sprite = selectionModeOff;
+        btn.GetComponent<Image>().sprite = skin.buildOff;
     }
 
     private void selectButton(GameObject btn) {
-        btn.GetComponent<Image>().sprite = selectionModeOn;
+        //btn.GetComponent<Image>().sprite = selectionModeOn;
+        btn.GetComponent<Image>().sprite = skin.buildOn;
     }
 
     private void selectNumber(NumberButton btn) {
-        btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = selectionModeOn;
+        //btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = selectionModeOn;
+        btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = skin.numberOn;
     }
 
     private void disselectNumber(NumberButton btn) {
-        btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = selectionModeOff;
+        //btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = selectionModeOff;
+        btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = skin.numberOff;
     }
+    /*
+    private void disselectAllNumbers() {
+
+    }
+    */
 
     private void createCorner(Vector2 p, float scale, int rot, Transform parent) {
 

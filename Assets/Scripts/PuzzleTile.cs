@@ -70,12 +70,12 @@ public class PuzzleTile : Tile {
             toggleNumber(selectedNumber);
             gameManager.addToPuzzleHistory();
         }
-        else if (gameManager.clickTileAction == "Toggle Red Hint") {
+        else if (gameManager.clickTileAction == "Toggle Note 1") {
             int selectedNumber = gameManager.selectedNumber;
             toggleNote1(selectedNumber);
             gameManager.addToPuzzleHistory();
         }
-        else if (gameManager.clickTileAction == "Toggle Green Hint") {
+        else if (gameManager.clickTileAction == "Toggle Note 2") {
             int selectedNumber = gameManager.selectedNumber;
             toggleNote2(selectedNumber);
             gameManager.addToPuzzleHistory();
