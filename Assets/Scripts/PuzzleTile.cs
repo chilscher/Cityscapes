@@ -55,8 +55,8 @@ public class PuzzleTile : Tile {
 
     public void setNumberColors() {
         ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out numberColor);
-        ColorUtility.TryParseHtmlString(StaticVariables.redHex, out note1Color);
-        ColorUtility.TryParseHtmlString(StaticVariables.greenHex, out note2Color);
+        ColorUtility.TryParseHtmlString(StaticVariables.lightRedHex, out note1Color);
+        ColorUtility.TryParseHtmlString(StaticVariables.lightBlueHex, out note2Color);
     }
 
     public void clicked() {

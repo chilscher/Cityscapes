@@ -73,8 +73,11 @@ public class GameManager : MonoBehaviour {
     //public Sprite buildButtonSelected;
     //public Sprite buildButtonNotSelected;
 
+    private Color offButtonColor;
+    private Color onButtonColor;
 
-
+    public GameObject coinsBox1s;
+    public GameObject coinsBox10s;
 
     private void Start() {
         if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
@@ -86,7 +89,9 @@ public class GameManager : MonoBehaviour {
         includeNote1Btn = StaticVariables.includeNotes1Button;
         includeNote2Btn = StaticVariables.includeNotes2Button;
 
-        
+
+        ColorUtility.TryParseHtmlString(skin.offButtonColor, out offButtonColor);
+        ColorUtility.TryParseHtmlString(skin.onButtonColor, out onButtonColor);
 
         if (StaticVariables.isTutorial) {
             includeNote1Btn = false;
@@ -101,6 +106,24 @@ public class GameManager : MonoBehaviour {
             setSelectionModeButtons();
             setUndoRedoButtons();
             hitBuildButton();
+            winCanvas.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = onButtonColor;
+            winCanvas.transform.GetChild(1).transform.GetChild(3).transform.GetChild(0).GetComponent<Image>().color = offButtonColor;
+            winCanvas.transform.GetChild(1).transform.GetChild(4).transform.GetChild(0).GetComponent<Image>().color = offButtonColor;
+
+
+            int coins = 0;
+            switch(size){
+                case 3: coins = coinsFor3Win; break;
+                case 4: coins = coinsFor4Win; break;
+                case 5: coins = coinsFor5Win; break;
+                case 6: coins = coinsFor6Win; break;
+            }
+            int onesDigit = coins % 10;
+            int tensDigit = (coins / 10) % 10;
+
+            coinsBox1s.GetComponent<SpriteRenderer>().sprite = numberButtonPrefab.GetComponent<NumberButton>().numberSprites[onesDigit];
+            coinsBox10s.GetComponent<SpriteRenderer>().sprite = numberButtonPrefab.GetComponent<NumberButton>().numberSprites[tensDigit];
+
 
             currentPuzzleState = new PuzzleState(puzzleGenerator);
         }
@@ -149,6 +172,8 @@ public class GameManager : MonoBehaviour {
 
 
 
+
+
     public void setSelectionModeButtons() {
         if (includeNote2Btn && includeNote1Btn) {
             selectionModeButtons1.SetActive(true);
@@ -177,25 +202,21 @@ public class GameManager : MonoBehaviour {
             buildButton = selectionModeButtons3.transform.GetChild(0).gameObject;
             note2Button = selectionModeButtons3.transform.GetChild(1).gameObject;
         }
+
+        if (!StaticVariables.isTutorial) { buildButton.transform.GetChild(1).GetComponent<Image>().sprite = skin.buildIcon; }
+        if (includeNote1Btn) { note1Button.transform.GetChild(1).GetComponent<Image>().sprite = skin.note1Icon; }
+        if (includeNote2Btn) { note2Button.transform.GetChild(1).GetComponent<Image>().sprite = skin.note2Icon; }
+
     }
-    /*
-    public void hideUndoAndRedo() {
-        undoRedoButtons.SetActive(false);
-    }
-    */
+
+    
     public void setUndoRedoButtons() {
-        undoRedoButtons.transform.GetChild(0).GetComponent<Image>().sprite = skin.undo;
-        undoRedoButtons.transform.GetChild(1).GetComponent<Image>().sprite = skin.redo;
+        undoRedoButtons.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = offButtonColor;
+        undoRedoButtons.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = skin.undoIcon;
+        undoRedoButtons.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = offButtonColor;
+        undoRedoButtons.transform.GetChild(1).GetChild(1).GetComponent<Image>().sprite = skin.redoIcon;
 
         undoRedoButtons.SetActive(StaticVariables.includeUndoRedo);
-        /*
-        if (StaticVariables.includeUndoRedo) {
-            undoRedoButtons.SetActive(true);
-        }
-        else {
-            hideUndoAndRedo();
-        }
-        */
     }
 
     public void hidePositioningObjects() {
@@ -306,23 +327,26 @@ public class GameManager : MonoBehaviour {
 
     public void hitBuildButton() {
         clickTileAction = "Apply Selected";
-        buildButton.GetComponent<Image>().sprite = skin.buildOn;
-        if (includeNote1Btn) { note1Button.GetComponent<Image>().sprite = skin.note1Off; }
-        if (includeNote2Btn) { note2Button.GetComponent<Image>().sprite = skin.note2Off; }
+        disselectBuildAndNotes();
+        if (!StaticVariables.isTutorial) { buildButton.transform.GetChild(0).GetComponent<Image>().color = onButtonColor; }
         
     }
     public void hitNote1Button() {
         clickTileAction = "Toggle Note 1";
-        buildButton.GetComponent<Image>().sprite = skin.buildOff;
-        if (includeNote1Btn) { note1Button.GetComponent<Image>().sprite = skin.note1On; }
-        if (includeNote2Btn) { note2Button.GetComponent<Image>().sprite = skin.note2Off; }
+        disselectBuildAndNotes();
+        note1Button.transform.GetChild(0).GetComponent<Image>().color = onButtonColor;
     }
 
     public void hitNote2Button() {
         clickTileAction = "Toggle Note 2";
-        buildButton.GetComponent<Image>().sprite = skin.buildOff;
-        if (includeNote1Btn) { note1Button.GetComponent<Image>().sprite = skin.note1Off; }
-        if (includeNote2Btn) { note2Button.GetComponent<Image>().sprite = skin.note2On; }
+        disselectBuildAndNotes();
+        note2Button.transform.GetChild(0).GetComponent<Image>().color = onButtonColor;
+    }
+
+    public void disselectBuildAndNotes() {
+        if (!StaticVariables.isTutorial) { buildButton.transform.GetChild(0).GetComponent<Image>().color = offButtonColor; }
+        if (includeNote1Btn) { note1Button.transform.GetChild(0).GetComponent<Image>().color = offButtonColor; }
+        if (includeNote2Btn) { note2Button.transform.GetChild(0).GetComponent<Image>().color = offButtonColor; }
     }
 
     public void goToMainMenu() {
@@ -339,7 +363,7 @@ public class GameManager : MonoBehaviour {
     public void generateNewPuzzleSameSize() {
         SceneManager.LoadScene("InPuzzle");
     }
-
+    
     public void showNumberButtonClicked(NumberButton nb) {
         if (prevClickedNumButton != null) {
             disselectNumber(prevClickedNumButton);
@@ -347,39 +371,19 @@ public class GameManager : MonoBehaviour {
         prevClickedNumButton = nb;
         selectNumber(nb);
     }
-
-    public void showNumberSelectionButtonClicked(GameObject btn) {
-        if (prevNumberSelectionButton != null) {
-            disselectButton(prevNumberSelectionButton);
-        }
-        prevNumberSelectionButton = btn;
-        selectButton(btn);
-    }
     
-    private void disselectButton(GameObject btn) {
-        //btn.GetComponent<Image>().sprite = selectionModeOff;
-        btn.GetComponent<Image>().sprite = skin.buildOff;
-    }
-
-    private void selectButton(GameObject btn) {
-        //btn.GetComponent<Image>().sprite = selectionModeOn;
-        btn.GetComponent<Image>().sprite = skin.buildOn;
-    }
 
     private void selectNumber(NumberButton btn) {
-        //btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = selectionModeOn;
-        btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = skin.numberOn;
+        SpriteRenderer s = btn.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        s.color = onButtonColor;
     }
 
     private void disselectNumber(NumberButton btn) {
-        //btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = selectionModeOff;
-        btn.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = skin.numberOff;
+        SpriteRenderer s = btn.transform.GetChild(0).GetComponent<SpriteRenderer>();
+        s.color = offButtonColor;
     }
-    /*
-    private void disselectAllNumbers() {
-
-    }
-    */
+    
+    
 
     private void createCorner(Vector2 p, float scale, int rot, Transform parent) {
 
@@ -464,16 +468,6 @@ public class GameManager : MonoBehaviour {
     private void OnApplicationQuit() {
         SaveSystem.SaveGame();
     }
-    /*
-    public void savePuzzleState() {
-        PuzzleState s = new PuzzleState(puzzleGenerator);
-        puzzleState = s;
-    }
-
-    public void restorePuzzleState() {
-        puzzleState.restorePuzzleState(puzzleGenerator);
-    }
-    */
 
     public void addToPuzzleHistory() {
         previousPuzzleStates.Add(currentPuzzleState);
@@ -508,5 +502,6 @@ public class GameManager : MonoBehaviour {
             nextPuzzleStates.RemoveAt(nextPuzzleStates.Count - 1);
         }
     }
+
     
 }

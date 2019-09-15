@@ -28,7 +28,7 @@ public class NumberButton: Tile {
 
 
     public void addNumberToTile(int num) {
-        number.sprite = numberSprites[num - 1];
+        number.sprite = numberSprites[num];
     }
 
 }

@@ -4,7 +4,8 @@ using UnityEngine;
 
 
 public class Skin: MonoBehaviour{
-
+    
+    /*
     public Sprite buildOn;
     public Sprite buildOff;
     public Sprite note1On;
@@ -13,6 +14,15 @@ public class Skin: MonoBehaviour{
     public Sprite note2Off;
     public Sprite numberOn;
     public Sprite numberOff;
-    public Sprite undo;
-    public Sprite redo;
+    */
+    //public Sprite undo;
+    //public Sprite redo;
+
+    public string offButtonColor;
+    public string onButtonColor;
+    public Sprite buildIcon;
+    public Sprite note1Icon;
+    public Sprite note2Icon;
+    public Sprite undoIcon;
+    public Sprite redoIcon;
 }
