@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviour {
             note2Button = selectionModeButtons3.transform.GetChild(1).gameObject;
         }
 
-        if (!StaticVariables.isTutorial) { buildButton.transform.GetChild(1).GetComponent<Image>().sprite = skin.buildIcon; }
+        if (includeNote1Btn || includeNote2Btn) { buildButton.transform.GetChild(1).GetComponent<Image>().sprite = skin.buildIcon; }
         if (includeNote1Btn) { note1Button.transform.GetChild(1).GetComponent<Image>().sprite = skin.note1Icon; }
         if (includeNote2Btn) { note2Button.transform.GetChild(1).GetComponent<Image>().sprite = skin.note2Icon; }
 
@@ -328,7 +328,7 @@ public class GameManager : MonoBehaviour {
     public void hitBuildButton() {
         clickTileAction = "Apply Selected";
         disselectBuildAndNotes();
-        if (!StaticVariables.isTutorial) { buildButton.transform.GetChild(0).GetComponent<Image>().color = onButtonColor; }
+        if (includeNote1Btn || includeNote2Btn) { buildButton.transform.GetChild(0).GetComponent<Image>().color = onButtonColor; }
         
     }
     public void hitNote1Button() {
@@ -344,7 +344,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void disselectBuildAndNotes() {
-        if (!StaticVariables.isTutorial) { buildButton.transform.GetChild(0).GetComponent<Image>().color = offButtonColor; }
+        if (includeNote1Btn || includeNote2Btn) { buildButton.transform.GetChild(0).GetComponent<Image>().color = offButtonColor; }
         if (includeNote1Btn) { note1Button.transform.GetChild(0).GetComponent<Image>().color = offButtonColor; }
         if (includeNote2Btn) { note2Button.transform.GetChild(0).GetComponent<Image>().color = offButtonColor; }
     }

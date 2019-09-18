@@ -16,6 +16,14 @@ public class SaveData{
     public bool showLarge;
     public bool showHuge;
 
+    public bool unlockedMed;
+    public bool unlockedLarge;
+    public bool unlockedHuge;
+    public bool unlockedNotes1;
+    public bool unlockedNotes2;
+    public bool unlockedResidentsChangeColor;
+    public bool unlockedUndoRedo;
+
 
     public SaveData() {
         coins = StaticVariables.coins;
@@ -28,6 +36,14 @@ public class SaveData{
         showMed = StaticVariables.showMed;
         showLarge = StaticVariables.showLarge;
         showHuge = StaticVariables.showHuge;
+
+        unlockedMed = StaticVariables.unlockedMedium;
+        unlockedLarge = StaticVariables.unlockedLarge;
+        unlockedHuge = StaticVariables.unlockedHuge;
+        unlockedNotes1 = StaticVariables.unlockedNotes1;
+        unlockedNotes2 = StaticVariables.unlockedNotes2;
+        unlockedResidentsChangeColor = StaticVariables.unlockedResidentsChangeColor;
+        unlockedUndoRedo = StaticVariables.unlockedUndoRedo;
 
     }
 
@@ -43,6 +59,14 @@ public class SaveData{
         StaticVariables.showMed = showMed;
         StaticVariables.showLarge = showLarge;
         StaticVariables.showHuge = showHuge;
+
+        StaticVariables.unlockedMedium = unlockedMed;
+        StaticVariables.unlockedLarge = unlockedLarge;
+        StaticVariables.unlockedHuge = unlockedHuge;
+        StaticVariables.unlockedNotes1 = unlockedNotes1;
+        StaticVariables.unlockedNotes2 = unlockedNotes2;
+        StaticVariables.unlockedResidentsChangeColor = unlockedResidentsChangeColor;
+        StaticVariables.unlockedUndoRedo = unlockedUndoRedo;
     }
 
 

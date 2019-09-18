@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class SettingsCanvasController : MonoBehaviour {
     
-    public GameObject redNoteButton;
-    public GameObject greenNoteButton;
+    public GameObject note1Button;
+    public GameObject note2Button;
     public GameObject changeCorrectResidentColorButton;
     public GameObject undoRedoButton;
 
@@ -80,11 +80,11 @@ public class SettingsCanvasController : MonoBehaviour {
 
 
 
-    public void clickedRedNoteButton() {
+    public void clickedNote1Button() {
         StaticVariables.includeNotes1Button = !StaticVariables.includeNotes1Button;
         updateButtons();
     }
-    public void clickedGreenNoteButton() {
+    public void clickedNote2Button() {
         StaticVariables.includeNotes2Button = !StaticVariables.includeNotes2Button;
         updateButtons();
     }
@@ -94,8 +94,8 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     private void updateButtons() {
-        redNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes1Button);
-        greenNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes2Button);
+        note1Button.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes1Button);
+        note2Button.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes2Button);
         changeCorrectResidentColorButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.changeResidentColorOnCorrectRows);
         undoRedoButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeUndoRedo);
 
@@ -103,6 +103,15 @@ public class SettingsCanvasController : MonoBehaviour {
         showMedButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.showMed);
         showLargeButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.showLarge);
         showHugeButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.showHuge);
+
+        showMedButton.SetActive(StaticVariables.unlockedMedium);
+        showLargeButton.SetActive(StaticVariables.unlockedLarge);
+        showHugeButton.SetActive(StaticVariables.unlockedHuge);
+        showMedButton.gameObject.transform.parent.gameObject.SetActive((StaticVariables.unlockedMedium || StaticVariables.unlockedLarge || StaticVariables.unlockedHuge));
+        note1Button.SetActive(StaticVariables.unlockedNotes1);
+        note2Button.SetActive(StaticVariables.unlockedNotes2);
+        changeCorrectResidentColorButton.SetActive(StaticVariables.unlockedResidentsChangeColor);
+        undoRedoButton.SetActive(StaticVariables.unlockedUndoRedo);
 
     }
 

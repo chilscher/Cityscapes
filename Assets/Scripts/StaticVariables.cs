@@ -7,16 +7,16 @@ public class StaticVariables{
     static public int size = 0;
     static public System.Random rand = new System.Random();
     static public bool isTutorial = false;
-    static public bool includeNotes1Button = true;
+    static public bool includeNotes1Button = false;
     static public bool includeNotes2Button = false;
     static public bool changeResidentColorOnCorrectRows = false;
     static public bool includeUndoRedo = false;
     
-    static public bool showMed = true;
-    static public bool showLarge = true;
-    static public bool showHuge = true;
+    static public bool showMed = false;
+    static public bool showLarge = false;
+    static public bool showHuge = false;
     
-    static public int highestUnlockedSize = 6;
+    static public int highestUnlockedSize = 3;
     static public int coins = 100;
 
     static public bool isApplicationLaunchingFirstTime = true;
@@ -33,4 +33,12 @@ public class StaticVariables{
     static public bool isFading;
     static public string fadingFrom;
     static public string fadingTo;
+
+    static public bool unlockedMedium = false;
+    static public bool unlockedLarge = false;
+    static public bool unlockedHuge = false;
+    static public bool unlockedNotes1 = false;
+    static public bool unlockedNotes2 = false;
+    static public bool unlockedResidentsChangeColor = false;
+    static public bool unlockedUndoRedo = false;
 }

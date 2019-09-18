@@ -18,16 +18,19 @@ public class ShopCanvasController : MonoBehaviour {
     private SpriteRenderer sprite1000s;
     private SpriteRenderer sprite10000s;
 
-    public Sprite[] numbers = new Sprite[10]; 
-    
-    public GameObject redNoteButton;
-    public GameObject greenNoteButton;
+    public Sprite[] numbers = new Sprite[10];
+
+    public GameObject notes1Button;
+    public GameObject notes2Button;
     public GameObject changeCorrectResidentColorButton;
     public GameObject undoRedoButton;
 
-    public GameObject showMedButton;
-    public GameObject showLargeButton;
-    public GameObject showHugeButton;
+    //public GameObject showMedButton;
+    //public GameObject showLargeButton;
+    public GameObject unlockMedButton;
+    public GameObject unlockLargeButton;
+    //public GameObject showHugeButton;
+    public GameObject unlockHugeButton;
 
 
     public GameObject blackForeground; //used to transition to/from the puzzle menu
@@ -125,7 +128,7 @@ public class ShopCanvasController : MonoBehaviour {
         }
     }
 
-
+    /*
     public void clickedHugePuzzle() {
         if (StaticVariables.highestUnlockedSize == 6) {
             StaticVariables.highestUnlockedSize = 5;
@@ -135,7 +138,8 @@ public class ShopCanvasController : MonoBehaviour {
         }
         updateButtons();
     }
-
+    */
+    /*
     public void clickedNotes1Button() {
         StaticVariables.includeNotes1Button = !StaticVariables.includeNotes1Button;
         updateButtons();
@@ -148,8 +152,10 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.changeResidentColorOnCorrectRows = !StaticVariables.changeResidentColorOnCorrectRows;
         updateButtons();
     }
+    */
 
     private void updateButtons() {
+        /*
         //hugePuzzleButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.highestUnlockedSize == 6);
         redNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes1Button);
         greenNoteButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes2Button);
@@ -157,12 +163,30 @@ public class ShopCanvasController : MonoBehaviour {
         undoRedoButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeUndoRedo);
 
 
-        showMedButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.showMed);
+        //showMedButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.showMed);
         showLargeButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.showLarge);
         showHugeButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.showHuge);
 
-    }
+        */
 
+
+        if (StaticVariables.unlockedMedium) { unlockMedButton.transform.GetChild(0).GetComponent<Text>().color = Color.grey; }
+        else { unlockMedButton.transform.GetChild(0).GetComponent<Text>().color = Color.black; }
+        if (StaticVariables.unlockedLarge) { unlockLargeButton.transform.GetChild(0).GetComponent<Text>().color = Color.grey; }
+        else { unlockLargeButton.transform.GetChild(0).GetComponent<Text>().color = Color.black; }
+        if (StaticVariables.unlockedHuge) { unlockHugeButton.transform.GetChild(0).GetComponent<Text>().color = Color.grey; }
+        else { unlockHugeButton.transform.GetChild(0).GetComponent<Text>().color = Color.black; }
+        if (StaticVariables.unlockedNotes1) { notes1Button.transform.GetChild(0).GetComponent<Text>().color = Color.grey; }
+        else { notes1Button.transform.GetChild(0).GetComponent<Text>().color = Color.black; }
+        if (StaticVariables.unlockedNotes2) { notes2Button.transform.GetChild(0).GetComponent<Text>().color = Color.grey; }
+        else { notes2Button.transform.GetChild(0).GetComponent<Text>().color = Color.black; }
+        if (StaticVariables.unlockedResidentsChangeColor) { changeCorrectResidentColorButton.transform.GetChild(0).GetComponent<Text>().color = Color.grey; }
+        else { changeCorrectResidentColorButton.transform.GetChild(0).GetComponent<Text>().color = Color.black; }
+        if (StaticVariables.unlockedUndoRedo) { undoRedoButton.transform.GetChild(0).GetComponent<Text>().color = Color.grey; }
+        else { undoRedoButton.transform.GetChild(0).GetComponent<Text>().color = Color.black; }
+
+    }
+    /*
     public void clicked4Button() {
         if (!StaticVariables.showLarge && !StaticVariables.showHuge) {
             StaticVariables.showMed = !StaticVariables.showMed;
@@ -185,6 +209,105 @@ public class ShopCanvasController : MonoBehaviour {
     public void clickedUndoRedoButton() {
         StaticVariables.includeUndoRedo = !StaticVariables.includeUndoRedo;
         updateButtons();
+    }
+    */
+
+    public void clearPurchases() {
+        //some kind of popup to confirm that the player wants to clear their purchases? 
+        //"are you sure you want to reset all of your purchases? you will NOT get your spent coins back!!!"
+        //if so, then do the following...
+
+        StaticVariables.unlockedMedium = false;
+        StaticVariables.unlockedLarge = false;
+        StaticVariables.unlockedHuge = false;
+        StaticVariables.highestUnlockedSize = 3;
+        StaticVariables.showMed = false;
+        StaticVariables.showLarge = false;
+        StaticVariables.showHuge = false;
+
+        StaticVariables.unlockedNotes1 = false;
+        StaticVariables.unlockedNotes2 = false;
+        StaticVariables.unlockedResidentsChangeColor = false;
+        StaticVariables.unlockedUndoRedo = false;
+        StaticVariables.includeNotes1Button = false;
+        StaticVariables.includeNotes2Button = false;
+        StaticVariables.changeResidentColorOnCorrectRows = false;
+        StaticVariables.includeUndoRedo = false;
+
+        updateButtons();
+    }
+
+    public void unlockMedium() {
+        if (!StaticVariables.unlockedMedium) {
+
+            StaticVariables.unlockedMedium = true;
+            StaticVariables.highestUnlockedSize = 4;
+            StaticVariables.showMed = true;
+
+            updateButtons();
+        }
+    }
+
+    public void unlockLarge() {
+        if (!StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
+
+            StaticVariables.unlockedLarge = true;
+            StaticVariables.highestUnlockedSize = 5;
+            StaticVariables.showMed = true;
+            StaticVariables.showLarge = true;
+
+            updateButtons();
+        }
+    }
+
+    public void unlockHuge() {
+        if (!StaticVariables.unlockedHuge && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
+
+            StaticVariables.unlockedHuge = true;
+            StaticVariables.highestUnlockedSize = 6;
+            StaticVariables.showMed = true;
+            StaticVariables.showLarge = true;
+            StaticVariables.showHuge = true;
+
+            updateButtons();
+        }
+    }
+
+    public void unlockNotes1() {
+        if (!StaticVariables.unlockedNotes1) {
+
+            StaticVariables.unlockedNotes1 = true;
+            StaticVariables.includeNotes1Button = true;
+
+            updateButtons();
+        }
+    }
+    public void unlockNotes2() {
+        if (!StaticVariables.unlockedNotes2) {
+
+            StaticVariables.unlockedNotes2 = true;
+            StaticVariables.includeNotes2Button = true;
+
+            updateButtons();
+        }
+    }
+    public void unlockResidentsChangeColor() {
+        if (!StaticVariables.unlockedResidentsChangeColor) {
+
+            StaticVariables.unlockedResidentsChangeColor = true;
+            StaticVariables.changeResidentColorOnCorrectRows = true;
+
+            updateButtons();
+        }
+    }
+    public void unlockUndoRedo() {
+        if (!StaticVariables.unlockedUndoRedo) {
+
+            StaticVariables.unlockedUndoRedo = true;
+            StaticVariables.includeUndoRedo = true;
+
+            updateButtons();
+        }
     }
 
 
