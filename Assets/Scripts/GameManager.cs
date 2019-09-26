@@ -59,6 +59,13 @@ public class GameManager : MonoBehaviour {
     public float fadeInTime;
     private float fadeTimer;
 
+    public SpriteRenderer winBlackSprite;
+    private bool fadingToWin = false;
+    private float fadingToWinTimer;
+    public float fadeToWinTime;
+    public float fadeToWinDarknessRatio;
+    private float winPopupScale;
+
     public Skin skin;
 
     [HideInInspector]
@@ -84,6 +91,7 @@ public class GameManager : MonoBehaviour {
             fadeTimer = fadeInTime;
         }
         blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+        winPopupScale = winCanvas.transform.GetChild(1).localScale.x;
 
         size = StaticVariables.size;
         includeNote1Btn = StaticVariables.includeNotes1Button;
@@ -148,6 +156,9 @@ public class GameManager : MonoBehaviour {
             winCanvas.SetActive(true);
             canClick = false;
             incrementCoinsForWin();
+
+            fadingToWin = true;
+            fadingToWinTimer = fadeToWinTime;
         }
 
         if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
@@ -166,6 +177,25 @@ public class GameManager : MonoBehaviour {
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
                 SceneManager.LoadScene("MainMenu");
+            }
+        }
+
+        if (fadingToWin) {
+            fadingToWinTimer -= Time.deltaTime;
+            if (fadingToWinTimer < 0f) { fadingToWinTimer = 0f; }
+            float fadePercent = 1 - (fadingToWinTimer / fadeToWinTime); // goes from 0 to 1 as time progresses
+
+            Color c = winBlackSprite.color;
+            c.a = fadePercent * fadeToWinDarknessRatio;
+            winBlackSprite.color = c;
+
+            float scale = fadePercent * winPopupScale;
+            //float scale = winPopupScale;
+
+            winCanvas.transform.GetChild(1).localScale = new Vector3(scale, scale, scale);
+
+            if (fadingToWinTimer <= 0f) {
+                fadingToWin = false;
             }
         }
     }
