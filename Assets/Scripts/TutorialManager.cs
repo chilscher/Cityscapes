@@ -39,7 +39,7 @@ public class TutorialManager{
 
         switch (tutorialStage) {
             case 1:
-                text = "Welcome to Cityscapes! This is a number-placement puzzle game. In Cityscapes, you are a city designer, and your job is to build a city to fit its new residents' wishes.";
+                text = "Welcome to Cityscapes! This is a number- placement puzzle game. In Cityscapes, you are a city designer, and your job is to build a city to fit its new residents' wishes.";
                 continueText = "Tap to continue...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -61,7 +61,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 4:
-                text = "The buildings you place will either be one story, two stories...";
+                text = "The buildings you place will either be one story,\ntwo stories...";
                 continueText = "Tap to continue...";
                 fillInSpace(7, 2);
                 tutorialText.text = text;
@@ -69,7 +69,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 5:
-                text = "The buildings you place will either be one story, two stories, or three stories tall.";
+                text = "The buildings you place will either be one story,\ntwo stories,\nor three stories tall.";
                 continueText = "Tap to continue...";
                 fillInSpace(8, 3);
                 tutorialText.text = text;
@@ -86,7 +86,7 @@ public class TutorialManager{
                 advanceRequirement = "tap number button 2";
                 break;
             case 7:
-                text = "To place a building, tap the building size you would like to place, then tap the space you would like to build on.";
+                text = "To place a building, tap the building size you would like to place,\nthen tap the space you would like to build on.";
                 continueText = "Place the building...";
                 removeRedBoxesAroundNums();
                 addRedBoxAroundTile(0);

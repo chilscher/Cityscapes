@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System;
 
 public class SettingsCanvasController : MonoBehaviour {
     
@@ -14,6 +15,11 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject showMedButton;
     public GameObject showLargeButton;
     public GameObject showHugeButton;
+
+    public GameObject creditsButton;
+    public GameObject creditsText;
+
+    public GameObject scrollView;
 
 
     public GameObject blackForeground; //used to transition to/from the puzzle menu
@@ -33,6 +39,11 @@ public class SettingsCanvasController : MonoBehaviour {
             fadeTimer = fadeInTime;
         }
 
+        creditsButton.transform.GetChild(1).GetComponent<Text>().text = "SHOW CREDITS";
+        creditsText.SetActive(false);
+
+
+        setScrollViewHeight();
     }
 
 
@@ -58,6 +69,7 @@ public class SettingsCanvasController : MonoBehaviour {
                 StaticVariables.isFading = false;
             }
         }
+        //setScrollViewHeight();
     }
 
 
@@ -138,4 +150,52 @@ public class SettingsCanvasController : MonoBehaviour {
         StaticVariables.includeUndoRedo= !StaticVariables.includeUndoRedo;
         updateButtons();
     }
+
+    public void clickedCreditsButton() {
+        if (creditsText.activeSelf) {
+            creditsButton.transform.GetChild(1).GetComponent<Text>().text = "SHOW CREDITS";
+            creditsText.SetActive(false);
+        }
+        else {
+            creditsButton.transform.GetChild(1).GetComponent<Text>().text = "HIDE CREDITS";
+            creditsText.SetActive(true);
+        }
+        setScrollViewHeight();
+    }
+    
+    public void setScrollViewHeight() {
+        //sets the scroll viewer (vertical layout group) height to match its contents. minimum is the height of its parent scrollable container
+        //to be called whenever an item is shown or hidden in the settings window
+
+        //define the current top height - for use at the end of the function
+        float topHeight = (float)Math.Round(((1 - scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition) * (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y)), 2);
+        
+        //get height of contents, including spaces between objects and top and bottom padding
+        float newHeight = 0f;
+        int activeCount = 0;
+        for (int i = 0; i < scrollView.transform.childCount; i++){
+            float h = scrollView.transform.GetChild(i).GetComponent<RectTransform>().sizeDelta.y;
+            if (scrollView.transform.GetChild(i).gameObject.activeSelf) {
+                newHeight += h;
+                activeCount++;
+            }
+        }
+        newHeight += ((activeCount - 1) * scrollView.GetComponent<VerticalLayoutGroup>().spacing);
+        newHeight += scrollView.GetComponent<VerticalLayoutGroup>().padding.top + scrollView.GetComponent<VerticalLayoutGroup>().padding.bottom;
+
+        //if lower than size of parent scrollable container, set it to that value
+        if (newHeight < scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y) {
+            newHeight = scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y;
+        }
+
+        //apply the new height
+        Vector2 newSize = new Vector2(scrollView.GetComponent<RectTransform>().sizeDelta.x, newHeight);
+        scrollView.GetComponent<RectTransform>().sizeDelta = newSize;
+
+        //set the scroll view to be at the same position as previously
+        scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - (topHeight / (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y));
+
+
+    }
+    
 }

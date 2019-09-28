@@ -33,6 +33,7 @@ public class StaticVariables{
     static public bool isFading;
     static public string fadingFrom;
     static public string fadingTo;
+    static public bool fadingIntoPuzzleSameSize;
 
     static public bool unlockedMedium = false;
     static public bool unlockedLarge = false;

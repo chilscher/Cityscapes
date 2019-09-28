@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour {
         if (StaticVariables.isTutorial) {
             includeNote1Btn = false;
             includeNote2Btn = false;
+            tutorialTextBox.GetComponent<Image>().color = offButtonColor;
         }
 
         if (!StaticVariables.isTutorial) {
@@ -161,7 +162,32 @@ public class GameManager : MonoBehaviour {
             fadingToWinTimer = fadeToWinTime;
         }
 
-        if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
+        if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle" && StaticVariables.fadingFrom == "puzzle") {
+            if (StaticVariables.fadingIntoPuzzleSameSize) {
+                fadeTimer -= Time.deltaTime;
+                Color c = blackSprite.color;
+                c.a = (fadeTimer) / fadeInTime;
+                blackSprite.color = c;
+                if (fadeTimer <= 0f) {
+                    StaticVariables.isFading = false;
+                }
+            }
+            else {
+                fadeTimer -= Time.deltaTime;
+                Color c = blackSprite.color;
+                c.a = (fadeOutTime - fadeTimer) / fadeOutTime;
+                blackSprite.color = c;
+                if (fadeTimer <= 0f) {
+                    StaticVariables.fadingIntoPuzzleSameSize = true;
+                    if (StaticVariables.fadingTo == "puzzle") {
+                        SceneManager.LoadScene("InPuzzle");
+                    }
+
+                }
+            }
+        }
+
+        else if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
             fadeTimer -= Time.deltaTime;
             Color c = blackSprite.color;
             c.a = (fadeTimer) / fadeInTime;
@@ -170,13 +196,16 @@ public class GameManager : MonoBehaviour {
                 StaticVariables.isFading = false;
             }
         }
-        if (StaticVariables.isFading && StaticVariables.fadingFrom == "puzzle") {
+        else if (StaticVariables.isFading && StaticVariables.fadingFrom == "puzzle") {
             fadeTimer -= Time.deltaTime;
             Color c = blackSprite.color;
             c.a = (fadeOutTime - fadeTimer) / fadeOutTime;
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
-                SceneManager.LoadScene("MainMenu");
+                if (StaticVariables.fadingTo == "menu") {
+                    SceneManager.LoadScene("MainMenu");
+                }
+
             }
         }
 
@@ -380,8 +409,11 @@ public class GameManager : MonoBehaviour {
     }
 
     public void goToMainMenu() {
-        StaticVariables.fadingTo = "menu";
-        startFadeOut();
+        if (!StaticVariables.isFading) {
+            StaticVariables.fadingTo = "menu";
+            startFadeOut();
+        }
+
         //SceneManager.LoadScene("MainMenu");
     }
     public void startFadeOut() {
@@ -391,7 +423,12 @@ public class GameManager : MonoBehaviour {
     }
 
     public void generateNewPuzzleSameSize() {
-        SceneManager.LoadScene("InPuzzle");
+        if (!StaticVariables.isFading) {
+            StaticVariables.fadingTo = "puzzle";
+            StaticVariables.fadingIntoPuzzleSameSize = false;
+            startFadeOut();
+        }
+        //SceneManager.LoadScene("InPuzzle");
     }
     
     public void showNumberButtonClicked(NumberButton nb) {
