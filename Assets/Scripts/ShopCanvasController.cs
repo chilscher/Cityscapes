@@ -39,6 +39,10 @@ public class ShopCanvasController : MonoBehaviour {
     public float fadeInTime;
     private float fadeTimer;
 
+    //public GameObject unlockRemoveColoredNumbersButton;
+    public GameObject unlockRemoveAllOfNumberButton;
+    public GameObject unlockClearPuzzleButton;
+
     private void Start() {
         sprite1s = coinsBox1s.GetComponent<SpriteRenderer>();
         sprite10s = coinsBox10s.GetComponent<SpriteRenderer>();
@@ -184,6 +188,13 @@ public class ShopCanvasController : MonoBehaviour {
         else { changeCorrectResidentColorButton.transform.GetChild(0).GetComponent<Text>().color = Color.black; }
         if (StaticVariables.unlockedUndoRedo) { undoRedoButton.transform.GetChild(0).GetComponent<Text>().color = Color.grey; }
         else { undoRedoButton.transform.GetChild(0).GetComponent<Text>().color = Color.black; }
+        //if (StaticVariables.unlockedRemoveColoredNotesOfChosenNumber) { unlockRemoveColoredNumbersButton.transform.GetChild(0).GetComponent<Text>().color = Color.grey; }
+        //else { unlockRemoveColoredNumbersButton.transform.GetChild(0).GetComponent<Text>().color = Color.black; }
+
+        if (StaticVariables.unlockedRemoveAllOfNumber) { unlockRemoveAllOfNumberButton.transform.GetChild(0).GetComponent<Text>().color = Color.grey; }
+        else { unlockRemoveAllOfNumberButton.transform.GetChild(0).GetComponent<Text>().color = Color.black; }
+        if (StaticVariables.unlockedClearPuzzle) { unlockClearPuzzleButton.transform.GetChild(0).GetComponent<Text>().color = Color.grey; }
+        else { unlockClearPuzzleButton.transform.GetChild(0).GetComponent<Text>().color = Color.black; }
 
     }
     /*
@@ -229,10 +240,17 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.unlockedNotes2 = false;
         StaticVariables.unlockedResidentsChangeColor = false;
         StaticVariables.unlockedUndoRedo = false;
+        //StaticVariables.unlockedRemoveColoredNotesOfChosenNumber = false;
+        StaticVariables.unlockedRemoveAllOfNumber = false;
+        StaticVariables.unlockedClearPuzzle = false;
+
         StaticVariables.includeNotes1Button = false;
         StaticVariables.includeNotes2Button = false;
         StaticVariables.changeResidentColorOnCorrectRows = false;
         StaticVariables.includeUndoRedo = false;
+        //StaticVariables.includeRemoveColoredNotesOfChosenNumber = false;
+        StaticVariables.includeRemoveAllOfNumber = false;
+        StaticVariables.includeClearPuzzle = false;
 
         updateButtons();
     }
@@ -305,6 +323,33 @@ public class ShopCanvasController : MonoBehaviour {
 
             StaticVariables.unlockedUndoRedo = true;
             StaticVariables.includeUndoRedo = true;
+
+            updateButtons();
+        }
+    }
+    /*
+    public void unlockRemoveColorNumberNotes() {
+        if (!StaticVariables.unlockedRemoveColoredNotesOfChosenNumber) {
+            StaticVariables.unlockedRemoveColoredNotesOfChosenNumber = true;
+            StaticVariables.includeRemoveColoredNotesOfChosenNumber = true;
+
+            updateButtons();
+        }
+    }
+    */
+    public void unlockRemoveAllOfNumber() {
+        if (!StaticVariables.unlockedRemoveAllOfNumber) {
+            StaticVariables.unlockedRemoveAllOfNumber = true;
+            StaticVariables.includeRemoveAllOfNumber = true;
+
+            updateButtons();
+        }
+    }
+
+    public void unlockClearPuzzle() {
+        if (!StaticVariables.unlockedClearPuzzle) {
+            StaticVariables.unlockedClearPuzzle = true;
+            StaticVariables.includeClearPuzzle = true;
 
             updateButtons();
         }

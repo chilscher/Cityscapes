@@ -21,9 +21,9 @@ public class GameManager : MonoBehaviour {
     public GameObject canvas;
     public GameObject winCanvas;
     private NumberButton prevClickedNumButton;
-    public GameObject buildButton;
-    public GameObject note1Button;
-    public GameObject note2Button;
+    private GameObject buildButton;
+    private GameObject note1Button;
+    private GameObject note2Button;
     private GameObject prevNumberSelectionButton;
 
 
@@ -76,15 +76,21 @@ public class GameManager : MonoBehaviour {
     private List<PuzzleState> previousPuzzleStates = new List<PuzzleState>(); // the list of puzzle states to be restored by the undo button
     private PuzzleState currentPuzzleState;
     private List<PuzzleState> nextPuzzleStates = new List<PuzzleState>();// the list of puzzle states to be restored by the redo button
-
-    //public Sprite buildButtonSelected;
-    //public Sprite buildButtonNotSelected;
+    
 
     private Color offButtonColor;
     private Color onButtonColor;
 
     public GameObject coinsBox1s;
     public GameObject coinsBox10s;
+
+    //public GameObject removeColoredHintsOfChosenNumberButton;
+    private GameObject removeAllOfNumberButton;
+    private GameObject clearPuzzleButton;
+
+    public GameObject removeAllAndClearButtons;
+    public GameObject onlyRemoveAllButton;
+    public GameObject onlyClearButton;
 
     private void Start() {
         if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
@@ -110,10 +116,15 @@ public class GameManager : MonoBehaviour {
         if (!StaticVariables.isTutorial) {
             puzzleGenerator.createPuzzle(size);
             drawFullPuzzle();
+            setRemoveAllAndClearButtons();
             drawNumberButtons();
+            switchNumber(size);
+            //showNumberButtonClicked();
             hidePositioningObjects();
             setSelectionModeButtons();
             setUndoRedoButtons();
+            //setRemoveColoredNotesButton();
+            //setClearPuzzleButton();
             hitBuildButton();
             winCanvas.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = onButtonColor;
             winCanvas.transform.GetChild(1).transform.GetChild(3).transform.GetChild(0).GetComponent<Image>().color = offButtonColor;
@@ -278,6 +289,42 @@ public class GameManager : MonoBehaviour {
         undoRedoButtons.SetActive(StaticVariables.includeUndoRedo);
     }
 
+    public void setRemoveAllAndClearButtons() {
+        removeAllAndClearButtons.SetActive(false);
+        onlyRemoveAllButton.SetActive(false);
+        onlyClearButton.SetActive(false);
+        removeAllOfNumberButton = onlyRemoveAllButton.transform.GetChild(0).gameObject;
+        clearPuzzleButton = onlyClearButton.transform.GetChild(0).gameObject;
+        if (!StaticVariables.isTutorial) {
+            if (StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle) {
+                removeAllOfNumberButton = removeAllAndClearButtons.transform.GetChild(0).gameObject;
+                clearPuzzleButton = removeAllAndClearButtons.transform.GetChild(1).gameObject;
+                removeAllAndClearButtons.SetActive(true);
+            }
+            else if (StaticVariables.includeRemoveAllOfNumber) {
+                onlyRemoveAllButton.SetActive(true);
+            }
+            else if (StaticVariables.includeClearPuzzle) {
+                onlyClearButton.SetActive(true);
+            }
+        }
+        removeAllOfNumberButton.transform.GetChild(0).GetComponent<Image>().color = offButtonColor;
+        clearPuzzleButton.transform.GetChild(0).GetComponent<Image>().color = offButtonColor;
+    }
+    /*
+    public void setRemoveColoredNotesButton() {
+        //removeColoredHintsOfChosenNumberButton.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = offButtonColor;
+        //removeColoredHintsOfChosenNumberButton.SetActive(StaticVariables.includeRemoveColoredNotesOfChosenNumber);
+        removeAllOfNumberButton.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = offButtonColor;
+        removeAllOfNumberButton.SetActive(StaticVariables.includeRemoveAllOfNumber);
+    }
+
+    public void setClearPuzzleButton() {
+        clearPuzzleButton.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = offButtonColor;
+        clearPuzzleButton.SetActive(StaticVariables.includeClearPuzzle);
+    }
+    */
+
     public void hidePositioningObjects() {
         puzzlePositioningImage.SetActive(false);
         numbersPositioningImage.SetActive(false);
@@ -374,6 +421,7 @@ public class GameManager : MonoBehaviour {
             button.setValues(pos, scaleFactor, parent);
 
             disselectNumber(button);
+            if (i + 1 == size && !StaticVariables.isTutorial) { showNumberButtonClicked(button); }
         }
     }
 
@@ -388,18 +436,24 @@ public class GameManager : MonoBehaviour {
         clickTileAction = "Apply Selected";
         disselectBuildAndNotes();
         if (includeNote1Btn || includeNote2Btn) { buildButton.transform.GetChild(0).GetComponent<Image>().color = onButtonColor; }
-        
+        //updateRemoveColoredNumber();
+        updateRemoveSelectedNumber();
+
     }
     public void hitNote1Button() {
         clickTileAction = "Toggle Note 1";
         disselectBuildAndNotes();
         note1Button.transform.GetChild(0).GetComponent<Image>().color = onButtonColor;
+        //updateRemoveColoredNumber();
+        updateRemoveSelectedNumber();
     }
 
     public void hitNote2Button() {
         clickTileAction = "Toggle Note 2";
         disselectBuildAndNotes();
         note2Button.transform.GetChild(0).GetComponent<Image>().color = onButtonColor;
+        //updateRemoveColoredNumber();
+        updateRemoveSelectedNumber();
     }
 
     public void disselectBuildAndNotes() {
@@ -437,12 +491,15 @@ public class GameManager : MonoBehaviour {
         }
         prevClickedNumButton = nb;
         selectNumber(nb);
+        //updateRemoveColoredNumber();
+        updateRemoveSelectedNumber();
     }
     
 
     private void selectNumber(NumberButton btn) {
         SpriteRenderer s = btn.transform.GetChild(0).GetComponent<SpriteRenderer>();
         s.color = onButtonColor;
+
     }
 
     private void disselectNumber(NumberButton btn) {
@@ -569,6 +626,132 @@ public class GameManager : MonoBehaviour {
             nextPuzzleStates.RemoveAt(nextPuzzleStates.Count - 1);
         }
     }
+    /*
+    public void pushRemoveAllColorNumberNotesButton() {
+        bool foundAnything = false;
+        int num = selectedNumber;
+        int colorNum = 0;
+        if (clickTileAction == "Toggle Note 1") { colorNum = 1; }
+        else if (clickTileAction == "Toggle Note 2") { colorNum = 2; }
+        if (colorNum != 0 && num != 0) {
+            foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+                if (t.doesTileContainColoredNote(colorNum, num)) {
+                    //print("found a tile that contains " + num + " on note #" + colorNum);
+                    if (colorNum == 1) { t.toggleNote1(num); }
+                    else { t.toggleNote2(num); }
+                    foundAnything = true;
+                }
+            }
+        }
+        if (foundAnything) {
+            addToPuzzleHistory();
+        }
+    }
+    */
 
-    
+    public void pushRemoveAllNumbersButton() {
+        bool foundAnything = false;
+        int num = selectedNumber;
+        int colorNum = 0; // 0 is build, 1 is note 1, 2 is note 2
+        if (clickTileAction == "Apply Selected") { colorNum = 0; }
+        else if (clickTileAction == "Toggle Note 1") { colorNum = 1; }
+        else if (clickTileAction == "Toggle Note 2") { colorNum = 2; }
+        if (colorNum != 0 && num != 0) {
+            foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+                if (t.doesTileContainColoredNote(colorNum, num)) {
+                    //print("found a tile that contains " + num + " on note #" + colorNum);
+                    if (colorNum == 1) { t.toggleNote1(num); }
+                    else { t.toggleNote2(num); }
+                    foundAnything = true;
+                }
+            }
+        }
+        if (colorNum == 0 && num != 0) {
+            foreach(PuzzleTile t in puzzleGenerator.puzzleTiles) {
+                if (t.shownNumber == num) {
+                    foundAnything = true;
+                    t.removeNumberFromTile();
+                }
+            }
+        }
+        if (foundAnything) {
+            addToPuzzleHistory();
+        }
+    }
+
+
+    public void pushClearPuzzleButton() {
+        bool changedAnything = false;
+        foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+            if (t.doesTileContainAnything()) { changedAnything = true; }
+            t.clearColoredNotes();
+            t.removeNumberFromTile();
+            
+        }
+        if (changedAnything) { addToPuzzleHistory(); }
+    }
+
+    /*
+    public void updateRemoveColoredNumber() {
+        if (StaticVariables.includeRemoveColoredNotesOfChosenNumber) {
+
+            removeColoredHintsOfChosenNumberButton.transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().sprite = numberButtonPrefab.GetComponent<NumberButton>().numberSprites[selectedNumber];
+            //print(selectedNumber);
+            Color buildingColor;
+            Color note1Color;
+            Color note2Color;
+            ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out buildingColor);
+            ColorUtility.TryParseHtmlString(skin.note1Color, out note1Color);
+            ColorUtility.TryParseHtmlString(skin.note2Color, out note2Color);
+            Color c = note1Color;
+            if (clickTileAction == "Apply Selected" || selectedNumber == 0) {
+                c = buildingColor;
+                //removeColoredHintsOfChosenNumberButton.SetActive(false);
+            }
+            else if (clickTileAction == "Toggle Note 1") {
+                c = note1Color;
+                //removeColoredHintsOfChosenNumberButton.SetActive(true);
+            }
+            else if (clickTileAction == "Toggle Note 2") {
+                c = note2Color;
+                //removeColoredHintsOfChosenNumberButton.SetActive(true);
+            }
+
+            removeColoredHintsOfChosenNumberButton.transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().color = c;
+        }
+    }
+    */
+
+    public void updateRemoveSelectedNumber() {
+        if (!StaticVariables.isTutorial && StaticVariables.includeRemoveAllOfNumber) {
+
+            //removeAllOfNumberButton.transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().sprite = numberButtonPrefab.GetComponent<NumberButton>().numberSprites[selectedNumber];
+            removeAllOfNumberButton.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = numberButtonPrefab.GetComponent<NumberButton>().numberSprites[selectedNumber];
+            //print(selectedNumber);
+            Color buildingColor;
+            Color note1Color;
+            Color note2Color;
+            ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out buildingColor);
+            ColorUtility.TryParseHtmlString(skin.note1Color, out note1Color);
+            ColorUtility.TryParseHtmlString(skin.note2Color, out note2Color);
+            Color c = note1Color;
+            if (clickTileAction == "Apply Selected" || selectedNumber == 0) {
+                c = buildingColor;
+                //removeColoredHintsOfChosenNumberButton.SetActive(false);
+            }
+            else if (clickTileAction == "Toggle Note 1") {
+                c = note1Color;
+                //removeColoredHintsOfChosenNumberButton.SetActive(true);
+            }
+            else if (clickTileAction == "Toggle Note 2") {
+                c = note2Color;
+                //removeColoredHintsOfChosenNumberButton.SetActive(true);
+            }
+
+            //removeAllOfNumberButton.transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().color = c;
+            removeAllOfNumberButton.transform.GetChild(1).GetComponent<SpriteRenderer>().color = c;
+        }
+    }
+
+
 }

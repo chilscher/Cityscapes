@@ -82,7 +82,7 @@ public class PuzzleState {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                puzzle.tilesArray[i, j].clearColorHints();
+                puzzle.tilesArray[i, j].clearColoredNotes();
                 for (int k = 0; k<redNotes[i,j].Length; k++) {
                     puzzle.tilesArray[i, j].toggleNote1(redNotes[i, j][k]);
                 }

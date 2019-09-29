@@ -11,6 +11,9 @@ public class StaticVariables{
     static public bool includeNotes2Button = false;
     static public bool changeResidentColorOnCorrectRows = false;
     static public bool includeUndoRedo = false;
+    //static public bool includeRemoveColoredNotesOfChosenNumber = false;
+    static public bool includeRemoveAllOfNumber = false;
+    static public bool includeClearPuzzle = false;
     
     static public bool showMed = false;
     static public bool showLarge = false;
@@ -42,4 +45,7 @@ public class StaticVariables{
     static public bool unlockedNotes2 = false;
     static public bool unlockedResidentsChangeColor = false;
     static public bool unlockedUndoRedo = false;
+    //static public bool unlockedRemoveColoredNotesOfChosenNumber = false;
+    static public bool unlockedRemoveAllOfNumber = false;
+    static public bool unlockedClearPuzzle = false;
 }

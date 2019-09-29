@@ -15,6 +15,9 @@ public class SaveData{
     public bool showMed;
     public bool showLarge;
     public bool showHuge;
+    //public bool includeRemoveColoredNumberNotes;
+    public bool includeRemoveAllOfNumber;
+    public bool includeClearPuzzle;
 
     public bool unlockedMed;
     public bool unlockedLarge;
@@ -23,6 +26,9 @@ public class SaveData{
     public bool unlockedNotes2;
     public bool unlockedResidentsChangeColor;
     public bool unlockedUndoRedo;
+    //public bool unlockedRemoveColoredNumberNotes;
+    public bool unlockedRemoveAllOfNumber;
+    public bool unlockedClearPuzzle;
 
 
     public SaveData() {
@@ -32,6 +38,9 @@ public class SaveData{
         changeResidentColorOnCorrectRows = StaticVariables.changeResidentColorOnCorrectRows;
         highestUnlockedSize = StaticVariables.highestUnlockedSize;
         includeUndoRedo = StaticVariables.includeUndoRedo;
+        //includeRemoveColoredNumberNotes = StaticVariables.includeRemoveColoredNotesOfChosenNumber;
+        includeRemoveAllOfNumber = StaticVariables.includeRemoveAllOfNumber;
+        includeClearPuzzle = StaticVariables.includeClearPuzzle;
 
         showMed = StaticVariables.showMed;
         showLarge = StaticVariables.showLarge;
@@ -44,6 +53,9 @@ public class SaveData{
         unlockedNotes2 = StaticVariables.unlockedNotes2;
         unlockedResidentsChangeColor = StaticVariables.unlockedResidentsChangeColor;
         unlockedUndoRedo = StaticVariables.unlockedUndoRedo;
+        //unlockedRemoveColoredNumberNotes = StaticVariables.unlockedRemoveColoredNotesOfChosenNumber;
+        unlockedRemoveAllOfNumber = StaticVariables.unlockedRemoveAllOfNumber;
+        unlockedClearPuzzle = StaticVariables.unlockedClearPuzzle;
 
     }
 
@@ -55,6 +67,9 @@ public class SaveData{
         StaticVariables.changeResidentColorOnCorrectRows = changeResidentColorOnCorrectRows;
         StaticVariables.highestUnlockedSize = highestUnlockedSize;
         StaticVariables.includeUndoRedo = includeUndoRedo;
+        //StaticVariables.includeRemoveColoredNotesOfChosenNumber = includeRemoveColoredNumberNotes;
+        StaticVariables.includeRemoveAllOfNumber = includeRemoveAllOfNumber;
+        StaticVariables.includeClearPuzzle = includeClearPuzzle;
 
         StaticVariables.showMed = showMed;
         StaticVariables.showLarge = showLarge;
@@ -67,6 +82,9 @@ public class SaveData{
         StaticVariables.unlockedNotes2 = unlockedNotes2;
         StaticVariables.unlockedResidentsChangeColor = unlockedResidentsChangeColor;
         StaticVariables.unlockedUndoRedo = unlockedUndoRedo;
+        //StaticVariables.unlockedRemoveColoredNotesOfChosenNumber = unlockedRemoveColoredNumberNotes;
+        StaticVariables.unlockedRemoveAllOfNumber = unlockedRemoveAllOfNumber;
+        StaticVariables.unlockedClearPuzzle = unlockedClearPuzzle;
     }
 
 

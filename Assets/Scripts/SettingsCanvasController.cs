@@ -11,6 +11,9 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject note2Button;
     public GameObject changeCorrectResidentColorButton;
     public GameObject undoRedoButton;
+    //public GameObject removeColoredNumberNotes;
+    public GameObject removeAllOfNumber;
+    public GameObject clearPuzzle;
 
     public GameObject showMedButton;
     public GameObject showLargeButton;
@@ -110,6 +113,9 @@ public class SettingsCanvasController : MonoBehaviour {
         note2Button.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes2Button);
         changeCorrectResidentColorButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.changeResidentColorOnCorrectRows);
         undoRedoButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeUndoRedo);
+        //removeColoredNumberNotes.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeRemoveColoredNotesOfChosenNumber);
+        removeAllOfNumber.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeRemoveAllOfNumber);
+        clearPuzzle.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeClearPuzzle);
 
 
         showMedButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.showMed);
@@ -124,6 +130,9 @@ public class SettingsCanvasController : MonoBehaviour {
         note2Button.SetActive(StaticVariables.unlockedNotes2);
         changeCorrectResidentColorButton.SetActive(StaticVariables.unlockedResidentsChangeColor);
         undoRedoButton.SetActive(StaticVariables.unlockedUndoRedo);
+        //removeColoredNumberNotes.SetActive(StaticVariables.unlockedRemoveColoredNotesOfChosenNumber);
+        removeAllOfNumber.SetActive(StaticVariables.unlockedRemoveAllOfNumber);
+        clearPuzzle.SetActive(StaticVariables.unlockedClearPuzzle);
 
     }
 
@@ -148,6 +157,22 @@ public class SettingsCanvasController : MonoBehaviour {
 
     public void clickedUndoRedoButton() {
         StaticVariables.includeUndoRedo= !StaticVariables.includeUndoRedo;
+        updateButtons();
+    }
+    /*
+    public void clickedRemoveColoredNumberNotesButton() {
+        StaticVariables.includeRemoveColoredNotesOfChosenNumber = !StaticVariables.includeRemoveColoredNotesOfChosenNumber;
+        updateButtons();
+    }
+    */
+
+    public void clickedRemoveAllOfNumberButton() {
+        StaticVariables.includeRemoveAllOfNumber = !StaticVariables.includeRemoveAllOfNumber;
+        updateButtons();
+    }
+
+    public void clickedClearPuzzleButton() {
+        StaticVariables.includeClearPuzzle = !StaticVariables.includeClearPuzzle;
         updateButtons();
     }
 

@@ -55,8 +55,8 @@ public class PuzzleTile : Tile {
 
     public void setNumberColors() {
         ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out numberColor);
-        ColorUtility.TryParseHtmlString(StaticVariables.lightRedHex, out note1Color);
-        ColorUtility.TryParseHtmlString(StaticVariables.lightBlueHex, out note2Color);
+        ColorUtility.TryParseHtmlString(gameManager.skin.note1Color, out note1Color);
+        ColorUtility.TryParseHtmlString(gameManager.skin.note2Color, out note2Color);
     }
 
     public void clicked() {
@@ -104,7 +104,7 @@ public class PuzzleTile : Tile {
         return (shownNumber == solution);
     }
 
-    private void removeNumberFromTile() {
+    public void removeNumberFromTile() {
         shownNumber = 0;
         
         building.enabled = false;
@@ -138,7 +138,7 @@ public class PuzzleTile : Tile {
             else {
                 shownNumber = num;
                 addNumberToTile(shownNumber);
-                clearColorHints();
+                clearColoredNotes();
             }
         }
     }
@@ -158,7 +158,7 @@ public class PuzzleTile : Tile {
                     print("you can only have 4 hints of each color!");
                     noteGroup1.Remove(num);
                 }
-                showColoredHints();
+                showColoredNotes();
             }
         }
     }
@@ -176,13 +176,13 @@ public class PuzzleTile : Tile {
                     print("you can only have 4 hints of each color!");
                     noteGroup2.Remove(num);
                 }
-                showColoredHints();
+                showColoredNotes();
             }
         }
     }
     
 
-    private void showColoredHints() {
+    private void showColoredNotes() {
         noteGroup1.Sort();
         noteGroup2.Sort();
 
@@ -212,10 +212,10 @@ public class PuzzleTile : Tile {
         }
     }
 
-    public void clearColorHints() {
+    public void clearColoredNotes() {
         noteGroup1 = new List<int>();
         noteGroup2 = new List<int>();
-        showColoredHints();
+        showColoredNotes();
     }
 
 
@@ -259,6 +259,27 @@ public class PuzzleTile : Tile {
 
     public void removeRedBorder() {
         redBorder.gameObject.SetActive(false);
+    }
+
+    public bool doesTileContainColoredNote(int colorNum, int noteNum) {
+        List<int> noteGroup = noteGroup1;
+        if (colorNum == 2) {
+            noteGroup = noteGroup2;
+        }
+        foreach (int n in noteGroup) {
+            if (noteNum == n) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public bool doesTileContainAnything() {
+        bool doesIt = false;
+        if (shownNumber != 0) { doesIt = true; }
+        if (noteGroup1.Count > 0) { doesIt = true; }
+        if (noteGroup2.Count > 0) { doesIt = true; }
+        return doesIt;
     }
 
 }

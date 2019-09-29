@@ -30,6 +30,10 @@ public class TutorialManager{
         tutorialText = gameManager.tutorialTextBox.GetComponent<Transform>().GetChild(0).GetComponent<Text>();
         continueClue = gameManager.tutorialTextBox.GetComponent<Transform>().GetChild(1).GetComponent<Text>();
         gameManager.undoRedoButtons.SetActive(false);
+        gameManager.setRemoveAllAndClearButtons();
+        //gameManager.removeColoredHintsOfChosenNumberButton.SetActive(false);
+        //gameManager.removeAllOfNumberButton.SetActive(false);
+        //gameManager.clearPuzzleButton.SetActive(false);
 
         advanceStage();
     }
