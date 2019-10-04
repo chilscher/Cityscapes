@@ -81,9 +81,11 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void goToMainMenu() {
+        if (!StaticVariables.isFading) {
+            StaticVariables.fadingTo = "menu";
+            startFadeOut();
+        }
         //SceneManager.LoadScene("MainMenu");
-        StaticVariables.fadingTo = "menu";
-        startFadeOut();
     }
 
     public void startFadeOut() {

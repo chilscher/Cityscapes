@@ -6,7 +6,13 @@ using UnityEngine.SceneManagement;
 using System;
 
 public class ShopCanvasController : MonoBehaviour {
-    
+
+    public int medCityPrice = 10;
+    public int largeCityPrice = 40;
+    public int hugeCityPrice = 100;
+    public int notes1Price = 6;
+
+
     public GameObject coinsBox1s;
     public GameObject coinsBox10s;
     public GameObject coinsBox100s;
@@ -21,15 +27,15 @@ public class ShopCanvasController : MonoBehaviour {
 
     public Sprite[] numbers = new Sprite[10];
 
-    public GameObject notes1Button;
+    
     public GameObject notes2Button;
     public GameObject changeCorrectResidentColorButton;
     public GameObject undoRedoButton;
 
-    //public GameObject unlockMedButton;
     public GameObject expandMedButton;
     public GameObject expandLargeButton;
-    public GameObject unlockHugeButton;
+    public GameObject expandHugeButton;
+    public GameObject expandNotes1Button;
 
 
     public GameObject blackForeground; //used to transition to/from the puzzle menu
@@ -43,8 +49,6 @@ public class ShopCanvasController : MonoBehaviour {
 
     public GameObject scrollView;
 
-    public int medCityPrice = 10;
-    public int largeCityPrice = 40;
 
     public string affordableCoinColor;
     public string unaffordableCoinColor;
@@ -53,6 +57,11 @@ public class ShopCanvasController : MonoBehaviour {
 
     public Sprite purchasedUpgradeButton;
     public Sprite unpurchasedUpgradeButton;
+
+    public Sprite availableUnlockButton;
+    public Sprite unavailableUnlockButton;
+
+    private GameObject expandedButton;
 
     private void Start() {
         ColorUtility.TryParseHtmlString(affordableCoinColor, out affordableColor);
@@ -67,6 +76,8 @@ public class ShopCanvasController : MonoBehaviour {
 
         displayCoinsOnButton(expandMedButton, medCityPrice);
         displayCoinsOnButton(expandLargeButton, largeCityPrice);
+        displayCoinsOnButton(expandHugeButton, hugeCityPrice);
+        displayCoinsOnButton(expandNotes1Button, notes1Price);
 
         updateButtons();
 
@@ -87,8 +98,6 @@ public class ShopCanvasController : MonoBehaviour {
             c.a = (fadeOutTime - fadeTimer) / fadeOutTime;
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
-                //StaticVariables.isFading = false;
-                //if (StaticVariables.isTutorial) { SceneManager.LoadScene("InPuzzle"); }
                 if (StaticVariables.fadingTo == "menu") { SceneManager.LoadScene("MainMenu"); }
             }
         }
@@ -96,7 +105,6 @@ public class ShopCanvasController : MonoBehaviour {
             fadeTimer -= Time.deltaTime;
             Color c = blackSprite.color;
             c.a = (fadeTimer) / fadeInTime;
-            //print(c.a);
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
                 StaticVariables.isFading = false;
@@ -110,17 +118,16 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     public void goToMainMenu() {
-
-        StaticVariables.fadingTo = "menu";
-        startFadeOut();
-        //SceneManager.LoadScene("MainMenu");
+        if (!StaticVariables.isFading) {
+            StaticVariables.fadingTo = "menu";
+            startFadeOut();
+        }
     }
 
     public void startFadeOut() {
         fadeTimer = fadeOutTime;
         StaticVariables.isFading = true;
         StaticVariables.fadingFrom = "shop";
-        //fadingOut = true;
     }
 
 
@@ -159,13 +166,11 @@ public class ShopCanvasController : MonoBehaviour {
 
         Color grey = Color.grey;
         updateButton(expandMedButton, StaticVariables.unlockedMedium, medCityPrice);
-        updateButton(expandLargeButton, StaticVariables.unlockedLarge, largeCityPrice);
+        updateButton(expandLargeButton, StaticVariables.unlockedLarge, largeCityPrice, StaticVariables.unlockedMedium);
+        updateButton(expandHugeButton, StaticVariables.unlockedLarge, hugeCityPrice, StaticVariables.unlockedLarge);
+        updateButton(expandNotes1Button, StaticVariables.unlockedNotes1, notes1Price);
 
-
-        if (StaticVariables.unlockedHuge) { unlockHugeButton.transform.GetChild(0).GetComponent<Text>().color = grey; }
-        else { unlockHugeButton.transform.GetChild(0).GetComponent<Text>().color = black; }
-        if (StaticVariables.unlockedNotes1) { notes1Button.transform.GetChild(0).GetComponent<Text>().color = grey; }
-        else { notes1Button.transform.GetChild(0).GetComponent<Text>().color = black; }
+        
         if (StaticVariables.unlockedNotes2) { notes2Button.transform.GetChild(0).GetComponent<Text>().color = grey; }
         else { notes2Button.transform.GetChild(0).GetComponent<Text>().color = black; }
         if (StaticVariables.unlockedResidentsChangeColor) { changeCorrectResidentColorButton.transform.GetChild(0).GetComponent<Text>().color = grey; }
@@ -180,39 +185,68 @@ public class ShopCanvasController : MonoBehaviour {
 
     }
 
-    private void updateButton(GameObject button, bool condition, int cost) {
+    private void updateButton(GameObject button, bool condition, int cost, bool uniqueUnlockCondition = true) {
         //shows if the item has already been purchased or not, and also sets the coin amount to the appropriate color
+        //uniqueUnlockCondition for purchasing the large puzzle would be that the medium puzzle has to already have been purchased
         if (condition) {
             button.GetComponent<Image>().sprite = purchasedUpgradeButton;
             //hide coins
             button.transform.GetChild(1).gameObject.SetActive(false);
-            //show check
+            //show purchase complete symbol
             button.transform.GetChild(2).gameObject.SetActive(true);
         }
         else {
             button.GetComponent<Image>().sprite = unpurchasedUpgradeButton;
             //show coins
             button.transform.GetChild(1).gameObject.SetActive(true);
-            //hide check
+            //hide purchase complete symbol
             button.transform.GetChild(2).gameObject.SetActive(false);
         }
-
+        GameObject coinObject = button.transform.GetChild(1).GetChild(0).gameObject;
         GameObject imageObject1s = button.transform.GetChild(1).GetChild(1).gameObject;
         GameObject imageObject10s = button.transform.GetChild(1).GetChild(2).gameObject;
         GameObject imageObject100s = button.transform.GetChild(1).GetChild(3).gameObject;
         GameObject imageObject1000s = button.transform.GetChild(1).GetChild(4).gameObject;
 
+        GameObject unlockButton = button.transform.parent.GetChild(2).GetChild(1).gameObject;
+        unlockButton.transform.GetChild(0).gameObject.SetActive(false); //unlock text
+        unlockButton.transform.GetChild(1).gameObject.SetActive(false); //already owned text
+        unlockButton.transform.GetChild(2).gameObject.SetActive(false); //cannot afford text
+        if (unlockButton.transform.childCount >= 4) { unlockButton.transform.GetChild(3).gameObject.SetActive(false); }//prerequisite not yet purchased text
+
         if (cost <= StaticVariables.coins) {
+            coinObject.GetComponent<Image>().color = Color.white;
             imageObject1s.GetComponent<Image>().color = affordableColor;
             imageObject10s.GetComponent<Image>().color = affordableColor;
             imageObject100s.GetComponent<Image>().color = affordableColor;
             imageObject1000s.GetComponent<Image>().color = affordableColor;
+
         }
         else {
+            coinObject.GetComponent<Image>().color = unaffordableColor;
             imageObject1s.GetComponent<Image>().color = unaffordableColor;
             imageObject10s.GetComponent<Image>().color = unaffordableColor;
             imageObject100s.GetComponent<Image>().color = unaffordableColor;
             imageObject1000s.GetComponent<Image>().color = unaffordableColor;
+
+
+        }
+        if (!uniqueUnlockCondition) {
+
+            unlockButton.GetComponent<Image>().sprite = unavailableUnlockButton;
+            unlockButton.transform.GetChild(3).gameObject.SetActive(true);
+        }
+        else if (condition) {
+            unlockButton.GetComponent<Image>().sprite = unavailableUnlockButton;
+            unlockButton.transform.GetChild(1).gameObject.SetActive(true);
+        }
+        else if (cost > StaticVariables.coins) {
+            unlockButton.GetComponent<Image>().sprite = unavailableUnlockButton;
+            unlockButton.transform.GetChild(2).gameObject.SetActive(true);
+        }
+        else {
+            unlockButton.GetComponent<Image>().sprite = availableUnlockButton;
+            unlockButton.transform.GetChild(0).gameObject.SetActive(true);
         }
 
     }
@@ -247,6 +281,17 @@ public class ShopCanvasController : MonoBehaviour {
         updateButtons();
     }
 
+    public void pushMedButton() { clickedButton(expandMedButton); }
+    
+    public void pushLargeButton() { clickedButton(expandLargeButton); }
+
+    public void pushHugeButton() { clickedButton(expandHugeButton); }
+
+    public void pushNotes1Button() { clickedButton(expandNotes1Button); }
+
+
+
+
     public void unlockMedium() {
         if (!StaticVariables.unlockedMedium) {
 
@@ -254,10 +299,12 @@ public class ShopCanvasController : MonoBehaviour {
             StaticVariables.highestUnlockedSize = 4;
             StaticVariables.showMed = true;
 
+            makePurchase(medCityPrice);
             updateButtons();
+            contractPreviousExpansion();
         }
     }
-    
+
     public void unlockLarge() {
         if (!StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
 
@@ -266,22 +313,11 @@ public class ShopCanvasController : MonoBehaviour {
             StaticVariables.showMed = true;
             StaticVariables.showLarge = true;
 
+            makePurchase(largeCityPrice);
             updateButtons();
+            contractPreviousExpansion();
         }
-
-
     }
-
-    public void pushMedButton() {
-        expandSiblings(expandMedButton);
-    }
-    
-    public void pushLargeButton() {
-        expandSiblings(expandLargeButton);
-    }
-
-    
-    
 
     public void unlockHuge() {
         if (!StaticVariables.unlockedHuge && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
@@ -292,7 +328,9 @@ public class ShopCanvasController : MonoBehaviour {
             StaticVariables.showLarge = true;
             StaticVariables.showHuge = true;
 
+            makePurchase(hugeCityPrice);
             updateButtons();
+            contractPreviousExpansion();
         }
     }
 
@@ -302,7 +340,9 @@ public class ShopCanvasController : MonoBehaviour {
             StaticVariables.unlockedNotes1 = true;
             StaticVariables.includeNotes1Button = true;
 
+            makePurchase(notes1Price);
             updateButtons();
+            contractPreviousExpansion();
         }
     }
     public void unlockNotes2() {
@@ -354,8 +394,11 @@ public class ShopCanvasController : MonoBehaviour {
 
     public void expandSiblings(GameObject button) {
         //sets all siblings of the chosen button to be active, and resizes all necessary scroll views
+
+        expandedButton = button;
+
         GameObject parentBox = button.transform.parent.gameObject;
-        bool switchTo = !parentBox.transform.GetChild(1).gameObject.activeSelf;
+        bool switchTo = true;
 
         for (int i = 1; i < parentBox.transform.childCount; i++) {
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
@@ -363,6 +406,39 @@ public class ShopCanvasController : MonoBehaviour {
         resizeToFitChildren(parentBox);
         setScrollViewHeight();
     }
+
+    public void contractSiblings(GameObject button) {
+        //sets all siblings of the chosen button to be inactive, and resizes all necessary scroll views
+        if (expandedButton == button) {
+            expandedButton = null;
+        }
+        GameObject parentBox = button.transform.parent.gameObject;
+        bool switchTo = false;
+
+        for (int i = 1; i < parentBox.transform.childCount; i++) {
+            parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
+        }
+        resizeToFitChildren(parentBox);
+        setScrollViewHeight();
+    }
+
+    public void contractPreviousExpansion() {
+        contractSiblings(expandedButton);
+    }
+
+    public void clickedButton(GameObject button) {
+        if (expandedButton == null) {
+            expandSiblings(button);
+        }
+        else if (expandedButton == button) {
+            contractPreviousExpansion();
+        }
+        else {
+            contractPreviousExpansion();
+            expandSiblings(button);
+        }
+    }
+    
 
     public void resizeToFitChildren(GameObject parent) {
         //get height of contents, including spaces between objects and top and bottom padding
@@ -437,6 +513,11 @@ public class ShopCanvasController : MonoBehaviour {
             imageObject100s.GetComponent<Image>().color = unaffordableColor;
             imageObject1000s.GetComponent<Image>().color = unaffordableColor;
         }
+    }
+
+    public void makePurchase(int cost) {
+        StaticVariables.coins -= cost;
+        displayCoinsAmount();
     }
 
 }

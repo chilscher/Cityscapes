@@ -81,30 +81,36 @@ public class MainMenuCanvasController : MonoBehaviour {
     }
 
     public void startPuzzle(int size) {
-        StaticVariables.size = size;
-        StaticVariables.isTutorial = false;
+        if (!StaticVariables.isFading) {
 
-        StaticVariables.fadingTo = "puzzle";
-        startFadeOut();
-        //SceneManager.LoadScene("InPuzzle");
+            StaticVariables.size = size;
+            StaticVariables.isTutorial = false;
+
+            StaticVariables.fadingTo = "puzzle";
+            startFadeOut();
+        }
     }
 
     public void startTutorial() {
-        StaticVariables.size = 3;
-        StaticVariables.isTutorial = true;
-        StaticVariables.fadingTo = "puzzle";
-        startFadeOut();
-        //SceneManager.LoadScene("InPuzzle");
+        if (!StaticVariables.isFading) {
+            StaticVariables.size = 3;
+            StaticVariables.isTutorial = true;
+            StaticVariables.fadingTo = "puzzle";
+            startFadeOut();
+        }
     }
 
     public void goToShop() {
-        StaticVariables.fadingTo = "shop";
-        startFadeOut();
+        if (!StaticVariables.isFading) {
+            StaticVariables.fadingTo = "shop";
+            startFadeOut();
+        }
     }
 
     public void goToSettings() {
-        StaticVariables.fadingTo = "settings";
-        startFadeOut();
-        //SceneManager.LoadScene("Settings");
+        if (!StaticVariables.isFading) {
+            StaticVariables.fadingTo = "settings";
+            startFadeOut();
+        }
     }
 }
