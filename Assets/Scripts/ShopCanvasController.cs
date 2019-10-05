@@ -10,7 +10,12 @@ public class ShopCanvasController : MonoBehaviour {
     public int medCityPrice = 10;
     public int largeCityPrice = 40;
     public int hugeCityPrice = 100;
-    public int notes1Price = 6;
+    public int notes1Price = 10;
+    public int notes2Price = 10;
+    public int residentColorPrice = 10;
+    public int undoRedoPrice = 10;
+    public int removeAllPrice = 10;
+    public int clearPrice = 10;
 
 
     public GameObject coinsBox1s;
@@ -28,14 +33,19 @@ public class ShopCanvasController : MonoBehaviour {
     public Sprite[] numbers = new Sprite[10];
 
     
-    public GameObject notes2Button;
-    public GameObject changeCorrectResidentColorButton;
-    public GameObject undoRedoButton;
+    //public GameObject notes2Button;
+    //public GameObject changeCorrectResidentColorButton;
+    //public GameObject undoRedoButton;
 
     public GameObject expandMedButton;
     public GameObject expandLargeButton;
     public GameObject expandHugeButton;
     public GameObject expandNotes1Button;
+    public GameObject expandNotes2Button;
+    public GameObject expandResidentColorButton;
+    public GameObject expandUndoRedoButton;
+    public GameObject expandRemoveAllButton;
+    public GameObject expandClearButton;
 
 
     public GameObject blackForeground; //used to transition to/from the puzzle menu
@@ -44,8 +54,8 @@ public class ShopCanvasController : MonoBehaviour {
     public float fadeInTime;
     private float fadeTimer;
     
-    public GameObject unlockRemoveAllOfNumberButton;
-    public GameObject unlockClearPuzzleButton;
+    //public GameObject unlockRemoveAllOfNumberButton;
+    //public GameObject unlockClearPuzzleButton;
 
     public GameObject scrollView;
 
@@ -78,6 +88,11 @@ public class ShopCanvasController : MonoBehaviour {
         displayCoinsOnButton(expandLargeButton, largeCityPrice);
         displayCoinsOnButton(expandHugeButton, hugeCityPrice);
         displayCoinsOnButton(expandNotes1Button, notes1Price);
+        displayCoinsOnButton(expandNotes2Button, notes2Price);
+        displayCoinsOnButton(expandResidentColorButton, residentColorPrice);
+        displayCoinsOnButton(expandUndoRedoButton, undoRedoPrice);
+        displayCoinsOnButton(expandRemoveAllButton, removeAllPrice);
+        displayCoinsOnButton(expandClearButton, clearPrice);
 
         updateButtons();
 
@@ -143,6 +158,12 @@ public class ShopCanvasController : MonoBehaviour {
         sprite1000s.sprite = numbers[value1000s];
         sprite10000s.sprite = numbers[value10000s];
 
+        coinsBox1s.SetActive(true);
+        coinsBox10s.SetActive(true);
+        coinsBox100s.SetActive(true);
+        coinsBox1000s.SetActive(true);
+        coinsBox10000s.SetActive(true);
+
         if (value10000s == 0) {
             coinsBox10000s.SetActive(false);
             if (value1000s == 0) {
@@ -167,21 +188,13 @@ public class ShopCanvasController : MonoBehaviour {
         Color grey = Color.grey;
         updateButton(expandMedButton, StaticVariables.unlockedMedium, medCityPrice);
         updateButton(expandLargeButton, StaticVariables.unlockedLarge, largeCityPrice, StaticVariables.unlockedMedium);
-        updateButton(expandHugeButton, StaticVariables.unlockedLarge, hugeCityPrice, StaticVariables.unlockedLarge);
+        updateButton(expandHugeButton, StaticVariables.unlockedHuge, hugeCityPrice, StaticVariables.unlockedLarge);
         updateButton(expandNotes1Button, StaticVariables.unlockedNotes1, notes1Price);
-
-        
-        if (StaticVariables.unlockedNotes2) { notes2Button.transform.GetChild(0).GetComponent<Text>().color = grey; }
-        else { notes2Button.transform.GetChild(0).GetComponent<Text>().color = black; }
-        if (StaticVariables.unlockedResidentsChangeColor) { changeCorrectResidentColorButton.transform.GetChild(0).GetComponent<Text>().color = grey; }
-        else { changeCorrectResidentColorButton.transform.GetChild(0).GetComponent<Text>().color = black; }
-        if (StaticVariables.unlockedUndoRedo) { undoRedoButton.transform.GetChild(0).GetComponent<Text>().color = grey; }
-        else { undoRedoButton.transform.GetChild(0).GetComponent<Text>().color = black; }
-
-        if (StaticVariables.unlockedRemoveAllOfNumber) { unlockRemoveAllOfNumberButton.transform.GetChild(0).GetComponent<Text>().color = grey; }
-        else { unlockRemoveAllOfNumberButton.transform.GetChild(0).GetComponent<Text>().color = black; }
-        if (StaticVariables.unlockedClearPuzzle) { unlockClearPuzzleButton.transform.GetChild(0).GetComponent<Text>().color = grey; }
-        else { unlockClearPuzzleButton.transform.GetChild(0).GetComponent<Text>().color = black; }
+        updateButton(expandNotes2Button, StaticVariables.unlockedNotes2, notes2Price, StaticVariables.unlockedNotes1);
+        updateButton(expandResidentColorButton, StaticVariables.unlockedResidentsChangeColor, residentColorPrice);
+        updateButton(expandUndoRedoButton, StaticVariables.unlockedUndoRedo, undoRedoPrice);
+        updateButton(expandRemoveAllButton, StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice, StaticVariables.includeUndoRedo);
+        updateButton(expandClearButton, StaticVariables.unlockedClearPuzzle, clearPrice, StaticVariables.includeUndoRedo);
 
     }
 
@@ -278,7 +291,10 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeRemoveAllOfNumber = false;
         StaticVariables.includeClearPuzzle = false;
 
+        if (StaticVariables.coins < 50) { StaticVariables.coins = 300; }
+
         updateButtons();
+        displayCoinsAmount();
     }
 
     public void pushMedButton() { clickedButton(expandMedButton); }
@@ -289,8 +305,15 @@ public class ShopCanvasController : MonoBehaviour {
 
     public void pushNotes1Button() { clickedButton(expandNotes1Button); }
 
+    public void pushNotes2Button() { clickedButton(expandNotes2Button); }
 
+    public void pushResidentColorButton() { clickedButton(expandResidentColorButton); }
 
+    public void pushUndoRedoButton() { clickedButton(expandUndoRedoButton); }
+
+    public void pushRemoveAllButton() { clickedButton(expandRemoveAllButton); }
+
+    public void pushClearButton() { clickedButton(expandClearButton); }
 
     public void unlockMedium() {
         if (!StaticVariables.unlockedMedium) {
@@ -346,12 +369,14 @@ public class ShopCanvasController : MonoBehaviour {
         }
     }
     public void unlockNotes2() {
-        if (!StaticVariables.unlockedNotes2) {
+        if (!StaticVariables.unlockedNotes2 && StaticVariables.unlockedNotes1) {
 
             StaticVariables.unlockedNotes2 = true;
             StaticVariables.includeNotes2Button = true;
 
+            makePurchase(notes2Price);
             updateButtons();
+            contractPreviousExpansion();
         }
     }
     public void unlockResidentsChangeColor() {
@@ -360,7 +385,9 @@ public class ShopCanvasController : MonoBehaviour {
             StaticVariables.unlockedResidentsChangeColor = true;
             StaticVariables.changeResidentColorOnCorrectRows = true;
 
+            makePurchase(residentColorPrice);
             updateButtons();
+            contractPreviousExpansion();
         }
     }
     public void unlockUndoRedo() {
@@ -369,24 +396,30 @@ public class ShopCanvasController : MonoBehaviour {
             StaticVariables.unlockedUndoRedo = true;
             StaticVariables.includeUndoRedo = true;
 
+            makePurchase(undoRedoPrice);
             updateButtons();
+            contractPreviousExpansion();
         }
     }
     public void unlockRemoveAllOfNumber() {
-        if (!StaticVariables.unlockedRemoveAllOfNumber) {
+        if (!StaticVariables.unlockedRemoveAllOfNumber && StaticVariables.includeUndoRedo) {
             StaticVariables.unlockedRemoveAllOfNumber = true;
             StaticVariables.includeRemoveAllOfNumber = true;
 
+            makePurchase(removeAllPrice);
             updateButtons();
+            contractPreviousExpansion();
         }
     }
 
     public void unlockClearPuzzle() {
-        if (!StaticVariables.unlockedClearPuzzle) {
+        if (!StaticVariables.unlockedClearPuzzle && StaticVariables.includeUndoRedo) {
             StaticVariables.unlockedClearPuzzle = true;
             StaticVariables.includeClearPuzzle = true;
 
+            makePurchase(clearPrice);
             updateButtons();
+            contractPreviousExpansion();
         }
     }
 
@@ -490,7 +523,12 @@ public class ShopCanvasController : MonoBehaviour {
         imageObject10s.GetComponent<Image>().sprite = numbers[value10s];
         imageObject100s.GetComponent<Image>().sprite = numbers[value100s];
         imageObject1000s.GetComponent<Image>().sprite = numbers[value1000s];
-        
+
+        imageObject1s.SetActive(true);
+        imageObject10s.SetActive(true);
+        imageObject100s.SetActive(true);
+        imageObject1000s.SetActive(true);
+
         if (value1000s == 0) {
             imageObject1000s.SetActive(false);
             if (value100s == 0) {

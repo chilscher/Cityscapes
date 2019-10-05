@@ -20,7 +20,7 @@ public class StaticVariables{
     static public bool showHuge = false;
     
     static public int highestUnlockedSize = 3;
-    static public int coins = 10;
+    static public int coins = 1000;
 
     static public bool isApplicationLaunchingFirstTime = true;
 
