@@ -18,10 +18,12 @@ public class MainMenuCanvasController : MonoBehaviour {
     private float fadeTimer;
 
     private void Start() {
+
         if (StaticVariables.isApplicationLaunchingFirstTime) {
             SaveSystem.LoadGame();
             StaticVariables.isApplicationLaunchingFirstTime = false;
         }
+        
 
         blackSprite = blackForeground.GetComponent<SpriteRenderer>();
 

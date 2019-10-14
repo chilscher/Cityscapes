@@ -32,11 +32,6 @@ public class ShopCanvasController : MonoBehaviour {
 
     public Sprite[] numbers = new Sprite[10];
 
-    
-    //public GameObject notes2Button;
-    //public GameObject changeCorrectResidentColorButton;
-    //public GameObject undoRedoButton;
-
     public GameObject expandMedButton;
     public GameObject expandLargeButton;
     public GameObject expandHugeButton;
@@ -53,9 +48,6 @@ public class ShopCanvasController : MonoBehaviour {
     public float fadeOutTime;
     public float fadeInTime;
     private float fadeTimer;
-    
-    //public GameObject unlockRemoveAllOfNumberButton;
-    //public GameObject unlockClearPuzzleButton;
 
     public GameObject scrollView;
 
@@ -65,17 +57,27 @@ public class ShopCanvasController : MonoBehaviour {
     private Color affordableColor;
     private Color unaffordableColor;
 
-    public Sprite purchasedUpgradeButton;
-    public Sprite unpurchasedUpgradeButton;
-
-    public Sprite availableUnlockButton;
-    public Sprite unavailableUnlockButton;
+    public string purchaseButtonExterior;
+    public string purchaseButtonInterior;
+    public string noPurchaseButtonExterior;
+    public string noPurchaseButtonInterior;
+    private Color purchaseButtonExteriorColor;
+    private Color purchaseButtonInteriorColor;
+    private Color noPurchaseButtonExteriorColor;
+    private Color noPurchaseButtonInteriorColor;
 
     private GameObject expandedButton;
+    
+
 
     private void Start() {
         ColorUtility.TryParseHtmlString(affordableCoinColor, out affordableColor);
         ColorUtility.TryParseHtmlString(unaffordableCoinColor, out unaffordableColor);
+        ColorUtility.TryParseHtmlString(purchaseButtonExterior, out purchaseButtonExteriorColor);
+        ColorUtility.TryParseHtmlString(purchaseButtonInterior, out purchaseButtonInteriorColor);
+        ColorUtility.TryParseHtmlString(noPurchaseButtonExterior, out noPurchaseButtonExteriorColor);
+        ColorUtility.TryParseHtmlString(noPurchaseButtonInterior, out noPurchaseButtonInteriorColor);
+
         sprite1s = coinsBox1s.GetComponent<SpriteRenderer>();
         sprite10s = coinsBox10s.GetComponent<SpriteRenderer>();
         sprite100s = coinsBox100s.GetComponent<SpriteRenderer>();
@@ -202,30 +204,28 @@ public class ShopCanvasController : MonoBehaviour {
         //shows if the item has already been purchased or not, and also sets the coin amount to the appropriate color
         //uniqueUnlockCondition for purchasing the large puzzle would be that the medium puzzle has to already have been purchased
         if (condition) {
-            button.GetComponent<Image>().sprite = purchasedUpgradeButton;
             //hide coins
-            button.transform.GetChild(1).gameObject.SetActive(false);
+            button.transform.Find("Coins").gameObject.SetActive(false);
             //show purchase complete symbol
-            button.transform.GetChild(2).gameObject.SetActive(true);
+            button.transform.Find("Purchased Symbol").gameObject.SetActive(true);
         }
         else {
-            button.GetComponent<Image>().sprite = unpurchasedUpgradeButton;
             //show coins
-            button.transform.GetChild(1).gameObject.SetActive(true);
+            button.transform.Find("Coins").gameObject.SetActive(true);
             //hide purchase complete symbol
-            button.transform.GetChild(2).gameObject.SetActive(false);
+            button.transform.Find("Purchased Symbol").gameObject.SetActive(false);
         }
-        GameObject coinObject = button.transform.GetChild(1).GetChild(0).gameObject;
-        GameObject imageObject1s = button.transform.GetChild(1).GetChild(1).gameObject;
-        GameObject imageObject10s = button.transform.GetChild(1).GetChild(2).gameObject;
-        GameObject imageObject100s = button.transform.GetChild(1).GetChild(3).gameObject;
-        GameObject imageObject1000s = button.transform.GetChild(1).GetChild(4).gameObject;
+        GameObject coinObject = button.transform.Find("Coins").Find("Coin").gameObject;
+        GameObject imageObject1s = button.transform.Find("Coins").Find("Coins - 1s").gameObject;
+        GameObject imageObject10s = button.transform.Find("Coins").Find("Coins - 10s").gameObject;
+        GameObject imageObject100s = button.transform.Find("Coins").Find("Coins - 100s").gameObject;
+        GameObject imageObject1000s = button.transform.Find("Coins").Find("Coins - 1000s").gameObject;
 
-        GameObject unlockButton = button.transform.parent.GetChild(2).GetChild(1).gameObject;
-        unlockButton.transform.GetChild(0).gameObject.SetActive(false); //unlock text
-        unlockButton.transform.GetChild(1).gameObject.SetActive(false); //already owned text
-        unlockButton.transform.GetChild(2).gameObject.SetActive(false); //cannot afford text
-        if (unlockButton.transform.childCount >= 4) { unlockButton.transform.GetChild(3).gameObject.SetActive(false); }//prerequisite not yet purchased text
+        GameObject unlockButton = button.transform.parent.Find("Dropdown").Find("Unlock").gameObject;
+        unlockButton.transform.GetChild(1).gameObject.SetActive(false); //unlock text
+        unlockButton.transform.GetChild(2).gameObject.SetActive(false); //already owned text
+        unlockButton.transform.GetChild(3).gameObject.SetActive(false); //cannot afford text
+        if (unlockButton.transform.childCount >= 5) { unlockButton.transform.GetChild(4).gameObject.SetActive(false); }//prerequisite not yet purchased text
 
         if (cost <= StaticVariables.coins) {
             coinObject.GetComponent<Image>().color = Color.white;
@@ -245,21 +245,24 @@ public class ShopCanvasController : MonoBehaviour {
 
         }
         if (!uniqueUnlockCondition) {
-
-            unlockButton.GetComponent<Image>().sprite = unavailableUnlockButton;
-            unlockButton.transform.GetChild(3).gameObject.SetActive(true);
+            unlockButton.transform.GetChild(0).Find("Borders").GetComponent<Image>().color = noPurchaseButtonExteriorColor;
+            unlockButton.transform.GetChild(0).Find("Interior").GetComponent<Image>().color = noPurchaseButtonInteriorColor;
+            unlockButton.transform.GetChild(4).gameObject.SetActive(true);
         }
         else if (condition) {
-            unlockButton.GetComponent<Image>().sprite = unavailableUnlockButton;
-            unlockButton.transform.GetChild(1).gameObject.SetActive(true);
-        }
-        else if (cost > StaticVariables.coins) {
-            unlockButton.GetComponent<Image>().sprite = unavailableUnlockButton;
+            unlockButton.transform.GetChild(0).Find("Borders").GetComponent<Image>().color = noPurchaseButtonExteriorColor;
+            unlockButton.transform.GetChild(0).Find("Interior").GetComponent<Image>().color = noPurchaseButtonInteriorColor;
             unlockButton.transform.GetChild(2).gameObject.SetActive(true);
         }
+        else if (cost > StaticVariables.coins) {
+            unlockButton.transform.GetChild(0).Find("Borders").GetComponent<Image>().color = noPurchaseButtonExteriorColor;
+            unlockButton.transform.GetChild(0).Find("Interior").GetComponent<Image>().color = noPurchaseButtonInteriorColor;
+            unlockButton.transform.GetChild(3).gameObject.SetActive(true);
+        }
         else {
-            unlockButton.GetComponent<Image>().sprite = availableUnlockButton;
-            unlockButton.transform.GetChild(0).gameObject.SetActive(true);
+            unlockButton.transform.GetChild(0).Find("Borders").GetComponent<Image>().color = purchaseButtonExteriorColor;
+            unlockButton.transform.GetChild(0).Find("Interior").GetComponent<Image>().color = purchaseButtonInteriorColor;
+            unlockButton.transform.GetChild(1).gameObject.SetActive(true);
         }
 
     }
@@ -316,7 +319,7 @@ public class ShopCanvasController : MonoBehaviour {
     public void pushClearButton() { clickedButton(expandClearButton); }
 
     public void unlockMedium() {
-        if (!StaticVariables.unlockedMedium) {
+        if (!StaticVariables.unlockedMedium && StaticVariables.coins >= medCityPrice) {
 
             StaticVariables.unlockedMedium = true;
             StaticVariables.highestUnlockedSize = 4;
@@ -329,7 +332,7 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     public void unlockLarge() {
-        if (!StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
+        if (!StaticVariables.unlockedLarge && StaticVariables.unlockedMedium && StaticVariables.coins >= largeCityPrice) {
 
             StaticVariables.unlockedLarge = true;
             StaticVariables.highestUnlockedSize = 5;
@@ -343,7 +346,7 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     public void unlockHuge() {
-        if (!StaticVariables.unlockedHuge && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
+        if (!StaticVariables.unlockedHuge && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium && StaticVariables.coins >= hugeCityPrice) {
 
             StaticVariables.unlockedHuge = true;
             StaticVariables.highestUnlockedSize = 6;
@@ -358,7 +361,7 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     public void unlockNotes1() {
-        if (!StaticVariables.unlockedNotes1) {
+        if (!StaticVariables.unlockedNotes1 && StaticVariables.coins >= notes1Price) {
 
             StaticVariables.unlockedNotes1 = true;
             StaticVariables.includeNotes1Button = true;
@@ -369,7 +372,7 @@ public class ShopCanvasController : MonoBehaviour {
         }
     }
     public void unlockNotes2() {
-        if (!StaticVariables.unlockedNotes2 && StaticVariables.unlockedNotes1) {
+        if (!StaticVariables.unlockedNotes2 && StaticVariables.unlockedNotes1 && StaticVariables.coins >= notes2Price) {
 
             StaticVariables.unlockedNotes2 = true;
             StaticVariables.includeNotes2Button = true;
@@ -380,7 +383,7 @@ public class ShopCanvasController : MonoBehaviour {
         }
     }
     public void unlockResidentsChangeColor() {
-        if (!StaticVariables.unlockedResidentsChangeColor) {
+        if (!StaticVariables.unlockedResidentsChangeColor && StaticVariables.coins >= residentColorPrice) {
 
             StaticVariables.unlockedResidentsChangeColor = true;
             StaticVariables.changeResidentColorOnCorrectRows = true;
@@ -391,7 +394,7 @@ public class ShopCanvasController : MonoBehaviour {
         }
     }
     public void unlockUndoRedo() {
-        if (!StaticVariables.unlockedUndoRedo) {
+        if (!StaticVariables.unlockedUndoRedo && StaticVariables.coins >= undoRedoPrice) {
 
             StaticVariables.unlockedUndoRedo = true;
             StaticVariables.includeUndoRedo = true;
@@ -402,7 +405,7 @@ public class ShopCanvasController : MonoBehaviour {
         }
     }
     public void unlockRemoveAllOfNumber() {
-        if (!StaticVariables.unlockedRemoveAllOfNumber && StaticVariables.includeUndoRedo) {
+        if (!StaticVariables.unlockedRemoveAllOfNumber && StaticVariables.includeUndoRedo && StaticVariables.coins >= removeAllPrice) {
             StaticVariables.unlockedRemoveAllOfNumber = true;
             StaticVariables.includeRemoveAllOfNumber = true;
 
@@ -413,7 +416,7 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     public void unlockClearPuzzle() {
-        if (!StaticVariables.unlockedClearPuzzle && StaticVariables.includeUndoRedo) {
+        if (!StaticVariables.unlockedClearPuzzle && StaticVariables.includeUndoRedo && StaticVariables.coins >= clearPrice) {
             StaticVariables.unlockedClearPuzzle = true;
             StaticVariables.includeClearPuzzle = true;
 
@@ -432,7 +435,7 @@ public class ShopCanvasController : MonoBehaviour {
 
         GameObject parentBox = button.transform.parent.gameObject;
         bool switchTo = true;
-
+        
         for (int i = 1; i < parentBox.transform.childCount; i++) {
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
         }
@@ -510,10 +513,10 @@ public class ShopCanvasController : MonoBehaviour {
         //assumes coins are all image components, with the ones place being child(1), all the way through thousands place being child(4).
         //also colors the coin amount depending on if the player can afford them.
 
-        GameObject imageObject1s = button.transform.GetChild(1).GetChild(1).gameObject;
-        GameObject imageObject10s = button.transform.GetChild(1).GetChild(2).gameObject;
-        GameObject imageObject100s = button.transform.GetChild(1).GetChild(3).gameObject;
-        GameObject imageObject1000s = button.transform.GetChild(1).GetChild(4).gameObject;
+        GameObject imageObject1s = button.transform.Find("Coins").Find("Coins - 1s").gameObject;
+        GameObject imageObject10s = button.transform.Find("Coins").Find("Coins - 10s").gameObject;
+        GameObject imageObject100s = button.transform.Find("Coins").Find("Coins - 100s").gameObject;
+        GameObject imageObject1000s = button.transform.Find("Coins").Find("Coins - 1000s").gameObject;
 
         int value1s = cost % 10;
         int value10s = (cost / 10) % 10;
