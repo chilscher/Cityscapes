@@ -21,7 +21,7 @@ public class NumberButton: Tile {
     private void OnMouseDown() {
         if (gameManager.canClick) {
             gameManager.switchNumber(value);
-            gameManager.showNumberButtonClicked(this);
+            //gameManager.showNumberButtonClicked(this);
 
         }
     }

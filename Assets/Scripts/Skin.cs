@@ -14,4 +14,9 @@ public class Skin: MonoBehaviour{
     public Sprite note2Icon;
     public Sprite undoIcon;
     public Sprite redoIcon;
+
+    public string onButtonColorInterior;
+    public string onButtonColorExterior;
+    public string offButtonColorInterior;
+    public string offButtonColorExterior;
 }

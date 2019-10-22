@@ -83,7 +83,8 @@ public class TutorialManager{
             case 6:
                 text = "To place a building, tap the building size you would like to place...";
                 continueText = "Choose the right building size...";
-                gameManager.drawNumberButtons();
+                //gameManager.drawNumberButtons();
+                gameManager.setNumberButtons();
                 addRedBoxAroundNumButton(2);
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -426,14 +427,17 @@ public class TutorialManager{
     }
 
     private void addRedBoxAroundNumButton(int num) {
-        NumberButton n = gameManager.numbersPositioning.GetComponent<Transform>().GetChild(num).GetComponent<NumberButton>();
-        n.GetComponent<Transform>().GetChild(2).gameObject.SetActive(true);
+        gameManager.numberButtons[num - 1].transform.Find("Red Border").gameObject.SetActive(true);
+        //NumberButton n = gameManager.numbersPositioning.GetComponent<Transform>().GetChild(num).GetComponent<NumberButton>();
+        //n.GetComponent<Transform>().GetChild(2).gameObject.SetActive(true);
     }
 
     private void removeRedBoxesAroundNums() {
-        for (int i = 1; i<4; i++) {
-            NumberButton n = gameManager.numbersPositioning.GetComponent<Transform>().GetChild(i).GetComponent<NumberButton>();
-            n.GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
+        for (int i = 1; i<gameManager.size + 1; i++) {
+
+            gameManager.numberButtons[i - 1].transform.Find("Red Border").gameObject.SetActive(false);
+            //NumberButton n = gameManager.numbersPositioning.GetComponent<Transform>().GetChild(i).GetComponent<NumberButton>();
+            //n.GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
 
         }
     }

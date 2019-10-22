@@ -16,31 +16,20 @@ public class GameManager : MonoBehaviour {
     public GameObject numberButtonPrefab;
     public GameObject puzzlePositioning;
     public GameObject puzzlePositioningImage;
-    public GameObject numbersPositioning;
-    public GameObject numbersPositioningImage;
     public GameObject canvas;
     public GameObject winCanvas;
-    private NumberButton prevClickedNumButton;
+    private GameObject prevClickedNumButton;
     private GameObject buildButton;
     private GameObject note1Button;
     private GameObject note2Button;
     private GameObject prevNumberSelectionButton;
-
-
-    //public Sprite selectionModeOn;
-    //public Sprite selectionModeOff;
-
     
-
-
     public GameObject streetCorner;
     public bool includeNote1Btn;
     public bool includeNote2Btn;
     public GameObject selectionModeButtons1;
     public GameObject selectionModeButtons2;
     public GameObject selectionModeButtons3;
-    //public GameObject undoButton;
-    //public GameObject redoButton;
     public GameObject undoRedoButtons;
 
     public TutorialManager tutorialManager;
@@ -81,16 +70,28 @@ public class GameManager : MonoBehaviour {
     private Color offButtonColor;
     private Color onButtonColor;
 
+    private Color offButtonColorExterior;
+    private Color onButtonColorExterior;
+    private Color offButtonColorInterior;
+    private Color onButtonColorInterior;
+
     public GameObject coinsBox1s;
     public GameObject coinsBox10s;
-
-    //public GameObject removeColoredHintsOfChosenNumberButton;
+    
     private GameObject removeAllOfNumberButton;
     private GameObject clearPuzzleButton;
 
     public GameObject removeAllAndClearButtons;
     public GameObject onlyRemoveAllButton;
     public GameObject onlyClearButton;
+
+    public GameObject[] numberButtons;
+    public GameObject numbers1to3;
+    public GameObject numbers1to4;
+    public GameObject numbers1to5;
+    public GameObject numbers1to6;
+
+    public Sprite[] numberSprites;
 
     private void Start() {
         if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
@@ -106,6 +107,13 @@ public class GameManager : MonoBehaviour {
 
         ColorUtility.TryParseHtmlString(skin.offButtonColor, out offButtonColor);
         ColorUtility.TryParseHtmlString(skin.onButtonColor, out onButtonColor);
+        ColorUtility.TryParseHtmlString(skin.onButtonColorExterior, out onButtonColorExterior);
+        ColorUtility.TryParseHtmlString(skin.onButtonColorInterior, out onButtonColorInterior);
+        ColorUtility.TryParseHtmlString(skin.offButtonColorExterior, out offButtonColorExterior);
+        ColorUtility.TryParseHtmlString(skin.offButtonColorInterior, out offButtonColorInterior);
+
+        hideNumberButtons();
+        
 
         if (StaticVariables.isTutorial) {
             includeNote1Btn = false;
@@ -117,8 +125,8 @@ public class GameManager : MonoBehaviour {
             puzzleGenerator.createPuzzle(size);
             drawFullPuzzle();
             setRemoveAllAndClearButtons();
-            drawNumberButtons();
-            switchNumber(size);
+            setNumberButtons();
+            pushNumberButton(size);
             //showNumberButtonClicked();
             hidePositioningObjects();
             setSelectionModeButtons();
@@ -141,8 +149,8 @@ public class GameManager : MonoBehaviour {
             int onesDigit = coins % 10;
             int tensDigit = (coins / 10) % 10;
 
-            coinsBox1s.GetComponent<SpriteRenderer>().sprite = numberButtonPrefab.GetComponent<NumberButton>().numberSprites[onesDigit];
-            coinsBox10s.GetComponent<SpriteRenderer>().sprite = numberButtonPrefab.GetComponent<NumberButton>().numberSprites[tensDigit];
+            coinsBox1s.GetComponent<SpriteRenderer>().sprite = numberSprites[onesDigit];
+            coinsBox10s.GetComponent<SpriteRenderer>().sprite = numberSprites[tensDigit];
 
 
             currentPuzzleState = new PuzzleState(puzzleGenerator);
@@ -240,7 +248,41 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private void hideNumberButtons() {
+        numbers1to3.SetActive(false);
+        numbers1to4.SetActive(false);
+        numbers1to5.SetActive(false);
+        numbers1to6.SetActive(false);
+    }
 
+    public void setNumberButtons() {
+        hideNumberButtons();
+        numberButtons = new GameObject[size];
+        switch (size) {
+            case 3:
+                setNBs(numbers1to3);
+                break;
+            case 4:
+                setNBs(numbers1to4);
+                break;
+            case 5:
+                setNBs(numbers1to5);
+                break;
+            case 6:
+                setNBs(numbers1to6);
+                break;
+        }
+        //pushNumberButton(size);
+    }
+
+    private void setNBs(GameObject nB) {
+        nB.SetActive(true);
+        for (int i = 0; i<size; i++) {
+            numberButtons[i] = nB.transform.GetChild(i).gameObject;
+            disselectNumber(numberButtons[i]);
+        }
+        //selectNumber(numberButtons[size - 1]);
+    }
 
 
 
@@ -281,10 +323,14 @@ public class GameManager : MonoBehaviour {
 
     
     public void setUndoRedoButtons() {
-        undoRedoButtons.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = offButtonColor;
-        undoRedoButtons.transform.GetChild(0).GetChild(1).GetComponent<Image>().sprite = skin.undoIcon;
-        undoRedoButtons.transform.GetChild(1).GetChild(0).GetComponent<Image>().color = offButtonColor;
-        undoRedoButtons.transform.GetChild(1).GetChild(1).GetComponent<Image>().sprite = skin.redoIcon;
+        //undoRedoButtons.transform.Find("Undo").Find("Background Color").GetComponent<Image>().color = offButtonColor;
+        undoRedoButtons.transform.Find("Undo").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        undoRedoButtons.transform.Find("Undo").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+        undoRedoButtons.transform.Find("Undo").Find("Icon").GetComponent<Image>().sprite = skin.undoIcon;
+        //undoRedoButtons.transform.Find("Redo").Find("Background Color").GetComponent<Image>().color = offButtonColor;
+        undoRedoButtons.transform.Find("Redo").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        undoRedoButtons.transform.Find("Redo").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+        undoRedoButtons.transform.Find("Redo").Find("Icon").GetComponent<Image>().sprite = skin.redoIcon;
 
         undoRedoButtons.SetActive(StaticVariables.includeUndoRedo);
     }
@@ -297,8 +343,8 @@ public class GameManager : MonoBehaviour {
         clearPuzzleButton = onlyClearButton.transform.GetChild(0).gameObject;
         if (!StaticVariables.isTutorial) {
             if (StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle) {
-                removeAllOfNumberButton = removeAllAndClearButtons.transform.GetChild(0).gameObject;
-                clearPuzzleButton = removeAllAndClearButtons.transform.GetChild(1).gameObject;
+                removeAllOfNumberButton = removeAllAndClearButtons.transform.Find("Remove All").gameObject;
+                clearPuzzleButton = removeAllAndClearButtons.transform.Find("Clear Puzzle").gameObject;
                 removeAllAndClearButtons.SetActive(true);
             }
             else if (StaticVariables.includeRemoveAllOfNumber) {
@@ -308,26 +354,16 @@ public class GameManager : MonoBehaviour {
                 onlyClearButton.SetActive(true);
             }
         }
-        removeAllOfNumberButton.transform.GetChild(0).GetComponent<Image>().color = offButtonColor;
-        clearPuzzleButton.transform.GetChild(0).GetComponent<Image>().color = offButtonColor;
+        //removeAllOfNumberButton.transform.Find("Background Color").GetComponent<Image>().color = offButtonColor;
+        removeAllOfNumberButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        removeAllOfNumberButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+        //clearPuzzleButton.transform.Find("Background Color").GetComponent<Image>().color = offButtonColor;
+        clearPuzzleButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        clearPuzzleButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
     }
-    /*
-    public void setRemoveColoredNotesButton() {
-        //removeColoredHintsOfChosenNumberButton.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = offButtonColor;
-        //removeColoredHintsOfChosenNumberButton.SetActive(StaticVariables.includeRemoveColoredNotesOfChosenNumber);
-        removeAllOfNumberButton.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = offButtonColor;
-        removeAllOfNumberButton.SetActive(StaticVariables.includeRemoveAllOfNumber);
-    }
-
-    public void setClearPuzzleButton() {
-        clearPuzzleButton.transform.GetChild(0).GetChild(0).GetComponent<Image>().color = offButtonColor;
-        clearPuzzleButton.SetActive(StaticVariables.includeClearPuzzle);
-    }
-    */
 
     public void hidePositioningObjects() {
         puzzlePositioningImage.SetActive(false);
-        numbersPositioningImage.SetActive(false);
     }
 
     public void drawFullPuzzle() {
@@ -389,42 +425,6 @@ public class GameManager : MonoBehaviour {
         createCorner(bottomRightPos, scaleFactor, 180, parent);
     }
 
-    public void drawNumberButtons() {
-        //assumes numbersPositioning object is a rectangle
-        float numberSize = numbersPositioning.transform.localScale.y;
-        float totalWidth = numbersPositioning.transform.localScale.x;
-        if (canvas.GetComponent<RectTransform>().rect.height > canvas.GetComponent<CanvasScaler>().referenceResolution.y) {
-            totalWidth *= (canvas.GetComponent<CanvasScaler>().referenceResolution.y / canvas.GetComponent<RectTransform>().rect.height);
-            numberSize *= (canvas.GetComponent<CanvasScaler>().referenceResolution.y / canvas.GetComponent<RectTransform>().rect.height);
-        }
-
-        //rescale so the numbers aren't jammed together
-        float minSpacing = numberSize * 0.2f;
-        if (totalWidth < numberSize * size) {
-            numberSize = (totalWidth - (minSpacing * (size - 1)))/ size;
-        }
-
-
-        float spaceWidth = (totalWidth - (numberSize * size)) / (size - 1);
-        Vector2 center = numbersPositioning.transform.position;
-        float defaultButtonScale = numberButtonPrefab.GetComponent<BoxCollider2D>().size.x;
-        float scaleFactor = numberSize / defaultButtonScale;
-        
-        Transform parent = numbersPositioning.transform;
-        for (int i = 0; i < size; i++) {
-            float xpos = center.x + (spaceWidth * i) + ((i + 0.5f)* numberSize) - totalWidth / 2;
-            Vector2 pos = new Vector2(xpos, center.y);
-
-            GameObject b = Instantiate(numberButtonPrefab);
-            NumberButton button = b.GetComponent<NumberButton>();
-            button.initialize(i + 1, this);
-            button.setValues(pos, scaleFactor, parent);
-
-            disselectNumber(button);
-            if (i + 1 == size && !StaticVariables.isTutorial) { showNumberButtonClicked(button); }
-        }
-    }
-
     public void switchNumber(int num) {
         selectedNumber = num;
         if (StaticVariables.isTutorial) {
@@ -435,15 +435,22 @@ public class GameManager : MonoBehaviour {
     public void hitBuildButton() {
         clickTileAction = "Apply Selected";
         disselectBuildAndNotes();
-        if (includeNote1Btn || includeNote2Btn) { buildButton.transform.GetChild(0).GetComponent<Image>().color = onButtonColor; }
+        if (includeNote1Btn || includeNote2Btn) {
+            //buildButton.transform.Find("Background Color").GetComponent<Image>().color = onButtonColor;
+            buildButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
+            buildButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
+        }
         //updateRemoveColoredNumber();
         updateRemoveSelectedNumber();
 
     }
+
     public void hitNote1Button() {
         clickTileAction = "Toggle Note 1";
         disselectBuildAndNotes();
-        note1Button.transform.GetChild(0).GetComponent<Image>().color = onButtonColor;
+        //note1Button.transform.Find("Background Color").GetComponent<Image>().color = onButtonColor;
+        note1Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
+        note1Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
         //updateRemoveColoredNumber();
         updateRemoveSelectedNumber();
     }
@@ -451,15 +458,29 @@ public class GameManager : MonoBehaviour {
     public void hitNote2Button() {
         clickTileAction = "Toggle Note 2";
         disselectBuildAndNotes();
-        note2Button.transform.GetChild(0).GetComponent<Image>().color = onButtonColor;
+        //note2Button.transform.Find("Background Color").GetComponent<Image>().color = onButtonColor;
+        note2Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
+        note2Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
         //updateRemoveColoredNumber();
         updateRemoveSelectedNumber();
     }
 
     public void disselectBuildAndNotes() {
-        if (includeNote1Btn || includeNote2Btn) { buildButton.transform.GetChild(0).GetComponent<Image>().color = offButtonColor; }
-        if (includeNote1Btn) { note1Button.transform.GetChild(0).GetComponent<Image>().color = offButtonColor; }
-        if (includeNote2Btn) { note2Button.transform.GetChild(0).GetComponent<Image>().color = offButtonColor; }
+        if (includeNote1Btn || includeNote2Btn) {
+            //buildButton.transform.Find("Background Color").GetComponent<Image>().color = offButtonColor; 
+            buildButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+            buildButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        }
+        if (includeNote1Btn) {
+            //note1Button.transform.Find("Background Color").GetComponent<Image>().color = offButtonColor;
+            note1Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+            note1Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        }
+        if (includeNote2Btn) {
+            //note2Button.transform.Find("Background Color").GetComponent<Image>().color = offButtonColor;
+            note2Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+            note2Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        }
     }
 
     public void goToMainMenu() {
@@ -470,6 +491,7 @@ public class GameManager : MonoBehaviour {
 
         //SceneManager.LoadScene("MainMenu");
     }
+
     public void startFadeOut() {
         fadeTimer = fadeOutTime;
         StaticVariables.isFading = true;
@@ -484,27 +506,23 @@ public class GameManager : MonoBehaviour {
         }
         //SceneManager.LoadScene("InPuzzle");
     }
-    
-    public void showNumberButtonClicked(NumberButton nb) {
+    public void showNumberButtonClicked(GameObject nB) {
         if (prevClickedNumButton != null) {
             disselectNumber(prevClickedNumButton);
         }
-        prevClickedNumButton = nb;
-        selectNumber(nb);
+        prevClickedNumButton = nB;
+        selectNumber(nB);
         //updateRemoveColoredNumber();
         updateRemoveSelectedNumber();
     }
-    
-
-    private void selectNumber(NumberButton btn) {
-        SpriteRenderer s = btn.transform.GetChild(0).GetComponent<SpriteRenderer>();
-        s.color = onButtonColor;
-
+    private void selectNumber(GameObject btn) {
+        btn.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
+        btn.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
     }
 
-    private void disselectNumber(NumberButton btn) {
-        SpriteRenderer s = btn.transform.GetChild(0).GetComponent<SpriteRenderer>();
-        s.color = offButtonColor;
+    private void disselectNumber(GameObject btn) {
+        btn.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        btn.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
     }
     
     
@@ -626,28 +644,11 @@ public class GameManager : MonoBehaviour {
             nextPuzzleStates.RemoveAt(nextPuzzleStates.Count - 1);
         }
     }
-    /*
-    public void pushRemoveAllColorNumberNotesButton() {
-        bool foundAnything = false;
-        int num = selectedNumber;
-        int colorNum = 0;
-        if (clickTileAction == "Toggle Note 1") { colorNum = 1; }
-        else if (clickTileAction == "Toggle Note 2") { colorNum = 2; }
-        if (colorNum != 0 && num != 0) {
-            foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
-                if (t.doesTileContainColoredNote(colorNum, num)) {
-                    //print("found a tile that contains " + num + " on note #" + colorNum);
-                    if (colorNum == 1) { t.toggleNote1(num); }
-                    else { t.toggleNote2(num); }
-                    foundAnything = true;
-                }
-            }
-        }
-        if (foundAnything) {
-            addToPuzzleHistory();
-        }
+
+    public void pushNumberButton(int num) {
+        switchNumber(num);
+        showNumberButtonClicked(numberButtons[num - 1]);
     }
-    */
 
     public void pushRemoveAllNumbersButton() {
         bool foundAnything = false;
@@ -691,42 +692,11 @@ public class GameManager : MonoBehaviour {
         if (changedAnything) { addToPuzzleHistory(); }
     }
 
-    /*
-    public void updateRemoveColoredNumber() {
-        if (StaticVariables.includeRemoveColoredNotesOfChosenNumber) {
-
-            removeColoredHintsOfChosenNumberButton.transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().sprite = numberButtonPrefab.GetComponent<NumberButton>().numberSprites[selectedNumber];
-            //print(selectedNumber);
-            Color buildingColor;
-            Color note1Color;
-            Color note2Color;
-            ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out buildingColor);
-            ColorUtility.TryParseHtmlString(skin.note1Color, out note1Color);
-            ColorUtility.TryParseHtmlString(skin.note2Color, out note2Color);
-            Color c = note1Color;
-            if (clickTileAction == "Apply Selected" || selectedNumber == 0) {
-                c = buildingColor;
-                //removeColoredHintsOfChosenNumberButton.SetActive(false);
-            }
-            else if (clickTileAction == "Toggle Note 1") {
-                c = note1Color;
-                //removeColoredHintsOfChosenNumberButton.SetActive(true);
-            }
-            else if (clickTileAction == "Toggle Note 2") {
-                c = note2Color;
-                //removeColoredHintsOfChosenNumberButton.SetActive(true);
-            }
-
-            removeColoredHintsOfChosenNumberButton.transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().color = c;
-        }
-    }
-    */
-
     public void updateRemoveSelectedNumber() {
         if (!StaticVariables.isTutorial && StaticVariables.includeRemoveAllOfNumber) {
 
             //removeAllOfNumberButton.transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().sprite = numberButtonPrefab.GetComponent<NumberButton>().numberSprites[selectedNumber];
-            removeAllOfNumberButton.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = numberButtonPrefab.GetComponent<NumberButton>().numberSprites[selectedNumber];
+            removeAllOfNumberButton.transform.Find("Number").GetComponent<SpriteRenderer>().sprite = numberSprites[selectedNumber];
             //print(selectedNumber);
             Color buildingColor;
             Color note1Color;
@@ -749,7 +719,7 @@ public class GameManager : MonoBehaviour {
             }
 
             //removeAllOfNumberButton.transform.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().color = c;
-            removeAllOfNumberButton.transform.GetChild(1).GetComponent<SpriteRenderer>().color = c;
+            removeAllOfNumberButton.transform.Find("Number").GetComponent<SpriteRenderer>().color = c;
         }
     }
 
