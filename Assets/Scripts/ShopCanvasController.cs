@@ -272,6 +272,15 @@ public class ShopCanvasController : MonoBehaviour {
         //"are you sure you want to reset all of your purchases? you will NOT get your spent coins back!!!"
         //if so, then do the following...
 
+        lockAll();
+
+        if (StaticVariables.coins < 50) { StaticVariables.coins = 300; }
+
+        displayCoinsAmount();
+    }
+
+    public void lockAll() {
+
         StaticVariables.unlockedMedium = false;
         StaticVariables.unlockedLarge = false;
         StaticVariables.unlockedHuge = false;
@@ -293,10 +302,42 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeUndoRedo = false;
         StaticVariables.includeRemoveAllOfNumber = false;
         StaticVariables.includeClearPuzzle = false;
-
-        if (StaticVariables.coins < 50) { StaticVariables.coins = 300; }
-
         updateButtons();
+    }
+
+    public void unlockAll() {
+
+        StaticVariables.unlockedMedium = true;
+        StaticVariables.unlockedLarge = true;
+        StaticVariables.unlockedHuge = true;
+        StaticVariables.highestUnlockedSize = 6;
+        StaticVariables.showMed = true;
+        StaticVariables.showLarge = true;
+        StaticVariables.showHuge = true;
+
+        StaticVariables.unlockedNotes1 = true;
+        StaticVariables.unlockedNotes2 = true;
+        StaticVariables.unlockedResidentsChangeColor = true;
+        StaticVariables.unlockedUndoRedo = true;
+        StaticVariables.unlockedRemoveAllOfNumber = true;
+        StaticVariables.unlockedClearPuzzle = true;
+
+        StaticVariables.includeNotes1Button = true;
+        StaticVariables.includeNotes2Button = true;
+        StaticVariables.changeResidentColorOnCorrectRows = true;
+        StaticVariables.includeUndoRedo = true;
+        StaticVariables.includeRemoveAllOfNumber = true;
+        StaticVariables.includeClearPuzzle = true;
+        updateButtons();
+    }
+
+    public void addCoins() {
+        StaticVariables.coins += 40;
+        displayCoinsAmount();
+    }
+
+    public void removeCoins() {
+        StaticVariables.coins = 0;
         displayCoinsAmount();
     }
 

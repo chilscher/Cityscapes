@@ -19,4 +19,6 @@ public class Skin: MonoBehaviour{
     public string onButtonColorExterior;
     public string offButtonColorInterior;
     public string offButtonColorExterior;
+
+    public string winPopupColor;
 }

@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
     public PuzzleGenerator puzzleGenerator;
     public int size;
 
-    public GameObject numberButtonPrefab;
+    //public GameObject numberButtonPrefab;
     public GameObject puzzlePositioning;
     public GameObject puzzlePositioningImage;
     public GameObject canvas;
@@ -74,6 +74,7 @@ public class GameManager : MonoBehaviour {
     private Color onButtonColorExterior;
     private Color offButtonColorInterior;
     private Color onButtonColorInterior;
+    private Color winPopupColor;
 
     public GameObject coinsBox1s;
     public GameObject coinsBox10s;
@@ -93,6 +94,8 @@ public class GameManager : MonoBehaviour {
 
     public Sprite[] numberSprites;
 
+    public GameObject menuButton;
+
     private void Start() {
         if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
             fadeTimer = fadeInTime;
@@ -111,9 +114,11 @@ public class GameManager : MonoBehaviour {
         ColorUtility.TryParseHtmlString(skin.onButtonColorInterior, out onButtonColorInterior);
         ColorUtility.TryParseHtmlString(skin.offButtonColorExterior, out offButtonColorExterior);
         ColorUtility.TryParseHtmlString(skin.offButtonColorInterior, out offButtonColorInterior);
+        ColorUtility.TryParseHtmlString(skin.winPopupColor, out winPopupColor);
 
         hideNumberButtons();
-        
+
+        colorMenuButton();
 
         if (StaticVariables.isTutorial) {
             includeNote1Btn = false;
@@ -127,16 +132,19 @@ public class GameManager : MonoBehaviour {
             setRemoveAllAndClearButtons();
             setNumberButtons();
             pushNumberButton(size);
-            //showNumberButtonClicked();
             hidePositioningObjects();
             setSelectionModeButtons();
             setUndoRedoButtons();
-            //setRemoveColoredNotesButton();
-            //setClearPuzzleButton();
             hitBuildButton();
-            winCanvas.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = onButtonColor;
-            winCanvas.transform.GetChild(1).transform.GetChild(3).transform.GetChild(0).GetComponent<Image>().color = offButtonColor;
-            winCanvas.transform.GetChild(1).transform.GetChild(4).transform.GetChild(0).GetComponent<Image>().color = offButtonColor;
+            winCanvas.transform.Find("Win Popup").Find("Background").GetComponent<Image>().color = winPopupColor;
+            winCanvas.transform.Find("Win Popup").Find("Menu").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+            winCanvas.transform.Find("Win Popup").Find("Menu").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+            winCanvas.transform.Find("Win Popup").Find("Another Puzzle").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+            winCanvas.transform.Find("Win Popup").Find("Another Puzzle").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+            Color c = winCanvas.transform.Find("Black Background").GetComponent<SpriteRenderer>().color;
+            c.a = fadeToWinDarknessRatio;
+            winCanvas.transform.Find("Black Background").GetComponent<SpriteRenderer>().color = c;
+            showCorrectCityArtOnWinScreen();
 
 
             int coins = 0;
@@ -248,11 +256,33 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private void showCorrectCityArtOnWinScreen() {
+        GameObject small = winCanvas.transform.Find("Win Popup").Find("City Art - Small").gameObject;
+        GameObject med = winCanvas.transform.Find("Win Popup").Find("City Art - Medium").gameObject;
+        GameObject large = winCanvas.transform.Find("Win Popup").Find("City Art - Large").gameObject;
+        GameObject huge = winCanvas.transform.Find("Win Popup").Find("City Art - Huge").gameObject;
+        small.SetActive(false);
+        med.SetActive(false);
+        large.SetActive(false);
+        huge.SetActive(false);
+        switch (size) {
+            case 3: small.SetActive(true); break;
+            case 4: med.SetActive(true); break;
+            case 5: large.SetActive(true); break;
+            case 6: huge.SetActive(true); break;
+        }
+    }
+
     private void hideNumberButtons() {
         numbers1to3.SetActive(false);
         numbers1to4.SetActive(false);
         numbers1to5.SetActive(false);
         numbers1to6.SetActive(false);
+    }
+
+    private void colorMenuButton() {
+        menuButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        menuButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
     }
 
     public void setNumberButtons() {
