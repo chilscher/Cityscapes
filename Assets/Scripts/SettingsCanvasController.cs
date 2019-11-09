@@ -7,17 +7,10 @@ using System;
 
 public class SettingsCanvasController : MonoBehaviour {
     
-    public GameObject note1Button;
-    public GameObject note2Button;
-    public GameObject changeCorrectResidentColorButton;
-    public GameObject undoRedoButton;
-    //public GameObject removeColoredNumberNotes;
-    public GameObject removeAllOfNumber;
-    public GameObject clearPuzzle;
-
-    public GameObject showMedButton;
-    public GameObject showLargeButton;
-    public GameObject showHugeButton;
+    //public GameObject changeCorrectResidentColorButton;
+    //public GameObject undoRedoButton;
+    //public GameObject removeAllOfNumber;
+    //public GameObject clearPuzzle;
 
     public GameObject creditsButton;
     public GameObject creditsText;
@@ -31,10 +24,21 @@ public class SettingsCanvasController : MonoBehaviour {
     public float fadeInTime;
     private float fadeTimer;
 
+    public GameObject medCityButton;
+    public GameObject largeCityButton;
+    public GameObject hugeCityButton;
+    public GameObject notes1Button;
+    public GameObject notes2Button;
+    public GameObject residentColorButton;
+    public GameObject undoRedoButton;
+    public GameObject removeNumbersButton;
+    public GameObject clearPuzzleButton;
+    
+
 
     private void Start() {
-        updateButtons();
-
+        showAndHideButtons();
+        setCurrentToggleTexts();
 
         blackSprite = blackForeground.GetComponent<SpriteRenderer>();
 
@@ -48,8 +52,7 @@ public class SettingsCanvasController : MonoBehaviour {
 
         setScrollViewHeight();
     }
-
-
+    
     private void Update() {
         if (StaticVariables.isFading && StaticVariables.fadingFrom == "settings") {
             fadeTimer -= Time.deltaTime;
@@ -57,8 +60,6 @@ public class SettingsCanvasController : MonoBehaviour {
             c.a = (fadeOutTime - fadeTimer) / fadeOutTime;
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
-                //StaticVariables.isFading = false;
-                //if (StaticVariables.isTutorial) { SceneManager.LoadScene("InPuzzle"); }
                 if (StaticVariables.fadingTo == "menu") { SceneManager.LoadScene("MainMenu"); }
             }
         }
@@ -66,16 +67,13 @@ public class SettingsCanvasController : MonoBehaviour {
             fadeTimer -= Time.deltaTime;
             Color c = blackSprite.color;
             c.a = (fadeTimer) / fadeInTime;
-            //print(c.a);
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
                 StaticVariables.isFading = false;
             }
         }
-        //setScrollViewHeight();
     }
-
-
+    
     private void OnApplicationQuit() {
         SaveSystem.SaveGame();
     }
@@ -85,97 +83,111 @@ public class SettingsCanvasController : MonoBehaviour {
             StaticVariables.fadingTo = "menu";
             startFadeOut();
         }
-        //SceneManager.LoadScene("MainMenu");
     }
 
     public void startFadeOut() {
         fadeTimer = fadeOutTime;
         StaticVariables.isFading = true;
         StaticVariables.fadingFrom = "settings";
-        //fadingOut = true;
     }
 
-
-
-    public void clickedNote1Button() {
-        StaticVariables.includeNotes1Button = !StaticVariables.includeNotes1Button;
-        updateButtons();
-    }
-    public void clickedNote2Button() {
-        StaticVariables.includeNotes2Button = !StaticVariables.includeNotes2Button;
-        updateButtons();
-    }
-    public void clickedCorrectResidentButton() {
-        StaticVariables.changeResidentColorOnCorrectRows = !StaticVariables.changeResidentColorOnCorrectRows;
-        updateButtons();
-    }
-
-    private void updateButtons() {
-        note1Button.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes1Button);
-        note2Button.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeNotes2Button);
-        changeCorrectResidentColorButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.changeResidentColorOnCorrectRows);
-        undoRedoButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeUndoRedo);
-        //removeColoredNumberNotes.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeRemoveColoredNotesOfChosenNumber);
-        removeAllOfNumber.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeRemoveAllOfNumber);
-        clearPuzzle.transform.GetChild(0).gameObject.SetActive(StaticVariables.includeClearPuzzle);
-
-
-        showMedButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.showMed);
-        showLargeButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.showLarge);
-        showHugeButton.transform.GetChild(0).gameObject.SetActive(StaticVariables.showHuge);
-
-        showMedButton.SetActive(StaticVariables.unlockedMedium);
-        showLargeButton.SetActive(StaticVariables.unlockedLarge);
-        showHugeButton.SetActive(StaticVariables.unlockedHuge);
-        showMedButton.gameObject.transform.parent.gameObject.SetActive((StaticVariables.unlockedMedium || StaticVariables.unlockedLarge || StaticVariables.unlockedHuge));
-        note1Button.SetActive(StaticVariables.unlockedNotes1);
-        note2Button.SetActive(StaticVariables.unlockedNotes2);
-        changeCorrectResidentColorButton.SetActive(StaticVariables.unlockedResidentsChangeColor);
+    public void showAndHideButtons() {
+        medCityButton.SetActive(StaticVariables.unlockedMedium);
+        largeCityButton.SetActive(StaticVariables.unlockedLarge);
+        hugeCityButton.SetActive(StaticVariables.unlockedHuge);
+        notes1Button.SetActive(StaticVariables.unlockedNotes1);
+        notes2Button.SetActive(StaticVariables.unlockedNotes2);
+        residentColorButton.SetActive(StaticVariables.unlockedResidentsChangeColor);
         undoRedoButton.SetActive(StaticVariables.unlockedUndoRedo);
-        //removeColoredNumberNotes.SetActive(StaticVariables.unlockedRemoveColoredNotesOfChosenNumber);
-        removeAllOfNumber.SetActive(StaticVariables.unlockedRemoveAllOfNumber);
-        clearPuzzle.SetActive(StaticVariables.unlockedClearPuzzle);
+        removeNumbersButton.SetActive(StaticVariables.unlockedRemoveAllOfNumber);
+        clearPuzzleButton.SetActive(StaticVariables.unlockedClearPuzzle);
 
     }
 
-    public void clicked4Button() {
-        if (!StaticVariables.showLarge && !StaticVariables.showHuge) {
-            StaticVariables.showMed = !StaticVariables.showMed;
+    public void setCurrentToggleTexts() {
+        toggleText(medCityButton, StaticVariables.showMed);
+        toggleText(largeCityButton, StaticVariables.showLarge);
+        toggleText(hugeCityButton, StaticVariables.showHuge);
+        toggleText(notes1Button, StaticVariables.includeNotes1Button);
+        toggleText(notes2Button, StaticVariables.includeNotes2Button);
+        toggleText(residentColorButton, StaticVariables.changeResidentColorOnCorrectRows);
+        toggleText(undoRedoButton, StaticVariables.includeUndoRedo);
+        toggleText(removeNumbersButton, StaticVariables.includeRemoveAllOfNumber);
+        toggleText(clearPuzzleButton, StaticVariables.includeClearPuzzle);
+    }
+
+    public void toggleText(GameObject button, bool cond) {
+        button.transform.Find("Button").Find("On").gameObject.SetActive(cond);
+        button.transform.Find("Button").Find("Off").gameObject.SetActive(!cond);
+    }
+
+    public void pushMedButton() {
+        StaticVariables.showMed = !StaticVariables.showMed;
+        if (!StaticVariables.showMed) {
+            StaticVariables.showLarge = false;
+            StaticVariables.showHuge = false;
         }
-        updateButtons();
-    }
-    public void clicked5Button() {
-        if (!StaticVariables.showHuge && StaticVariables.showMed) {
-            StaticVariables.showLarge = !StaticVariables.showLarge;
-        }
-        updateButtons();
-    }
-    public void clicked6Button() {
-        if (StaticVariables.showLarge && StaticVariables.showMed) {
-            StaticVariables.showHuge = !StaticVariables.showHuge;
-        }
-        updateButtons();
+        setCurrentToggleTexts();
     }
 
-    public void clickedUndoRedoButton() {
-        StaticVariables.includeUndoRedo= !StaticVariables.includeUndoRedo;
-        updateButtons();
+    public void pushLargeButton() {
+        StaticVariables.showLarge = !StaticVariables.showLarge;
+        if (StaticVariables.showLarge) {
+            StaticVariables.showMed = true;
+        }
+        else {
+            StaticVariables.showHuge = false;
+        }
+        setCurrentToggleTexts();
     }
-    /*
-    public void clickedRemoveColoredNumberNotesButton() {
-        StaticVariables.includeRemoveColoredNotesOfChosenNumber = !StaticVariables.includeRemoveColoredNotesOfChosenNumber;
-        updateButtons();
-    }
-    */
 
-    public void clickedRemoveAllOfNumberButton() {
+    public void pushHugeButton() {
+        StaticVariables.showHuge = !StaticVariables.showHuge;
+        if (StaticVariables.showHuge) {
+            StaticVariables.showMed = true;
+            StaticVariables.showLarge = true;
+        }
+        setCurrentToggleTexts();
+    }
+
+    public void pushNotes1Button() {
+        StaticVariables.includeNotes1Button = !StaticVariables.includeNotes1Button;
+        setCurrentToggleTexts();
+    }
+
+    public void pushNotes2Button() {
+        StaticVariables.includeNotes2Button = !StaticVariables.includeNotes2Button;
+        setCurrentToggleTexts();
+    }
+    
+    public void pushResidentColorButton() {
+        StaticVariables.changeResidentColorOnCorrectRows = !StaticVariables.changeResidentColorOnCorrectRows;
+        setCurrentToggleTexts();
+    }
+
+    public void pushUndoRedoButton() {
+        StaticVariables.includeUndoRedo = !StaticVariables.includeUndoRedo;
+        if (!StaticVariables.includeUndoRedo) {
+            StaticVariables.includeRemoveAllOfNumber = false;
+            StaticVariables.includeClearPuzzle = false;
+        }
+        setCurrentToggleTexts();
+    }
+
+    public void pushRemoveNumbersButton() {
         StaticVariables.includeRemoveAllOfNumber = !StaticVariables.includeRemoveAllOfNumber;
-        updateButtons();
+        if (StaticVariables.includeRemoveAllOfNumber) {
+            StaticVariables.includeUndoRedo = true;
+        }
+        setCurrentToggleTexts();
     }
 
-    public void clickedClearPuzzleButton() {
+    public void pushClearPuzzleButton() {
         StaticVariables.includeClearPuzzle = !StaticVariables.includeClearPuzzle;
-        updateButtons();
+        if (StaticVariables.includeClearPuzzle) {
+            StaticVariables.includeUndoRedo = true;
+        }
+        setCurrentToggleTexts();
     }
 
     public void clickedCreditsButton() {

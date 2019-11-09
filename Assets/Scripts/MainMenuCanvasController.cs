@@ -58,6 +58,7 @@ public class MainMenuCanvasController : MonoBehaviour {
                 if (StaticVariables.fadingTo == "puzzle") { SceneManager.LoadScene("InPuzzle"); }
                 if (StaticVariables.fadingTo == "shop") { SceneManager.LoadScene("Shop"); }
                 if (StaticVariables.fadingTo == "settings") { SceneManager.LoadScene("Settings"); }
+                //if (StaticVariables.fadingTo == "tutorial menu") { SceneManager.LoadScene("Tutorials"); }
             }
         }
         if (StaticVariables.isFading && StaticVariables.fadingTo == "menu") {
@@ -92,7 +93,7 @@ public class MainMenuCanvasController : MonoBehaviour {
             startFadeOut();
         }
     }
-
+    
     public void startTutorial() {
         if (!StaticVariables.isFading) {
             StaticVariables.size = 3;
@@ -101,6 +102,15 @@ public class MainMenuCanvasController : MonoBehaviour {
             startFadeOut();
         }
     }
+    
+    /*
+    public void goToTutorialMenu() {
+        if (!StaticVariables.isFading) {
+            StaticVariables.fadingTo = "tutorial menu";
+            startFadeOut();
+        }
+    }
+    */
 
     public void goToShop() {
         if (!StaticVariables.isFading) {

@@ -17,6 +17,9 @@ public class TutorialManager{
     private string continueText;
 
     public void startTutorial() {
+        gameManager.puzzlePositioning = gameManager.tutorialCanvas.transform.Find("Puzzle Positioning").gameObject;
+        gameManager.blackForeground = gameManager.tutorialCanvas.transform.Find("Black Foreground").gameObject;
+        gameManager.blackSprite = gameManager.blackForeground.GetComponent<SpriteRenderer>();
         gameManager.puzzleGenerator.usePredeterminedSolution = true;
         gameManager.puzzleGenerator.predeterminedSolution = puzzle;
         gameManager.puzzleGenerator.createPuzzle(3);
@@ -25,16 +28,24 @@ public class TutorialManager{
         gameManager.hidePositioningObjects();
         gameManager.setSelectionModeButtons();
         gameManager.hitBuildButton();
-        gameManager.screenTappedMonitor.SetActive(true);
-        gameManager.tutorialTextBox.SetActive(true);
-        tutorialText = gameManager.tutorialTextBox.GetComponent<Transform>().GetChild(0).GetComponent<Text>();
-        continueClue = gameManager.tutorialTextBox.GetComponent<Transform>().GetChild(1).GetComponent<Text>();
-        gameManager.undoRedoButtons.SetActive(false);
-        gameManager.setRemoveAllAndClearButtons();
+        //gameManager.screenTappedMonitor.SetActive(true);
+        //gameManager.tutorialTextBox.SetActive(true);
+        tutorialText = gameManager.tutorialTextBox.transform.Find("Text").GetComponent<Text>();
+        continueClue = gameManager.tutorialTextBox.transform.Find("Continue clue").GetComponent<Text>();
+        //gameManager.undoRedoButtons.SetActive(false);
+        //gameManager.setRemoveAllAndClearButtons();
         //gameManager.removeColoredHintsOfChosenNumberButton.SetActive(false);
         //gameManager.removeAllOfNumberButton.SetActive(false);
         //gameManager.clearPuzzleButton.SetActive(false);
-
+        /*
+        gameManager.tutorialCanvas.transform.Find("Numbers").Find("1").Find("Button Image").Find("Borders").GetComponent<Image>().color = gameManager.offButtonColorExterior;
+        gameManager.tutorialCanvas.transform.Find("Numbers").Find("1").Find("Button Image").Find("Interior").GetComponent<Image>().color = gameManager.offButtonColorInterior;
+        gameManager.tutorialCanvas.transform.Find("Numbers").Find("2").Find("Button Image").Find("Borders").GetComponent<Image>().color = gameManager.offButtonColorExterior;
+        gameManager.tutorialCanvas.transform.Find("Numbers").Find("2").Find("Button Image").Find("Interior").GetComponent<Image>().color = gameManager.offButtonColorInterior;
+        gameManager.tutorialCanvas.transform.Find("Numbers").Find("3").Find("Button Image").Find("Borders").GetComponent<Image>().color = gameManager.offButtonColorExterior;
+        gameManager.tutorialCanvas.transform.Find("Numbers").Find("3").Find("Button Image").Find("Interior").GetComponent<Image>().color = gameManager.offButtonColorInterior;
+        */
+        gameManager.tutorialCanvas.transform.Find("Numbers").gameObject.SetActive(false);
         advanceStage();
     }
 
@@ -84,7 +95,7 @@ public class TutorialManager{
                 text = "To place a building, tap the building size you would like to place...";
                 continueText = "Choose the right building size...";
                 //gameManager.drawNumberButtons();
-                gameManager.setNumberButtons();
+                gameManager.tutorialCanvas.transform.Find("Numbers").gameObject.SetActive(true);
                 addRedBoxAroundNumButton(2);
                 tutorialText.text = text;
                 continueClue.text = continueText;
