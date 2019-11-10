@@ -1,0 +1,66 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System;
+
+public class CreditsCanvasController : MonoBehaviour {
+ 
+
+    public GameObject blackForeground; //used to transition to/from the puzzle menu
+    private SpriteRenderer blackSprite;
+    public float fadeOutTime;
+    public float fadeInTime;
+    private float fadeTimer;
+    
+    
+
+
+    private void Start() {
+        blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+
+        if (StaticVariables.isFading && StaticVariables.fadingTo == "settings") {
+            fadeTimer = fadeInTime;
+        }
+    }
+    
+    private void Update() {
+        if (StaticVariables.isFading && StaticVariables.fadingFrom == "credits") {
+            fadeTimer -= Time.deltaTime;
+            Color c = blackSprite.color;
+            c.a = (fadeOutTime - fadeTimer) / fadeOutTime;
+            blackSprite.color = c;
+            if (fadeTimer <= 0f) {
+                if (StaticVariables.fadingTo == "settings") { SceneManager.LoadScene("Settings"); }
+            }
+        }
+        if (StaticVariables.isFading && StaticVariables.fadingTo == "credits") {
+            fadeTimer -= Time.deltaTime;
+            Color c = blackSprite.color;
+            c.a = (fadeTimer) / fadeInTime;
+            blackSprite.color = c;
+            if (fadeTimer <= 0f) {
+                StaticVariables.isFading = false;
+            }
+        }
+    }
+    
+    private void OnApplicationQuit() {
+        SaveSystem.SaveGame();
+    }
+
+    public void back() {
+        if (!StaticVariables.isFading) {
+            StaticVariables.fadingTo = "settings";
+            startFadeOut();
+        }
+    }
+
+    public void startFadeOut() {
+        fadeTimer = fadeOutTime;
+        StaticVariables.isFading = true;
+        StaticVariables.fadingFrom = "credits";
+    }
+    
+}

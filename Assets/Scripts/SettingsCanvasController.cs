@@ -12,8 +12,8 @@ public class SettingsCanvasController : MonoBehaviour {
     //public GameObject removeAllOfNumber;
     //public GameObject clearPuzzle;
 
-    public GameObject creditsButton;
-    public GameObject creditsText;
+    //public GameObject creditsButton;
+    //public GameObject creditsText;
 
     public GameObject scrollView;
 
@@ -45,10 +45,11 @@ public class SettingsCanvasController : MonoBehaviour {
         if (StaticVariables.isFading && StaticVariables.fadingTo == "settings") {
             fadeTimer = fadeInTime;
         }
-
-        creditsButton.transform.GetChild(1).GetComponent<Text>().text = "SHOW CREDITS";
+        /*
+        creditsButton.transform.Find("Button").Find("Show").gameObject.SetActive(true);
+        creditsButton.transform.Find("Button").Find("Hide").gameObject.SetActive(false);
         creditsText.SetActive(false);
-
+        */
 
         setScrollViewHeight();
     }
@@ -61,6 +62,7 @@ public class SettingsCanvasController : MonoBehaviour {
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
                 if (StaticVariables.fadingTo == "menu") { SceneManager.LoadScene("MainMenu"); }
+                if (StaticVariables.fadingTo == "credits") { SceneManager.LoadScene("Credits"); }
             }
         }
         if (StaticVariables.isFading && StaticVariables.fadingTo == "settings") {
@@ -190,18 +192,26 @@ public class SettingsCanvasController : MonoBehaviour {
         setCurrentToggleTexts();
     }
 
-    public void clickedCreditsButton() {
+    public void pushCreditsButton() {
+        if (!StaticVariables.isFading) {
+            StaticVariables.fadingTo = "credits";
+            startFadeOut();
+        }
+        /*
         if (creditsText.activeSelf) {
-            creditsButton.transform.GetChild(1).GetComponent<Text>().text = "SHOW CREDITS";
+            creditsButton.transform.Find("Button").Find("Show").gameObject.SetActive(true);
+            creditsButton.transform.Find("Button").Find("Hide").gameObject.SetActive(false);
             creditsText.SetActive(false);
         }
         else {
-            creditsButton.transform.GetChild(1).GetComponent<Text>().text = "HIDE CREDITS";
+            creditsButton.transform.Find("Button").Find("Show").gameObject.SetActive(false);
+            creditsButton.transform.Find("Button").Find("Hide").gameObject.SetActive(true);
             creditsText.SetActive(true);
         }
         setScrollViewHeight();
+        */
     }
-    
+    /*
     public void setScrollViewHeight() {
         //sets the scroll viewer (vertical layout group) height to match its contents. minimum is the height of its parent scrollable container
         //to be called whenever an item is shown or hidden in the settings window
@@ -236,5 +246,38 @@ public class SettingsCanvasController : MonoBehaviour {
 
 
     }
-    
+    */
+    public void setScrollViewHeight() {
+        //sets the scroll viewer (vertical layout group) height to match its contents. minimum is the height of its parent scrollable container
+        //to be called whenever an item is shown or hidden in the settings window
+
+        //define the current top height - for use at the end of the function
+        float topHeight = (float)Math.Round(((1 - scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition) * (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y)), 2);
+
+        resizeToFitChildren(scrollView);
+
+        //set the scroll view to be at the same position as previously
+        scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - (topHeight / (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y));
+
+    }
+
+    public void resizeToFitChildren(GameObject parent) {
+        //get height of contents, including spaces between objects and top and bottom padding
+        float newHeight = 0f;
+        int activeCount = 0;
+        for (int i = 0; i < parent.transform.childCount; i++) {
+            float h = parent.transform.GetChild(i).GetComponent<RectTransform>().sizeDelta.y;
+            if (parent.transform.GetChild(i).gameObject.activeSelf) {
+                newHeight += h;
+                activeCount++;
+            }
+        }
+        newHeight += ((activeCount - 1) * parent.GetComponent<VerticalLayoutGroup>().spacing);
+        newHeight += parent.GetComponent<VerticalLayoutGroup>().padding.top + parent.GetComponent<VerticalLayoutGroup>().padding.bottom;
+
+        Vector2 newSize = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, newHeight);
+        parent.GetComponent<RectTransform>().sizeDelta = newSize;
+
+    }
+
 }
