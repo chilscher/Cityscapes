@@ -9,12 +9,13 @@ public class TutorialManager{
     public string puzzle = "231312123";
     public GameManager gameManager;
     private int tutorialStage = 0;
-    //private int tutorialStage = 26;
     public string advanceRequirement;
     public Text tutorialText;
     public Text continueClue;
     private string text;
     private string continueText;
+    private string skipRequirement = ""; //if you complete this requirement, skip a few steps until you get to "skipToStage"
+    private int skipToStage = 0;
 
     public void startTutorial() {
         gameManager.puzzlePositioning = gameManager.tutorialCanvas.transform.Find("Puzzle Positioning").gameObject;
@@ -28,23 +29,8 @@ public class TutorialManager{
         gameManager.hidePositioningObjects();
         gameManager.setSelectionModeButtons();
         gameManager.hitBuildButton();
-        //gameManager.screenTappedMonitor.SetActive(true);
-        //gameManager.tutorialTextBox.SetActive(true);
         tutorialText = gameManager.tutorialTextBox.transform.Find("Text").GetComponent<Text>();
         continueClue = gameManager.tutorialTextBox.transform.Find("Continue clue").GetComponent<Text>();
-        //gameManager.undoRedoButtons.SetActive(false);
-        //gameManager.setRemoveAllAndClearButtons();
-        //gameManager.removeColoredHintsOfChosenNumberButton.SetActive(false);
-        //gameManager.removeAllOfNumberButton.SetActive(false);
-        //gameManager.clearPuzzleButton.SetActive(false);
-        /*
-        gameManager.tutorialCanvas.transform.Find("Numbers").Find("1").Find("Button Image").Find("Borders").GetComponent<Image>().color = gameManager.offButtonColorExterior;
-        gameManager.tutorialCanvas.transform.Find("Numbers").Find("1").Find("Button Image").Find("Interior").GetComponent<Image>().color = gameManager.offButtonColorInterior;
-        gameManager.tutorialCanvas.transform.Find("Numbers").Find("2").Find("Button Image").Find("Borders").GetComponent<Image>().color = gameManager.offButtonColorExterior;
-        gameManager.tutorialCanvas.transform.Find("Numbers").Find("2").Find("Button Image").Find("Interior").GetComponent<Image>().color = gameManager.offButtonColorInterior;
-        gameManager.tutorialCanvas.transform.Find("Numbers").Find("3").Find("Button Image").Find("Borders").GetComponent<Image>().color = gameManager.offButtonColorExterior;
-        gameManager.tutorialCanvas.transform.Find("Numbers").Find("3").Find("Button Image").Find("Interior").GetComponent<Image>().color = gameManager.offButtonColorInterior;
-        */
         gameManager.tutorialCanvas.transform.Find("Numbers").gameObject.SetActive(false);
         advanceStage();
     }
@@ -52,16 +38,18 @@ public class TutorialManager{
     private void advanceStage() {
         tutorialStage++;
 
+        //string prevSkipReq = skipRequirement;
+
         switch (tutorialStage) {
             case 1:
-                text = "Welcome to Cityscapes! This is a number- placement puzzle game. In Cityscapes, you are a city designer, and your job is to build a city to fit its new residents' wishes.";
+                text = "Welcome to Cityscapes! This is a number-placement puzzle game. In Cityscapes, you are a city designer, and your job is to build a city to fit its new residents' wishes.";
                 continueText = "Tap to continue...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
                 break;
             case 2:
-                text = "This 3x3 grid is your city, and each space on the grid can hold one building.";
+                text = "The above 3x3 grid is your city, and each space on the grid can hold one building.";
                 continueText = "Tap to continue...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -102,7 +90,7 @@ public class TutorialManager{
                 advanceRequirement = "tap number button 2";
                 break;
             case 7:
-                text = "To place a building, tap the building size you would like to place,\nthen tap the space you would like to build on.";
+                text = "To place a building, tap the building size you would like to place,\n\nthen tap the space you would like to build on.";
                 continueText = "Place the building...";
                 removeRedBoxesAroundNums();
                 addRedBoxAroundTile(0);
@@ -131,9 +119,11 @@ public class TutorialManager{
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
+                skipRequirement = "add building of height 3 to tile 3";
+                skipToStage = 14;
                 break;
             case 11:
-                text = "Firstly, every street has to contain exactly one building of each height. These three buildings form a street and already satisfy this rule.";
+                text = "Firstly, every street has to contain exactly one building of each height.\n\nThese three buildings form a street and already satisfy this rule.";
                 continueText = "Tap to continue...";
                 addRedBoxAroundStreet("horizontal", 2);
                 tutorialText.text = text;
@@ -148,13 +138,16 @@ public class TutorialManager{
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
+                //skipRequirement = "add building of height 3 to tile 3";
+                //skipToStage = 15;
                 break;
             case 13:
-                text = "However, this street does not yet have one of every building! It still needs a three-story building in the middle.";
+                text = "However, this street does not yet have one of every building!\n\nIt still needs a three-story building in the middle.";
                 continueText = "Place the correct building...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "add building of height 3 to tile 3";
+                skipRequirement = "";
                 break;
             case 14:
                 text = "Great! The second building requirement involves the residents of the city...";
@@ -165,7 +158,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 15:
-                text = "Great! The second building requirement involves the residents of the city, who are now standing at the ends of every street!";
+                text = "Great! The second building requirement involves the residents of the city,\n\nwho are now standing at the ends of every street!";
                 continueText = "Tap to continue...";
                 gameManager.showHints();
                 tutorialText.text = text;
@@ -195,9 +188,11 @@ public class TutorialManager{
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
+                skipRequirement = "add building of height 3 to tile 1";
+                skipToStage = 21;
                 break;
             case 19:
-                text = "This resident is looking down this street, and only wants to be able to see one building. So we know that the building closest to them has to be the tallest one on the whole street!";
+                text = "This resident is looking down this street, and only wants to be able to see one building.\n\nSo we know that the building closest to them has to be the tallest one on the whole street!";
                 continueText = "Tap to continue...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -209,6 +204,7 @@ public class TutorialManager{
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "add building of height 3 to tile 1";
+                skipRequirement = "";
                 break;
             case 21:
                 text = "Awesome!";
@@ -220,7 +216,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 22:
-                text = "Awesome! Now, you can fill in the last missing building on the topmost street.";
+                text = "Awesome!\n\nNow, you can fill in the last missing building on the topmost street.";
                 continueText = "Place the correct building...";
                 addRedBoxAroundStreet("horizontal", 0);
                 tutorialText.text = text;
@@ -254,7 +250,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 26:
-                text = "Congratulations! You have completed your first city in Cityscapes! Now let's start a new city from scratch!";
+                text = "Congratulations! You have completed your first city in Cityscapes!\n\nNow let's start a new city from scratch!";
                 continueText = "Tap to continue...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -290,13 +286,16 @@ public class TutorialManager{
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
+                skipRequirement = "add buildings of height 3 to tiles 2 and 6";
+                skipToStage = 31;
                 break;
             case 30:
-                text = "These four residents only want to see one building, so you know the spaces next to them have to have three-story buildings.";
+                text = "These four residents only want to see one building,\n\nso you know the spaces next to them have to have three-story buildings.";
                 continueText = "Place the correct buildings...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "add buildings of height 3 to tiles 2 and 6";
+                skipRequirement = "";
                 break;
             case 31:
                 text = "Well done!";
@@ -307,7 +306,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 32:
-                text = "Well done! Now, you know enough to figure out where the final three-story building has to go! Remember, only one of each building size can go in each street!";
+                text = "Well done!\n\nNow, you know enough to figure out where the final three-story building has to go! Remember, only one of each building size can go in each street!";
                 continueText = "Place the correct building...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -327,9 +326,11 @@ public class TutorialManager{
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
+                skipRequirement = "add building of height 2 to tile 0";
+                skipToStage = 37;
                 break;
             case 35:
-                text = "This resident only wants to see two buildings down their street. Therefore, we know that this building...";
+                text = "This resident only wants to see two buildings down their street.\n\nTherefore, we know that this building...";
                 continueText = "Tap to continue...";
                 addRedBoxAroundTile(0);
                 tutorialText.text = text;
@@ -337,11 +338,12 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 36:
-                text = "This resident only wants to see two buildings down their street. Therefore, we know that this building has to be the second-tallest building in the street!";
+                text = "This resident only wants to see two buildings down their street.\n\nTherefore, we know that this building has to be the second-tallest building in the street!";
                 continueText = "Place the correct building...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "add building of height 2 to tile 0";
+                skipRequirement = "";
                 break;
             case 37:
                 text = "And now you know enough to completely fill the top street!";
@@ -369,7 +371,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 40:
-                text = "Congratulations! You have completed the tutorial for Cityscapes. Return to the main menu and try a puzzle on your own! You can redo this tutorial at any time.";
+                text = "Congratulations! You have completed the tutorial for Cityscapes.\n\nReturn to the main menu and try a puzzle on your own! You can redo this tutorial at any time.";
                 continueText = "Main Menu...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -385,6 +387,11 @@ public class TutorialManager{
 
     }
 
+    private void skipStage() {
+        while(tutorialStage < skipToStage) {
+            advanceStage();
+        }
+    }
 
 
 
@@ -409,6 +416,9 @@ public class TutorialManager{
                     if (advanceRequirement == "add building of height " + chosenNumber + " to tile " + tileNum) {
                         advanceStage();
                     }
+                    if (skipRequirement == "add building of height " + chosenNumber + " to tile " + tileNum) {
+                        skipStage();
+                    }
                 }
             }
         }
@@ -417,6 +427,12 @@ public class TutorialManager{
             PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
             if (ts[0, 2].shownNumber == 3 && ts[2,0].shownNumber == 3) {
                 advanceStage();
+            }
+        }
+        if (skipRequirement == "add buildings of height 3 to tiles 2 and 6") {
+            PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
+            if (ts[0, 2].shownNumber == 3 && ts[2, 0].shownNumber == 3) {
+                skipStage();
             }
         }
         if (advanceRequirement == "complete the city") {
@@ -439,16 +455,12 @@ public class TutorialManager{
 
     private void addRedBoxAroundNumButton(int num) {
         gameManager.numberButtons[num - 1].transform.Find("Red Border").gameObject.SetActive(true);
-        //NumberButton n = gameManager.numbersPositioning.GetComponent<Transform>().GetChild(num).GetComponent<NumberButton>();
-        //n.GetComponent<Transform>().GetChild(2).gameObject.SetActive(true);
     }
 
     private void removeRedBoxesAroundNums() {
         for (int i = 1; i<gameManager.size + 1; i++) {
 
             gameManager.numberButtons[i - 1].transform.Find("Red Border").gameObject.SetActive(false);
-            //NumberButton n = gameManager.numbersPositioning.GetComponent<Transform>().GetChild(i).GetComponent<NumberButton>();
-            //n.GetComponent<Transform>().GetChild(2).gameObject.SetActive(false);
 
         }
     }
@@ -482,10 +494,21 @@ public class TutorialManager{
                     if (advanceRequirement == "add building of height " + chosenNumber + " to tile " + tileNum) {
                         return true;
                     }
+                    if (skipRequirement == "add building of height " + chosenNumber + " to tile " + tileNum) {
+                        return true;
+                    }
                 }
             }
         }
         if (advanceRequirement == "add buildings of height 3 to tiles 2 and 6") {
+            PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
+            if (gameManager.selectedNumber == 3) {
+                if (ts[0, 2] == t || ts[2, 0] == t) {
+                    return true;
+                }
+            }
+        }
+        if (skipRequirement == "add buildings of height 3 to tiles 2 and 6") {
             PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
             if (gameManager.selectedNumber == 3) {
                 if (ts[0, 2] == t || ts[2, 0] == t) {

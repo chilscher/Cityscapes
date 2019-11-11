@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Skin: MonoBehaviour{
     
-    public string offButtonColor;
-    public string onButtonColor;
     public string note1Color;
     public string note2Color;
     public Sprite buildIcon;

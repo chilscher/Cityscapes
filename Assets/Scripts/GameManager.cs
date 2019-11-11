@@ -10,10 +10,17 @@ public class GameManager : MonoBehaviour {
     public string clickTileAction = "Apply Selected";
     [HideInInspector]
     public int selectedNumber = 0;
-    public PuzzleGenerator puzzleGenerator;
+    [HideInInspector]
     public int size;
+    [HideInInspector]
+    public bool includeNote1Btn;
+    [HideInInspector]
+    public bool includeNote2Btn;
 
-    //public GameObject numberButtonPrefab;
+
+
+    public PuzzleGenerator puzzleGenerator;
+    
     public GameObject puzzlePositioning;
     public GameObject puzzlePositioningImage;
     public GameObject canvas;
@@ -25,8 +32,6 @@ public class GameManager : MonoBehaviour {
     private GameObject prevNumberSelectionButton;
     
     public GameObject streetCorner;
-    public bool includeNote1Btn;
-    public bool includeNote2Btn;
     public GameObject selectionModeButtons1;
     public GameObject selectionModeButtons2;
     public GameObject selectionModeButtons3;
@@ -43,6 +48,7 @@ public class GameManager : MonoBehaviour {
     public int coinsFor6Win = 20;
     
     public GameObject blackForeground; //used to transition to/from the main menu
+    [HideInInspector]
     public SpriteRenderer blackSprite;
     public float fadeOutTime;
     public float fadeInTime;
@@ -66,10 +72,8 @@ public class GameManager : MonoBehaviour {
     private PuzzleState currentPuzzleState;
     private List<PuzzleState> nextPuzzleStates = new List<PuzzleState>();// the list of puzzle states to be restored by the redo button
     
-
-    private Color offButtonColor;
-    private Color onButtonColor;
-
+    
+    [HideInInspector]
     public Color offButtonColorExterior;
     public Color onButtonColorExterior;
     public Color offButtonColorInterior;
@@ -111,9 +115,7 @@ public class GameManager : MonoBehaviour {
         includeNote1Btn = StaticVariables.includeNotes1Button;
         includeNote2Btn = StaticVariables.includeNotes2Button;
 
-
-        ColorUtility.TryParseHtmlString(skin.offButtonColor, out offButtonColor);
-        ColorUtility.TryParseHtmlString(skin.onButtonColor, out onButtonColor);
+        
         ColorUtility.TryParseHtmlString(skin.onButtonColorExterior, out onButtonColorExterior);
         ColorUtility.TryParseHtmlString(skin.onButtonColorInterior, out onButtonColorInterior);
         ColorUtility.TryParseHtmlString(skin.offButtonColorExterior, out offButtonColorExterior);
@@ -127,7 +129,6 @@ public class GameManager : MonoBehaviour {
         if (StaticVariables.isTutorial) {
             originalPuzzleScale = puzzlePositioning.transform.localScale.x;
             setTutorialNumberButtons();
-            tutorialTextBox.GetComponent<Image>().color = offButtonColor;
             tutorialCanvas.SetActive(true);
             puzzleCanvas.SetActive(false);
 
@@ -363,8 +364,8 @@ public class GameManager : MonoBehaviour {
         }
 
         if (includeNote1Btn || includeNote2Btn) { buildButton.transform.GetChild(1).GetComponent<Image>().sprite = skin.buildIcon; }
-        if (includeNote1Btn) { note1Button.transform.GetChild(1).GetComponent<Image>().sprite = skin.note1Icon; }
-        if (includeNote2Btn) { note2Button.transform.GetChild(1).GetComponent<Image>().sprite = skin.note2Icon; }
+        if (includeNote1Btn) { note1Button.transform.Find("Icon").GetComponent<Image>().sprite = skin.note1Icon; }
+        if (includeNote2Btn) { note2Button.transform.Find("Icon").GetComponent<Image>().sprite = skin.note2Icon; }
 
     }
 
