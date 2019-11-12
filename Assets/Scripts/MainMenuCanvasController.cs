@@ -10,6 +10,11 @@ public class MainMenuCanvasController : MonoBehaviour {
     public GameObject smallAndMedPuzzleButtons;
     public GameObject smallMedLargePuzzleButtons;
     public GameObject smallMedLargeHugePuzzleButtons;
+    public GameObject background;
+
+    public GameObject shopButton;
+    public GameObject tutorialButton;
+    public GameObject settingsButton;
 
     public GameObject blackForeground; //used to transition to/from the puzzle menu
     private SpriteRenderer blackSprite;
@@ -17,13 +22,26 @@ public class MainMenuCanvasController : MonoBehaviour {
     public float fadeInTime;
     private float fadeTimer;
 
+
+    public Skin defaultSkin;
+
+    public Skin[] skins;
+
+    //private Color buttonColorExterior;
+    //private Color buttonColorInterior;
+
     private void Start() {
 
         if (StaticVariables.isApplicationLaunchingFirstTime) {
-            SaveSystem.LoadGame();
+            SaveSystem.LoadGame(skins);
             StaticVariables.isApplicationLaunchingFirstTime = false;
         }
-        
+
+        background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.mainMenuBackground;
+        //ColorUtility.TryParseHtmlString(StaticVariables.skin.mainMenuButtonExterior, out buttonColorExterior);
+        //ColorUtility.TryParseHtmlString(StaticVariables.skin.mainMenuButtonInterior, out buttonColorInterior);
+        colorButtons();
+        applyCityArtSkin();
 
         blackSprite = blackForeground.GetComponent<SpriteRenderer>();
 
@@ -49,6 +67,7 @@ public class MainMenuCanvasController : MonoBehaviour {
     }
 
     private void Update() {
+        //
         if (StaticVariables.isFading && StaticVariables.fadingFrom == "menu") {
             fadeTimer -= Time.deltaTime;
             Color c = blackSprite.color;
@@ -58,7 +77,6 @@ public class MainMenuCanvasController : MonoBehaviour {
                 if (StaticVariables.fadingTo == "puzzle") { SceneManager.LoadScene("InPuzzle"); }
                 if (StaticVariables.fadingTo == "shop") { SceneManager.LoadScene("Shop"); }
                 if (StaticVariables.fadingTo == "settings") { SceneManager.LoadScene("Settings"); }
-                //if (StaticVariables.fadingTo == "tutorial menu") { SceneManager.LoadScene("Tutorials"); }
             }
         }
         if (StaticVariables.isFading && StaticVariables.fadingTo == "menu") {
@@ -102,15 +120,6 @@ public class MainMenuCanvasController : MonoBehaviour {
             startFadeOut();
         }
     }
-    
-    /*
-    public void goToTutorialMenu() {
-        if (!StaticVariables.isFading) {
-            StaticVariables.fadingTo = "tutorial menu";
-            startFadeOut();
-        }
-    }
-    */
 
     public void goToShop() {
         if (!StaticVariables.isFading) {
@@ -124,5 +133,41 @@ public class MainMenuCanvasController : MonoBehaviour {
             StaticVariables.fadingTo = "settings";
             startFadeOut();
         }
+    }
+    /*
+    private void updateButtonColors(GameObject button) {
+        button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = buttonColorExterior;
+        button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = buttonColorInterior;
+    }
+    */
+
+    private void colorButtons() {
+        InterfaceFunctions.colorMenuButton(onlySmallPuzzleButton.transform.Find("3").gameObject);
+        InterfaceFunctions.colorMenuButton(smallAndMedPuzzleButtons.transform.Find("3").gameObject);
+        InterfaceFunctions.colorMenuButton(smallAndMedPuzzleButtons.transform.Find("4").gameObject);
+        InterfaceFunctions.colorMenuButton(smallMedLargePuzzleButtons.transform.Find("3").gameObject);
+        InterfaceFunctions.colorMenuButton(smallMedLargePuzzleButtons.transform.Find("4").gameObject);
+        InterfaceFunctions.colorMenuButton(smallMedLargePuzzleButtons.transform.Find("5").gameObject);
+        InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("3").gameObject);
+        InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("4").gameObject);
+        InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("5").gameObject);
+        InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("6").gameObject);
+
+        InterfaceFunctions.colorMenuButton(shopButton);
+        InterfaceFunctions.colorMenuButton(tutorialButton);
+        InterfaceFunctions.colorMenuButton(settingsButton);
+    }
+
+    private void applyCityArtSkin() {
+        onlySmallPuzzleButton.transform.Find("3").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
+        smallAndMedPuzzleButtons.transform.Find("3").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
+        smallAndMedPuzzleButtons.transform.Find("4").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
+        smallMedLargePuzzleButtons.transform.Find("3").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
+        smallMedLargePuzzleButtons.transform.Find("4").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
+        smallMedLargePuzzleButtons.transform.Find("5").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
+        smallMedLargeHugePuzzleButtons.transform.Find("3").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
+        smallMedLargeHugePuzzleButtons.transform.Find("4").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
+        smallMedLargeHugePuzzleButtons.transform.Find("5").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
+        smallMedLargeHugePuzzleButtons.transform.Find("6").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
     }
 }

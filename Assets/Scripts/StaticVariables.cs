@@ -25,6 +25,7 @@ public class StaticVariables{
     static public bool isApplicationLaunchingFirstTime = true;
 
     static public string whiteHex = "#ffffff";
+    
     static public string mintHex = "#98ff98";
     static public string greenHex = "#228b22";
     static public string redHex = "#ff0000";
@@ -32,6 +33,7 @@ public class StaticVariables{
     static public string lightRedHex = "#f85f65";
     static public string lightBlueHex = "#99d9ea";
     static public string darkMintHex = "";
+    
 
     static public bool isFading;
     static public string fadingFrom;
@@ -45,7 +47,8 @@ public class StaticVariables{
     static public bool unlockedNotes2 = false;
     static public bool unlockedResidentsChangeColor = false;
     static public bool unlockedUndoRedo = false;
-    //static public bool unlockedRemoveColoredNotesOfChosenNumber = false;
     static public bool unlockedRemoveAllOfNumber = false;
     static public bool unlockedClearPuzzle = false;
+
+    static public Skin skin;
 }

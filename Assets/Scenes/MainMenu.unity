@@ -805,7 +805,7 @@ GameObject:
   - component: {fileID: 292074721}
   - component: {fileID: 292074720}
   m_Layer: 0
-  m_Name: Small City Art
+  m_Name: City Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1780,7 +1780,7 @@ GameObject:
   - component: {fileID: 558893442}
   - component: {fileID: 558893441}
   m_Layer: 0
-  m_Name: Small City Art
+  m_Name: City Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2566,7 +2566,7 @@ GameObject:
   - component: {fileID: 667892839}
   - component: {fileID: 667892838}
   m_Layer: 0
-  m_Name: Large City Art
+  m_Name: City Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2722,7 +2722,7 @@ GameObject:
   - component: {fileID: 755770460}
   - component: {fileID: 755770459}
   m_Layer: 0
-  m_Name: Medium City Art
+  m_Name: City Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2910,7 +2910,7 @@ GameObject:
   - component: {fileID: 803628234}
   - component: {fileID: 803628233}
   m_Layer: 0
-  m_Name: Huge City Art
+  m_Name: City Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3343,9 +3343,18 @@ MonoBehaviour:
   smallAndMedPuzzleButtons: {fileID: 26980899}
   smallMedLargePuzzleButtons: {fileID: 866361116}
   smallMedLargeHugePuzzleButtons: {fileID: 1990785418}
+  background: {fileID: 1863834607}
+  shopButton: {fileID: 1656825152}
+  tutorialButton: {fileID: 443763566}
+  settingsButton: {fileID: 631664034}
   blackForeground: {fileID: 2055686838}
   fadeOutTime: 0.5
   fadeInTime: 0.5
+  defaultSkin: {fileID: 2135032764033575535, guid: 83513b0b1be6dbc4884f648b2c97455a,
+    type: 3}
+  skins:
+  - {fileID: 2135032764033575535, guid: 83513b0b1be6dbc4884f648b2c97455a, type: 3}
+  - {fileID: 2135032764033575535, guid: c494d6e07e4991b41969f01a991d1aa2, type: 3}
 --- !u!114 &1005856052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5288,7 +5297,7 @@ GameObject:
   - component: {fileID: 1553579926}
   - component: {fileID: 1553579925}
   m_Layer: 0
-  m_Name: Large City Art
+  m_Name: City Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6132,7 +6141,7 @@ GameObject:
   - component: {fileID: 1685997692}
   - component: {fileID: 1685997691}
   m_Layer: 0
-  m_Name: Medium City Art
+  m_Name: City Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6282,7 +6291,7 @@ GameObject:
   - component: {fileID: 1689844917}
   - component: {fileID: 1689844916}
   m_Layer: 0
-  m_Name: Small City Art
+  m_Name: City Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6698,7 +6707,7 @@ GameObject:
   - component: {fileID: 1817663211}
   - component: {fileID: 1817663210}
   m_Layer: 0
-  m_Name: Medium City Art
+  m_Name: City Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7188,7 +7197,7 @@ GameObject:
   - component: {fileID: 1928497073}
   - component: {fileID: 1928497072}
   m_Layer: 0
-  m_Name: Small City Art
+  m_Name: City Art
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -67,8 +67,10 @@ public class ShopCanvasController : MonoBehaviour {
     private Color noPurchaseButtonInteriorColor;
 
     private GameObject expandedButton;
-    
 
+    public GameObject background;
+
+    public GameObject menuButton;
 
     private void Start() {
         ColorUtility.TryParseHtmlString(affordableCoinColor, out affordableColor);
@@ -98,7 +100,10 @@ public class ShopCanvasController : MonoBehaviour {
 
         updateButtons();
 
+        background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
         blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+
+        InterfaceFunctions.colorMenuButton(menuButton);
 
         if (StaticVariables.isFading && StaticVariables.fadingTo == "shop") {
             fadeTimer = fadeInTime;

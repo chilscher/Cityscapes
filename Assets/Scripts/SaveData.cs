@@ -30,6 +30,8 @@ public class SaveData{
     public bool unlockedRemoveAllOfNumber;
     public bool unlockedClearPuzzle;
 
+    public string skinName;
+
 
     public SaveData() {
         coins = StaticVariables.coins;
@@ -56,10 +58,10 @@ public class SaveData{
         //unlockedRemoveColoredNumberNotes = StaticVariables.unlockedRemoveColoredNotesOfChosenNumber;
         unlockedRemoveAllOfNumber = StaticVariables.unlockedRemoveAllOfNumber;
         unlockedClearPuzzle = StaticVariables.unlockedClearPuzzle;
-
+        skinName = StaticVariables.skin.skinName;
     }
 
-    public void LoadData() {
+    public void LoadData(Skin[] skins) {
 
         StaticVariables.coins = coins;
         StaticVariables.includeNotes1Button = includeNotes1;
@@ -85,6 +87,17 @@ public class SaveData{
         //StaticVariables.unlockedRemoveColoredNotesOfChosenNumber = unlockedRemoveColoredNumberNotes;
         StaticVariables.unlockedRemoveAllOfNumber = unlockedRemoveAllOfNumber;
         StaticVariables.unlockedClearPuzzle = unlockedClearPuzzle;
+
+        StaticVariables.skin = getSkinFromName(skinName, skins);
+    }
+
+    public Skin getSkinFromName(string name, Skin[] skins) {
+        foreach (Skin s in skins) {
+            if (s.skinName == name) {
+                return s;
+            }
+        }
+        return skins[0];
     }
 
 

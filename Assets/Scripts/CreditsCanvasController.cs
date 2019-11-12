@@ -13,12 +13,19 @@ public class CreditsCanvasController : MonoBehaviour {
     public float fadeOutTime;
     public float fadeInTime;
     private float fadeTimer;
-    
+
+    public GameObject background;
+    private Color buttonColorExterior;
+    private Color buttonColorInterior;
+    public GameObject menuButton;
     
 
 
     private void Start() {
+        background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.creditsBackground;
         blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+
+        InterfaceFunctions.colorMenuButton(menuButton);
 
         if (StaticVariables.isFading && StaticVariables.fadingTo == "settings") {
             fadeTimer = fadeInTime;
@@ -62,5 +69,7 @@ public class CreditsCanvasController : MonoBehaviour {
         StaticVariables.isFading = true;
         StaticVariables.fadingFrom = "credits";
     }
+
     
+
 }

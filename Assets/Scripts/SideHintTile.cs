@@ -43,9 +43,15 @@ public class SideHintTile : Tile {
     }
 
     public void setNumberColors() {
+        if (!StaticVariables.isTutorial) {
 
-        ColorUtility.TryParseHtmlString(StaticVariables.mintHex, out incorrectColor);
-        ColorUtility.TryParseHtmlString(StaticVariables.greenHex, out correctColor);
+            ColorUtility.TryParseHtmlString(StaticVariables.skin.citizenColor, out incorrectColor);
+            ColorUtility.TryParseHtmlString(StaticVariables.skin.satisfiedCitizenColor, out correctColor);
+        }
+        else {
+            ColorUtility.TryParseHtmlString(StaticVariables.mintHex, out incorrectColor);
+            ColorUtility.TryParseHtmlString(StaticVariables.greenHex, out correctColor);
+        }
     }
 
     public bool isRowValid() {

@@ -33,6 +33,10 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject undoRedoButton;
     public GameObject removeNumbersButton;
     public GameObject clearPuzzleButton;
+
+    public GameObject background;
+
+    public GameObject menuButton;
     
 
 
@@ -40,7 +44,10 @@ public class SettingsCanvasController : MonoBehaviour {
         showAndHideButtons();
         setCurrentToggleTexts();
 
+        //background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
         blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+        //InterfaceFunctions.colorMenuButton(menuButton);
+        loadSkin();
 
         if (StaticVariables.isFading && StaticVariables.fadingTo == "settings") {
             fadeTimer = fadeInTime;
@@ -278,6 +285,21 @@ public class SettingsCanvasController : MonoBehaviour {
         Vector2 newSize = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, newHeight);
         parent.GetComponent<RectTransform>().sizeDelta = newSize;
 
+    }
+
+
+
+
+    public void chooseSkin(Skin s) {
+
+        StaticVariables.skin = s;
+        loadSkin();
+    }
+    
+
+    private void loadSkin() {
+        background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
+        InterfaceFunctions.colorMenuButton(menuButton);
     }
 
 }

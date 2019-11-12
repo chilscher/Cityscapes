@@ -19,17 +19,27 @@ public static class SaveSystem{
 
     }
 
-    public static void LoadGame() {
+    public static void LoadGame(Skin[] skins) {
 
         if (File.Exists(path)) {
 
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
-            SaveData data = formatter.Deserialize(stream) as SaveData;
-            stream.Close();
+            if (stream.Length == 0) {
+                stream.Close();
 
-            data.LoadData();
+                //Debug.Log("first time");
+                firstTimePlayingEver(skins);
 
+            }
+            else {
+                //Debug.Log("returning player");
+                SaveData data = formatter.Deserialize(stream) as SaveData;
+                stream.Close();
+
+                data.LoadData(skins);
+
+            }
         }
         else {
             //save file not found
@@ -37,6 +47,15 @@ public static class SaveSystem{
             
         }
 
+    }
+
+    private static void firstTimePlayingEver(Skin[] skins) {
+
+        StaticVariables.skin = skins[0];
+        StaticVariables.coins = 0;
+        StaticVariables.highestUnlockedSize = 3;
+        SaveGame();
+        LoadGame(skins);
     }
 
 

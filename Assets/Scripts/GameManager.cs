@@ -72,13 +72,19 @@ public class GameManager : MonoBehaviour {
     private PuzzleState currentPuzzleState;
     private List<PuzzleState> nextPuzzleStates = new List<PuzzleState>();// the list of puzzle states to be restored by the redo button
     
-    
+    /*
     [HideInInspector]
     public Color offButtonColorExterior;
+    [HideInInspector]
     public Color onButtonColorExterior;
+    [HideInInspector]
     public Color offButtonColorInterior;
+    [HideInInspector]
     public Color onButtonColorInterior;
-    private Color winPopupColor;
+    */
+    private Color winBackgroundColorInterior;
+    private Color winBackgroundColorExterior;
+    //private Color winPopupColor;
 
     public GameObject coinsBox1s;
     public GameObject coinsBox10s;
@@ -90,6 +96,7 @@ public class GameManager : MonoBehaviour {
     public GameObject onlyRemoveAllButton;
     public GameObject onlyClearButton;
 
+    [HideInInspector]
     public GameObject[] numberButtons;
     public GameObject numbers1to3;
     public GameObject numbers1to4;
@@ -103,8 +110,11 @@ public class GameManager : MonoBehaviour {
     public GameObject puzzleCanvas;
     public GameObject tutorialCanvas;
     private float originalPuzzleScale;
+    public GameObject puzzleBackground;
+
 
     private void Start() {
+        skin = StaticVariables.skin;
         if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
             fadeTimer = fadeInTime;
         }
@@ -115,12 +125,15 @@ public class GameManager : MonoBehaviour {
         includeNote1Btn = StaticVariables.includeNotes1Button;
         includeNote2Btn = StaticVariables.includeNotes2Button;
 
-        
+        /*
         ColorUtility.TryParseHtmlString(skin.onButtonColorExterior, out onButtonColorExterior);
         ColorUtility.TryParseHtmlString(skin.onButtonColorInterior, out onButtonColorInterior);
         ColorUtility.TryParseHtmlString(skin.offButtonColorExterior, out offButtonColorExterior);
         ColorUtility.TryParseHtmlString(skin.offButtonColorInterior, out offButtonColorInterior);
-        ColorUtility.TryParseHtmlString(skin.winPopupColor, out winPopupColor);
+        */
+        ColorUtility.TryParseHtmlString(skin.mainMenuButtonExterior, out winBackgroundColorExterior);
+        ColorUtility.TryParseHtmlString(skin.mainMenuButtonInterior, out winBackgroundColorInterior);
+        //ColorUtility.TryParseHtmlString(skin.winPopupColor, out winPopupColor);
 
         hideNumberButtons();
 
@@ -149,10 +162,17 @@ public class GameManager : MonoBehaviour {
             setSelectionModeButtons();
             setUndoRedoButtons();
             hitBuildButton();
+            puzzleBackground.GetComponent<SpriteRenderer>().sprite = skin.puzzleBackground;
+            InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Menu"));
+            InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Another Puzzle"));
+            /*
             winCanvas.transform.Find("Win Popup").Find("Menu").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
             winCanvas.transform.Find("Win Popup").Find("Menu").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
             winCanvas.transform.Find("Win Popup").Find("Another Puzzle").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
             winCanvas.transform.Find("Win Popup").Find("Another Puzzle").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+            */
+            winCanvas.transform.Find("Win Popup").Find("Win Popup Background Exterior").GetComponent<SpriteRenderer>().color = winBackgroundColorExterior;
+            winCanvas.transform.Find("Win Popup").Find("Win Popup Background Interior").GetComponent<SpriteRenderer>().color = winBackgroundColorInterior;
             Color c = winCanvas.transform.Find("Black Background").GetComponent<SpriteRenderer>().color;
             c.a = fadeToWinDarknessRatio;
             winCanvas.transform.Find("Black Background").GetComponent<SpriteRenderer>().color = c;
@@ -269,6 +289,10 @@ public class GameManager : MonoBehaviour {
         med.SetActive(false);
         large.SetActive(false);
         huge.SetActive(false);
+        small.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.smallCityArt;
+        med.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.medCityArt;
+        large.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.largeCityArt;
+        huge.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.hugeCityArt;
         switch (size) {
             case 3: small.SetActive(true); break;
             case 4: med.SetActive(true); break;
@@ -285,11 +309,13 @@ public class GameManager : MonoBehaviour {
     }
 
     private void colorMenuButton() {
-        menuButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-        menuButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+        InterfaceFunctions.colorPuzzleButton(menuButton);
+        //menuButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        //menuButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
         if (StaticVariables.isTutorial) {
-            tutorialCanvas.transform.Find("Menu").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-            tutorialCanvas.transform.Find("Menu").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+            InterfaceFunctions.colorPuzzleButton(tutorialCanvas.transform.Find("Menu"));
+            //tutorialCanvas.transform.Find("Menu").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+            //tutorialCanvas.transform.Find("Menu").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
         }
         
     }
@@ -371,11 +397,14 @@ public class GameManager : MonoBehaviour {
 
     
     public void setUndoRedoButtons() {
-        undoRedoButtons.transform.Find("Undo").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-        undoRedoButtons.transform.Find("Undo").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+        InterfaceFunctions.colorPuzzleButton(undoRedoButtons.transform.Find("Undo"));
+        InterfaceFunctions.colorPuzzleButton(undoRedoButtons.transform.Find("Redo"));
+
+        //undoRedoButtons.transform.Find("Undo").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        //undoRedoButtons.transform.Find("Undo").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
         undoRedoButtons.transform.Find("Undo").Find("Icon").GetComponent<Image>().sprite = skin.undoIcon;
-        undoRedoButtons.transform.Find("Redo").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-        undoRedoButtons.transform.Find("Redo").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+        //undoRedoButtons.transform.Find("Redo").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        //undoRedoButtons.transform.Find("Redo").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
         undoRedoButtons.transform.Find("Redo").Find("Icon").GetComponent<Image>().sprite = skin.redoIcon;
 
         undoRedoButtons.SetActive(StaticVariables.includeUndoRedo);
@@ -400,10 +429,13 @@ public class GameManager : MonoBehaviour {
                 onlyClearButton.SetActive(true);
             }
         }
-        removeAllOfNumberButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-        removeAllOfNumberButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
-        clearPuzzleButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-        clearPuzzleButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+
+        InterfaceFunctions.colorPuzzleButton(removeAllOfNumberButton);
+        InterfaceFunctions.colorPuzzleButton(clearPuzzleButton);
+        //removeAllOfNumberButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        //removeAllOfNumberButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+        //clearPuzzleButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        //clearPuzzleButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
     }
 
     public void hidePositioningObjects() {
@@ -477,8 +509,10 @@ public class GameManager : MonoBehaviour {
         clickTileAction = "Apply Selected";
         disselectBuildAndNotes();
         if (includeNote1Btn || includeNote2Btn) {
-            buildButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
-            buildButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
+
+            InterfaceFunctions.colorPuzzleButtonOn(buildButton);
+            //buildButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
+            //buildButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
         }
         updateRemoveSelectedNumber();
 
@@ -487,31 +521,37 @@ public class GameManager : MonoBehaviour {
     public void hitNote1Button() {
         clickTileAction = "Toggle Note 1";
         disselectBuildAndNotes();
-        note1Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
-        note1Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
+        InterfaceFunctions.colorPuzzleButtonOn(note1Button);
+        //note1Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
+        //note1Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
         updateRemoveSelectedNumber();
     }
 
     public void hitNote2Button() {
         clickTileAction = "Toggle Note 2";
         disselectBuildAndNotes();
-        note2Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
-        note2Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
+
+        InterfaceFunctions.colorPuzzleButtonOn(note2Button);
+        //note2Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
+        //note2Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
         updateRemoveSelectedNumber();
     }
 
     public void disselectBuildAndNotes() {
         if (includeNote1Btn || includeNote2Btn) {
-            buildButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
-            buildButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+            InterfaceFunctions.colorPuzzleButton(buildButton);
+            //buildButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+            //buildButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
         }
         if (includeNote1Btn) {
-            note1Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
-            note1Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+            InterfaceFunctions.colorPuzzleButton(note1Button);
+            //note1Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+            //note1Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
         }
         if (includeNote2Btn) {
-            note2Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
-            note2Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+            InterfaceFunctions.colorPuzzleButton(note2Button);
+            //note2Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+            //note2Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
         }
     }
 
@@ -544,13 +584,16 @@ public class GameManager : MonoBehaviour {
         updateRemoveSelectedNumber();
     }
     private void selectNumber(GameObject btn) {
-        btn.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
-        btn.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
+
+        InterfaceFunctions.colorPuzzleButtonOn(btn);
+        //btn.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
+        //btn.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
     }
 
     private void disselectNumber(GameObject btn) {
-        btn.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-        btn.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+        InterfaceFunctions.colorPuzzleButton(btn);
+        //btn.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
+        //btn.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
     }
     
     

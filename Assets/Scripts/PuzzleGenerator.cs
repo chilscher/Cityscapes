@@ -9,17 +9,24 @@ public class PuzzleGenerator : MonoBehaviour{
     public Puzzle puzzle;
     public GameObject puzzleTilePrefab;
     public GameObject sideHintTilePrefab;
+    [HideInInspector]
     public List<PuzzleTile> puzzleTiles;
 
     public bool usePredeterminedSolution;
     public string predeterminedSolution;
     
+    [HideInInspector]
     public SideHintTile[] topHints;
+    [HideInInspector]
     public SideHintTile[] bottomHints;
+    [HideInInspector]
     public SideHintTile[] leftHints;
+    [HideInInspector]
     public SideHintTile[] rightHints;
 
+    [HideInInspector]
     public SideHintTile[] allHints;
+    [HideInInspector]
     public PuzzleTile[,] tilesArray;
 
     public GameManager gameManagerObject;

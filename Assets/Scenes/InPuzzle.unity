@@ -12181,7 +12181,7 @@ GameObject:
   - component: {fileID: 1074428867}
   - component: {fileID: 1074428868}
   m_Layer: 0
-  m_Name: Win Popup Border Interior
+  m_Name: Win Popup Background Interior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15997,16 +15997,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   clickTileAction: Apply Selected
   selectedNumber: 0
-  puzzleGenerator: {fileID: 1301818362}
   size: 4
+  includeNote1Btn: 0
+  includeNote2Btn: 0
+  puzzleGenerator: {fileID: 1301818362}
   puzzlePositioning: {fileID: 1288534164}
   puzzlePositioningImage: {fileID: 645666155}
   canvas: {fileID: 416968851}
   winCanvas: {fileID: 1916004574}
   streetCorner: {fileID: 7404936744469136690, guid: 57225bd2d53397a4290711c7f0353a3f,
     type: 3}
-  includeNote1Btn: 0
-  includeNote2Btn: 0
   selectionModeButtons1: {fileID: 80404369}
   selectionModeButtons2: {fileID: 519921083}
   selectionModeButtons3: {fileID: 1948661509}
@@ -16026,7 +16026,7 @@ MonoBehaviour:
   winBlackSprite: {fileID: 2092147890}
   fadeToWinTime: 0.5
   fadeToWinDarknessRatio: 0.9
-  skin: {fileID: 2135032764033575535, guid: 83513b0b1be6dbc4884f648b2c97455a, type: 3}
+  skin: {fileID: 2135032764033575535, guid: c494d6e07e4991b41969f01a991d1aa2, type: 3}
   canClick: 1
   offButtonColorExterior: {r: 0, g: 0, b: 0, a: 0}
   onButtonColorExterior: {r: 0, g: 0, b: 0, a: 0}
@@ -16056,6 +16056,7 @@ MonoBehaviour:
   menuButton: {fileID: 1536806124}
   puzzleCanvas: {fileID: 416968851}
   tutorialCanvas: {fileID: 638443242}
+  puzzleBackground: {fileID: 1800942035}
 --- !u!1 &1358257279
 GameObject:
   m_ObjectHideFlags: 0
@@ -16297,7 +16298,7 @@ GameObject:
   - component: {fileID: 1371838639}
   - component: {fileID: 1371838640}
   m_Layer: 0
-  m_Name: Win Popup Border Exterior
+  m_Name: Win Popup Background Exterior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
