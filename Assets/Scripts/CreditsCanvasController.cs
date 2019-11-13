@@ -27,7 +27,7 @@ public class CreditsCanvasController : MonoBehaviour {
 
         InterfaceFunctions.colorMenuButton(menuButton);
 
-        if (StaticVariables.isFading && StaticVariables.fadingTo == "settings") {
+        if (StaticVariables.isFading && StaticVariables.fadingTo == "credits") {
             fadeTimer = fadeInTime;
         }
     }

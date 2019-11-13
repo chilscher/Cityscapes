@@ -1,0 +1,69 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &440273601514678775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8584492471566220470}
+  - component: {fileID: 2135032764033575535}
+  m_Layer: 0
+  m_Name: Mountains Skin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8584492471566220470
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440273601514678775}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1508085, y: -4.279265, z: 90}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2135032764033575535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440273601514678775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7fa59bcee1bb94a9c5123c4458fe9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinName: Mountains
+  note1Color: '#f85f65'
+  note2Color: '#99d9ea'
+  buildIcon: {fileID: 21300000, guid: ad7ba33e151a7394fb424cc7c4af34f5, type: 3}
+  note1Icon: {fileID: 21300000, guid: 89f888cd141a3724dad8735476a16a7a, type: 3}
+  note2Icon: {fileID: 21300000, guid: 4d83ed7eec1df7c429c5c6ef309aeb05, type: 3}
+  undoIcon: {fileID: 21300000, guid: ce049f0221ea8ed4a9ffb4797554e0a1, type: 3}
+  redoIcon: {fileID: 21300000, guid: a05bb6a260adacc45874061ce6212a5f, type: 3}
+  onButtonColorInterior: '#3a9c6e'
+  onButtonColorExterior: '#1f6644'
+  offButtonColorInterior: '#b8dfb8'
+  offButtonColorExterior: '#629e81'
+  citizenColor: '#98ff98'
+  satisfiedCitizenColor: '#228b22'
+  puzzleBackground: {fileID: 21300000, guid: a7f1d8ff333b7114cb0525d3f9a568a0, type: 3}
+  mainMenuBackground: {fileID: 21300000, guid: b15cea4d5f20f1b47a18226f9d99853c, type: 3}
+  shopBackground: {fileID: 21300000, guid: 632ed6f31417b0e4095d79a52ae2521a, type: 3}
+  creditsBackground: {fileID: 21300000, guid: 1c88bd6e9b23a7e45abd8d19a4da4e7c, type: 3}
+  mainMenuButtonInterior: '#9db0b4'
+  mainMenuButtonExterior: '#7e8587'
+  smallCityArt: {fileID: 21300000, guid: 08b71c6ee3abe9047a5781845aeed72c, type: 3}
+  medCityArt: {fileID: 21300000, guid: 66681376de0cc1043b1605713da2d38a, type: 3}
+  largeCityArt: {fileID: 21300000, guid: 30ced2c6d97c45a4ead31c03d139be7f, type: 3}
+  hugeCityArt: {fileID: 21300000, guid: 58947663aa8cbe94eb8b3eb7fac1c5f2, type: 3}
