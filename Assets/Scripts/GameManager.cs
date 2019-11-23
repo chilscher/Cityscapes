@@ -112,6 +112,8 @@ public class GameManager : MonoBehaviour {
     private float originalPuzzleScale;
     public GameObject puzzleBackground;
 
+    public bool showBuildings;
+
 
     private void Start() {
         skin = StaticVariables.skin;
@@ -462,6 +464,7 @@ public class GameManager : MonoBehaviour {
             for (int j = 0; j < size; j++) {
                 Vector2 pos = new Vector2(puzzleCenter.x - (totalSize / 2) + (scaleFactor * defaultTileScale * (j + 0.5f)), puzzleCenter.y + (totalSize / 2) - (scaleFactor * defaultTileScale * (i + 0.5f)));
                 puzzleGenerator.tilesArray[i, j].setValues(pos, scaleFactor, parent);
+                puzzleGenerator.tilesArray[i, j].transform.Find("Building").gameObject.SetActive(showBuildings);
             }
         }
 
