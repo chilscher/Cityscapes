@@ -31,6 +31,7 @@ public class SaveData{
     public bool unlockedClearPuzzle;
 
     public string skinName;
+    public bool hidePurchasedUpgrades;
 
 
     public SaveData() {
@@ -59,6 +60,7 @@ public class SaveData{
         unlockedRemoveAllOfNumber = StaticVariables.unlockedRemoveAllOfNumber;
         unlockedClearPuzzle = StaticVariables.unlockedClearPuzzle;
         skinName = StaticVariables.skin.skinName;
+        hidePurchasedUpgrades = StaticVariables.hidePurchasedUpgrades;
     }
 
     public void LoadData(Skin[] skins) {
@@ -89,6 +91,7 @@ public class SaveData{
         StaticVariables.unlockedClearPuzzle = unlockedClearPuzzle;
 
         StaticVariables.skin = getSkinFromName(skinName, skins);
+        StaticVariables.hidePurchasedUpgrades = hidePurchasedUpgrades;
     }
 
     public Skin getSkinFromName(string name, Skin[] skins) {

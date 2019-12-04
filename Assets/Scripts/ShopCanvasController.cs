@@ -203,16 +203,23 @@ public class ShopCanvasController : MonoBehaviour {
         updateButton(expandRemoveAllButton, StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice, StaticVariables.includeUndoRedo);
         updateButton(expandClearButton, StaticVariables.unlockedClearPuzzle, clearPrice, StaticVariables.includeUndoRedo);
 
+        setScrollViewHeight();
+
     }
 
     private void updateButton(GameObject button, bool condition, int cost, bool uniqueUnlockCondition = true) {
         //shows if the item has already been purchased or not, and also sets the coin amount to the appropriate color
         //uniqueUnlockCondition for purchasing the large puzzle would be that the medium puzzle has to already have been purchased
+
+        //by default, show the button
+        button.transform.parent.gameObject.SetActive(true);
         if (condition) {
             //hide coins
             button.transform.Find("Coins").gameObject.SetActive(false);
             //show purchase complete symbol
             button.transform.Find("Purchased Symbol").gameObject.SetActive(true);
+            //if the upgrade has been purchased and purchases are supposed to be hidden, then hide the button
+            if (StaticVariables.hidePurchasedUpgrades) { button.transform.parent.gameObject.SetActive(false); }
         }
         else {
             //show coins
@@ -535,6 +542,9 @@ public class ShopCanvasController : MonoBehaviour {
         }
         newHeight += ((activeCount - 1) * parent.GetComponent<VerticalLayoutGroup>().spacing);
         newHeight += parent.GetComponent<VerticalLayoutGroup>().padding.top + parent.GetComponent<VerticalLayoutGroup>().padding.bottom;
+
+        //set the container height to be at least the height of the parent
+        if(newHeight < parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y) { newHeight = parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y; }
 
         Vector2 newSize = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, newHeight);
         parent.GetComponent<RectTransform>().sizeDelta = newSize;

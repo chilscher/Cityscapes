@@ -311,6 +311,7 @@ public class GameManager : MonoBehaviour {
     }
 
     private void colorMenuButton() {
+        /*
         InterfaceFunctions.colorPuzzleButton(menuButton);
         //menuButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
         //menuButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
@@ -318,6 +319,10 @@ public class GameManager : MonoBehaviour {
             InterfaceFunctions.colorPuzzleButton(tutorialCanvas.transform.Find("Menu"));
             //tutorialCanvas.transform.Find("Menu").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
             //tutorialCanvas.transform.Find("Menu").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+        }
+        */
+        if (!StaticVariables.isTutorial) {
+            InterfaceFunctions.colorPuzzleButton(menuButton);
         }
         
     }

@@ -1,9 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System;
+using UnityEngine.UI;
 
 public class SettingsCanvasController : MonoBehaviour {
     
@@ -37,6 +35,8 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject background;
 
     public GameObject menuButton;
+
+    public GameObject hidePurchasedUpgradesButton;
     
 
 
@@ -111,6 +111,7 @@ public class SettingsCanvasController : MonoBehaviour {
         removeNumbersButton.SetActive(StaticVariables.unlockedRemoveAllOfNumber);
         clearPuzzleButton.SetActive(StaticVariables.unlockedClearPuzzle);
 
+        hidePurchasedUpgradesButton.SetActive(true);
     }
 
     public void setCurrentToggleTexts() {
@@ -123,6 +124,8 @@ public class SettingsCanvasController : MonoBehaviour {
         toggleText(undoRedoButton, StaticVariables.includeUndoRedo);
         toggleText(removeNumbersButton, StaticVariables.includeRemoveAllOfNumber);
         toggleText(clearPuzzleButton, StaticVariables.includeClearPuzzle);
+
+        toggleText(hidePurchasedUpgradesButton, StaticVariables.hidePurchasedUpgrades);
     }
 
     public void toggleText(GameObject button, bool cond) {
@@ -218,6 +221,11 @@ public class SettingsCanvasController : MonoBehaviour {
         setScrollViewHeight();
         */
     }
+
+    public void pushHidePurchasedUpgradesButton() {
+        StaticVariables.hidePurchasedUpgrades = !StaticVariables.hidePurchasedUpgrades;
+        setCurrentToggleTexts();
+    }
     /*
     public void setScrollViewHeight() {
         //sets the scroll viewer (vertical layout group) height to match its contents. minimum is the height of its parent scrollable container
@@ -301,5 +309,7 @@ public class SettingsCanvasController : MonoBehaviour {
         background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
         InterfaceFunctions.colorMenuButton(menuButton);
     }
+
+
 
 }

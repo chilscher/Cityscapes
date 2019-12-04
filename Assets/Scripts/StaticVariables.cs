@@ -51,4 +51,5 @@ public class StaticVariables{
     static public bool unlockedClearPuzzle = false;
 
     static public Skin skin;
+    static public bool hidePurchasedUpgrades = false;
 }
