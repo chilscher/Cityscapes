@@ -10,6 +10,7 @@ public class MainMenuCanvasController : MonoBehaviour {
     public GameObject smallAndMedPuzzleButtons;
     public GameObject smallMedLargePuzzleButtons;
     public GameObject smallMedLargeHugePuzzleButtons;
+    public GameObject returnOrAbandonButtons;
     public GameObject background;
 
     public GameObject shopButton;
@@ -49,20 +50,7 @@ public class MainMenuCanvasController : MonoBehaviour {
             fadeTimer = fadeInTime;
         }
 
-        int highestUnlockedSize = 3;
-        if (StaticVariables.showMed) {
-            highestUnlockedSize = 4;
-        }
-        if (StaticVariables.showLarge) {
-            highestUnlockedSize = 5;
-        }
-        if (StaticVariables.showHuge) {
-            highestUnlockedSize = 6;
-        }
-        onlySmallPuzzleButton.SetActive(highestUnlockedSize == 3);
-        smallAndMedPuzzleButtons.SetActive(highestUnlockedSize == 4);
-        smallMedLargePuzzleButtons.SetActive(highestUnlockedSize == 5);
-        smallMedLargeHugePuzzleButtons.SetActive(highestUnlockedSize == 6);
+        showCityButtons();
 
     }
 
@@ -169,5 +157,43 @@ public class MainMenuCanvasController : MonoBehaviour {
         smallMedLargeHugePuzzleButtons.transform.Find("4").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
         smallMedLargeHugePuzzleButtons.transform.Find("5").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
         smallMedLargeHugePuzzleButtons.transform.Find("6").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
+    }
+
+
+    public void pushReturnToPuzzleButton() {
+        startPuzzle(StaticVariables.savedPuzzleSize);
+    }
+
+    public void pushAbandonPuzzleButton() {
+        StaticVariables.hasSavedPuzzleState = false;
+        showCityButtons();
+    }
+
+    private void showCityButtons() {
+        
+        int highestUnlockedSize = 3;
+        if (StaticVariables.showMed) {
+            highestUnlockedSize = 4;
+        }
+        if (StaticVariables.showLarge) {
+            highestUnlockedSize = 5;
+        }
+        if (StaticVariables.showHuge) {
+            highestUnlockedSize = 6;
+        }
+        if (StaticVariables.hasSavedPuzzleState) {
+            //print("we have a saved puzzle state!");
+        }
+        else {
+            //print("no saved puzzle state... :(");
+
+            onlySmallPuzzleButton.SetActive(highestUnlockedSize == 3);
+            smallAndMedPuzzleButtons.SetActive(highestUnlockedSize == 4);
+            smallMedLargePuzzleButtons.SetActive(highestUnlockedSize == 5);
+            smallMedLargeHugePuzzleButtons.SetActive(highestUnlockedSize == 6);
+        }
+
+
+        returnOrAbandonButtons.SetActive(StaticVariables.hasSavedPuzzleState);
     }
 }

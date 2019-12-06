@@ -346,6 +346,7 @@ public class ShopCanvasController : MonoBehaviour {
     public void addCoins() {
         StaticVariables.coins += 40;
         displayCoinsAmount();
+        updateButtons();
     }
 
     public void removeCoins() {
@@ -544,11 +545,32 @@ public class ShopCanvasController : MonoBehaviour {
         newHeight += parent.GetComponent<VerticalLayoutGroup>().padding.top + parent.GetComponent<VerticalLayoutGroup>().padding.bottom;
 
         //set the container height to be at least the height of the parent
-        if(newHeight < parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y) { newHeight = parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y; }
+        //if(newHeight < parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y) { newHeight = parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y; }
 
         Vector2 newSize = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, newHeight);
         parent.GetComponent<RectTransform>().sizeDelta = newSize;
 
+    }
+
+    public void resizeToFitChildrenMinSize(GameObject parent) {
+        //exactly the same as resizeToFitChildren, but also the container height has to be at least the height of its parent
+        float newHeight = 0f;
+        int activeCount = 0;
+        for (int i = 0; i < parent.transform.childCount; i++) {
+            float h = parent.transform.GetChild(i).GetComponent<RectTransform>().sizeDelta.y;
+            if (parent.transform.GetChild(i).gameObject.activeSelf) {
+                newHeight += h;
+                activeCount++;
+            }
+        }
+        newHeight += ((activeCount - 1) * parent.GetComponent<VerticalLayoutGroup>().spacing);
+        newHeight += parent.GetComponent<VerticalLayoutGroup>().padding.top + parent.GetComponent<VerticalLayoutGroup>().padding.bottom;
+
+        //set the container height to be at least the height of the parent
+        if (newHeight < parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y) { newHeight = parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y; }
+
+        Vector2 newSize = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, newHeight);
+        parent.GetComponent<RectTransform>().sizeDelta = newSize;
     }
 
     public void setScrollViewHeight() {
@@ -558,7 +580,7 @@ public class ShopCanvasController : MonoBehaviour {
         //define the current top height - for use at the end of the function
         float topHeight = (float)Math.Round(((1 - scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition) * (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y)), 2);
 
-        resizeToFitChildren(scrollView);
+        resizeToFitChildrenMinSize(scrollView);
 
         //set the scroll view to be at the same position as previously
         scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - (topHeight / (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y));

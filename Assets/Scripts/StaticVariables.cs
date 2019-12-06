@@ -52,4 +52,12 @@ public class StaticVariables{
 
     static public Skin skin;
     static public bool hidePurchasedUpgrades = false;
+
+    static public bool hasSavedPuzzleState = false;
+
+    static public List<PuzzleState> previousPuzzleStates;
+    static public PuzzleState currentPuzzleState;
+    static public List<PuzzleState> nextPuzzleStates;
+    static public string puzzleSolution;
+    static public int savedPuzzleSize;
 }

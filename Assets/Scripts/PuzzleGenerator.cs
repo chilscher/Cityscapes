@@ -146,4 +146,19 @@ public class PuzzleGenerator : MonoBehaviour{
         }
     }
 
+    public string makeSolutionString() {
+        string s = "";
+        foreach (PuzzleTile t in tilesArray) {
+            s += t.solution;
+        }
+        //print(s);
+        return s;
+    }
+
+    public void restoreSavedPuzzle(string solutionString, int size) {
+        predeterminedSolution = solutionString;
+        usePredeterminedSolution = true;
+        createPuzzle(size);
+    }
+
 }

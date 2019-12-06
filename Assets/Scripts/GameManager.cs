@@ -155,7 +155,13 @@ public class GameManager : MonoBehaviour {
         else if (!StaticVariables.isTutorial) {
             tutorialCanvas.SetActive(false);
             puzzleCanvas.SetActive(true);
-            puzzleGenerator.createPuzzle(size);
+            if (StaticVariables.hasSavedPuzzleState) {
+                puzzleGenerator.restoreSavedPuzzle(StaticVariables.puzzleSolution, size);
+                loadPuzzleStates();
+            }
+            else {
+                puzzleGenerator.createPuzzle(size);
+            }
             drawFullPuzzle();
             setRemoveAllAndClearButtons();
             setNumberButtons();
@@ -565,9 +571,33 @@ public class GameManager : MonoBehaviour {
 
     public void goToMainMenu() {
         if (!StaticVariables.isFading) {
+            if (!hasWonYet) { savePuzzleStates(); }
             StaticVariables.fadingTo = "menu";
             startFadeOut();
         }
+    }
+
+    public void savePuzzleStates() {
+        StaticVariables.hasSavedPuzzleState = true;
+
+        StaticVariables.previousPuzzleStates = previousPuzzleStates;
+        StaticVariables.currentPuzzleState = currentPuzzleState;
+        StaticVariables.nextPuzzleStates = nextPuzzleStates;
+
+        StaticVariables.puzzleSolution = puzzleGenerator.makeSolutionString();
+        StaticVariables.savedPuzzleSize = size;
+    }
+
+    public void loadPuzzleStates() {
+        StaticVariables.hasSavedPuzzleState = false;
+
+        previousPuzzleStates = StaticVariables.previousPuzzleStates;
+        currentPuzzleState = StaticVariables.currentPuzzleState;
+        nextPuzzleStates = StaticVariables.nextPuzzleStates;
+
+        currentPuzzleState.restorePuzzleState(puzzleGenerator);
+
+        //load the actual puzzle solution
     }
 
     public void startFadeOut() {
@@ -806,6 +836,5 @@ public class GameManager : MonoBehaviour {
             removeAllOfNumberButton.transform.Find("Number").GetComponent<SpriteRenderer>().color = c;
         }
     }
-
 
 }
