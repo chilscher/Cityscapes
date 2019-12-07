@@ -584,6 +584,8 @@ public class GameManager : MonoBehaviour {
         StaticVariables.currentPuzzleState = currentPuzzleState;
         StaticVariables.nextPuzzleStates = nextPuzzleStates;
 
+        //print(currentPuzzleState.returnStateAsString());
+
         StaticVariables.puzzleSolution = puzzleGenerator.makeSolutionString();
         StaticVariables.savedPuzzleSize = size;
     }
@@ -722,6 +724,7 @@ public class GameManager : MonoBehaviour {
 
 
     private void OnApplicationQuit() {
+        savePuzzleStates();
         SaveSystem.SaveGame();
     }
 
