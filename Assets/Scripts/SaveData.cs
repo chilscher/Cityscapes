@@ -29,6 +29,7 @@ public class SaveData{
     public bool unlockedClearPuzzle;
 
     public string skinName;
+    public string unlockedSkinNames;
     public bool hidePurchasedUpgrades;
 
     public bool hasSavedPuzzleState;
@@ -62,7 +63,10 @@ public class SaveData{
         unlockedUndoRedo = StaticVariables.unlockedUndoRedo;
         unlockedRemoveAllOfNumber = StaticVariables.unlockedRemoveAllOfNumber;
         unlockedClearPuzzle = StaticVariables.unlockedClearPuzzle;
+        
+
         skinName = StaticVariables.skin.skinName;
+        unlockedSkinNames = getUnlockedSkinNames();
         hidePurchasedUpgrades = StaticVariables.hidePurchasedUpgrades;
 
         hasSavedPuzzleState = StaticVariables.hasSavedPuzzleState;
@@ -72,19 +76,11 @@ public class SaveData{
             nextPuzzleStates = getPuzzleStateStringsFromList(StaticVariables.nextPuzzleStates);
             puzzleSolution = StaticVariables.puzzleSolution;
             savedPuzzleSize = StaticVariables.savedPuzzleSize;
-            /*
-            Debug.Log("saving...");
-            Debug.Log("previous states: " + previousPuzzleStates);
-            Debug.Log("current state: " + currentPuzzleState);
-            Debug.Log("next states: " + nextPuzzleStates);
-            Debug.Log("solution: " + puzzleSolution);
-            Debug.Log("puzzle size: " + savedPuzzleSize);
-            */
         }
 
     }
 
-    public void LoadData(Skin[] skins) {
+    public void LoadData() {
 
         StaticVariables.coins = coins;
         StaticVariables.includeNotes1Button = includeNotes1;
@@ -108,8 +104,9 @@ public class SaveData{
         StaticVariables.unlockedUndoRedo = unlockedUndoRedo;
         StaticVariables.unlockedRemoveAllOfNumber = unlockedRemoveAllOfNumber;
         StaticVariables.unlockedClearPuzzle = unlockedClearPuzzle;
-
-        StaticVariables.skin = getSkinFromName(skinName, skins);
+        
+        StaticVariables.skin = InterfaceFunctions.getSkinFromName(skinName);
+        StaticVariables.unlockedSkins = getUnlockedSkins();
         StaticVariables.hidePurchasedUpgrades = hidePurchasedUpgrades;
 
         StaticVariables.hasSavedPuzzleState = hasSavedPuzzleState;
@@ -118,26 +115,8 @@ public class SaveData{
             StaticVariables.currentPuzzleState = new PuzzleState(currentPuzzleState, savedPuzzleSize);
             StaticVariables.nextPuzzleStates = getPuzzleStateListFromString(nextPuzzleStates, savedPuzzleSize);
             StaticVariables.puzzleSolution = puzzleSolution;
-            StaticVariables.savedPuzzleSize = savedPuzzleSize;
-            /*
-            Debug.Log("loading...");
-            Debug.Log("previous states: " + getPuzzleStateStringsFromList(StaticVariables.previousPuzzleStates));
-            Debug.Log("current state: " + StaticVariables.currentPuzzleState.returnStateAsString());
-            Debug.Log("next states: " + getPuzzleStateStringsFromList(StaticVariables.nextPuzzleStates));
-            Debug.Log("solution: " + puzzleSolution);
-            Debug.Log("puzzle size: " + savedPuzzleSize);
-            */
-            
+            StaticVariables.savedPuzzleSize = savedPuzzleSize;            
         }
-    }
-
-    public Skin getSkinFromName(string name, Skin[] skins) {
-        foreach (Skin s in skins) {
-            if (s.skinName == name) {
-                return s;
-            }
-        }
-        return skins[0];
     }
 
     private string getPuzzleStateStringsFromList(List<PuzzleState> list) {
@@ -167,7 +146,27 @@ public class SaveData{
         return list;
     }
     
+    private string getUnlockedSkinNames() {
+        string result = "";
+        foreach (Skin skin in StaticVariables.unlockedSkins) {
+            result += skin.skinName + " ";
+        }
+        if (result.Length > 1) {
+            result = result.Substring(0, result.Length - 1);
+        }
+        return result;
+    }
 
+    private List<Skin> getUnlockedSkins() {
+        List<Skin> skins = new List<Skin>();
+        if (unlockedSkinNames != "") {
+            string[] strings = unlockedSkinNames.Split(' ');
+            foreach (string str in strings) {
+                skins.Add(InterfaceFunctions.getSkinFromName(str));
+            }
+        }
+        return skins;
+    }
 
 
 }

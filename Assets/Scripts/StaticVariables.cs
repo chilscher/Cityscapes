@@ -50,6 +50,10 @@ public class StaticVariables{
     static public bool unlockedRemoveAllOfNumber = false;
     static public bool unlockedClearPuzzle = false;
 
+    //static public bool unlockedMountainsSkin = false;
+
+    static public List<Skin> unlockedSkins = new List<Skin>();
+
     static public Skin skin;
     static public bool hidePurchasedUpgrades = false;
 
@@ -60,4 +64,6 @@ public class StaticVariables{
     static public List<PuzzleState> nextPuzzleStates;
     static public string puzzleSolution;
     static public int savedPuzzleSize;
+
+    static public Skin[] allSkins;
 }

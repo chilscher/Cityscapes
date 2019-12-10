@@ -37,13 +37,17 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject menuButton;
 
     public GameObject hidePurchasedUpgradesButton;
-    
 
+    private bool expandedSkinButton = false;
+    public GameObject expandSkinButton;
+
+    public GameObject currentSkinText;
 
     private void Start() {
         showAndHideButtons();
         setCurrentToggleTexts();
-
+        updateCurrentSkinText();
+        showChooseSkinButton();
         //background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
         blackSprite = blackForeground.GetComponent<SpriteRenderer>();
         //InterfaceFunctions.colorMenuButton(menuButton);
@@ -226,42 +230,7 @@ public class SettingsCanvasController : MonoBehaviour {
         StaticVariables.hidePurchasedUpgrades = !StaticVariables.hidePurchasedUpgrades;
         setCurrentToggleTexts();
     }
-    /*
-    public void setScrollViewHeight() {
-        //sets the scroll viewer (vertical layout group) height to match its contents. minimum is the height of its parent scrollable container
-        //to be called whenever an item is shown or hidden in the settings window
 
-        //define the current top height - for use at the end of the function
-        float topHeight = (float)Math.Round(((1 - scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition) * (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y)), 2);
-        
-        //get height of contents, including spaces between objects and top and bottom padding
-        float newHeight = 0f;
-        int activeCount = 0;
-        for (int i = 0; i < scrollView.transform.childCount; i++){
-            float h = scrollView.transform.GetChild(i).GetComponent<RectTransform>().sizeDelta.y;
-            if (scrollView.transform.GetChild(i).gameObject.activeSelf) {
-                newHeight += h;
-                activeCount++;
-            }
-        }
-        newHeight += ((activeCount - 1) * scrollView.GetComponent<VerticalLayoutGroup>().spacing);
-        newHeight += scrollView.GetComponent<VerticalLayoutGroup>().padding.top + scrollView.GetComponent<VerticalLayoutGroup>().padding.bottom;
-
-        //if lower than size of parent scrollable container, set it to that value
-        if (newHeight < scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y) {
-            newHeight = scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y;
-        }
-
-        //apply the new height
-        Vector2 newSize = new Vector2(scrollView.GetComponent<RectTransform>().sizeDelta.x, newHeight);
-        scrollView.GetComponent<RectTransform>().sizeDelta = newSize;
-
-        //set the scroll view to be at the same position as previously
-        scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - (topHeight / (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y));
-
-
-    }
-    */
     public void setScrollViewHeight() {
         //sets the scroll viewer (vertical layout group) height to match its contents. minimum is the height of its parent scrollable container
         //to be called whenever an item is shown or hidden in the settings window
@@ -269,15 +238,16 @@ public class SettingsCanvasController : MonoBehaviour {
         //define the current top height - for use at the end of the function
         float topHeight = (float)Math.Round(((1 - scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition) * (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y)), 2);
 
-        resizeToFitChildren(scrollView);
+        resizeToFitChildren(scrollView, true);
 
         //set the scroll view to be at the same position as previously
         scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - (topHeight / (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y));
 
     }
 
-    public void resizeToFitChildren(GameObject parent) {
+    public void resizeToFitChildren(GameObject parent, bool minSize) {
         //get height of contents, including spaces between objects and top and bottom padding
+        //if minSize is true, the container height has to be at least the height of its parent
         float newHeight = 0f;
         int activeCount = 0;
         for (int i = 0; i < parent.transform.childCount; i++) {
@@ -289,6 +259,9 @@ public class SettingsCanvasController : MonoBehaviour {
         }
         newHeight += ((activeCount - 1) * parent.GetComponent<VerticalLayoutGroup>().spacing);
         newHeight += parent.GetComponent<VerticalLayoutGroup>().padding.top + parent.GetComponent<VerticalLayoutGroup>().padding.bottom;
+
+        //set the container height to be at least the height of the parent
+        if (minSize && newHeight < parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y) { newHeight = parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y; }
 
         Vector2 newSize = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, newHeight);
         parent.GetComponent<RectTransform>().sizeDelta = newSize;
@@ -310,6 +283,61 @@ public class SettingsCanvasController : MonoBehaviour {
         InterfaceFunctions.colorMenuButton(menuButton);
     }
 
+    public void clickedExpandSkinButton() {
+        if (!expandedSkinButton) {
+            expandSkinButtons();
+            expandedSkinButton = true;
+        }
+        else {
+            contractSkinButtons();
+            expandedSkinButton = false;
+        }
+
+        
+    }
+
+    private void expandSkinButtons() {
+        GameObject parentBox = expandSkinButton.transform.parent.gameObject;
+        parentBox.transform.Find("Basic").gameObject.SetActive(true);
+        for (int i = 2; i < parentBox.transform.childCount; i++) {
+            bool switchTo = StaticVariables.unlockedSkins.Contains(InterfaceFunctions.getSkinFromName(parentBox.transform.GetChild(i).name));
+            parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
+        }
+        resizeToFitChildren(parentBox, false);
+        setScrollViewHeight();
+    }
+
+    private void contractSkinButtons() {
+        GameObject parentBox = expandSkinButton.transform.parent.gameObject;
+        //parentBox.transform.Find("Basic").gameObject.SetActive(true);
+        for (int i = 1; i < parentBox.transform.childCount; i++) {
+            bool switchTo = false;
+            parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
+        }
+        resizeToFitChildren(parentBox, false);
+        setScrollViewHeight();
+    }
+
+    public void clickedSkinButton(GameObject button) {
+        chooseSkin(InterfaceFunctions.getSkinFromName(button.transform.parent.gameObject.name));
+        updateCurrentSkinText();
+    }
+
+    private void updateCurrentSkinText() {
+        currentSkinText.GetComponent<Text>().text = "CURRENT SKIN:\n" + StaticVariables.skin.skinName.ToUpper();
+
+
+        GameObject parentBox = expandSkinButton.transform.parent.gameObject;
+        for (int i = 1; i < parentBox.transform.childCount; i++) {
+            bool isActive = (InterfaceFunctions.getSkinFromName(parentBox.transform.GetChild(i).name) == StaticVariables.skin);
+            parentBox.transform.GetChild(i).Find("Button").Find("On").gameObject.SetActive(isActive);
+            parentBox.transform.GetChild(i).Find("Button").Find("Off").gameObject.SetActive(!isActive);
+        }
+    }
+
+    private void showChooseSkinButton() {
+        expandSkinButton.transform.parent.gameObject.SetActive(StaticVariables.unlockedSkins.Count >= 1);
+    }
 
 
 }

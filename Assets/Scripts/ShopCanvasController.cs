@@ -17,6 +17,9 @@ public class ShopCanvasController : MonoBehaviour {
     public int removeAllPrice = 10;
     public int clearPrice = 10;
 
+    //public int mountainsSkinPrice = 10;
+    public int skinPrice = 10;
+
 
     public GameObject coinsBox1s;
     public GameObject coinsBox10s;
@@ -42,6 +45,9 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject expandRemoveAllButton;
     public GameObject expandClearButton;
 
+    //public GameObject expandMountainsSkinButton;
+    public GameObject[] skinButtons;
+    //public GameObject[] skins;
 
     public GameObject blackForeground; //used to transition to/from the puzzle menu
     private SpriteRenderer blackSprite;
@@ -72,6 +78,8 @@ public class ShopCanvasController : MonoBehaviour {
 
     public GameObject menuButton;
 
+    //public 
+
     private void Start() {
         ColorUtility.TryParseHtmlString(affordableCoinColor, out affordableColor);
         ColorUtility.TryParseHtmlString(unaffordableCoinColor, out unaffordableColor);
@@ -98,6 +106,11 @@ public class ShopCanvasController : MonoBehaviour {
         displayCoinsOnButton(expandRemoveAllButton, removeAllPrice);
         displayCoinsOnButton(expandClearButton, clearPrice);
 
+
+        foreach (GameObject parent in skinButtons) {
+            displayCoinsOnButton(parent.transform.Find("Expand Button").gameObject, skinPrice);
+        }
+
         updateButtons();
 
         background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
@@ -114,6 +127,7 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     private void Update() {
+        //InterfaceFunctions.printUnlockedSkins();
         if (StaticVariables.isFading && StaticVariables.fadingFrom == "shop") {
             fadeTimer -= Time.deltaTime;
             Color c = blackSprite.color;
@@ -133,7 +147,7 @@ public class ShopCanvasController : MonoBehaviour {
             }
         }
     }
-
+    
 
     private void OnApplicationQuit() {
         SaveSystem.SaveGame();
@@ -203,6 +217,12 @@ public class ShopCanvasController : MonoBehaviour {
         updateButton(expandRemoveAllButton, StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice, StaticVariables.includeUndoRedo);
         updateButton(expandClearButton, StaticVariables.unlockedClearPuzzle, clearPrice, StaticVariables.includeUndoRedo);
 
+        //updateButton(expandMountainsSkinButton, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.getSkinFromName("Mountains")), skinPrice);
+        
+        foreach (GameObject parent in skinButtons) {
+            updateButton(parent.transform.Find("Expand Button").gameObject, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.getSkinFromName(parent.name)), skinPrice);
+        }
+        
         setScrollViewHeight();
 
     }
@@ -314,6 +334,11 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeUndoRedo = false;
         StaticVariables.includeRemoveAllOfNumber = false;
         StaticVariables.includeClearPuzzle = false;
+        
+        StaticVariables.unlockedSkins = new List<Skin>();
+        StaticVariables.skin = InterfaceFunctions.getDefaultSkin();
+        background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
+        InterfaceFunctions.colorMenuButton(menuButton);
         updateButtons();
     }
 
@@ -340,7 +365,18 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeUndoRedo = true;
         StaticVariables.includeRemoveAllOfNumber = true;
         StaticVariables.includeClearPuzzle = true;
+        
+        unlockAllSkins();
         updateButtons();
+    }
+
+    private void unlockAllSkins() {
+        foreach(Skin skin in StaticVariables.allSkins) {
+            if (skin != InterfaceFunctions.getDefaultSkin()) {
+                StaticVariables.unlockedSkins.Add(skin);
+            }
+            
+        }
     }
 
     public void addCoins() {
@@ -354,53 +390,45 @@ public class ShopCanvasController : MonoBehaviour {
         displayCoinsAmount();
     }
 
-    public void pushMedButton() { clickedButton(expandMedButton); }
-    
-    public void pushLargeButton() { clickedButton(expandLargeButton); }
+    public void pushButton(GameObject parent) {
+        //takes the parent of the current button as a parameter. Expands/contracts child dropdown
+        clickedButton(parent.transform.Find("Expand Button").gameObject);
 
-    public void pushHugeButton() { clickedButton(expandHugeButton); }
+    }
 
-    public void pushNotes1Button() { clickedButton(expandNotes1Button); }
+    private bool canPurchase(bool notCond, int cost) {
+        return (!notCond && StaticVariables.coins >= cost);
+    }
 
-    public void pushNotes2Button() { clickedButton(expandNotes2Button); }
-
-    public void pushResidentColorButton() { clickedButton(expandResidentColorButton); }
-
-    public void pushUndoRedoButton() { clickedButton(expandUndoRedoButton); }
-
-    public void pushRemoveAllButton() { clickedButton(expandRemoveAllButton); }
-
-    public void pushClearButton() { clickedButton(expandClearButton); }
+    private void doPurchase(int price) {
+        makePurchase(price);
+        updateButtons();
+        contractPreviousExpansion();
+    }
 
     public void unlockMedium() {
-        if (!StaticVariables.unlockedMedium && StaticVariables.coins >= medCityPrice) {
+        if (canPurchase(StaticVariables.unlockedMedium,medCityPrice)) {
 
             StaticVariables.unlockedMedium = true;
             StaticVariables.highestUnlockedSize = 4;
             StaticVariables.showMed = true;
 
-            makePurchase(medCityPrice);
-            updateButtons();
-            contractPreviousExpansion();
+            doPurchase(medCityPrice);
         }
     }
-
     public void unlockLarge() {
-        if (!StaticVariables.unlockedLarge && StaticVariables.unlockedMedium && StaticVariables.coins >= largeCityPrice) {
+        if (canPurchase(StaticVariables.unlockedLarge, largeCityPrice) && StaticVariables.unlockedMedium) {
 
             StaticVariables.unlockedLarge = true;
             StaticVariables.highestUnlockedSize = 5;
             StaticVariables.showMed = true;
             StaticVariables.showLarge = true;
 
-            makePurchase(largeCityPrice);
-            updateButtons();
-            contractPreviousExpansion();
+            doPurchase(largeCityPrice);
         }
     }
-
     public void unlockHuge() {
-        if (!StaticVariables.unlockedHuge && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium && StaticVariables.coins >= hugeCityPrice) {
+        if (canPurchase(StaticVariables.unlockedHuge, hugeCityPrice) && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
 
             StaticVariables.unlockedHuge = true;
             StaticVariables.highestUnlockedSize = 6;
@@ -408,79 +436,71 @@ public class ShopCanvasController : MonoBehaviour {
             StaticVariables.showLarge = true;
             StaticVariables.showHuge = true;
 
-            makePurchase(hugeCityPrice);
-            updateButtons();
-            contractPreviousExpansion();
+            doPurchase(hugeCityPrice);
         }
     }
-
     public void unlockNotes1() {
-        if (!StaticVariables.unlockedNotes1 && StaticVariables.coins >= notes1Price) {
+        if (canPurchase(StaticVariables.unlockedNotes1,notes1Price)) {
 
             StaticVariables.unlockedNotes1 = true;
             StaticVariables.includeNotes1Button = true;
 
-            makePurchase(notes1Price);
-            updateButtons();
-            contractPreviousExpansion();
+            doPurchase(notes1Price);
         }
     }
     public void unlockNotes2() {
-        if (!StaticVariables.unlockedNotes2 && StaticVariables.unlockedNotes1 && StaticVariables.coins >= notes2Price) {
+        if (canPurchase(StaticVariables.unlockedNotes2, notes2Price) && StaticVariables.unlockedNotes1) {
 
             StaticVariables.unlockedNotes2 = true;
             StaticVariables.includeNotes2Button = true;
 
-            makePurchase(notes2Price);
-            updateButtons();
-            contractPreviousExpansion();
+            doPurchase(notes2Price);
         }
     }
     public void unlockResidentsChangeColor() {
-        if (!StaticVariables.unlockedResidentsChangeColor && StaticVariables.coins >= residentColorPrice) {
+        if (canPurchase(StaticVariables.unlockedResidentsChangeColor,residentColorPrice)) {
 
             StaticVariables.unlockedResidentsChangeColor = true;
             StaticVariables.changeResidentColorOnCorrectRows = true;
 
-            makePurchase(residentColorPrice);
-            updateButtons();
-            contractPreviousExpansion();
+            doPurchase(residentColorPrice);
         }
     }
     public void unlockUndoRedo() {
-        if (!StaticVariables.unlockedUndoRedo && StaticVariables.coins >= undoRedoPrice) {
+        if (canPurchase(StaticVariables.unlockedUndoRedo,undoRedoPrice)) {
 
             StaticVariables.unlockedUndoRedo = true;
             StaticVariables.includeUndoRedo = true;
 
-            makePurchase(undoRedoPrice);
-            updateButtons();
-            contractPreviousExpansion();
+            doPurchase(undoRedoPrice);
         }
     }
     public void unlockRemoveAllOfNumber() {
-        if (!StaticVariables.unlockedRemoveAllOfNumber && StaticVariables.includeUndoRedo && StaticVariables.coins >= removeAllPrice) {
+        if (canPurchase(StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice) && StaticVariables.includeUndoRedo) {
             StaticVariables.unlockedRemoveAllOfNumber = true;
             StaticVariables.includeRemoveAllOfNumber = true;
 
-            makePurchase(removeAllPrice);
-            updateButtons();
-            contractPreviousExpansion();
+            doPurchase(removeAllPrice);
         }
     }
-
     public void unlockClearPuzzle() {
-        if (!StaticVariables.unlockedClearPuzzle && StaticVariables.includeUndoRedo && StaticVariables.coins >= clearPrice) {
+        if (canPurchase(StaticVariables.unlockedClearPuzzle, clearPrice) && StaticVariables.includeUndoRedo) {
             StaticVariables.unlockedClearPuzzle = true;
             StaticVariables.includeClearPuzzle = true;
 
-            makePurchase(clearPrice);
-            updateButtons();
-            contractPreviousExpansion();
+            doPurchase(clearPrice);
         }
     }
 
 
+    public void unlockSkin(Skin skin) {
+        if (canPurchase(StaticVariables.unlockedSkins.Contains(skin), skinPrice)){
+            StaticVariables.unlockedSkins.Add(skin);
+
+            doPurchase(skinPrice);
+        }
+
+    }
 
     public void expandSiblings(GameObject button) {
         //sets all siblings of the chosen button to be active, and resizes all necessary scroll views
@@ -493,7 +513,7 @@ public class ShopCanvasController : MonoBehaviour {
         for (int i = 1; i < parentBox.transform.childCount; i++) {
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
         }
-        resizeToFitChildren(parentBox);
+        resizeToFitChildren(parentBox, false);
         setScrollViewHeight();
     }
 
@@ -508,7 +528,7 @@ public class ShopCanvasController : MonoBehaviour {
         for (int i = 1; i < parentBox.transform.childCount; i++) {
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
         }
-        resizeToFitChildren(parentBox);
+        resizeToFitChildren(parentBox, false);
         setScrollViewHeight();
     }
 
@@ -530,8 +550,9 @@ public class ShopCanvasController : MonoBehaviour {
     }
     
 
-    public void resizeToFitChildren(GameObject parent) {
+    public void resizeToFitChildren(GameObject parent, bool minSize) {
         //get height of contents, including spaces between objects and top and bottom padding
+        //if minSize is true, the container height has to be at least the height of its parent
         float newHeight = 0f;
         int activeCount = 0;
         for (int i = 0; i < parent.transform.childCount; i++) {
@@ -545,32 +566,11 @@ public class ShopCanvasController : MonoBehaviour {
         newHeight += parent.GetComponent<VerticalLayoutGroup>().padding.top + parent.GetComponent<VerticalLayoutGroup>().padding.bottom;
 
         //set the container height to be at least the height of the parent
-        //if(newHeight < parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y) { newHeight = parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y; }
+        if(minSize && newHeight < parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y) { newHeight = parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y; }
 
         Vector2 newSize = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, newHeight);
         parent.GetComponent<RectTransform>().sizeDelta = newSize;
 
-    }
-
-    public void resizeToFitChildrenMinSize(GameObject parent) {
-        //exactly the same as resizeToFitChildren, but also the container height has to be at least the height of its parent
-        float newHeight = 0f;
-        int activeCount = 0;
-        for (int i = 0; i < parent.transform.childCount; i++) {
-            float h = parent.transform.GetChild(i).GetComponent<RectTransform>().sizeDelta.y;
-            if (parent.transform.GetChild(i).gameObject.activeSelf) {
-                newHeight += h;
-                activeCount++;
-            }
-        }
-        newHeight += ((activeCount - 1) * parent.GetComponent<VerticalLayoutGroup>().spacing);
-        newHeight += parent.GetComponent<VerticalLayoutGroup>().padding.top + parent.GetComponent<VerticalLayoutGroup>().padding.bottom;
-
-        //set the container height to be at least the height of the parent
-        if (newHeight < parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y) { newHeight = parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y; }
-
-        Vector2 newSize = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, newHeight);
-        parent.GetComponent<RectTransform>().sizeDelta = newSize;
     }
 
     public void setScrollViewHeight() {
@@ -580,7 +580,8 @@ public class ShopCanvasController : MonoBehaviour {
         //define the current top height - for use at the end of the function
         float topHeight = (float)Math.Round(((1 - scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition) * (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y)), 2);
 
-        resizeToFitChildrenMinSize(scrollView);
+        //resizeToFitChildrenMinSize(scrollView);
+        resizeToFitChildren(scrollView, true);
 
         //set the scroll view to be at the same position as previously
         scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - (topHeight / (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y));

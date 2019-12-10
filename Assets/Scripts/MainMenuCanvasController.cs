@@ -34,10 +34,11 @@ public class MainMenuCanvasController : MonoBehaviour {
     private void Start() {
 
         if (StaticVariables.isApplicationLaunchingFirstTime) {
-            SaveSystem.LoadGame(skins);
+            StaticVariables.allSkins = skins;
+            SaveSystem.LoadGame();
             StaticVariables.isApplicationLaunchingFirstTime = false;
         }
-
+        //print(StaticVariables.skin.name);
         background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.mainMenuBackground;
         //ColorUtility.TryParseHtmlString(StaticVariables.skin.mainMenuButtonExterior, out buttonColorExterior);
         //ColorUtility.TryParseHtmlString(StaticVariables.skin.mainMenuButtonInterior, out buttonColorInterior);
@@ -80,7 +81,12 @@ public class MainMenuCanvasController : MonoBehaviour {
 
 
     private void OnApplicationQuit() {
+        //PerformOverflow();
         SaveSystem.SaveGame();
+    }
+
+    private void PerformOverflow() {
+        PerformOverflow();
     }
 
     public void startFadeOut() {

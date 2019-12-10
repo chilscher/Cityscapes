@@ -46,4 +46,25 @@ public static class InterfaceFunctions{
     public static void colorPuzzleButtonOn(Transform button) {
         colorPuzzleButtonOn(button.gameObject);
     }
+
+    public static Skin getSkinFromName(string name) {
+        foreach (Skin skin in StaticVariables.allSkins) {
+            if (skin.skinName == name) {
+                return skin;
+            }
+        }
+        return null;
+    }
+    /*
+    public static void printUnlockedSkins() {
+        string output = "unlocked skins: ";
+        foreach (Skin skin in StaticVariables.unlockedSkins) {
+            output += skin.skinName + " ";
+        }
+        Debug.Log(output);
+    }
+    */
+    public static Skin getDefaultSkin() {
+        return StaticVariables.allSkins[0];
+    }
 }
