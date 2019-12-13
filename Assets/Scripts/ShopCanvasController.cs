@@ -18,7 +18,9 @@ public class ShopCanvasController : MonoBehaviour {
     public int clearPrice = 10;
 
     //public int mountainsSkinPrice = 10;
-    public int skinPrice = 10;
+    //public int skinPrice = 10;
+    public int skinTier1Price = 10;
+    public int skinTier2Price = 20;
 
 
     public GameObject coinsBox1s;
@@ -46,7 +48,7 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject expandClearButton;
 
     //public GameObject expandMountainsSkinButton;
-    public GameObject[] skinButtons;
+    private GameObject[] skinButtons;
     //public GameObject[] skins;
 
     public GameObject blackForeground; //used to transition to/from the puzzle menu
@@ -78,6 +80,9 @@ public class ShopCanvasController : MonoBehaviour {
 
     public GameObject menuButton;
 
+    public GameObject skinsStart; //the object right before the first skin's expand-button
+    public GameObject skinsEnd; //the object right after the last skin's expand-button
+
     //public 
 
     private void Start() {
@@ -105,10 +110,10 @@ public class ShopCanvasController : MonoBehaviour {
         displayCoinsOnButton(expandUndoRedoButton, undoRedoPrice);
         displayCoinsOnButton(expandRemoveAllButton, removeAllPrice);
         displayCoinsOnButton(expandClearButton, clearPrice);
-
-
+        
+        findSkinButtons();
         foreach (GameObject parent in skinButtons) {
-            displayCoinsOnButton(parent.transform.Find("Expand Button").gameObject, skinPrice);
+            displayCoinsOnButton(parent.transform.Find("Expand Button").gameObject, getSkinPrice((InterfaceFunctions.getSkinFromName(parent.name))));
         }
 
         updateButtons();
@@ -124,6 +129,28 @@ public class ShopCanvasController : MonoBehaviour {
 
         setScrollViewHeight();
 
+    }
+
+    private void findSkinButtons() {
+        int start = skinsStart.transform.GetSiblingIndex();
+        int end = skinsEnd.transform.GetSiblingIndex();
+        List<GameObject> buttons = new List<GameObject>();
+        GameObject parent = expandMedButton.transform.parent.parent.gameObject;
+        for (int i = start + 1; i<end; i++) {
+            //print(parent.transform.GetChild(i).gameObject.name);
+            buttons.Add(parent.transform.GetChild(i).gameObject);
+        }
+        skinButtons = buttons.ToArray();
+    }
+
+    private int getSkinPrice(Skin skin) {
+        switch (skin.skinTier) {
+            case 1:
+                return skinTier1Price;
+            case 2:
+                return skinTier2Price;
+        }
+        return 0;
     }
 
     private void Update() {
@@ -220,7 +247,7 @@ public class ShopCanvasController : MonoBehaviour {
         //updateButton(expandMountainsSkinButton, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.getSkinFromName("Mountains")), skinPrice);
         
         foreach (GameObject parent in skinButtons) {
-            updateButton(parent.transform.Find("Expand Button").gameObject, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.getSkinFromName(parent.name)), skinPrice);
+            updateButton(parent.transform.Find("Expand Button").gameObject, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.getSkinFromName(parent.name)), getSkinPrice((InterfaceFunctions.getSkinFromName(parent.name))));
         }
         
         setScrollViewHeight();
@@ -380,7 +407,7 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     public void addCoins() {
-        StaticVariables.coins += 40;
+        StaticVariables.coins += 400;
         displayCoinsAmount();
         updateButtons();
     }
@@ -493,11 +520,16 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
 
-    public void unlockSkin(Skin skin) {
-        if (canPurchase(StaticVariables.unlockedSkins.Contains(skin), skinPrice)){
+    public void unlockSkin(GameObject parent) {
+        Skin skin = InterfaceFunctions.getSkinFromName(parent.name);
+        if (canPurchase(StaticVariables.unlockedSkins.Contains(skin), getSkinPrice(skin))){
             StaticVariables.unlockedSkins.Add(skin);
 
-            doPurchase(skinPrice);
+            StaticVariables.skin = skin;
+            background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
+            InterfaceFunctions.colorMenuButton(menuButton);
+
+            doPurchase(getSkinPrice(skin));
         }
 
     }

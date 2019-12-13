@@ -146,6 +146,15 @@ public class MainMenuCanvasController : MonoBehaviour {
         InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("4").gameObject);
         InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("5").gameObject);
         InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("6").gameObject);
+        InterfaceFunctions.colorMenuButton(returnOrAbandonButtons.transform.Find("Return").gameObject);
+        InterfaceFunctions.colorMenuButton(returnOrAbandonButtons.transform.Find("Abandon").gameObject);
+
+        Color exter;
+        Color inter;
+        ColorUtility.TryParseHtmlString(StaticVariables.skin.mainMenuButtonExterior, out exter);
+        ColorUtility.TryParseHtmlString(StaticVariables.skin.mainMenuButtonInterior, out inter);
+        returnOrAbandonButtons.transform.Find("Backdrop").Find("Border").GetComponent<SpriteRenderer>().color = exter;
+        returnOrAbandonButtons.transform.Find("Backdrop").Find("Interior").GetComponent<SpriteRenderer>().color = inter;
 
         InterfaceFunctions.colorMenuButton(shopButton);
         InterfaceFunctions.colorMenuButton(tutorialButton);

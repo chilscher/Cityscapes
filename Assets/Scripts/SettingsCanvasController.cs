@@ -302,6 +302,7 @@ public class SettingsCanvasController : MonoBehaviour {
         for (int i = 2; i < parentBox.transform.childCount; i++) {
             bool switchTo = StaticVariables.unlockedSkins.Contains(InterfaceFunctions.getSkinFromName(parentBox.transform.GetChild(i).name));
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
+            parentBox.transform.GetChild(i).Find("Button").Find("Text").GetComponent<Text>().text = parentBox.transform.GetChild(i).name.ToUpper() + " SKIN";
         }
         resizeToFitChildren(parentBox, false);
         setScrollViewHeight();

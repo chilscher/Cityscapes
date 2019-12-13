@@ -6,6 +6,7 @@ using UnityEngine;
 public class Skin: MonoBehaviour{
 
     public string skinName;
+    public int skinTier;
 
     public string note1Color;
     public string note2Color;
