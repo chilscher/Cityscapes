@@ -32,9 +32,13 @@ public class Skin: MonoBehaviour{
 
     public string mainMenuButtonInterior;
     public string mainMenuButtonExterior;
+    public string resumePuzzleInterior;
+    public string resumePuzzleExterior;
 
     public Sprite smallCityArt;
     public Sprite medCityArt;
     public Sprite largeCityArt;
     public Sprite hugeCityArt;
+
+    public Sprite buildingSprite;
 }

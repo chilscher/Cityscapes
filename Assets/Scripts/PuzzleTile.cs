@@ -18,9 +18,9 @@ public class PuzzleTile : Tile {
     public List<int> noteGroup2 = new List<int>();
 
     public Sprite emptyTileSprite;
-    public Sprite[] buildingSprites;
+    //public Sprite[] buildingSprites;
 
-    private Sprite[] usableBuildingSprites;
+    //private Sprite[] usableBuildingSprites;
 
 
     private SpriteRenderer background;
@@ -34,6 +34,12 @@ public class PuzzleTile : Tile {
     private Color note1Color;
     private Color note2Color;
 
+    private bool randomRotation = false;
+    private bool scaleBuildingSizes = true;
+    private float minBuildingScale = 0.5f;
+    //private double prevScale = 1f;
+   
+
     public void initialize(int solution, Transform parent, int maxValue, GameManager gameManager) {
         this.solution = solution;
         this.maxValue = maxValue;
@@ -46,11 +52,14 @@ public class PuzzleTile : Tile {
         redBorder = transform.GetChild(4).GetComponent<SpriteRenderer>();
 
         // pick a random tile rotation direction
-        int[] directions = new int[] { 0, 90, 180, 270 };
-        int r = StaticVariables.rand.Next(4);
-        building.transform.Rotate(new Vector3(0, 0, directions[r]));
+        if (randomRotation) {
+            int[] directions = new int[] { 0, 90, 180, 270 };
+            int r = StaticVariables.rand.Next(4);
+            building.transform.Rotate(new Vector3(0, 0, directions[r]));
+        }
         setNumberColors();
-        createUsableBuildingSprites();
+        //createUsableBuildingSprites();
+        building.sprite = StaticVariables.skin.buildingSprite;
     }
 
     public void setNumberColors() {
@@ -105,8 +114,15 @@ public class PuzzleTile : Tile {
     }
 
     public void removeNumberFromTile() {
+        if (scaleBuildingSizes && shownNumber != 0) {
+            //building.transform.localScale /= ((float)shownNumber / usableBuildingSprites.Length);
+            //building.transform.localScale /= ((((float)shownNumber / usableBuildingSprites.Length) * minBuildingScale) + minBuildingScale);
+            float scale1 = ((float)shownNumber - 1) / (maxValue - 1);
+            float scale2 = scale1 * minBuildingScale;
+            float scale3 = scale2 + minBuildingScale;
+            building.transform.localScale /= (scale3);
+        }
         shownNumber = 0;
-        
         building.enabled = false;
         number.enabled = false;
         
@@ -136,6 +152,7 @@ public class PuzzleTile : Tile {
                 removeNumberFromTile();
             }
             else {
+                removeNumberFromTile();
                 shownNumber = num;
                 addNumberToTile(shownNumber);
                 clearColoredNotes();
@@ -227,7 +244,17 @@ public class PuzzleTile : Tile {
         }
 
         if (num != 0) {
-            building.sprite = usableBuildingSprites[num - 1];
+            if (scaleBuildingSizes) {
+                //building.sprite = usableBuildingSprites[usableBuildingSprites.Length - 1];
+                //building.transform.localScale *= ((float)num / usableBuildingSprites.Length);
+                float scale1 = ((float)num - 1) / (maxValue - 1);
+                float scale2 = scale1 * minBuildingScale;
+                float scale3 = scale2 + minBuildingScale;
+                building.transform.localScale *= (scale3);
+            }
+            else {
+                //building.sprite = usableBuildingSprites[num - 1];
+            }
             number.sprite = whiteSprites[num - 1];
             number.color = numberColor;
 
@@ -235,7 +262,7 @@ public class PuzzleTile : Tile {
             number.enabled = true;
         }
     }
-
+    /*
     private void createUsableBuildingSprites() {
         //does not allow for cities of size 7!
         usableBuildingSprites = new Sprite[maxValue];
@@ -252,6 +279,7 @@ public class PuzzleTile : Tile {
             usableBuildingSprites[i] = s;
         }
     }
+    */
 
     public void addRedBorder() {
         redBorder.gameObject.SetActive(true);

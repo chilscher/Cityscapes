@@ -151,8 +151,8 @@ public class MainMenuCanvasController : MonoBehaviour {
 
         Color exter;
         Color inter;
-        ColorUtility.TryParseHtmlString(StaticVariables.skin.mainMenuButtonExterior, out exter);
-        ColorUtility.TryParseHtmlString(StaticVariables.skin.mainMenuButtonInterior, out inter);
+        ColorUtility.TryParseHtmlString(StaticVariables.skin.resumePuzzleExterior, out exter);
+        ColorUtility.TryParseHtmlString(StaticVariables.skin.resumePuzzleInterior, out inter);
         returnOrAbandonButtons.transform.Find("Backdrop").Find("Border").GetComponent<SpriteRenderer>().color = exter;
         returnOrAbandonButtons.transform.Find("Backdrop").Find("Interior").GetComponent<SpriteRenderer>().color = inter;
 
