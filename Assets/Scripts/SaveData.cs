@@ -38,6 +38,8 @@ public class SaveData{
     public string nextPuzzleStates;
     public string puzzleSolution;
     public int savedPuzzleSize;
+    public int savedBuildNumber;
+    public string savedBuildType;
 
 
     public SaveData() {
@@ -76,6 +78,8 @@ public class SaveData{
             nextPuzzleStates = getPuzzleStateStringsFromList(StaticVariables.nextPuzzleStates);
             puzzleSolution = StaticVariables.puzzleSolution;
             savedPuzzleSize = StaticVariables.savedPuzzleSize;
+            savedBuildNumber = StaticVariables.savedBuildNumber;
+            savedBuildType = StaticVariables.savedBuildType;
         }
 
     }
@@ -115,7 +119,9 @@ public class SaveData{
             StaticVariables.currentPuzzleState = new PuzzleState(currentPuzzleState, savedPuzzleSize);
             StaticVariables.nextPuzzleStates = getPuzzleStateListFromString(nextPuzzleStates, savedPuzzleSize);
             StaticVariables.puzzleSolution = puzzleSolution;
-            StaticVariables.savedPuzzleSize = savedPuzzleSize;            
+            StaticVariables.savedPuzzleSize = savedPuzzleSize;
+            StaticVariables.savedBuildNumber = savedBuildNumber;
+            StaticVariables.savedBuildType = savedBuildType;
         }
     }
 

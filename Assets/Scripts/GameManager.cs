@@ -161,15 +161,20 @@ public class GameManager : MonoBehaviour {
             }
             else {
                 puzzleGenerator.createPuzzle(size);
+                selectedNumber = size;
+                clickTileAction = "Apply Selected";
             }
             drawFullPuzzle();
             setRemoveAllAndClearButtons();
             setNumberButtons();
-            pushNumberButton(size);
+            //pushNumberButton(size);
+            highlightSelectedNumber();
+
             hidePositioningObjects();
             setSelectionModeButtons();
             setUndoRedoButtons();
-            hitBuildButton();
+            //hitBuildButton();
+            highlightBuildType();
             puzzleBackground.GetComponent<SpriteRenderer>().sprite = skin.puzzleBackground;
             InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Menu"));
             InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Another Puzzle"));
@@ -588,6 +593,9 @@ public class GameManager : MonoBehaviour {
 
         StaticVariables.puzzleSolution = puzzleGenerator.makeSolutionString();
         StaticVariables.savedPuzzleSize = size;
+
+        StaticVariables.savedBuildNumber = selectedNumber;
+        StaticVariables.savedBuildType = clickTileAction;
     }
 
     public void loadPuzzleStates() {
@@ -599,6 +607,8 @@ public class GameManager : MonoBehaviour {
 
         currentPuzzleState.restorePuzzleState(puzzleGenerator);
 
+        selectedNumber = StaticVariables.savedBuildNumber;
+        clickTileAction = StaticVariables.savedBuildType;
         //load the actual puzzle solution
     }
 
@@ -765,6 +775,32 @@ public class GameManager : MonoBehaviour {
     public void pushNumberButton(int num) {
         switchNumber(num);
         showNumberButtonClicked(numberButtons[num - 1]);
+    }
+
+    public void highlightSelectedNumber() {
+        showNumberButtonClicked(numberButtons[selectedNumber - 1]);
+    }
+    public void highlightBuildType() {
+        //if the build type is set to be included, then highlight it. otherwise, highlight the build button
+        disselectBuildAndNotes();
+
+        GameObject button;
+        if (clickTileAction == "Toggle Note 1" && includeNote1Btn) {
+            button = note1Button;
+        }
+        else if (clickTileAction == "Toggle Note 2" && includeNote2Btn) {
+            button = note2Button;
+        }
+        else {
+            clickTileAction = "Apply Selected";
+            button = buildButton;
+        }
+        
+        if (includeNote1Btn || includeNote2Btn) {
+
+            InterfaceFunctions.colorPuzzleButtonOn(button);
+        }
+        
     }
 
     public void pushTutorialNumberButton(int num) {

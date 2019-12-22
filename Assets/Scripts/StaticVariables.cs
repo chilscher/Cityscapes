@@ -64,6 +64,8 @@ public class StaticVariables{
     static public List<PuzzleState> nextPuzzleStates;
     static public string puzzleSolution;
     static public int savedPuzzleSize;
+    static public int savedBuildNumber;
+    static public string savedBuildType;
 
     static public Skin[] allSkins;
 }
