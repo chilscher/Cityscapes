@@ -66,9 +66,14 @@ public class MainMenuCanvasController : MonoBehaviour {
                 if (StaticVariables.fadingTo == "puzzle") { SceneManager.LoadScene("InPuzzle"); }
                 if (StaticVariables.fadingTo == "shop") { SceneManager.LoadScene("Shop"); }
                 if (StaticVariables.fadingTo == "settings") { SceneManager.LoadScene("Settings"); }
+                if (StaticVariables.fadingTo == "reload") {
+                    StaticVariables.fadingTo = "menu";
+                    StaticVariables.fadingFrom = "reloaded";
+                    SceneManager.LoadScene("MainMenu");
+                }
             }
         }
-        if (StaticVariables.isFading && StaticVariables.fadingTo == "menu") {
+        else if (StaticVariables.isFading && StaticVariables.fadingTo == "menu") {
             fadeTimer -= Time.deltaTime;
             Color c = blackSprite.color;
             c.a = (fadeTimer) / fadeInTime;
@@ -146,15 +151,15 @@ public class MainMenuCanvasController : MonoBehaviour {
         InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("4").gameObject);
         InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("5").gameObject);
         InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("6").gameObject);
-        InterfaceFunctions.colorMenuButton(returnOrAbandonButtons.transform.Find("Return").gameObject);
-        InterfaceFunctions.colorMenuButton(returnOrAbandonButtons.transform.Find("Abandon").gameObject);
+        InterfaceFunctions.colorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Return").gameObject);
+        InterfaceFunctions.colorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Abandon").gameObject);
 
         Color exter;
         Color inter;
         ColorUtility.TryParseHtmlString(StaticVariables.skin.resumePuzzleExterior, out exter);
         ColorUtility.TryParseHtmlString(StaticVariables.skin.resumePuzzleInterior, out inter);
-        returnOrAbandonButtons.transform.Find("Backdrop").Find("Border").GetComponent<SpriteRenderer>().color = exter;
-        returnOrAbandonButtons.transform.Find("Backdrop").Find("Interior").GetComponent<SpriteRenderer>().color = inter;
+        returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Border").GetComponent<SpriteRenderer>().color = exter;
+        returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Interior").GetComponent<SpriteRenderer>().color = inter;
 
         InterfaceFunctions.colorMenuButton(shopButton);
         InterfaceFunctions.colorMenuButton(tutorialButton);
@@ -181,11 +186,24 @@ public class MainMenuCanvasController : MonoBehaviour {
 
     public void pushAbandonPuzzleButton() {
         StaticVariables.hasSavedPuzzleState = false;
-        showCityButtons();
+        
+        if (!StaticVariables.isFading) {
+            
+
+            StaticVariables.fadingTo = "reload";
+            startFadeOut();
+        }
+        
+        //showCityButtons();
     }
 
     private void showCityButtons() {
-        
+
+        returnOrAbandonButtons.SetActive(false);
+        shopButton.SetActive(true);
+        tutorialButton.SetActive(true);
+        settingsButton.SetActive(true);
+
         int highestUnlockedSize = 3;
         if (StaticVariables.showMed) {
             highestUnlockedSize = 4;
@@ -197,6 +215,14 @@ public class MainMenuCanvasController : MonoBehaviour {
             highestUnlockedSize = 6;
         }
         if (StaticVariables.hasSavedPuzzleState) {
+            onlySmallPuzzleButton.SetActive(false);
+            smallAndMedPuzzleButtons.SetActive(false);
+            smallMedLargePuzzleButtons.SetActive(false);
+            smallMedLargeHugePuzzleButtons.SetActive(false);
+            returnOrAbandonButtons.SetActive(true);
+            shopButton.SetActive(false);
+            tutorialButton.SetActive(false);
+            settingsButton.SetActive(false);
             //print("we have a saved puzzle state!");
         }
         else {
@@ -207,8 +233,10 @@ public class MainMenuCanvasController : MonoBehaviour {
             smallMedLargePuzzleButtons.SetActive(highestUnlockedSize == 5);
             smallMedLargeHugePuzzleButtons.SetActive(highestUnlockedSize == 6);
         }
-
-
-        returnOrAbandonButtons.SetActive(StaticVariables.hasSavedPuzzleState);
+        /*
+        if (StaticVariables.hasSavedPuzzleState) {
+        }
+        */
+        //returnOrAbandonButtons.SetActive(StaticVariables.hasSavedPuzzleState);
     }
 }

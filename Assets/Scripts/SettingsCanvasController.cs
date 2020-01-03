@@ -144,6 +144,7 @@ public class SettingsCanvasController : MonoBehaviour {
             StaticVariables.showHuge = false;
         }
         setCurrentToggleTexts();
+        SaveSystem.SaveGame();
     }
 
     public void pushLargeButton() {
@@ -155,6 +156,7 @@ public class SettingsCanvasController : MonoBehaviour {
             StaticVariables.showHuge = false;
         }
         setCurrentToggleTexts();
+        SaveSystem.SaveGame();
     }
 
     public void pushHugeButton() {
@@ -164,21 +166,25 @@ public class SettingsCanvasController : MonoBehaviour {
             StaticVariables.showLarge = true;
         }
         setCurrentToggleTexts();
+        SaveSystem.SaveGame();
     }
 
     public void pushNotes1Button() {
         StaticVariables.includeNotes1Button = !StaticVariables.includeNotes1Button;
         setCurrentToggleTexts();
+        SaveSystem.SaveGame();
     }
 
     public void pushNotes2Button() {
         StaticVariables.includeNotes2Button = !StaticVariables.includeNotes2Button;
         setCurrentToggleTexts();
+        SaveSystem.SaveGame();
     }
     
     public void pushResidentColorButton() {
         StaticVariables.changeResidentColorOnCorrectRows = !StaticVariables.changeResidentColorOnCorrectRows;
         setCurrentToggleTexts();
+        SaveSystem.SaveGame();
     }
 
     public void pushUndoRedoButton() {
@@ -188,6 +194,7 @@ public class SettingsCanvasController : MonoBehaviour {
             StaticVariables.includeClearPuzzle = false;
         }
         setCurrentToggleTexts();
+        SaveSystem.SaveGame();
     }
 
     public void pushRemoveNumbersButton() {
@@ -196,6 +203,7 @@ public class SettingsCanvasController : MonoBehaviour {
             StaticVariables.includeUndoRedo = true;
         }
         setCurrentToggleTexts();
+        SaveSystem.SaveGame();
     }
 
     public void pushClearPuzzleButton() {
@@ -204,6 +212,7 @@ public class SettingsCanvasController : MonoBehaviour {
             StaticVariables.includeUndoRedo = true;
         }
         setCurrentToggleTexts();
+        SaveSystem.SaveGame();
     }
 
     public void pushCreditsButton() {
@@ -211,24 +220,12 @@ public class SettingsCanvasController : MonoBehaviour {
             StaticVariables.fadingTo = "credits";
             startFadeOut();
         }
-        /*
-        if (creditsText.activeSelf) {
-            creditsButton.transform.Find("Button").Find("Show").gameObject.SetActive(true);
-            creditsButton.transform.Find("Button").Find("Hide").gameObject.SetActive(false);
-            creditsText.SetActive(false);
-        }
-        else {
-            creditsButton.transform.Find("Button").Find("Show").gameObject.SetActive(false);
-            creditsButton.transform.Find("Button").Find("Hide").gameObject.SetActive(true);
-            creditsText.SetActive(true);
-        }
-        setScrollViewHeight();
-        */
     }
 
     public void pushHidePurchasedUpgradesButton() {
         StaticVariables.hidePurchasedUpgrades = !StaticVariables.hidePurchasedUpgrades;
         setCurrentToggleTexts();
+        SaveSystem.SaveGame();
     }
 
     public void setScrollViewHeight() {
@@ -272,9 +269,10 @@ public class SettingsCanvasController : MonoBehaviour {
 
 
     public void chooseSkin(Skin s) {
-
         StaticVariables.skin = s;
         loadSkin();
+
+        SaveSystem.SaveGame();
     }
     
 

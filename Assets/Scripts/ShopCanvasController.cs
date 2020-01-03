@@ -431,6 +431,8 @@ public class ShopCanvasController : MonoBehaviour {
         makePurchase(price);
         updateButtons();
         contractPreviousExpansion();
+
+        SaveSystem.SaveGame();
     }
 
     public void unlockMedium() {

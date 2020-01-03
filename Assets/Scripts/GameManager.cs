@@ -67,24 +67,14 @@ public class GameManager : MonoBehaviour {
     public bool canClick = true;
     
     private bool hasWonYet = false;
+    private bool hasAnythingHappenedYet = false;
 
     private List<PuzzleState> previousPuzzleStates = new List<PuzzleState>(); // the list of puzzle states to be restored by the undo button
     private PuzzleState currentPuzzleState;
     private List<PuzzleState> nextPuzzleStates = new List<PuzzleState>();// the list of puzzle states to be restored by the redo button
     
-    /*
-    [HideInInspector]
-    public Color offButtonColorExterior;
-    [HideInInspector]
-    public Color onButtonColorExterior;
-    [HideInInspector]
-    public Color offButtonColorInterior;
-    [HideInInspector]
-    public Color onButtonColorInterior;
-    */
     private Color winBackgroundColorInterior;
     private Color winBackgroundColorExterior;
-    //private Color winPopupColor;
 
     public GameObject coinsBox1s;
     public GameObject coinsBox10s;
@@ -534,7 +524,7 @@ public class GameManager : MonoBehaviour {
             //buildButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
         }
         updateRemoveSelectedNumber();
-
+        save();
     }
 
     public void hitNote1Button() {
@@ -544,6 +534,7 @@ public class GameManager : MonoBehaviour {
         //note1Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
         //note1Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
         updateRemoveSelectedNumber();
+        save();
     }
 
     public void hitNote2Button() {
@@ -554,6 +545,7 @@ public class GameManager : MonoBehaviour {
         //note2Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
         //note2Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
         updateRemoveSelectedNumber();
+        save();
     }
 
     public void disselectBuildAndNotes() {
@@ -576,14 +568,23 @@ public class GameManager : MonoBehaviour {
 
     public void goToMainMenu() {
         if (!StaticVariables.isFading) {
-            if (!hasWonYet) { savePuzzleStates(); }
+            save();
             StaticVariables.fadingTo = "menu";
             startFadeOut();
         }
     }
 
+    public void save() {
+        if (!StaticVariables.isTutorial) {
+            savePuzzleStates();
+            SaveSystem.SaveGame();
+        }
+
+    }
+
     public void savePuzzleStates() {
-        StaticVariables.hasSavedPuzzleState = true;
+        //StaticVariables.hasSavedPuzzleState = !hasWonYet && hasAnythingHappenedYet;
+        StaticVariables.hasSavedPuzzleState = !hasWonYet;
 
         StaticVariables.previousPuzzleStates = previousPuzzleStates;
         StaticVariables.currentPuzzleState = currentPuzzleState;
@@ -635,13 +636,27 @@ public class GameManager : MonoBehaviour {
     }
     private void selectNumber(GameObject btn) {
 
-        InterfaceFunctions.colorPuzzleButtonOn(btn);
+        if (!StaticVariables.isTutorial) { InterfaceFunctions.colorPuzzleButtonOn(btn); }
+        else {
+            //temporarily swap to default skin
+            Skin currentSkin = StaticVariables.skin;
+            StaticVariables.skin = StaticVariables.allSkins[0];
+            InterfaceFunctions.colorPuzzleButtonOn(btn);
+            StaticVariables.skin = currentSkin;
+        }
         //btn.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
         //btn.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
     }
 
     private void disselectNumber(GameObject btn) {
-        InterfaceFunctions.colorPuzzleButton(btn);
+        if (!StaticVariables.isTutorial) { InterfaceFunctions.colorPuzzleButton(btn); }
+        else {
+            //temporarily swap to default skin
+            Skin currentSkin = StaticVariables.skin;
+            StaticVariables.skin = StaticVariables.allSkins[0];
+            InterfaceFunctions.colorPuzzleButton(btn);
+            StaticVariables.skin = currentSkin;
+        }
         //btn.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
         //btn.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
     }
@@ -734,8 +749,9 @@ public class GameManager : MonoBehaviour {
 
 
     private void OnApplicationQuit() {
-        savePuzzleStates();
-        SaveSystem.SaveGame();
+        save();
+        //savePuzzleStates();
+        //SaveSystem.SaveGame();
     }
 
     public void addToPuzzleHistory() {
@@ -746,6 +762,8 @@ public class GameManager : MonoBehaviour {
         if (nextPuzzleStates.Count > 0) {
             nextPuzzleStates = new List<PuzzleState>();
         }
+        hasAnythingHappenedYet = true;
+        save();
     }
 
     public void pushUndoButton() {
@@ -759,6 +777,7 @@ public class GameManager : MonoBehaviour {
 
             currentPuzzleState = currentState;
             previousPuzzleStates.RemoveAt(previousPuzzleStates.Count - 1);
+            save();
         }
     }
 
@@ -769,12 +788,14 @@ public class GameManager : MonoBehaviour {
             currentState.restorePuzzleState(puzzleGenerator);
             currentPuzzleState = currentState;
             nextPuzzleStates.RemoveAt(nextPuzzleStates.Count - 1);
+            save();
         }
     }
 
     public void pushNumberButton(int num) {
         switchNumber(num);
         showNumberButtonClicked(numberButtons[num - 1]);
+        save();
     }
 
     public void highlightSelectedNumber() {
@@ -800,6 +821,7 @@ public class GameManager : MonoBehaviour {
 
             InterfaceFunctions.colorPuzzleButtonOn(button);
         }
+        //save();
         
     }
 
