@@ -171,6 +171,12 @@ public class ShopCanvasController : MonoBehaviour {
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
                 StaticVariables.isFading = false;
+                if (StaticVariables.waitingOnButtonClickAfterFadeIn) {
+                    StaticVariables.waitingOnButtonClickAfterFadeIn = false;
+                    if (StaticVariables.buttonClickInWaiting.Contains("menu")) {
+                        goToMainMenu();
+                    }
+                }
             }
         }
     }
@@ -184,6 +190,10 @@ public class ShopCanvasController : MonoBehaviour {
         if (!StaticVariables.isFading) {
             StaticVariables.fadingTo = "menu";
             startFadeOut();
+        }
+        else {
+            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
+            StaticVariables.buttonClickInWaiting = "menu";
         }
     }
 

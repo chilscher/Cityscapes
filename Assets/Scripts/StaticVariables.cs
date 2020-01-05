@@ -68,4 +68,7 @@ public class StaticVariables{
     static public string savedBuildType;
 
     static public Skin[] allSkins;
+
+    static public bool waitingOnButtonClickAfterFadeIn = false;
+    static public string buttonClickInWaiting = "";
 }

@@ -49,6 +49,12 @@ public class CreditsCanvasController : MonoBehaviour {
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
                 StaticVariables.isFading = false;
+                if (StaticVariables.waitingOnButtonClickAfterFadeIn) {
+                    StaticVariables.waitingOnButtonClickAfterFadeIn = false;
+                    if (StaticVariables.buttonClickInWaiting.Contains("settings")) {
+                        back();
+                    }
+                }
             }
         }
     }
@@ -61,6 +67,10 @@ public class CreditsCanvasController : MonoBehaviour {
         if (!StaticVariables.isFading) {
             StaticVariables.fadingTo = "settings";
             startFadeOut();
+        }
+        else {
+            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
+            StaticVariables.buttonClickInWaiting = "settings";
         }
     }
 

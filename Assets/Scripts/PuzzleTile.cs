@@ -247,10 +247,12 @@ public class PuzzleTile : Tile {
             if (scaleBuildingSizes) {
                 //building.sprite = usableBuildingSprites[usableBuildingSprites.Length - 1];
                 //building.transform.localScale *= ((float)num / usableBuildingSprites.Length);
+                building.transform.localScale = new Vector3(1,1,1); //reset the building size, so when it is redrawn the building size does not exponentially diminish
                 float scale1 = ((float)num - 1) / (maxValue - 1);
                 float scale2 = scale1 * minBuildingScale;
                 float scale3 = scale2 + minBuildingScale;
                 building.transform.localScale *= (scale3);
+                //print("scaled");
             }
             else {
                 //building.sprite = usableBuildingSprites[num - 1];

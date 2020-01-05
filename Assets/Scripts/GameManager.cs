@@ -146,6 +146,7 @@ public class GameManager : MonoBehaviour {
             tutorialCanvas.SetActive(false);
             puzzleCanvas.SetActive(true);
             if (StaticVariables.hasSavedPuzzleState) {
+                //print("has saved puzzle state!");
                 puzzleGenerator.restoreSavedPuzzle(StaticVariables.puzzleSolution, size);
                 loadPuzzleStates();
             }
@@ -209,12 +210,16 @@ public class GameManager : MonoBehaviour {
         }
         if (!hasWonYet && puzzleGenerator.checkPuzzle() && !StaticVariables.isTutorial) {
             hasWonYet = true;
+            
             winCanvas.SetActive(true);
             canClick = false;
             incrementCoinsForWin();
 
             fadingToWin = true;
             fadingToWinTimer = fadeToWinTime;
+
+            StaticVariables.hasSavedPuzzleState = false;
+            save();
         }
 
         if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle" && StaticVariables.fadingFrom == "puzzle") {
@@ -225,6 +230,13 @@ public class GameManager : MonoBehaviour {
                 blackSprite.color = c;
                 if (fadeTimer <= 0f) {
                     StaticVariables.isFading = false;
+
+                    if (StaticVariables.waitingOnButtonClickAfterFadeIn) {
+                        StaticVariables.waitingOnButtonClickAfterFadeIn = false;
+                        if (StaticVariables.buttonClickInWaiting.Contains("menu")) {
+                            goToMainMenu();
+                        }
+                    }
                 }
             }
             else {
@@ -249,6 +261,13 @@ public class GameManager : MonoBehaviour {
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
                 StaticVariables.isFading = false;
+
+                if (StaticVariables.waitingOnButtonClickAfterFadeIn) {
+                    StaticVariables.waitingOnButtonClickAfterFadeIn = false;
+                    if (StaticVariables.buttonClickInWaiting.Contains("menu")) {
+                        goToMainMenu();
+                    }
+                }
             }
         }
         else if (StaticVariables.isFading && StaticVariables.fadingFrom == "puzzle") {
@@ -571,6 +590,10 @@ public class GameManager : MonoBehaviour {
             save();
             StaticVariables.fadingTo = "menu";
             startFadeOut();
+        }
+        else {
+            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
+            StaticVariables.buttonClickInWaiting = "menu";
         }
     }
 

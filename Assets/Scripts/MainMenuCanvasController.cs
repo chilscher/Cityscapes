@@ -80,6 +80,26 @@ public class MainMenuCanvasController : MonoBehaviour {
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
                 StaticVariables.isFading = false;
+                if (StaticVariables.waitingOnButtonClickAfterFadeIn) {
+                    StaticVariables.waitingOnButtonClickAfterFadeIn = false;
+                    if (StaticVariables.buttonClickInWaiting.Contains("puzzle")) {
+                        int s = int.Parse(StaticVariables.buttonClickInWaiting[StaticVariables.buttonClickInWaiting.Length -1] + "");
+                        //print("going to enter puzzle with size of " + s);
+                        startPuzzle(s);
+                    }
+                    else if (StaticVariables.buttonClickInWaiting == "tutorial") {
+                        startTutorial();
+                    }
+                    else if (StaticVariables.buttonClickInWaiting == "shop") {
+                        goToShop();
+                    }
+                    else if (StaticVariables.buttonClickInWaiting == "settings") {
+                        goToSettings();
+                    }
+                    else if (StaticVariables.buttonClickInWaiting == "abandon") {
+                        pushAbandonPuzzleButton();
+                    }
+                }
             }
         }
     }
@@ -109,6 +129,10 @@ public class MainMenuCanvasController : MonoBehaviour {
             StaticVariables.fadingTo = "puzzle";
             startFadeOut();
         }
+        else {
+            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
+            StaticVariables.buttonClickInWaiting = "puzzle" + size;
+        }
     }
     
     public void startTutorial() {
@@ -118,6 +142,10 @@ public class MainMenuCanvasController : MonoBehaviour {
             StaticVariables.fadingTo = "puzzle";
             startFadeOut();
         }
+        else {
+            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
+            StaticVariables.buttonClickInWaiting = "tutorial";
+        }
     }
 
     public void goToShop() {
@@ -125,12 +153,20 @@ public class MainMenuCanvasController : MonoBehaviour {
             StaticVariables.fadingTo = "shop";
             startFadeOut();
         }
+        else {
+            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
+            StaticVariables.buttonClickInWaiting = "shop";
+        }
     }
 
     public void goToSettings() {
         if (!StaticVariables.isFading) {
             StaticVariables.fadingTo = "settings";
             startFadeOut();
+        }
+        else {
+            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
+            StaticVariables.buttonClickInWaiting = "settings";
         }
     }
     /*
@@ -177,6 +213,58 @@ public class MainMenuCanvasController : MonoBehaviour {
         smallMedLargeHugePuzzleButtons.transform.Find("4").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
         smallMedLargeHugePuzzleButtons.transform.Find("5").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
         smallMedLargeHugePuzzleButtons.transform.Find("6").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
+
+        if (StaticVariables.hasSavedPuzzleState) {
+            string[] arr = new string[2];
+            arr[0] = "Return";
+            arr[1] = "Abandon";
+            foreach (string s in arr) {
+
+                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Small").gameObject.SetActive(false);
+                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Small").GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
+                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Med").gameObject.SetActive(false);
+                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Med").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
+                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Large").gameObject.SetActive(false);
+                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Large").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
+                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Huge").gameObject.SetActive(false);
+                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Huge").GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
+                if (StaticVariables.savedPuzzleSize == 3) {
+                    returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Small").gameObject.SetActive(true);
+                }
+                if (StaticVariables.savedPuzzleSize == 4) {
+                    returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Med").gameObject.SetActive(true);
+                }
+                if (StaticVariables.savedPuzzleSize == 5) {
+                    returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Large").gameObject.SetActive(true);
+                }
+                if (StaticVariables.savedPuzzleSize == 6) {
+                    returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Huge").gameObject.SetActive(true);
+                }
+            }
+            /*
+            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Small").gameObject.SetActive(false);
+            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Small").GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
+            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Med").gameObject.SetActive(false);
+            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Med").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
+            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Large").gameObject.SetActive(false);
+            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Large").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
+            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Huge").gameObject.SetActive(false);
+            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Huge").GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
+            if (StaticVariables.savedPuzzleSize == 3) {
+                returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Small").gameObject.SetActive(true);
+            }
+            if (StaticVariables.savedPuzzleSize == 4) {
+                returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Med").gameObject.SetActive(true);
+            }
+            if (StaticVariables.savedPuzzleSize == 5) {
+                returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Large").gameObject.SetActive(true);
+            }
+            if (StaticVariables.savedPuzzleSize == 6) {
+                returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Huge").gameObject.SetActive(true);
+            }
+            */
+        }
+
     }
 
 
@@ -193,7 +281,11 @@ public class MainMenuCanvasController : MonoBehaviour {
             StaticVariables.fadingTo = "reload";
             startFadeOut();
         }
-        
+        else {
+            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
+            StaticVariables.buttonClickInWaiting = "abandon";
+        }
+
         //showCityButtons();
     }
 
