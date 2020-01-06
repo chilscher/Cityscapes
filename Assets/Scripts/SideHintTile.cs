@@ -26,6 +26,10 @@ public class SideHintTile : Tile {
 
         setNumberColors();
         addNumberToTile(hintValue);
+
+        Skin tempSkin = StaticVariables.skin;
+        if (StaticVariables.isTutorial) { tempSkin = StaticVariables.allSkins[0]; }
+        background.GetComponent<SpriteRenderer>().color = InterfaceFunctions.getColorFromString(tempSkin.streetColor);
     }
 
     public int numBuildingsCurrentlyVisible() {

@@ -67,4 +67,10 @@ public static class InterfaceFunctions{
     public static Skin getDefaultSkin() {
         return StaticVariables.allSkins[0];
     }
+
+    public static Color getColorFromString(string s) {
+        Color c;
+        ColorUtility.TryParseHtmlString(s, out c);
+        return c;
+    }
 }

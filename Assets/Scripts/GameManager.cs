@@ -694,6 +694,10 @@ public class GameManager : MonoBehaviour {
         corner.transform.Rotate(new Vector3(0, 0, rot));
         corner.transform.parent = parent;
 
+        Skin tempSkin = StaticVariables.skin;
+        if (StaticVariables.isTutorial) { tempSkin = StaticVariables.allSkins[0]; }
+        corner.GetComponent<SpriteRenderer>().color = InterfaceFunctions.getColorFromString(tempSkin.streetColor);
+
 
         Vector3 pos = corner.transform.localPosition;
         pos.z = 0;

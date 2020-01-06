@@ -41,4 +41,6 @@ public class Skin: MonoBehaviour{
     public Sprite hugeCityArt;
 
     public Sprite buildingSprite;
+
+    public string streetColor;
 }

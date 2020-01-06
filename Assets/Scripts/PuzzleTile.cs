@@ -60,6 +60,11 @@ public class PuzzleTile : Tile {
         setNumberColors();
         //createUsableBuildingSprites();
         building.sprite = StaticVariables.skin.buildingSprite;
+
+        Skin tempSkin = StaticVariables.skin;
+        if (StaticVariables.isTutorial) { tempSkin = StaticVariables.allSkins[0]; }
+        //corner.GetComponent<SpriteRenderer>().color = InterfaceFunctions.getColorFromString(tempSkin.streetColor);
+        road.color = InterfaceFunctions.getColorFromString(tempSkin.streetColor);
     }
 
     public void setNumberColors() {
