@@ -381,7 +381,8 @@ public class TutorialManager{
                 if (StaticVariables.highestUnlockedSize < 3) {
                     StaticVariables.highestUnlockedSize = 3;
                 }
-                SceneManager.LoadScene("MainMenu");
+                gameManager.goToMainMenu();
+                //SceneManager.LoadScene("MainMenu");
                 break;
         }
 

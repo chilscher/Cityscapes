@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviour {
     public bool canClick = true;
     
     private bool hasWonYet = false;
-    private bool hasAnythingHappenedYet = false;
+    //private bool hasAnythingHappenedYet = false;
 
     private List<PuzzleState> previousPuzzleStates = new List<PuzzleState>(); // the list of puzzle states to be restored by the undo button
     private PuzzleState currentPuzzleState;
@@ -789,7 +789,7 @@ public class GameManager : MonoBehaviour {
         if (nextPuzzleStates.Count > 0) {
             nextPuzzleStates = new List<PuzzleState>();
         }
-        hasAnythingHappenedYet = true;
+        //hasAnythingHappenedYet = true;
         save();
     }
 
