@@ -35,9 +35,9 @@ public class StaticVariables{
     static public string darkMintHex = "";
     
 
-    static public bool isFading;
+    static public bool isFading = true;
     static public string fadingFrom;
-    static public string fadingTo;
+    static public string fadingTo = "menu";
     static public bool fadingIntoPuzzleSameSize;
 
     static public bool unlockedMedium = false;

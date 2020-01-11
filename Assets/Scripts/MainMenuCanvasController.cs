@@ -274,6 +274,7 @@ public class MainMenuCanvasController : MonoBehaviour {
 
     public void pushAbandonPuzzleButton() {
         StaticVariables.hasSavedPuzzleState = false;
+        SaveSystem.SaveGame();
         
         if (!StaticVariables.isFading) {
             
