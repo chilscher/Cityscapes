@@ -20,6 +20,8 @@ public static class InterfaceFunctions{
     }
 
     public static void colorPuzzleButton(GameObject button) {
+        colorPuzzleButton(button, StaticVariables.skin);
+        /*
         Color buttonColorExterior;
         Color buttonColorInterior;
 
@@ -28,12 +30,28 @@ public static class InterfaceFunctions{
 
         button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = buttonColorExterior;
         button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = buttonColorInterior;
+        */
     }
     public static void colorPuzzleButton(Transform button) {
         colorPuzzleButton(button.gameObject);
     }
+    public static void colorPuzzleButton(GameObject button, Skin skin) {
+        Color buttonColorExterior;
+        Color buttonColorInterior;
+
+        ColorUtility.TryParseHtmlString(skin.offButtonColorExterior, out buttonColorExterior);
+        ColorUtility.TryParseHtmlString(skin.offButtonColorInterior, out buttonColorInterior);
+
+        button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = buttonColorExterior;
+        button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = buttonColorInterior;
+    }
+    public static void colorPuzzleButton(Transform button, Skin skin) {
+        colorPuzzleButton(button.gameObject, skin);
+    }
 
     public static void colorPuzzleButtonOn(GameObject button) {
+        colorPuzzleButtonOn(button, StaticVariables.skin);
+        /*
         Color buttonColorExterior;
         Color buttonColorInterior;
 
@@ -42,9 +60,23 @@ public static class InterfaceFunctions{
 
         button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = buttonColorExterior;
         button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = buttonColorInterior;
+        */
     }
     public static void colorPuzzleButtonOn(Transform button) {
         colorPuzzleButtonOn(button.gameObject);
+    }
+    public static void colorPuzzleButtonOn(GameObject button, Skin skin) {
+        Color buttonColorExterior;
+        Color buttonColorInterior;
+
+        ColorUtility.TryParseHtmlString(skin.onButtonColorExterior, out buttonColorExterior);
+        ColorUtility.TryParseHtmlString(skin.onButtonColorInterior, out buttonColorInterior);
+
+        button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = buttonColorExterior;
+        button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = buttonColorInterior;
+    }
+    public static void colorPuzzleButtonOn(Transform button, Skin skin) {
+        colorPuzzleButtonOn(button.gameObject, skin);
     }
 
     public static Skin getSkinFromName(string name) {
@@ -55,19 +87,9 @@ public static class InterfaceFunctions{
         }
         return null;
     }
-    /*
-    public static void printUnlockedSkins() {
-        string output = "unlocked skins: ";
-        foreach (Skin skin in StaticVariables.unlockedSkins) {
-            output += skin.skinName + " ";
-        }
-        Debug.Log(output);
-    }
-    */
     public static Skin getDefaultSkin() {
         return StaticVariables.allSkins[0];
     }
-
     public static Color getColorFromString(string s) {
         Color c;
         ColorUtility.TryParseHtmlString(s, out c);

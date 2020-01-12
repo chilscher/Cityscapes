@@ -28,8 +28,6 @@ public class MainMenuCanvasController : MonoBehaviour {
 
     public Skin[] skins;
 
-    //private Color buttonColorExterior;
-    //private Color buttonColorInterior;
 
     private void Start() {
 
@@ -241,28 +239,6 @@ public class MainMenuCanvasController : MonoBehaviour {
                     returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Huge").gameObject.SetActive(true);
                 }
             }
-            /*
-            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Small").gameObject.SetActive(false);
-            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Small").GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
-            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Med").gameObject.SetActive(false);
-            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Med").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
-            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Large").gameObject.SetActive(false);
-            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Large").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
-            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Huge").gameObject.SetActive(false);
-            returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Huge").GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
-            if (StaticVariables.savedPuzzleSize == 3) {
-                returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Small").gameObject.SetActive(true);
-            }
-            if (StaticVariables.savedPuzzleSize == 4) {
-                returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Med").gameObject.SetActive(true);
-            }
-            if (StaticVariables.savedPuzzleSize == 5) {
-                returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Large").gameObject.SetActive(true);
-            }
-            if (StaticVariables.savedPuzzleSize == 6) {
-                returnOrAbandonButtons.transform.Find("Popup").Find("Return").Find("City Art - Huge").gameObject.SetActive(true);
-            }
-            */
         }
 
     }

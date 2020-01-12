@@ -59,12 +59,10 @@ public class PuzzleTile : Tile {
         }
         setNumberColors();
         //createUsableBuildingSprites();
-        building.sprite = StaticVariables.skin.buildingSprite;
-
-        Skin tempSkin = StaticVariables.skin;
-        if (StaticVariables.isTutorial) { tempSkin = StaticVariables.allSkins[0]; }
+        building.sprite = gameManager.skin.buildingSprite;
+        
         //corner.GetComponent<SpriteRenderer>().color = InterfaceFunctions.getColorFromString(tempSkin.streetColor);
-        road.color = InterfaceFunctions.getColorFromString(tempSkin.streetColor);
+        road.color = InterfaceFunctions.getColorFromString(gameManager.skin.streetColor);
     }
 
     public void setNumberColors() {

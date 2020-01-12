@@ -104,9 +104,13 @@ public class GameManager : MonoBehaviour {
 
     public bool showBuildings;
 
+    public Skin basicSkin;
 
     private void Start() {
         skin = StaticVariables.skin;
+        if (StaticVariables.isTutorial) {
+            skin = basicSkin;
+        }
         if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
             fadeTimer = fadeInTime;
         }
@@ -116,16 +120,9 @@ public class GameManager : MonoBehaviour {
         size = StaticVariables.size;
         includeNote1Btn = StaticVariables.includeNotes1Button;
         includeNote2Btn = StaticVariables.includeNotes2Button;
-
-        /*
-        ColorUtility.TryParseHtmlString(skin.onButtonColorExterior, out onButtonColorExterior);
-        ColorUtility.TryParseHtmlString(skin.onButtonColorInterior, out onButtonColorInterior);
-        ColorUtility.TryParseHtmlString(skin.offButtonColorExterior, out offButtonColorExterior);
-        ColorUtility.TryParseHtmlString(skin.offButtonColorInterior, out offButtonColorInterior);
-        */
+        
         ColorUtility.TryParseHtmlString(skin.mainMenuButtonExterior, out winBackgroundColorExterior);
         ColorUtility.TryParseHtmlString(skin.mainMenuButtonInterior, out winBackgroundColorInterior);
-        //ColorUtility.TryParseHtmlString(skin.winPopupColor, out winPopupColor);
 
         hideNumberButtons();
 
@@ -659,29 +656,11 @@ public class GameManager : MonoBehaviour {
     }
     private void selectNumber(GameObject btn) {
 
-        if (!StaticVariables.isTutorial) { InterfaceFunctions.colorPuzzleButtonOn(btn); }
-        else {
-            //temporarily swap to default skin
-            Skin currentSkin = StaticVariables.skin;
-            StaticVariables.skin = StaticVariables.allSkins[0];
-            InterfaceFunctions.colorPuzzleButtonOn(btn);
-            StaticVariables.skin = currentSkin;
-        }
-        //btn.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
-        //btn.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
+        InterfaceFunctions.colorPuzzleButtonOn(btn, skin);
     }
 
     private void disselectNumber(GameObject btn) {
-        if (!StaticVariables.isTutorial) { InterfaceFunctions.colorPuzzleButton(btn); }
-        else {
-            //temporarily swap to default skin
-            Skin currentSkin = StaticVariables.skin;
-            StaticVariables.skin = StaticVariables.allSkins[0];
-            InterfaceFunctions.colorPuzzleButton(btn);
-            StaticVariables.skin = currentSkin;
-        }
-        //btn.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-        //btn.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+        InterfaceFunctions.colorPuzzleButton(btn, skin);
     }
     
     
@@ -694,9 +673,8 @@ public class GameManager : MonoBehaviour {
         corner.transform.Rotate(new Vector3(0, 0, rot));
         corner.transform.parent = parent;
 
-        Skin tempSkin = StaticVariables.skin;
-        if (StaticVariables.isTutorial) { tempSkin = StaticVariables.allSkins[0]; }
-        corner.GetComponent<SpriteRenderer>().color = InterfaceFunctions.getColorFromString(tempSkin.streetColor);
+
+        corner.GetComponent<SpriteRenderer>().color = InterfaceFunctions.getColorFromString(skin.streetColor);
 
 
         Vector3 pos = corner.transform.localPosition;
