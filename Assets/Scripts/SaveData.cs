@@ -17,6 +17,7 @@ public class SaveData{
     public bool showHuge;
     public bool includeRemoveAllOfNumber;
     public bool includeClearPuzzle;
+    public bool includeHighlightBuildings;
 
     public bool unlockedMed;
     public bool unlockedLarge;
@@ -27,6 +28,7 @@ public class SaveData{
     public bool unlockedUndoRedo;
     public bool unlockedRemoveAllOfNumber;
     public bool unlockedClearPuzzle;
+    public bool unlockedHighlightBuildings;
 
     public string skinName;
     public string unlockedSkinNames;
@@ -51,6 +53,7 @@ public class SaveData{
         includeUndoRedo = StaticVariables.includeUndoRedo;
         includeRemoveAllOfNumber = StaticVariables.includeRemoveAllOfNumber;
         includeClearPuzzle = StaticVariables.includeClearPuzzle;
+        includeHighlightBuildings = StaticVariables.includeHighlightBuildings;
 
         showMed = StaticVariables.showMed;
         showLarge = StaticVariables.showLarge;
@@ -65,7 +68,7 @@ public class SaveData{
         unlockedUndoRedo = StaticVariables.unlockedUndoRedo;
         unlockedRemoveAllOfNumber = StaticVariables.unlockedRemoveAllOfNumber;
         unlockedClearPuzzle = StaticVariables.unlockedClearPuzzle;
-        
+        unlockedHighlightBuildings = StaticVariables.unlockedHighlightBuildings;
 
         skinName = StaticVariables.skin.skinName;
         unlockedSkinNames = getUnlockedSkinNames();
@@ -94,6 +97,7 @@ public class SaveData{
         StaticVariables.includeUndoRedo = includeUndoRedo;
         StaticVariables.includeRemoveAllOfNumber = includeRemoveAllOfNumber;
         StaticVariables.includeClearPuzzle = includeClearPuzzle;
+        StaticVariables.includeHighlightBuildings = includeHighlightBuildings;
 
         StaticVariables.showMed = showMed;
         StaticVariables.showLarge = showLarge;
@@ -108,6 +112,7 @@ public class SaveData{
         StaticVariables.unlockedUndoRedo = unlockedUndoRedo;
         StaticVariables.unlockedRemoveAllOfNumber = unlockedRemoveAllOfNumber;
         StaticVariables.unlockedClearPuzzle = unlockedClearPuzzle;
+        StaticVariables.unlockedHighlightBuildings = unlockedHighlightBuildings;
         
         StaticVariables.skin = InterfaceFunctions.getSkinFromName(skinName);
         StaticVariables.unlockedSkins = getUnlockedSkins();

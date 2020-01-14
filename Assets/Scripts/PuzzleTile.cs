@@ -33,6 +33,7 @@ public class PuzzleTile : Tile {
     private Color numberColor;
     private Color note1Color;
     private Color note2Color;
+    private Color highlightBuildingColor;
 
     private bool randomRotation = false;
     private bool scaleBuildingSizes = true;
@@ -69,6 +70,7 @@ public class PuzzleTile : Tile {
         ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out numberColor);
         ColorUtility.TryParseHtmlString(gameManager.skin.note1Color, out note1Color);
         ColorUtility.TryParseHtmlString(gameManager.skin.note2Color, out note2Color);
+        ColorUtility.TryParseHtmlString(gameManager.skin.onButtonColorInterior, out highlightBuildingColor);
     }
 
     public void clicked() {
@@ -265,6 +267,8 @@ public class PuzzleTile : Tile {
 
             building.enabled = true;
             number.enabled = true;
+
+            highlightIfBuildingNumber(gameManager.selectedNumber);
         }
     }
     /*
@@ -313,6 +317,17 @@ public class PuzzleTile : Tile {
         if (noteGroup1.Count > 0) { doesIt = true; }
         if (noteGroup2.Count > 0) { doesIt = true; }
         return doesIt;
+    }
+
+    public void highlightIfBuildingNumber(int num) {
+        if (!StaticVariables.isTutorial && StaticVariables.includeHighlightBuildings) {
+            if (shownNumber == num) {
+                number.color = highlightBuildingColor;
+            }
+            else {
+                number.color = numberColor;
+            }
+        }
     }
 
 }

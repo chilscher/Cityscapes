@@ -57,6 +57,9 @@ public class CreditsCanvasController : MonoBehaviour {
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            back();
+        }
     }
     
     private void OnApplicationQuit() {

@@ -120,6 +120,129 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &24577311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 24577312}
+  - component: {fileID: 24577316}
+  - component: {fileID: 24577315}
+  - component: {fileID: 24577314}
+  - component: {fileID: 24577313}
+  m_Layer: 5
+  m_Name: Scroll Menu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &24577312
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24577311}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.0004798, y: 1.0004798, z: 1.0004798}
+  m_Children:
+  - {fileID: 1769658477}
+  m_Father: {fileID: 1182900866}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 1.443089, y: 89.591995}
+  m_SizeDelta: {x: 884.40076, y: 1711.115}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &24577313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24577311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 0
+--- !u!114 &24577314
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24577311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1aa08ab6e0800fa44ae55d278d1423e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Content: {fileID: 1769658477}
+  m_Horizontal: 0
+  m_Vertical: 1
+  m_MovementType: 1
+  m_Elasticity: 0.1
+  m_Inertia: 1
+  m_DecelerationRate: 0.135
+  m_ScrollSensitivity: 1
+  m_Viewport: {fileID: 0}
+  m_HorizontalScrollbar: {fileID: 0}
+  m_VerticalScrollbar: {fileID: 0}
+  m_HorizontalScrollbarVisibility: 0
+  m_VerticalScrollbarVisibility: 0
+  m_HorizontalScrollbarSpacing: 0
+  m_VerticalScrollbarSpacing: 0
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &24577315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24577311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &24577316
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24577311}
+  m_CullTransparentMesh: 0
 --- !u!1 &75665620
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,7 +1222,7 @@ RectTransform:
   - {fileID: 784971810}
   - {fileID: 1959983960}
   - {fileID: 645438306}
-  - {fileID: 1769658477}
+  - {fileID: 24577312}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1525,7 +1648,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a1dd5b5ff2b47eb4595b06a74dac8202, type: 3}
+  m_Sprite: {fileID: 21300000, guid: fcb24593c45112d47b044b6228739a86, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -1548,7 +1671,7 @@ GameObject:
   - component: {fileID: 1769658479}
   - component: {fileID: 1769658478}
   m_Layer: 0
-  m_Name: Credits Text 1
+  m_Name: Credits Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1563,15 +1686,15 @@ RectTransform:
   m_GameObject: {fileID: 1769658476}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0004798, y: 1.0004798, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0}
   m_Children: []
-  m_Father: {fileID: 1182900866}
-  m_RootOrder: 4
+  m_Father: {fileID: 24577312}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -41.4}
-  m_SizeDelta: {x: 1382.9, y: 1927}
+  m_AnchoredPosition: {x: 0, y: -1518.5}
+  m_SizeDelta: {x: 813.5, y: 4748.2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1769658478
 MonoBehaviour:
@@ -1598,57 +1721,196 @@ MonoBehaviour:
     m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 3
+    m_MinSize: 2
     m_MaxSize: 50
     m_Alignment: 1
     m_AlignByGeometry: 1
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 'COIN SYMBOL: "JUMPING COIN" by MAGDUM,  opengameart.org/content/jumping-coin
+    m_LineSpacing: 1.1
+  m_Text: '
 
 
-    TUTORIAL SYMBOL: "PIXEL BOOK (ANIMATED) by GUFOSOWA, opengameart.org/content/pixel-book-animated
+    Copyright Cole Hilscher 2020
+
+    All Rights Reserved
 
 
-    SETTINGS SYMBOL: modified from "GAME SETTINGS", pixelartmaker.com/art/5decf176b915200
+    All assets listed below have been
+
+    acquired and used freely from pixel art
+
+    creators online. All assets not listed here
+
+    have been created by Cole Hilscher.
 
 
-    TITLE LETTERING: "8-BIT PERSONALIZED ALPHABET" by PUDDIN, opengameart.org/content/8-bit-personalized-alphabet-only-letters
+
+    COIN SYMBOL
+
+    -------
+
+    "JUMPING COIN" by MAGDUM,
+
+    opengameart.org/content/jumping-coin
 
 
-    FONT: "FFF FORWARD" by FONTS FOR FLASH,  fontsforflash.1001fonts.com/
+
+    TUTORIAL SYMBOL
+
+    ------
+
+    "PIXEL BOOK (ANIMATED) by GUFOSOWA, opengameart.org/content/pixel-book-
+
+    animated
 
 
-    SHOP & SETTINGS BUILDING: modified from "SMALL BOAT SHOP 16x16"
 
-    by .BEE, opengameart.org/content/small-boat-shop-16x16
+    SETTINGS SYMBOL
 
+    ------
 
-    MAIN MENU BUILDING: modified from "HOUSE SETS" by SHEPARDSKIN, opengameart.org/content/house-sets
+    modified from "GAME SETTINGS",
 
-
-    BUILD BUTTON SYMBOL: modified from "HEAVY IRON HAMMER" by LAXATTACK1226, opengameart.org/content/heavy-iron-hammer
-
-
-    NUMBERS: modified from "PIXEL NUMBERS" by BLACKWOLFDAVE, opengameart.org/content/pixel-numbers
+    pixelartmaker.com/art/5decf176b915200
 
 
-    UNDO & REDO SYMBOLS: "PIXEL STYLE ICONS" by ICOJOY, opengameart.org/content/pixel-style-icons
+
+    TITLE LETTERING
+
+    ------
+
+    "8-BIT PERSONALIZED ALPHABET"
+
+    by PUDDIN, opengameart.org/content/8-bit-
+
+    personalized-alphabet-only-letters
 
 
-    PATTERNED BORDER: modified from "BORDERDECORATION" by JAP, opengameart.org/content/borderdecoration
+
+    FONT
+
+    ------
+
+    "FFF FORWARD" by FONTS FOR FLASH,
+
+    fontsforflash.1001fonts.com/
 
 
-    "MOUNTAINS SKIN" MOUNTAINS FEATURE: "BOB ROSS INSPIRED MOUNTAIN BACKGROUND" by
-    FUNWITHPIXELS, opengameart.org/content/bob-ross-inspired-mountain-background
+
+    "BASIC SKIN"
+
+    SHOP & SETTINGS BUILDING
+
+    ------
+
+    modified from "SMALL BOAT SHOP 16x16"
+
+    by .BEE, opengameart.org/content/
+
+    small-boat-shop-16x16
 
 
-    "MOUNTAINS SKIN" PUZZLE BACKGROUND: modified from "8-BIT YETI" by LD, opengameart.org/content/8-bit-yeti
+
+    "BASIC SKIN"
+
+    MAIN MENU BUILDING
+
+    ------
+
+    modified from "HOUSE SETS"
+
+    by SHEPARDSKIN, opengameart.org/content/house-sets
 
 
-    "SPACE SKIN" BACKGROUNDS: modified from "SPACE BACKGROUND" by "ANSIMUZ", opengameart.org/content/space-background-3'
+
+    BUILD BUTTON SYMBOL
+
+    ------
+
+    modified from "HEAVY IRON HAMMER"
+
+    by LAXATTACK1226, opengameart.org/content/heavy-
+
+    iron-hammer
+
+
+
+    PIXELATED NUMBERS
+
+    ------
+
+    modified from "PIXEL NUMBERS" by BLACKWOLFDAVE, opengameart.org/content/pixel-numbers
+
+
+
+    UNDO & REDO SYMBOLS
+
+    ------
+
+    "PIXEL STYLE ICONS" by ICOJOY
+
+    opengameart.org/content/pixel-
+
+    style-icons
+
+
+
+    PATTERNED BORDER
+
+    ------
+
+    modified from "BORDERDECORATION"
+
+    by JAP, opengameart.org/content/
+
+    borderdecoration
+
+
+
+    "MOUNTAINS SKIN"
+
+    MAIN MENU MOUNTAINS
+
+    ------
+
+    "BOB ROSS INSPIRED MOUNTAIN
+
+    BACKGROUND" by FUNWITHPIXELS,
+
+    opengameart.org/content/bob-
+
+    ross-inspired-mountain-background
+
+
+
+    "MOUNTAINS SKIN"
+
+    PUZZLE BACKGROUND
+
+    ------
+
+    modified from "8-BIT YETI" by LD
+
+    opengameart.org/content/8-bit-yeti
+
+
+
+    "SPACE SKIN"
+
+    BACKGROUND
+
+    ------
+
+    modified from "SPACE BACKGROUND"
+
+    by "ANSIMUZ", opengameart.org/
+
+    content/space-background-3
+
+
+'
 --- !u!222 &1769658479
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1681,7 +1943,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1959983959}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1101, z: 0}
+  m_LocalPosition: {x: 0, y: 1151, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1145275426}

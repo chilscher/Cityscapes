@@ -297,6 +297,10 @@ public class GameManager : MonoBehaviour {
                 fadingToWin = false;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            goToMainMenu();
+        }
     }
 
     private void showCorrectCityArtOnWinScreen() {
@@ -583,6 +587,19 @@ public class GameManager : MonoBehaviour {
     }
 
     public void goToMainMenu() {
+        if (!hasWonYet) {
+            if (!StaticVariables.isFading) {
+                save();
+                StaticVariables.fadingTo = "menu";
+                startFadeOut();
+            }
+            else {
+                StaticVariables.waitingOnButtonClickAfterFadeIn = true;
+                StaticVariables.buttonClickInWaiting = "menu";
+            }
+        }
+    }
+    public void goToMainMenuWinPopup() {
         if (!StaticVariables.isFading) {
             save();
             StaticVariables.fadingTo = "menu";
@@ -653,6 +670,12 @@ public class GameManager : MonoBehaviour {
         prevClickedNumButton = nB;
         selectNumber(nB);
         updateRemoveSelectedNumber();
+
+        if (!StaticVariables.isTutorial && StaticVariables.includeHighlightBuildings) {
+            foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.highlightIfBuildingNumber(selectedNumber); }
+        }
+
+
     }
     private void selectNumber(GameObject btn) {
 

@@ -16,6 +16,7 @@ public class ShopCanvasController : MonoBehaviour {
     public int undoRedoPrice = 10;
     public int removeAllPrice = 10;
     public int clearPrice = 10;
+    public int highlightBuildingsPrice = 10;
 
     //public int mountainsSkinPrice = 10;
     //public int skinPrice = 10;
@@ -46,6 +47,12 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject expandUndoRedoButton;
     public GameObject expandRemoveAllButton;
     public GameObject expandClearButton;
+    public GameObject expandHighlightBuildingsButton;
+
+    public GameObject unlockedEverythingText;
+    public GameObject unlockedAllCitiesText;
+    public GameObject unlockedAllFeaturesText;
+    public GameObject unlockedAllSkinsText;
 
     //public GameObject expandMountainsSkinButton;
     private GameObject[] skinButtons;
@@ -110,7 +117,8 @@ public class ShopCanvasController : MonoBehaviour {
         displayCoinsOnButton(expandUndoRedoButton, undoRedoPrice);
         displayCoinsOnButton(expandRemoveAllButton, removeAllPrice);
         displayCoinsOnButton(expandClearButton, clearPrice);
-        
+        displayCoinsOnButton(expandHighlightBuildingsButton, highlightBuildingsPrice);
+
         findSkinButtons();
         foreach (GameObject parent in skinButtons) {
             displayCoinsOnButton(parent.transform.Find("Expand Button").gameObject, getSkinPrice((InterfaceFunctions.getSkinFromName(parent.name))));
@@ -178,6 +186,9 @@ public class ShopCanvasController : MonoBehaviour {
                     }
                 }
             }
+        }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            goToMainMenu();
         }
     }
     
@@ -251,15 +262,27 @@ public class ShopCanvasController : MonoBehaviour {
         updateButton(expandNotes2Button, StaticVariables.unlockedNotes2, notes2Price, StaticVariables.unlockedNotes1);
         updateButton(expandResidentColorButton, StaticVariables.unlockedResidentsChangeColor, residentColorPrice);
         updateButton(expandUndoRedoButton, StaticVariables.unlockedUndoRedo, undoRedoPrice);
-        updateButton(expandRemoveAllButton, StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice, StaticVariables.includeUndoRedo);
-        updateButton(expandClearButton, StaticVariables.unlockedClearPuzzle, clearPrice, StaticVariables.includeUndoRedo);
+        updateButton(expandRemoveAllButton, StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice, StaticVariables.unlockedUndoRedo);
+        updateButton(expandClearButton, StaticVariables.unlockedClearPuzzle, clearPrice, StaticVariables.unlockedUndoRedo);
+        updateButton(expandHighlightBuildingsButton, StaticVariables.unlockedHighlightBuildings, highlightBuildingsPrice, StaticVariables.unlockedResidentsChangeColor);
 
         //updateButton(expandMountainsSkinButton, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.getSkinFromName("Mountains")), skinPrice);
-        
+
         foreach (GameObject parent in skinButtons) {
             updateButton(parent.transform.Find("Expand Button").gameObject, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.getSkinFromName(parent.name)), getSkinPrice((InterfaceFunctions.getSkinFromName(parent.name))));
         }
-        
+
+        //also update text shown when all upgrades of a single type have been purchased.
+        //these texts should only appear if the player chooses to hide purchased upgrades
+        bool allCities = StaticVariables.unlockedMedium && StaticVariables.unlockedLarge && StaticVariables.unlockedHuge;
+        bool allFeatures = StaticVariables.unlockedNotes1 && StaticVariables.unlockedNotes2 && StaticVariables.unlockedResidentsChangeColor && StaticVariables.unlockedUndoRedo && StaticVariables.unlockedRemoveAllOfNumber && StaticVariables.unlockedClearPuzzle && StaticVariables.unlockedHighlightBuildings;
+        bool allSkins = StaticVariables.unlockedSkins.Count + 1 == StaticVariables.allSkins.Length;
+        bool allContent = allCities && allFeatures && allSkins;
+        unlockedAllCitiesText.SetActive(allCities && StaticVariables.hidePurchasedUpgrades);
+        unlockedAllFeaturesText.SetActive(allFeatures && StaticVariables.hidePurchasedUpgrades);
+        unlockedAllSkinsText.SetActive(allSkins && StaticVariables.hidePurchasedUpgrades);
+        unlockedEverythingText.SetActive(allContent);
+
         setScrollViewHeight();
 
     }
@@ -364,6 +387,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.unlockedUndoRedo = false;
         StaticVariables.unlockedRemoveAllOfNumber = false;
         StaticVariables.unlockedClearPuzzle = false;
+        StaticVariables.unlockedHighlightBuildings = false;
 
         StaticVariables.includeNotes1Button = false;
         StaticVariables.includeNotes2Button = false;
@@ -371,7 +395,8 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeUndoRedo = false;
         StaticVariables.includeRemoveAllOfNumber = false;
         StaticVariables.includeClearPuzzle = false;
-        
+        StaticVariables.includeHighlightBuildings = false;
+
         StaticVariables.unlockedSkins = new List<Skin>();
         StaticVariables.skin = InterfaceFunctions.getDefaultSkin();
         background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
@@ -395,6 +420,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.unlockedUndoRedo = true;
         StaticVariables.unlockedRemoveAllOfNumber = true;
         StaticVariables.unlockedClearPuzzle = true;
+        StaticVariables.unlockedHighlightBuildings = true;
 
         StaticVariables.includeNotes1Button = true;
         StaticVariables.includeNotes2Button = true;
@@ -402,6 +428,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeUndoRedo = true;
         StaticVariables.includeRemoveAllOfNumber = true;
         StaticVariables.includeClearPuzzle = true;
+        StaticVariables.includeHighlightBuildings = true;
         
         unlockAllSkins();
         updateButtons();
@@ -409,7 +436,7 @@ public class ShopCanvasController : MonoBehaviour {
 
     private void unlockAllSkins() {
         foreach(Skin skin in StaticVariables.allSkins) {
-            if (skin != InterfaceFunctions.getDefaultSkin()) {
+            if (skin != InterfaceFunctions.getDefaultSkin() && !StaticVariables.unlockedSkins.Contains(skin)) {
                 StaticVariables.unlockedSkins.Add(skin);
             }
             
@@ -515,7 +542,7 @@ public class ShopCanvasController : MonoBehaviour {
         }
     }
     public void unlockRemoveAllOfNumber() {
-        if (canPurchase(StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice) && StaticVariables.includeUndoRedo) {
+        if (canPurchase(StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice) && StaticVariables.unlockedUndoRedo) {
             StaticVariables.unlockedRemoveAllOfNumber = true;
             StaticVariables.includeRemoveAllOfNumber = true;
 
@@ -523,11 +550,20 @@ public class ShopCanvasController : MonoBehaviour {
         }
     }
     public void unlockClearPuzzle() {
-        if (canPurchase(StaticVariables.unlockedClearPuzzle, clearPrice) && StaticVariables.includeUndoRedo) {
+        if (canPurchase(StaticVariables.unlockedClearPuzzle, clearPrice) && StaticVariables.unlockedUndoRedo) {
             StaticVariables.unlockedClearPuzzle = true;
             StaticVariables.includeClearPuzzle = true;
 
             doPurchase(clearPrice);
+        }
+    }
+
+    public void unlockHighlightBuildings() {
+        if (canPurchase(StaticVariables.unlockedHighlightBuildings, highlightBuildingsPrice) && StaticVariables.unlockedResidentsChangeColor) {
+            StaticVariables.unlockedHighlightBuildings = true;
+            StaticVariables.includeHighlightBuildings = true;
+
+            doPurchase(highlightBuildingsPrice);
         }
     }
 

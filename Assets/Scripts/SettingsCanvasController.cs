@@ -31,6 +31,7 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject undoRedoButton;
     public GameObject removeNumbersButton;
     public GameObject clearPuzzleButton;
+    public GameObject highlightBuildingsButton;
 
     public GameObject background;
 
@@ -91,6 +92,10 @@ public class SettingsCanvasController : MonoBehaviour {
                 }
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            goToMainMenu();
+        }
     }
     
     private void OnApplicationQuit() {
@@ -124,6 +129,7 @@ public class SettingsCanvasController : MonoBehaviour {
         undoRedoButton.SetActive(StaticVariables.unlockedUndoRedo);
         removeNumbersButton.SetActive(StaticVariables.unlockedRemoveAllOfNumber);
         clearPuzzleButton.SetActive(StaticVariables.unlockedClearPuzzle);
+        highlightBuildingsButton.SetActive(StaticVariables.unlockedHighlightBuildings);
 
         hidePurchasedUpgradesButton.SetActive(true);
     }
@@ -138,6 +144,7 @@ public class SettingsCanvasController : MonoBehaviour {
         toggleText(undoRedoButton, StaticVariables.includeUndoRedo);
         toggleText(removeNumbersButton, StaticVariables.includeRemoveAllOfNumber);
         toggleText(clearPuzzleButton, StaticVariables.includeClearPuzzle);
+        toggleText(highlightBuildingsButton, StaticVariables.includeHighlightBuildings);
 
         toggleText(hidePurchasedUpgradesButton, StaticVariables.hidePurchasedUpgrades);
     }
@@ -220,6 +227,15 @@ public class SettingsCanvasController : MonoBehaviour {
         StaticVariables.includeClearPuzzle = !StaticVariables.includeClearPuzzle;
         if (StaticVariables.includeClearPuzzle) {
             StaticVariables.includeUndoRedo = true;
+        }
+        setCurrentToggleTexts();
+        SaveSystem.SaveGame();
+    }
+
+    public void pushHighlightBuildingsButton() {
+        StaticVariables.includeHighlightBuildings = !StaticVariables.includeHighlightBuildings;
+        if (StaticVariables.includeHighlightBuildings) {
+            StaticVariables.changeResidentColorOnCorrectRows = true;
         }
         setCurrentToggleTexts();
         SaveSystem.SaveGame();

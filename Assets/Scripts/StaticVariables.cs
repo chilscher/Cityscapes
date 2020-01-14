@@ -14,6 +14,7 @@ public class StaticVariables{
     //static public bool includeRemoveColoredNotesOfChosenNumber = false;
     static public bool includeRemoveAllOfNumber = false;
     static public bool includeClearPuzzle = false;
+    static public bool includeHighlightBuildings = false;
     
     static public bool showMed = false;
     static public bool showLarge = false;
@@ -49,6 +50,7 @@ public class StaticVariables{
     static public bool unlockedUndoRedo = false;
     static public bool unlockedRemoveAllOfNumber = false;
     static public bool unlockedClearPuzzle = false;
+    static public bool unlockedHighlightBuildings = false;
 
     //static public bool unlockedMountainsSkin = false;
 
