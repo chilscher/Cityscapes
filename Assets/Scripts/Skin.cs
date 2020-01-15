@@ -28,7 +28,6 @@ public class Skin: MonoBehaviour{
     public Sprite puzzleBackground;
     public Sprite mainMenuBackground;
     public Sprite shopBackground;
-    public Sprite creditsBackground;
 
     public string mainMenuButtonInterior;
     public string mainMenuButtonExterior;

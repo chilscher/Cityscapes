@@ -36,10 +36,7 @@ public class MainMenuCanvasController : MonoBehaviour {
             SaveSystem.LoadGame();
             StaticVariables.isApplicationLaunchingFirstTime = false;
         }
-        //print(StaticVariables.skin.name);
         background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.mainMenuBackground;
-        //ColorUtility.TryParseHtmlString(StaticVariables.skin.mainMenuButtonExterior, out buttonColorExterior);
-        //ColorUtility.TryParseHtmlString(StaticVariables.skin.mainMenuButtonInterior, out buttonColorInterior);
         colorButtons();
         applyCityArtSkin();
 
@@ -54,7 +51,6 @@ public class MainMenuCanvasController : MonoBehaviour {
     }
 
     private void Update() {
-        //
         if (StaticVariables.isFading && StaticVariables.fadingFrom == "menu") {
             fadeTimer -= Time.deltaTime;
             Color c = blackSprite.color;
@@ -82,7 +78,6 @@ public class MainMenuCanvasController : MonoBehaviour {
                     StaticVariables.waitingOnButtonClickAfterFadeIn = false;
                     if (StaticVariables.buttonClickInWaiting.Contains("puzzle")) {
                         int s = int.Parse(StaticVariables.buttonClickInWaiting[StaticVariables.buttonClickInWaiting.Length -1] + "");
-                        //print("going to enter puzzle with size of " + s);
                         startPuzzle(s);
                     }
                     else if (StaticVariables.buttonClickInWaiting == "tutorial") {
@@ -104,12 +99,7 @@ public class MainMenuCanvasController : MonoBehaviour {
 
 
     private void OnApplicationQuit() {
-        //PerformOverflow();
         SaveSystem.SaveGame();
-    }
-
-    private void PerformOverflow() {
-        PerformOverflow();
     }
 
     public void startFadeOut() {
@@ -262,8 +252,6 @@ public class MainMenuCanvasController : MonoBehaviour {
             StaticVariables.waitingOnButtonClickAfterFadeIn = true;
             StaticVariables.buttonClickInWaiting = "abandon";
         }
-
-        //showCityButtons();
     }
 
     private void showCityButtons() {
@@ -289,23 +277,15 @@ public class MainMenuCanvasController : MonoBehaviour {
             smallMedLargePuzzleButtons.SetActive(false);
             smallMedLargeHugePuzzleButtons.SetActive(false);
             returnOrAbandonButtons.SetActive(true);
-            shopButton.SetActive(false);
-            tutorialButton.SetActive(false);
-            settingsButton.SetActive(false);
-            //print("we have a saved puzzle state!");
+            //shopButton.SetActive(false);
+            //tutorialButton.SetActive(false);
+            //settingsButton.SetActive(false);
         }
         else {
-            //print("no saved puzzle state... :(");
-
             onlySmallPuzzleButton.SetActive(highestUnlockedSize == 3);
             smallAndMedPuzzleButtons.SetActive(highestUnlockedSize == 4);
             smallMedLargePuzzleButtons.SetActive(highestUnlockedSize == 5);
             smallMedLargeHugePuzzleButtons.SetActive(highestUnlockedSize == 6);
         }
-        /*
-        if (StaticVariables.hasSavedPuzzleState) {
-        }
-        */
-        //returnOrAbandonButtons.SetActive(StaticVariables.hasSavedPuzzleState);
     }
 }

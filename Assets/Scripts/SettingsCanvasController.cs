@@ -49,19 +49,12 @@ public class SettingsCanvasController : MonoBehaviour {
         setCurrentToggleTexts();
         updateCurrentSkinText();
         showChooseSkinButton();
-        //background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
         blackSprite = blackForeground.GetComponent<SpriteRenderer>();
-        //InterfaceFunctions.colorMenuButton(menuButton);
         loadSkin();
 
         if (StaticVariables.isFading && StaticVariables.fadingTo == "settings") {
             fadeTimer = fadeInTime;
         }
-        /*
-        creditsButton.transform.Find("Button").Find("Show").gameObject.SetActive(true);
-        creditsButton.transform.Find("Button").Find("Hide").gameObject.SetActive(false);
-        creditsText.SetActive(false);
-        */
 
         setScrollViewHeight();
     }
@@ -334,7 +327,6 @@ public class SettingsCanvasController : MonoBehaviour {
 
     private void contractSkinButtons() {
         GameObject parentBox = expandSkinButton.transform.parent.gameObject;
-        //parentBox.transform.Find("Basic").gameObject.SetActive(true);
         for (int i = 1; i < parentBox.transform.childCount; i++) {
             bool switchTo = false;
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);

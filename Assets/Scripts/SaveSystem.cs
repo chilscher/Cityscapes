@@ -51,7 +51,6 @@ public static class SaveSystem{
     }
 
     private static void firstTimePlayingEver() {
-        //Debug.Log("here");
         StaticVariables.skin = InterfaceFunctions.getDefaultSkin();
         StaticVariables.coins = 0;
         StaticVariables.highestUnlockedSize = 3;

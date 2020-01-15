@@ -11,7 +11,6 @@ public class StaticVariables{
     static public bool includeNotes2Button = false;
     static public bool changeResidentColorOnCorrectRows = false;
     static public bool includeUndoRedo = false;
-    //static public bool includeRemoveColoredNotesOfChosenNumber = false;
     static public bool includeRemoveAllOfNumber = false;
     static public bool includeClearPuzzle = false;
     static public bool includeHighlightBuildings = false;
@@ -51,8 +50,6 @@ public class StaticVariables{
     static public bool unlockedRemoveAllOfNumber = false;
     static public bool unlockedClearPuzzle = false;
     static public bool unlockedHighlightBuildings = false;
-
-    //static public bool unlockedMountainsSkin = false;
 
     static public List<Skin> unlockedSkins = new List<Skin>();
 

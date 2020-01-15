@@ -20,13 +20,10 @@ public class PuzzleSolver{
 
     public void solvePuzzle(int[] topHints, int[] bottomHints, int[] leftHints, int[] rightHints, int[,] puzzle) {
         setUp(topHints, bottomHints, leftHints, rightHints, puzzle);
-        //printHints();
 
         immediatePopulation();
         immediateProhibition();
-
-        //printCore();
-
+        
         bool cont = true;
         while (cont){
             int beforeCount = getNumTilesPopulated();
@@ -36,7 +33,6 @@ public class PuzzleSolver{
             if (beforeCount == afterCount) {
                 cont = false;
             }
-            //printCore();
         }
 
     }
@@ -44,14 +40,9 @@ public class PuzzleSolver{
     public bool isPuzzleValid(int[] topHints, int[] bottomHints, int[] leftHints, int[] rightHints, int[,] puzzle) {
         solvePuzzle(topHints, bottomHints, leftHints, rightHints, puzzle);
         if ((getNumEmptyTiles() <7)) {
-        
-        //if(!areCompletedTilesRight()) { 
-        
             return true;
         }
         return false;
-        
-        //return true;
     }
 
 
@@ -259,7 +250,6 @@ public class PuzzleSolver{
             if (t.populated) {
                 for (int i = 1; i <= size; i++) {
                     t.prohibitValue(i);
-                    //t.prohibitedValues.Add(i);
                 }
             }
         }
@@ -276,8 +266,6 @@ public class PuzzleSolver{
         foreach (PuzzleSolverSideTile h in hintsList) {
             //if hint is between 1 and size (exclusive) and it is next to the only contiguous space in the row, you might be able to populate the row in ascending or descending order
             if ((h.hint > 1) && (h.hint < size) && h.isHintNextToContiguousUnpopulatedArea() && (h.isHighestValueInRow()) && (!h.isAnyUnusedNumHigherThanLowestVisible())) {
-                //print(h.hint);
-                //print(h.row[0].xValue + ", " + h.row[0].yValue);
                 List<int> unusedNumbers = h.getUnusedNumbers();//assumes unusedNumbers is sorted
                 int numVisible = h.numBuildingsCurrentlyVisible();
                 int lowestVisible = h.lowestBuildingCurrentlyVisible();

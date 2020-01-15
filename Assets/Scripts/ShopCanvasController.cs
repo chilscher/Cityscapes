@@ -17,9 +17,7 @@ public class ShopCanvasController : MonoBehaviour {
     public int removeAllPrice = 10;
     public int clearPrice = 10;
     public int highlightBuildingsPrice = 10;
-
-    //public int mountainsSkinPrice = 10;
-    //public int skinPrice = 10;
+    
     public int skinTier1Price = 10;
     public int skinTier2Price = 20;
 
@@ -53,10 +51,8 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject unlockedAllCitiesText;
     public GameObject unlockedAllFeaturesText;
     public GameObject unlockedAllSkinsText;
-
-    //public GameObject expandMountainsSkinButton;
+    
     private GameObject[] skinButtons;
-    //public GameObject[] skins;
 
     public GameObject blackForeground; //used to transition to/from the puzzle menu
     private SpriteRenderer blackSprite;
@@ -89,8 +85,7 @@ public class ShopCanvasController : MonoBehaviour {
 
     public GameObject skinsStart; //the object right before the first skin's expand-button
     public GameObject skinsEnd; //the object right after the last skin's expand-button
-
-    //public 
+    
 
     private void Start() {
         ColorUtility.TryParseHtmlString(affordableCoinColor, out affordableColor);
@@ -249,10 +244,6 @@ public class ShopCanvasController : MonoBehaviour {
     
 
     private void updateButtons() {
-
-        Color black = Color.black;
-        ColorUtility.TryParseHtmlString("#FFEB42", out black);
-        ColorUtility.TryParseHtmlString("#3A3A3A", out black);
 
         Color grey = Color.grey;
         updateButton(expandMedButton, StaticVariables.unlockedMedium, medCityPrice);

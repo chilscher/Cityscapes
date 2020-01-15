@@ -22,7 +22,7 @@ public class CreditsCanvasController : MonoBehaviour {
 
 
     private void Start() {
-        background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.creditsBackground;
+        background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
         blackSprite = blackForeground.GetComponent<SpriteRenderer>();
 
         InterfaceFunctions.colorMenuButton(menuButton);

@@ -67,7 +67,6 @@ public class GameManager : MonoBehaviour {
     public bool canClick = true;
     
     private bool hasWonYet = false;
-    //private bool hasAnythingHappenedYet = false;
 
     private List<PuzzleState> previousPuzzleStates = new List<PuzzleState>(); // the list of puzzle states to be restored by the undo button
     private PuzzleState currentPuzzleState;
@@ -143,7 +142,6 @@ public class GameManager : MonoBehaviour {
             tutorialCanvas.SetActive(false);
             puzzleCanvas.SetActive(true);
             if (StaticVariables.hasSavedPuzzleState) {
-                //print("has saved puzzle state!");
                 puzzleGenerator.restoreSavedPuzzle(StaticVariables.puzzleSolution, size);
                 loadPuzzleStates();
             }
@@ -155,23 +153,16 @@ public class GameManager : MonoBehaviour {
             drawFullPuzzle();
             setRemoveAllAndClearButtons();
             setNumberButtons();
-            //pushNumberButton(size);
             highlightSelectedNumber();
 
             hidePositioningObjects();
             setSelectionModeButtons();
             setUndoRedoButtons();
-            //hitBuildButton();
+            //centerContent();              //removed for now until because the puzzle background art is built to have a spacious center
             highlightBuildType();
             puzzleBackground.GetComponent<SpriteRenderer>().sprite = skin.puzzleBackground;
             InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Menu"));
             InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Another Puzzle"));
-            /*
-            winCanvas.transform.Find("Win Popup").Find("Menu").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
-            winCanvas.transform.Find("Win Popup").Find("Menu").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-            winCanvas.transform.Find("Win Popup").Find("Another Puzzle").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
-            winCanvas.transform.Find("Win Popup").Find("Another Puzzle").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-            */
             winCanvas.transform.Find("Win Popup").Find("Win Popup Background Exterior").GetComponent<SpriteRenderer>().color = winBackgroundColorExterior;
             winCanvas.transform.Find("Win Popup").Find("Win Popup Background Interior").GetComponent<SpriteRenderer>().color = winBackgroundColorInterior;
             Color c = winCanvas.transform.Find("Black Background").GetComponent<SpriteRenderer>().color;
@@ -332,16 +323,6 @@ public class GameManager : MonoBehaviour {
     }
 
     private void colorMenuButton() {
-        /*
-        InterfaceFunctions.colorPuzzleButton(menuButton);
-        //menuButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-        //menuButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
-        if (StaticVariables.isTutorial) {
-            InterfaceFunctions.colorPuzzleButton(tutorialCanvas.transform.Find("Menu"));
-            //tutorialCanvas.transform.Find("Menu").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-            //tutorialCanvas.transform.Find("Menu").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
-        }
-        */
         if (!StaticVariables.isTutorial) {
             InterfaceFunctions.colorPuzzleButton(menuButton);
         }
@@ -427,12 +408,8 @@ public class GameManager : MonoBehaviour {
     public void setUndoRedoButtons() {
         InterfaceFunctions.colorPuzzleButton(undoRedoButtons.transform.Find("Undo"));
         InterfaceFunctions.colorPuzzleButton(undoRedoButtons.transform.Find("Redo"));
-
-        //undoRedoButtons.transform.Find("Undo").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-        //undoRedoButtons.transform.Find("Undo").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
+    
         undoRedoButtons.transform.Find("Undo").Find("Icon").GetComponent<Image>().sprite = skin.undoIcon;
-        //undoRedoButtons.transform.Find("Redo").Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-        //undoRedoButtons.transform.Find("Redo").Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
         undoRedoButtons.transform.Find("Redo").Find("Icon").GetComponent<Image>().sprite = skin.redoIcon;
 
         undoRedoButtons.SetActive(StaticVariables.includeUndoRedo);
@@ -460,10 +437,6 @@ public class GameManager : MonoBehaviour {
 
         InterfaceFunctions.colorPuzzleButton(removeAllOfNumberButton);
         InterfaceFunctions.colorPuzzleButton(clearPuzzleButton);
-        //removeAllOfNumberButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-        //removeAllOfNumberButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
-        //clearPuzzleButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
-        //clearPuzzleButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
     }
 
     public void hidePositioningObjects() {
@@ -540,8 +513,6 @@ public class GameManager : MonoBehaviour {
         if (includeNote1Btn || includeNote2Btn) {
 
             InterfaceFunctions.colorPuzzleButtonOn(buildButton);
-            //buildButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
-            //buildButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
         }
         updateRemoveSelectedNumber();
         save();
@@ -551,8 +522,6 @@ public class GameManager : MonoBehaviour {
         clickTileAction = "Toggle Note 1";
         disselectBuildAndNotes();
         InterfaceFunctions.colorPuzzleButtonOn(note1Button);
-        //note1Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
-        //note1Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
         updateRemoveSelectedNumber();
         save();
     }
@@ -562,8 +531,6 @@ public class GameManager : MonoBehaviour {
         disselectBuildAndNotes();
 
         InterfaceFunctions.colorPuzzleButtonOn(note2Button);
-        //note2Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = onButtonColorInterior;
-        //note2Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = onButtonColorExterior;
         updateRemoveSelectedNumber();
         save();
     }
@@ -571,18 +538,12 @@ public class GameManager : MonoBehaviour {
     public void disselectBuildAndNotes() {
         if (includeNote1Btn || includeNote2Btn) {
             InterfaceFunctions.colorPuzzleButton(buildButton);
-            //buildButton.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
-            //buildButton.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
         }
         if (includeNote1Btn) {
             InterfaceFunctions.colorPuzzleButton(note1Button);
-            //note1Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
-            //note1Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
         }
         if (includeNote2Btn) {
             InterfaceFunctions.colorPuzzleButton(note2Button);
-            //note2Button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = offButtonColorInterior;
-            //note2Button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = offButtonColorExterior;
         }
     }
 
@@ -620,20 +581,25 @@ public class GameManager : MonoBehaviour {
     }
 
     public void savePuzzleStates() {
-        //StaticVariables.hasSavedPuzzleState = !hasWonYet && hasAnythingHappenedYet;
-        StaticVariables.hasSavedPuzzleState = !hasWonYet;
+        bool hasAnythingHappenedYet = false;
+        if (previousPuzzleStates.Count > 0) {hasAnythingHappenedYet = true; }
+        if (nextPuzzleStates.Count > 0) { hasAnythingHappenedYet = true; }
+        if (hasAnythingHappenedYet) {
+            StaticVariables.hasSavedPuzzleState = !hasWonYet;
 
-        StaticVariables.previousPuzzleStates = previousPuzzleStates;
-        StaticVariables.currentPuzzleState = currentPuzzleState;
-        StaticVariables.nextPuzzleStates = nextPuzzleStates;
+            StaticVariables.previousPuzzleStates = previousPuzzleStates;
+            StaticVariables.currentPuzzleState = currentPuzzleState;
+            StaticVariables.nextPuzzleStates = nextPuzzleStates;
 
-        //print(currentPuzzleState.returnStateAsString());
+            StaticVariables.puzzleSolution = puzzleGenerator.makeSolutionString();
+            StaticVariables.savedPuzzleSize = size;
 
-        StaticVariables.puzzleSolution = puzzleGenerator.makeSolutionString();
-        StaticVariables.savedPuzzleSize = size;
-
-        StaticVariables.savedBuildNumber = selectedNumber;
-        StaticVariables.savedBuildType = clickTileAction;
+            StaticVariables.savedBuildNumber = selectedNumber;
+            StaticVariables.savedBuildType = clickTileAction;
+        }
+        else {
+            StaticVariables.hasSavedPuzzleState = false;
+        }
     }
 
     public void loadPuzzleStates() {
@@ -647,7 +613,6 @@ public class GameManager : MonoBehaviour {
 
         selectedNumber = StaticVariables.savedBuildNumber;
         clickTileAction = StaticVariables.savedBuildType;
-        //load the actual puzzle solution
     }
 
     public void startFadeOut() {
@@ -778,19 +743,15 @@ public class GameManager : MonoBehaviour {
 
     private void OnApplicationQuit() {
         save();
-        //savePuzzleStates();
-        //SaveSystem.SaveGame();
     }
 
     public void addToPuzzleHistory() {
         previousPuzzleStates.Add(currentPuzzleState);
         PuzzleState currentState = new PuzzleState(puzzleGenerator);
         currentPuzzleState = currentState;
-        //clear all "redo" steps
         if (nextPuzzleStates.Count > 0) {
             nextPuzzleStates = new List<PuzzleState>();
         }
-        //hasAnythingHappenedYet = true;
         save();
     }
 
@@ -849,7 +810,6 @@ public class GameManager : MonoBehaviour {
 
             InterfaceFunctions.colorPuzzleButtonOn(button);
         }
-        //save();
         
     }
 
@@ -923,6 +883,95 @@ public class GameManager : MonoBehaviour {
                 c = note2Color;
             }
             removeAllOfNumberButton.transform.Find("Number").GetComponent<SpriteRenderer>().color = c;
+        }
+    }
+
+    private void centerContent() {
+        //centers the puzzle's content vertically on the screen. for example, if the player has no unlocks, the puzzle and building size buttons should be centered in the screen
+        if (!StaticVariables.isTutorial) {
+            //default order is puzzle, then numbers, then build/note/note2, then undo/redo, then remove/clear
+            int numRows = 1;
+            if (StaticVariables.includeNotes1Button || StaticVariables.includeNotes2Button) { numRows++; }
+            if (StaticVariables.includeUndoRedo) { numRows++; }
+            if (StaticVariables.includeRemoveAllOfNumber || StaticVariables.includeClearPuzzle) { numRows++; }
+            /*
+            if (numRows == 4) {
+                //do nothing, puzzle order is good
+            }
+            else {
+                print(numRows);
+            }
+            */
+            if (numRows != 4) {
+                float missingHeight = 0f;
+                if (!StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle) {
+                    float pos = removeAllAndClearButtons.transform.position.y;
+                    float pos2 = undoRedoButtons.transform.position.y;
+                    float diff = pos - pos2;
+                    missingHeight += diff;
+                }
+                if (!StaticVariables.includeUndoRedo) {
+                    float pos = undoRedoButtons.transform.position.y;
+                    float pos2 = selectionModeButtons1.transform.position.y;
+                    float diff = pos - pos2;
+                    missingHeight += diff;
+                }
+                if (!StaticVariables.includeNotes1Button && !StaticVariables.includeNotes2Button) {
+                    float pos = selectionModeButtons1.transform.position.y;
+                    float pos2 = numbers1to3.transform.position.y;
+                    float diff = pos - pos2;
+                    missingHeight += diff;
+                }
+                //print(missingHeight);
+
+                missingHeight /= 2;
+
+                Vector3 p = puzzlePositioning.transform.position;
+                p.y += missingHeight;
+                //puzzlePositioning.transform.position = p;
+
+                p = numbers1to3.transform.position;
+                p.y += missingHeight;
+                numbers1to3.transform.position = p;
+                numbers1to4.transform.position = p;
+                numbers1to5.transform.position = p;
+                numbers1to6.transform.position = p;
+
+                p = selectionModeButtons1.transform.position;
+                p.y += missingHeight;
+                selectionModeButtons1.transform.position = p;
+                selectionModeButtons2.transform.position = p;
+                selectionModeButtons3.transform.position = p;
+
+                p = undoRedoButtons.transform.position;
+                p.y += missingHeight;
+                undoRedoButtons.transform.position = p;
+
+                p = removeAllAndClearButtons.transform.position;
+                p.y += missingHeight;
+                removeAllAndClearButtons.transform.position = p;
+                onlyRemoveAllButton.transform.position = p;
+                onlyClearButton.transform.position = p;
+
+            }
+
+
+            if (!StaticVariables.includeNotes1Button && !StaticVariables.includeNotes2Button) {
+                float pos = selectionModeButtons1.transform.position.y;
+                float undoRedoPos = undoRedoButtons.transform.position.y;
+                float diff = undoRedoPos - pos;
+                Vector3 p = undoRedoButtons.transform.position;
+                p.y -= diff;
+                undoRedoButtons.transform.position = p;
+
+                p = removeAllAndClearButtons.transform.position;
+                p.y -= diff;
+                removeAllAndClearButtons.transform.position = p;
+                onlyClearButton.transform.position = p;
+                onlyRemoveAllButton.transform.position = p;
+            }
+            
+
         }
     }
 

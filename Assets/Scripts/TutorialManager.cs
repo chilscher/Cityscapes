@@ -38,8 +38,6 @@ public class TutorialManager{
     private void advanceStage() {
         tutorialStage++;
 
-        //string prevSkipReq = skipRequirement;
-
         switch (tutorialStage) {
             case 1:
                 text = "Welcome to Cityscapes! This is a number-placement puzzle game. In Cityscapes, you are a city designer, and your job is to build a city to fit its new residents' wishes.";
@@ -64,7 +62,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 4:
-                text = "The buildings you place will either be one story,\ntwo stories...";
+                text = "The buildings you place will either be one story...\ntwo stories...";
                 continueText = "Tap to continue...";
                 fillInSpace(7, 2);
                 tutorialText.text = text;
@@ -72,7 +70,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 5:
-                text = "The buildings you place will either be one story,\ntwo stories,\nor three stories tall.";
+                text = "The buildings you place will either be one story...\ntwo stories...\nor three stories tall.";
                 continueText = "Tap to continue...";
                 fillInSpace(8, 3);
                 tutorialText.text = text;
@@ -82,7 +80,6 @@ public class TutorialManager{
             case 6:
                 text = "To place a building, tap the building size you would like to place...";
                 continueText = "Choose the right building size...";
-                //gameManager.drawNumberButtons();
                 gameManager.tutorialCanvas.transform.Find("Numbers").gameObject.SetActive(true);
                 addRedBoxAroundNumButton(2);
                 tutorialText.text = text;
@@ -90,7 +87,7 @@ public class TutorialManager{
                 advanceRequirement = "tap number button 2";
                 break;
             case 7:
-                text = "To place a building, tap the building size you would like to place,\n\nthen tap the space you would like to build on.";
+                text = "To place a building, tap the building size you would like to place...\n\nthen tap the space you would like to build on.";
                 continueText = "Place the building...";
                 removeRedBoxesAroundNums();
                 addRedBoxAroundTile(0);
@@ -138,8 +135,6 @@ public class TutorialManager{
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
-                //skipRequirement = "add building of height 3 to tile 3";
-                //skipToStage = 15;
                 break;
             case 13:
                 text = "However, this street does not yet have one of every building!\n\nIt still needs a three-story building in the middle.";
@@ -158,7 +153,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 15:
-                text = "Great! The second building requirement involves the residents of the city,\n\nwho are now standing at the ends of every street!";
+                text = "Great! The second building requirement involves the residents of the city...\n\nwho are now standing at the ends of every street!";
                 continueText = "Tap to continue...";
                 gameManager.showHints();
                 tutorialText.text = text;
@@ -174,7 +169,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 17:
-                text = "This resident is looking down this street...";
+                text = "This resident...\nis looking down this street...";
                 continueText = "Tap to continue...";
                 addRedBoxAroundResident("top", 1);
                 addRedBoxAroundStreet("vertical", 1);
@@ -183,7 +178,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 18:
-                text = "This resident is looking down this street, and only wants to be able to see one building.";
+                text = "This resident...\nis looking down this street...\nand only wants to be able to see one building.";
                 continueText = "Tap to continue...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -192,7 +187,7 @@ public class TutorialManager{
                 skipToStage = 21;
                 break;
             case 19:
-                text = "This resident is looking down this street, and only wants to be able to see one building.\n\nSo we know that the building closest to them has to be the tallest one on the whole street!";
+                text = "This resident...\nis looking down this street...\nand only wants to be able to see one building.\nSo we know that the building closest to them has to be the tallest one on the whole street!";
                 continueText = "Tap to continue...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -264,7 +259,6 @@ public class TutorialManager{
                 gameManager.puzzleGenerator.predeterminedSolution = puzzle;
                 gameManager.puzzleGenerator.createPuzzle(3);
                 gameManager.drawFullPuzzle();
-                //gameManager.drawNumberButtons();
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -290,7 +284,7 @@ public class TutorialManager{
                 skipToStage = 31;
                 break;
             case 30:
-                text = "These four residents only want to see one building,\n\nso you know the spaces next to them have to have three-story buildings.";
+                text = "These four residents only want to see one building...\n\nso you know the spaces next to them have to have three-story buildings.";
                 continueText = "Place the correct buildings...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -306,7 +300,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 32:
-                text = "Well done!\n\nNow, you know enough to figure out where the final three-story building has to go! Remember, only one of each building size can go in each street!";
+                text = "Well done!\nNow, you know enough to figure out where the final three-story building has to go! Remember, only one of each building size can go in each street!";
                 continueText = "Place the correct building...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -330,7 +324,7 @@ public class TutorialManager{
                 skipToStage = 37;
                 break;
             case 35:
-                text = "This resident only wants to see two buildings down their street.\n\nTherefore, we know that this building...";
+                text = "This resident only wants to see two buildings down their street...\nTherefore, we know that this building...";
                 continueText = "Tap to continue...";
                 addRedBoxAroundTile(0);
                 tutorialText.text = text;
@@ -338,7 +332,7 @@ public class TutorialManager{
                 advanceRequirement = "tap screen";
                 break;
             case 36:
-                text = "This resident only wants to see two buildings down their street.\n\nTherefore, we know that this building has to be the second-tallest building in the street!";
+                text = "This resident only wants to see two buildings down their street...\nTherefore, we know that this building...\nhas to be the second-tallest building in the street!";
                 continueText = "Place the correct building...";
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -382,7 +376,6 @@ public class TutorialManager{
                     StaticVariables.highestUnlockedSize = 3;
                 }
                 gameManager.goToMainMenu();
-                //SceneManager.LoadScene("MainMenu");
                 break;
         }
 
