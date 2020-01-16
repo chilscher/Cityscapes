@@ -227,9 +227,11 @@ public class SettingsCanvasController : MonoBehaviour {
 
     public void pushHighlightBuildingsButton() {
         StaticVariables.includeHighlightBuildings = !StaticVariables.includeHighlightBuildings;
+        /*
         if (StaticVariables.includeHighlightBuildings) {
             StaticVariables.changeResidentColorOnCorrectRows = true;
         }
+        */
         setCurrentToggleTexts();
         SaveSystem.SaveGame();
     }
