@@ -70,4 +70,6 @@ public class StaticVariables{
 
     static public bool waitingOnButtonClickAfterFadeIn = false;
     static public string buttonClickInWaiting = "";
+
+    static public bool hasBeatenTutorial = false;
 }

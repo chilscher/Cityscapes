@@ -43,6 +43,8 @@ public class SaveData{
     public int savedBuildNumber;
     public string savedBuildType;
 
+    public bool hasBeatenTutorial;
+
 
     public SaveData() {
         coins = StaticVariables.coins;
@@ -73,6 +75,8 @@ public class SaveData{
         skinName = StaticVariables.skin.skinName;
         unlockedSkinNames = getUnlockedSkinNames();
         hidePurchasedUpgrades = StaticVariables.hidePurchasedUpgrades;
+
+        hasBeatenTutorial = StaticVariables.hasBeatenTutorial;
 
         hasSavedPuzzleState = StaticVariables.hasSavedPuzzleState;
         if (hasSavedPuzzleState) {
@@ -117,6 +121,8 @@ public class SaveData{
         StaticVariables.skin = InterfaceFunctions.getSkinFromName(skinName);
         StaticVariables.unlockedSkins = getUnlockedSkins();
         StaticVariables.hidePurchasedUpgrades = hidePurchasedUpgrades;
+
+        StaticVariables.hasBeatenTutorial = hasBeatenTutorial;
 
         StaticVariables.hasSavedPuzzleState = hasSavedPuzzleState;
         if (hasSavedPuzzleState) {

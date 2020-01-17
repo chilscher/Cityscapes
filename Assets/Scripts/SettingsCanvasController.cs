@@ -44,8 +44,15 @@ public class SettingsCanvasController : MonoBehaviour {
 
     public GameObject currentSkinText;
 
+    public GameObject cosmeticsTitle;
+    public GameObject visualTitle;
+    public GameObject buttonsTitle;
+    public GameObject citiesTitle;
+    public GameObject othersTitle;
+
     private void Start() {
         showAndHideButtons();
+        showAndHideText();
         setCurrentToggleTexts();
         updateCurrentSkinText();
         showChooseSkinButton();
@@ -125,7 +132,22 @@ public class SettingsCanvasController : MonoBehaviour {
         highlightBuildingsButton.SetActive(StaticVariables.unlockedHighlightBuildings);
 
         hidePurchasedUpgradesButton.SetActive(true);
+        
     }
+
+    public void showAndHideText() {
+        bool anyCosmetics = StaticVariables.unlockedSkins.Count > 0;
+        bool anyVisuals = residentColorButton.activeSelf || highlightBuildingsButton.activeSelf;
+        bool anyButtons = notes1Button.activeSelf || notes2Button.activeSelf || undoRedoButton.activeSelf || removeNumbersButton.activeSelf || clearPuzzleButton.activeSelf;
+        bool anyCities = medCityButton.activeSelf || largeCityButton.activeSelf || hugeCityButton.activeSelf;
+        bool anyUpgrades = anyCosmetics || anyVisuals || anyButtons || anyCities;
+
+        cosmeticsTitle.SetActive(anyCosmetics);
+        visualTitle.SetActive(anyVisuals);
+        buttonsTitle.SetActive(anyButtons);
+        citiesTitle.SetActive(anyCities);
+        othersTitle.SetActive(anyUpgrades);
+}
 
     public void setCurrentToggleTexts() {
         toggleText(medCityButton, StaticVariables.showMed);

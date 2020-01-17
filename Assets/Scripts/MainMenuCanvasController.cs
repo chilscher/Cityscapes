@@ -15,6 +15,7 @@ public class MainMenuCanvasController : MonoBehaviour {
 
     public GameObject shopButton;
     public GameObject tutorialButton;
+    public GameObject largeCenterTutorialButton;
     public GameObject settingsButton;
 
     public GameObject blackForeground; //used to transition to/from the puzzle menu
@@ -188,6 +189,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         InterfaceFunctions.colorMenuButton(shopButton);
         InterfaceFunctions.colorMenuButton(tutorialButton);
         InterfaceFunctions.colorMenuButton(settingsButton);
+        InterfaceFunctions.colorMenuButton(largeCenterTutorialButton);
     }
 
     private void applyCityArtSkin() {
@@ -256,6 +258,7 @@ public class MainMenuCanvasController : MonoBehaviour {
 
     private void showCityButtons() {
 
+        largeCenterTutorialButton.SetActive(false);
         returnOrAbandonButtons.SetActive(false);
         shopButton.SetActive(true);
         tutorialButton.SetActive(true);
@@ -277,15 +280,24 @@ public class MainMenuCanvasController : MonoBehaviour {
             smallMedLargePuzzleButtons.SetActive(false);
             smallMedLargeHugePuzzleButtons.SetActive(false);
             returnOrAbandonButtons.SetActive(true);
-            //shopButton.SetActive(false);
-            //tutorialButton.SetActive(false);
-            //settingsButton.SetActive(false);
         }
         else {
             onlySmallPuzzleButton.SetActive(highestUnlockedSize == 3);
             smallAndMedPuzzleButtons.SetActive(highestUnlockedSize == 4);
             smallMedLargePuzzleButtons.SetActive(highestUnlockedSize == 5);
             smallMedLargeHugePuzzleButtons.SetActive(highestUnlockedSize == 6);
+        }
+
+        if (!StaticVariables.hasBeatenTutorial) {
+            returnOrAbandonButtons.SetActive(false);
+            shopButton.SetActive(false);
+            tutorialButton.SetActive(false);
+            settingsButton.SetActive(false);
+            onlySmallPuzzleButton.SetActive(false);
+            smallAndMedPuzzleButtons.SetActive(false);
+            smallMedLargePuzzleButtons.SetActive(false);
+            smallMedLargeHugePuzzleButtons.SetActive(false);
+            largeCenterTutorialButton.SetActive(true);
         }
     }
 }

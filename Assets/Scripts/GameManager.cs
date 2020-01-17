@@ -105,6 +105,13 @@ public class GameManager : MonoBehaviour {
 
     public Skin basicSkin;
 
+
+    public GameObject totalCoinsBox1s;
+    public GameObject totalCoinsBox10s;
+    public GameObject totalCoinsBox100s;
+    public GameObject totalCoinsBox1000s;
+    public GameObject totalCoinsBox10000s;
+
     private void Start() {
         skin = StaticVariables.skin;
         if (StaticVariables.isTutorial) {
@@ -163,6 +170,7 @@ public class GameManager : MonoBehaviour {
             puzzleBackground.GetComponent<SpriteRenderer>().sprite = skin.puzzleBackground;
             InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Menu"));
             InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Another Puzzle"));
+            InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Shop"));
             winCanvas.transform.Find("Win Popup").Find("Win Popup Background Exterior").GetComponent<SpriteRenderer>().color = winBackgroundColorExterior;
             winCanvas.transform.Find("Win Popup").Find("Win Popup Background Interior").GetComponent<SpriteRenderer>().color = winBackgroundColorInterior;
             Color c = winCanvas.transform.Find("Black Background").GetComponent<SpriteRenderer>().color;
@@ -183,7 +191,6 @@ public class GameManager : MonoBehaviour {
 
             coinsBox1s.GetComponent<SpriteRenderer>().sprite = numberSprites[onesDigit];
             coinsBox10s.GetComponent<SpriteRenderer>().sprite = numberSprites[tensDigit];
-
 
             currentPuzzleState = new PuzzleState(puzzleGenerator);
         }
@@ -267,6 +274,9 @@ public class GameManager : MonoBehaviour {
                 if (StaticVariables.fadingTo == "menu") {
                     SceneManager.LoadScene("MainMenu");
                 }
+                if (StaticVariables.fadingTo == "shop") {
+                    SceneManager.LoadScene("Shop");
+                }
 
             }
         }
@@ -313,6 +323,60 @@ public class GameManager : MonoBehaviour {
             case 5: large.SetActive(true); break;
             case 6: huge.SetActive(true); break;
         }
+    }
+
+
+    public void displayTotalCoinsAmount() {
+        int value1s = StaticVariables.coins % 10;
+        int value10s = (StaticVariables.coins / 10) % 10;
+        int value100s = (StaticVariables.coins / 100) % 10;
+        int value1000s = (StaticVariables.coins / 1000) % 10;
+        int value10000s = (StaticVariables.coins / 10000) % 10;
+        totalCoinsBox1s.GetComponent<SpriteRenderer>().sprite = numberSprites[value1s];
+        totalCoinsBox10s.GetComponent<SpriteRenderer>().sprite = numberSprites[value10s];
+        totalCoinsBox100s.GetComponent<SpriteRenderer>().sprite = numberSprites[value100s];
+        totalCoinsBox1000s.GetComponent<SpriteRenderer>().sprite = numberSprites[value1000s];
+        totalCoinsBox10000s.GetComponent<SpriteRenderer>().sprite = numberSprites[value10000s];
+
+        totalCoinsBox1s.SetActive(true);
+        totalCoinsBox10s.SetActive(true);
+        totalCoinsBox100s.SetActive(true);
+        totalCoinsBox1000s.SetActive(true);
+        totalCoinsBox10000s.SetActive(true);
+
+        if (value10000s == 0) {
+            totalCoinsBox10000s.SetActive(false);
+            if (value1000s == 0) {
+                totalCoinsBox1000s.SetActive(false);
+                if (value100s == 0) {
+                    totalCoinsBox100s.SetActive(false);
+                    if (value10s == 0) {
+                        totalCoinsBox10s.SetActive(false);
+                    }
+                }
+            }
+        }
+
+        // shift the coins images over so that they are next to the text
+        int shiftAmount = 0;
+        if (!totalCoinsBox10000s.activeSelf) { shiftAmount++; }
+        if (!totalCoinsBox1000s.activeSelf) { shiftAmount++; }
+        if (!totalCoinsBox100s.activeSelf) { shiftAmount++; }
+        if (!totalCoinsBox10s.activeSelf) { shiftAmount++; }
+
+        float shiftPer = totalCoinsBox10000s.transform.position.x - totalCoinsBox1000s.transform.position.x;
+        float totalShift = shiftAmount * shiftPer;
+
+        Transform parentTransform = totalCoinsBox1s.transform.parent;
+        Vector3 pos = parentTransform.position;
+        pos.x += totalShift;
+        parentTransform.position = pos;
+
+        //shift the coins image and associated text over so they are centered
+        Transform parent2Transform = parentTransform.parent;
+        pos = parent2Transform.position;
+        pos.x -= totalShift / 2;
+        parent2Transform.position = pos;
     }
 
     private void hideNumberButtons() {
@@ -572,6 +636,18 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    public void goToShop() {
+        if (!StaticVariables.isFading) {
+            save();
+            StaticVariables.fadingTo = "shop";
+            startFadeOut();
+        }
+        else {
+            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
+            StaticVariables.buttonClickInWaiting = "shop";
+        }
+    }
+
     public void save() {
         if (!StaticVariables.isTutorial) {
             savePuzzleStates();
@@ -738,6 +814,8 @@ public class GameManager : MonoBehaviour {
                 break;
         }
         StaticVariables.coins += amt;
+
+        displayTotalCoinsAmount();
     }
 
 

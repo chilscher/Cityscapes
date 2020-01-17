@@ -452,6 +452,13 @@ public class ShopCanvasController : MonoBehaviour {
         updateButtons();
     }
 
+    public void foreshInstall() {
+        removeCoins();
+        lockAll();
+        StaticVariables.hasBeatenTutorial = false;
+        goToMainMenu();
+    }
+
     public void removeCoins() {
         StaticVariables.coins = 0;
         displayCoinsAmount();
