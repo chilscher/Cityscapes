@@ -20,31 +20,25 @@ public static class SaveSystem{
     }
 
     public static void LoadGame() {
-        //Debug.Log(Application.persistentDataPath);
         if (File.Exists(path)) {
 
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
             if (stream.Length == 0) {
                 stream.Close();
-
-                //Debug.Log("first time");
                 firstTimePlayingEver();
 
             }
             else {
-                //Debug.Log("returning player");
                 SaveData data = formatter.Deserialize(stream) as SaveData;
                 stream.Close();
 
                 data.LoadData();
-
+                
             }
         }
         else {
             firstTimePlayingEver();
-            //save file not found
-            //Debug.LogError("Save file not found in " + path);
             
         }
 

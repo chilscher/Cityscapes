@@ -4,14 +4,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SettingsCanvasController : MonoBehaviour {
-    
-    //public GameObject changeCorrectResidentColorButton;
-    //public GameObject undoRedoButton;
-    //public GameObject removeAllOfNumber;
-    //public GameObject clearPuzzle;
-
-    //public GameObject creditsButton;
-    //public GameObject creditsText;
 
     public GameObject scrollView;
 
@@ -249,11 +241,6 @@ public class SettingsCanvasController : MonoBehaviour {
 
     public void pushHighlightBuildingsButton() {
         StaticVariables.includeHighlightBuildings = !StaticVariables.includeHighlightBuildings;
-        /*
-        if (StaticVariables.includeHighlightBuildings) {
-            StaticVariables.changeResidentColorOnCorrectRows = true;
-        }
-        */
         setCurrentToggleTexts();
         SaveSystem.SaveGame();
     }

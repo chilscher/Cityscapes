@@ -48,7 +48,6 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject expandHighlightBuildingsButton;
 
     public GameObject unlockedEverythingText;
-    public GameObject unlockedAllCitiesText;
     public GameObject unlockedAllFeaturesText;
     public GameObject unlockedAllSkinsText;
     
@@ -143,7 +142,6 @@ public class ShopCanvasController : MonoBehaviour {
         List<GameObject> buttons = new List<GameObject>();
         GameObject parent = expandMedButton.transform.parent.parent.gameObject;
         for (int i = start + 1; i<end; i++) {
-            //print(parent.transform.GetChild(i).gameObject.name);
             buttons.Add(parent.transform.GetChild(i).gameObject);
         }
         skinButtons = buttons.ToArray();
@@ -160,7 +158,6 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     private void Update() {
-        //InterfaceFunctions.printUnlockedSkins();
         if (StaticVariables.isFading && StaticVariables.fadingFrom == "shop") {
             fadeTimer -= Time.deltaTime;
             Color c = blackSprite.color;
@@ -259,9 +256,6 @@ public class ShopCanvasController : MonoBehaviour {
         updateButton(expandRemoveAllButton, StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice, StaticVariables.unlockedUndoRedo);
         updateButton(expandClearButton, StaticVariables.unlockedClearPuzzle, clearPrice, StaticVariables.unlockedUndoRedo);
         updateButton(expandHighlightBuildingsButton, StaticVariables.unlockedHighlightBuildings, highlightBuildingsPrice);
-        //updateButton(expandHighlightBuildingsButton, StaticVariables.unlockedHighlightBuildings, highlightBuildingsPrice, StaticVariables.unlockedResidentsChangeColor);
-
-        //updateButton(expandMountainsSkinButton, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.getSkinFromName("Mountains")), skinPrice);
 
         foreach (GameObject parent in skinButtons) {
             updateButton(parent.transform.Find("Expand Button").gameObject, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.getSkinFromName(parent.name)), getSkinPrice((InterfaceFunctions.getSkinFromName(parent.name))));
@@ -273,7 +267,6 @@ public class ShopCanvasController : MonoBehaviour {
         bool allFeatures = StaticVariables.unlockedNotes1 && StaticVariables.unlockedNotes2 && StaticVariables.unlockedResidentsChangeColor && StaticVariables.unlockedUndoRedo && StaticVariables.unlockedRemoveAllOfNumber && StaticVariables.unlockedClearPuzzle && StaticVariables.unlockedHighlightBuildings;
         bool allSkins = StaticVariables.unlockedSkins.Count + 1 == StaticVariables.allSkins.Length;
         bool allContent = allCities && allFeatures && allSkins;
-        //unlockedAllCitiesText.SetActive(allCities && StaticVariables.hidePurchasedUpgrades);
         unlockedAllFeaturesText.SetActive(allFeatures && allCities && StaticVariables.hidePurchasedUpgrades);
         unlockedAllSkinsText.SetActive(allSkins && StaticVariables.hidePurchasedUpgrades);
         unlockedEverythingText.SetActive(allContent);
@@ -363,10 +356,6 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     public void clearPurchases() {
-        //some kind of popup to confirm that the player wants to clear their purchases? 
-        //"are you sure you want to reset all of your purchases? you will NOT get your spent coins back!!!"
-        //if so, then do the following...
-
         lockAll();
 
         if (StaticVariables.coins < 50) { StaticVariables.coins = 300; }
@@ -467,7 +456,6 @@ public class ShopCanvasController : MonoBehaviour {
     public void pushButton(GameObject parent) {
         //takes the parent of the current button as a parameter. Expands/contracts child dropdown
         clickedButton(parent.transform.Find("Expand Button").gameObject);
-
     }
 
     private bool canPurchase(bool notCond, int cost) {
@@ -569,7 +557,6 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     public void unlockHighlightBuildings() {
-        //if (canPurchase(StaticVariables.unlockedHighlightBuildings, highlightBuildingsPrice) && StaticVariables.unlockedResidentsChangeColor) {
         if (canPurchase(StaticVariables.unlockedHighlightBuildings, highlightBuildingsPrice)) {
             StaticVariables.unlockedHighlightBuildings = true;
             StaticVariables.includeHighlightBuildings = true;
@@ -595,7 +582,6 @@ public class ShopCanvasController : MonoBehaviour {
 
     public void expandSiblings(GameObject button) {
         //sets all siblings of the chosen button to be active, and resizes all necessary scroll views
-
         expandedButton = button;
 
         GameObject parentBox = button.transform.parent.gameObject;

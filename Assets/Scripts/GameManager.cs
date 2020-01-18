@@ -165,7 +165,6 @@ public class GameManager : MonoBehaviour {
             hidePositioningObjects();
             setSelectionModeButtons();
             setUndoRedoButtons();
-            //centerContent();              //removed for now until because the puzzle background art is built to have a spacious center
             highlightBuildType();
             puzzleBackground.GetComponent<SpriteRenderer>().sprite = skin.puzzleBackground;
             InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Menu"));
@@ -961,95 +960,6 @@ public class GameManager : MonoBehaviour {
                 c = note2Color;
             }
             removeAllOfNumberButton.transform.Find("Number").GetComponent<SpriteRenderer>().color = c;
-        }
-    }
-
-    private void centerContent() {
-        //centers the puzzle's content vertically on the screen. for example, if the player has no unlocks, the puzzle and building size buttons should be centered in the screen
-        if (!StaticVariables.isTutorial) {
-            //default order is puzzle, then numbers, then build/note/note2, then undo/redo, then remove/clear
-            int numRows = 1;
-            if (StaticVariables.includeNotes1Button || StaticVariables.includeNotes2Button) { numRows++; }
-            if (StaticVariables.includeUndoRedo) { numRows++; }
-            if (StaticVariables.includeRemoveAllOfNumber || StaticVariables.includeClearPuzzle) { numRows++; }
-            /*
-            if (numRows == 4) {
-                //do nothing, puzzle order is good
-            }
-            else {
-                print(numRows);
-            }
-            */
-            if (numRows != 4) {
-                float missingHeight = 0f;
-                if (!StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle) {
-                    float pos = removeAllAndClearButtons.transform.position.y;
-                    float pos2 = undoRedoButtons.transform.position.y;
-                    float diff = pos - pos2;
-                    missingHeight += diff;
-                }
-                if (!StaticVariables.includeUndoRedo) {
-                    float pos = undoRedoButtons.transform.position.y;
-                    float pos2 = selectionModeButtons1.transform.position.y;
-                    float diff = pos - pos2;
-                    missingHeight += diff;
-                }
-                if (!StaticVariables.includeNotes1Button && !StaticVariables.includeNotes2Button) {
-                    float pos = selectionModeButtons1.transform.position.y;
-                    float pos2 = numbers1to3.transform.position.y;
-                    float diff = pos - pos2;
-                    missingHeight += diff;
-                }
-                //print(missingHeight);
-
-                missingHeight /= 2;
-
-                Vector3 p = puzzlePositioning.transform.position;
-                p.y += missingHeight;
-                //puzzlePositioning.transform.position = p;
-
-                p = numbers1to3.transform.position;
-                p.y += missingHeight;
-                numbers1to3.transform.position = p;
-                numbers1to4.transform.position = p;
-                numbers1to5.transform.position = p;
-                numbers1to6.transform.position = p;
-
-                p = selectionModeButtons1.transform.position;
-                p.y += missingHeight;
-                selectionModeButtons1.transform.position = p;
-                selectionModeButtons2.transform.position = p;
-                selectionModeButtons3.transform.position = p;
-
-                p = undoRedoButtons.transform.position;
-                p.y += missingHeight;
-                undoRedoButtons.transform.position = p;
-
-                p = removeAllAndClearButtons.transform.position;
-                p.y += missingHeight;
-                removeAllAndClearButtons.transform.position = p;
-                onlyRemoveAllButton.transform.position = p;
-                onlyClearButton.transform.position = p;
-
-            }
-
-
-            if (!StaticVariables.includeNotes1Button && !StaticVariables.includeNotes2Button) {
-                float pos = selectionModeButtons1.transform.position.y;
-                float undoRedoPos = undoRedoButtons.transform.position.y;
-                float diff = undoRedoPos - pos;
-                Vector3 p = undoRedoButtons.transform.position;
-                p.y -= diff;
-                undoRedoButtons.transform.position = p;
-
-                p = removeAllAndClearButtons.transform.position;
-                p.y -= diff;
-                removeAllAndClearButtons.transform.position = p;
-                onlyClearButton.transform.position = p;
-                onlyRemoveAllButton.transform.position = p;
-            }
-            
-
         }
     }
 
