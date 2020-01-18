@@ -5,11 +5,23 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class MainMenuCanvasController : MonoBehaviour {
-
+    /*
     public GameObject onlySmallPuzzleButton;
     public GameObject smallAndMedPuzzleButtons;
     public GameObject smallMedLargePuzzleButtons;
     public GameObject smallMedLargeHugePuzzleButtons;
+    */
+    public GameObject puzzleButtons;
+    public GameObject smallShadow;
+    public GameObject mediumShadow;
+    public GameObject largeShadow;
+    public GameObject hugeShadow;
+
+    public GameObject smallText;
+    public GameObject mediumText;
+    public GameObject largeText;
+    public GameObject hugeText;
+
     public GameObject returnOrAbandonButtons;
     public GameObject background;
 
@@ -110,17 +122,20 @@ public class MainMenuCanvasController : MonoBehaviour {
     }
 
     public void startPuzzle(int size) {
-        if (!StaticVariables.isFading) {
+        if (getHighestUnlockedSize() >= size) {
 
-            StaticVariables.size = size;
-            StaticVariables.isTutorial = false;
+            if (!StaticVariables.isFading) {
 
-            StaticVariables.fadingTo = "puzzle";
-            startFadeOut();
-        }
-        else {
-            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
-            StaticVariables.buttonClickInWaiting = "puzzle" + size;
+                StaticVariables.size = size;
+                StaticVariables.isTutorial = false;
+
+                StaticVariables.fadingTo = "puzzle";
+                startFadeOut();
+            }
+            else {
+                StaticVariables.waitingOnButtonClickAfterFadeIn = true;
+                StaticVariables.buttonClickInWaiting = "puzzle" + size;
+            }
         }
     }
     
@@ -166,6 +181,7 @@ public class MainMenuCanvasController : MonoBehaviour {
     */
 
     private void colorButtons() {
+        /*
         InterfaceFunctions.colorMenuButton(onlySmallPuzzleButton.transform.Find("3").gameObject);
         InterfaceFunctions.colorMenuButton(smallAndMedPuzzleButtons.transform.Find("3").gameObject);
         InterfaceFunctions.colorMenuButton(smallAndMedPuzzleButtons.transform.Find("4").gameObject);
@@ -176,6 +192,13 @@ public class MainMenuCanvasController : MonoBehaviour {
         InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("4").gameObject);
         InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("5").gameObject);
         InterfaceFunctions.colorMenuButton(smallMedLargeHugePuzzleButtons.transform.Find("6").gameObject);
+        */
+
+        InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("3").gameObject);
+        InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("4").gameObject);
+        InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("5").gameObject);
+        InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("6").gameObject);
+
         InterfaceFunctions.colorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Return").gameObject);
         InterfaceFunctions.colorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Abandon").gameObject);
 
@@ -193,6 +216,7 @@ public class MainMenuCanvasController : MonoBehaviour {
     }
 
     private void applyCityArtSkin() {
+        /*
         onlySmallPuzzleButton.transform.Find("3").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
         smallAndMedPuzzleButtons.transform.Find("3").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
         smallAndMedPuzzleButtons.transform.Find("4").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
@@ -203,6 +227,12 @@ public class MainMenuCanvasController : MonoBehaviour {
         smallMedLargeHugePuzzleButtons.transform.Find("4").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
         smallMedLargeHugePuzzleButtons.transform.Find("5").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
         smallMedLargeHugePuzzleButtons.transform.Find("6").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
+        */
+
+        puzzleButtons.transform.Find("3").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
+        puzzleButtons.transform.Find("4").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
+        puzzleButtons.transform.Find("5").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
+        puzzleButtons.transform.Find("6").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
 
         if (StaticVariables.hasSavedPuzzleState) {
             string[] arr = new string[2];
@@ -263,7 +293,76 @@ public class MainMenuCanvasController : MonoBehaviour {
         shopButton.SetActive(true);
         tutorialButton.SetActive(true);
         settingsButton.SetActive(true);
+        smallShadow.SetActive(false);
+        mediumShadow.SetActive(false);
+        largeShadow.SetActive(false);
+        hugeShadow.SetActive(false);
+        smallText.SetActive(true);
+        mediumText.SetActive(true);
+        largeText.SetActive(true);
+        hugeText.SetActive(true);
 
+        int highestUnlockedSize = getHighestUnlockedSize();
+        if (StaticVariables.hasSavedPuzzleState) {
+            /*
+            onlySmallPuzzleButton.SetActive(false);
+            smallAndMedPuzzleButtons.SetActive(false);
+            smallMedLargePuzzleButtons.SetActive(false);
+            smallMedLargeHugePuzzleButtons.SetActive(false);
+            */
+            puzzleButtons.SetActive(false);
+            returnOrAbandonButtons.SetActive(true);
+        }
+        else {
+            puzzleButtons.SetActive(true);
+            smallShadow.SetActive(!(highestUnlockedSize >= 3));
+            mediumShadow.SetActive(!(highestUnlockedSize >= 4));
+            largeShadow.SetActive(!(highestUnlockedSize >= 5));
+            hugeShadow.SetActive(!(highestUnlockedSize >= 6));
+
+            smallText.SetActive(highestUnlockedSize >= 3);
+            mediumText.SetActive(highestUnlockedSize >= 4);
+            largeText.SetActive(highestUnlockedSize >= 5);
+            hugeText.SetActive(highestUnlockedSize >= 6);
+            /*
+            onlySmallPuzzleButton.SetActive(highestUnlockedSize == 3);
+            smallAndMedPuzzleButtons.SetActive(highestUnlockedSize == 4);
+            smallMedLargePuzzleButtons.SetActive(highestUnlockedSize == 5);
+            smallMedLargeHugePuzzleButtons.SetActive(highestUnlockedSize == 6);
+            */
+        }
+
+        if (!StaticVariables.hasBeatenTutorial) {
+            returnOrAbandonButtons.SetActive(false);
+            shopButton.SetActive(false);
+            tutorialButton.SetActive(false);
+            settingsButton.SetActive(false);
+
+            puzzleButtons.SetActive(false);
+            /*
+            onlySmallPuzzleButton.SetActive(false);
+            smallAndMedPuzzleButtons.SetActive(false);
+            smallMedLargePuzzleButtons.SetActive(false);
+            smallMedLargeHugePuzzleButtons.SetActive(false);
+            */
+            largeCenterTutorialButton.SetActive(true);
+        }
+
+        /*
+        onlySmallPuzzleButton.SetActive(false);
+        smallAndMedPuzzleButtons.SetActive(false);
+        smallMedLargePuzzleButtons.SetActive(false);
+        smallMedLargeHugePuzzleButtons.SetActive(false);
+
+        puzzleButtons.SetActive(true);
+        smallShadow.SetActive(!(highestUnlockedSize >= 3));
+        mediumShadow.SetActive(!(highestUnlockedSize >= 4));
+        largeShadow.SetActive(!(highestUnlockedSize >= 5));
+        hugeShadow.SetActive(!(highestUnlockedSize >= 6));
+        */
+    }
+
+    public int getHighestUnlockedSize() {
         int highestUnlockedSize = 3;
         if (StaticVariables.showMed) {
             highestUnlockedSize = 4;
@@ -274,30 +373,6 @@ public class MainMenuCanvasController : MonoBehaviour {
         if (StaticVariables.showHuge) {
             highestUnlockedSize = 6;
         }
-        if (StaticVariables.hasSavedPuzzleState) {
-            onlySmallPuzzleButton.SetActive(false);
-            smallAndMedPuzzleButtons.SetActive(false);
-            smallMedLargePuzzleButtons.SetActive(false);
-            smallMedLargeHugePuzzleButtons.SetActive(false);
-            returnOrAbandonButtons.SetActive(true);
-        }
-        else {
-            onlySmallPuzzleButton.SetActive(highestUnlockedSize == 3);
-            smallAndMedPuzzleButtons.SetActive(highestUnlockedSize == 4);
-            smallMedLargePuzzleButtons.SetActive(highestUnlockedSize == 5);
-            smallMedLargeHugePuzzleButtons.SetActive(highestUnlockedSize == 6);
-        }
-
-        if (!StaticVariables.hasBeatenTutorial) {
-            returnOrAbandonButtons.SetActive(false);
-            shopButton.SetActive(false);
-            tutorialButton.SetActive(false);
-            settingsButton.SetActive(false);
-            onlySmallPuzzleButton.SetActive(false);
-            smallAndMedPuzzleButtons.SetActive(false);
-            smallMedLargePuzzleButtons.SetActive(false);
-            smallMedLargeHugePuzzleButtons.SetActive(false);
-            largeCenterTutorialButton.SetActive(true);
-        }
+        return highestUnlockedSize;
     }
 }
