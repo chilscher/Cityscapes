@@ -364,6 +364,7 @@ public class TutorialManager{
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
                 StaticVariables.hasBeatenTutorial = true;
+                SaveSystem.SaveGame();
                 break;
             case 40:
                 text = "Congratulations! You have completed the tutorial for Cityscapes.\n\nReturn to the main menu and try a puzzle on your own! You can redo this tutorial at any time.";

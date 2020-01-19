@@ -139,6 +139,8 @@ public class GameManager : MonoBehaviour {
             setTutorialNumberButtons();
             tutorialCanvas.SetActive(true);
             puzzleCanvas.SetActive(false);
+            //hide menu button if it is your first time playing the tutorial
+            tutorialCanvas.transform.Find("Menu").gameObject.SetActive(StaticVariables.hasBeatenTutorial);
 
             tutorialManager = new TutorialManager();
             tutorialManager.gameManager = this;
