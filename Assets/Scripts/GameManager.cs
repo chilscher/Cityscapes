@@ -29,12 +29,15 @@ public class GameManager : MonoBehaviour {
     private GameObject buildButton;
     private GameObject note1Button;
     private GameObject note2Button;
+    private GameObject clearTileButton;
     private GameObject prevNumberSelectionButton;
-    
+
     public GameObject streetCorner;
+    public GameObject selectionModeButtons0;
     public GameObject selectionModeButtons1;
     public GameObject selectionModeButtons2;
     public GameObject selectionModeButtons3;
+    
     public GameObject undoRedoButtons;
 
     public TutorialManager tutorialManager;
@@ -163,6 +166,8 @@ public class GameManager : MonoBehaviour {
             setRemoveAllAndClearButtons();
             setNumberButtons();
             highlightSelectedNumber();
+            if (clickTileAction == "Clear Tile") { disselectNumber(prevClickedNumButton); }
+            
 
             hidePositioningObjects();
             setSelectionModeButtons();
@@ -436,47 +441,47 @@ public class GameManager : MonoBehaviour {
 
     public void setSelectionModeButtons() {
         if (includeNote2Btn && includeNote1Btn) {
+            selectionModeButtons0.SetActive(false);
             selectionModeButtons1.SetActive(true);
             selectionModeButtons2.SetActive(false);
             selectionModeButtons3.SetActive(false);
             buildButton = selectionModeButtons1.transform.GetChild(0).gameObject;
             note1Button = selectionModeButtons1.transform.GetChild(1).gameObject;
             note2Button = selectionModeButtons1.transform.GetChild(2).gameObject;
+            clearTileButton = selectionModeButtons1.transform.Find("Clear").gameObject;
         }
         else if (!includeNote2Btn && !includeNote1Btn) {
+            selectionModeButtons0.SetActive(true);
             selectionModeButtons1.SetActive(false);
             selectionModeButtons2.SetActive(false);
             selectionModeButtons3.SetActive(false);
+            buildButton = selectionModeButtons0.transform.Find("Build").gameObject;
+            clearTileButton = selectionModeButtons0.transform.Find("Clear").gameObject;
         }
-        else if (!includeNote2Btn && includeNote1Btn){
+        else if (!includeNote2Btn && includeNote1Btn) {
+            selectionModeButtons0.SetActive(false);
             selectionModeButtons1.SetActive(false);
             selectionModeButtons2.SetActive(true);
             selectionModeButtons3.SetActive(false);
             buildButton = selectionModeButtons2.transform.GetChild(0).gameObject;
             note1Button = selectionModeButtons2.transform.GetChild(1).gameObject;
+            clearTileButton = selectionModeButtons2.transform.Find("Clear").gameObject;
         }
         else if (includeNote2Btn && !includeNote1Btn) {
+            selectionModeButtons0.SetActive(false);
             selectionModeButtons1.SetActive(false);
             selectionModeButtons2.SetActive(false);
             selectionModeButtons3.SetActive(true);
             buildButton = selectionModeButtons3.transform.GetChild(0).gameObject;
             note2Button = selectionModeButtons3.transform.GetChild(1).gameObject;
+            clearTileButton = selectionModeButtons3.transform.Find("Clear").gameObject;
         }
-
-        if (includeNote1Btn || includeNote2Btn) { buildButton.transform.GetChild(1).GetComponent<Image>().sprite = skin.buildIcon; }
-        if (includeNote1Btn) { note1Button.transform.Find("Icon").GetComponent<Image>().sprite = skin.note1Icon; }
-        if (includeNote2Btn) { note2Button.transform.Find("Icon").GetComponent<Image>().sprite = skin.note2Icon; }
-
     }
 
     
     public void setUndoRedoButtons() {
         InterfaceFunctions.colorPuzzleButton(undoRedoButtons.transform.Find("Undo"));
         InterfaceFunctions.colorPuzzleButton(undoRedoButtons.transform.Find("Redo"));
-    
-        undoRedoButtons.transform.Find("Undo").Find("Icon").GetComponent<Image>().sprite = skin.undoIcon;
-        undoRedoButtons.transform.Find("Redo").Find("Icon").GetComponent<Image>().sprite = skin.redoIcon;
-
         undoRedoButtons.SetActive(StaticVariables.includeUndoRedo);
     }
 
@@ -573,17 +578,22 @@ public class GameManager : MonoBehaviour {
     }
 
     public void hitBuildButton() {
+        if (clickTileAction == "Clear Tile") {
+            selectNumber(prevClickedNumButton);
+            foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.highlightIfBuildingNumber(selectedNumber); }
+        }
         clickTileAction = "Apply Selected";
         disselectBuildAndNotes();
-        if (includeNote1Btn || includeNote2Btn) {
-
-            InterfaceFunctions.colorPuzzleButtonOn(buildButton);
-        }
+        InterfaceFunctions.colorPuzzleButtonOn(buildButton);
         updateRemoveSelectedNumber();
         save();
     }
 
     public void hitNote1Button() {
+        if (clickTileAction == "Clear Tile") {
+            selectNumber(prevClickedNumButton);
+            foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.highlightIfBuildingNumber(selectedNumber); }
+        }
         clickTileAction = "Toggle Note 1";
         disselectBuildAndNotes();
         InterfaceFunctions.colorPuzzleButtonOn(note1Button);
@@ -592,6 +602,10 @@ public class GameManager : MonoBehaviour {
     }
 
     public void hitNote2Button() {
+        if (clickTileAction == "Clear Tile") {
+            selectNumber(prevClickedNumButton);
+            foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.highlightIfBuildingNumber(selectedNumber); }
+        }
         clickTileAction = "Toggle Note 2";
         disselectBuildAndNotes();
 
@@ -599,17 +613,27 @@ public class GameManager : MonoBehaviour {
         updateRemoveSelectedNumber();
         save();
     }
+    
+    public void hitClearButton() {
+        clickTileAction = "Clear Tile";
+        disselectNumber(prevClickedNumButton);
+        disselectBuildAndNotes();
+        foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.unhighlightBuildingNumber(); }
+        InterfaceFunctions.colorPuzzleButtonOn(clearTileButton);
+        updateRemoveSelectedNumber();
+        save();
+    }
 
     public void disselectBuildAndNotes() {
-        if (includeNote1Btn || includeNote2Btn) {
-            InterfaceFunctions.colorPuzzleButton(buildButton);
-        }
+        InterfaceFunctions.colorPuzzleButton(buildButton);
+
         if (includeNote1Btn) {
             InterfaceFunctions.colorPuzzleButton(note1Button);
         }
         if (includeNote2Btn) {
             InterfaceFunctions.colorPuzzleButton(note2Button);
         }
+        InterfaceFunctions.colorPuzzleButton(clearTileButton);
     }
 
     public void goToMainMenu() {
@@ -863,6 +887,11 @@ public class GameManager : MonoBehaviour {
     public void pushNumberButton(int num) {
         switchNumber(num);
         showNumberButtonClicked(numberButtons[num - 1]);
+        if (clickTileAction == "Clear Tile") {
+            clickTileAction = "Apply Selected";
+            highlightBuildType();
+            updateRemoveSelectedNumber();
+        }
         save();
     }
 
@@ -880,15 +909,16 @@ public class GameManager : MonoBehaviour {
         else if (clickTileAction == "Toggle Note 2" && includeNote2Btn) {
             button = note2Button;
         }
+        else if (clickTileAction == "Clear Tile") {
+            button = clearTileButton;
+        }
         else {
             clickTileAction = "Apply Selected";
             button = buildButton;
         }
         
-        if (includeNote1Btn || includeNote2Btn) {
+        InterfaceFunctions.colorPuzzleButtonOn(button);
 
-            InterfaceFunctions.colorPuzzleButtonOn(button);
-        }
         
     }
 
@@ -901,31 +931,33 @@ public class GameManager : MonoBehaviour {
     }
 
     public void pushRemoveAllNumbersButton() {
-        bool foundAnything = false;
-        int num = selectedNumber;
-        int colorNum = 0; // 0 is build, 1 is note 1, 2 is note 2
-        if (clickTileAction == "Apply Selected") { colorNum = 0; }
-        else if (clickTileAction == "Toggle Note 1") { colorNum = 1; }
-        else if (clickTileAction == "Toggle Note 2") { colorNum = 2; }
-        if (colorNum != 0 && num != 0) {
-            foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
-                if (t.doesTileContainColoredNote(colorNum, num)) {
-                    if (colorNum == 1) { t.toggleNote1(num); }
-                    else { t.toggleNote2(num); }
-                    foundAnything = true;
+        if (clickTileAction != "Clear Tile") {
+            bool foundAnything = false;
+            int num = selectedNumber;
+            int colorNum = 0; // 0 is build, 1 is note 1, 2 is note 2
+            if (clickTileAction == "Apply Selected") { colorNum = 0; }
+            else if (clickTileAction == "Toggle Note 1") { colorNum = 1; }
+            else if (clickTileAction == "Toggle Note 2") { colorNum = 2; }
+            if (colorNum != 0 && num != 0) {
+                foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+                    if (t.doesTileContainColoredNote(colorNum, num)) {
+                        if (colorNum == 1) { t.toggleNote1(num); }
+                        else { t.toggleNote2(num); }
+                        foundAnything = true;
+                    }
                 }
             }
-        }
-        if (colorNum == 0 && num != 0) {
-            foreach(PuzzleTile t in puzzleGenerator.puzzleTiles) {
-                if (t.shownNumber == num) {
-                    foundAnything = true;
-                    t.removeNumberFromTile();
+            if (colorNum == 0 && num != 0) {
+                foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+                    if (t.shownNumber == num) {
+                        foundAnything = true;
+                        t.removeNumberFromTile();
+                    }
                 }
             }
-        }
-        if (foundAnything) {
-            addToPuzzleHistory();
+            if (foundAnything) {
+                addToPuzzleHistory();
+            }
         }
     }
 
@@ -941,9 +973,11 @@ public class GameManager : MonoBehaviour {
         if (changedAnything) { addToPuzzleHistory(); }
     }
 
+
     public void updateRemoveSelectedNumber() {
         if (!StaticVariables.isTutorial && StaticVariables.includeRemoveAllOfNumber) {
-            
+            removeAllOfNumberButton.transform.Find("Dash").gameObject.SetActive(false);
+            removeAllOfNumberButton.transform.Find("Number").gameObject.SetActive(true);
             removeAllOfNumberButton.transform.Find("Number").GetComponent<SpriteRenderer>().sprite = numberSprites[selectedNumber];
             Color buildingColor;
             Color note1Color;
@@ -962,6 +996,12 @@ public class GameManager : MonoBehaviour {
                 c = note2Color;
             }
             removeAllOfNumberButton.transform.Find("Number").GetComponent<SpriteRenderer>().color = c;
+
+            if (clickTileAction == "Clear Tile") {
+                removeAllOfNumberButton.transform.Find("Dash").gameObject.SetActive(true);
+                removeAllOfNumberButton.transform.Find("Number").gameObject.SetActive(false);
+
+            }
         }
     }
 

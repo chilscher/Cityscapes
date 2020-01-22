@@ -10,11 +10,6 @@ public class Skin: MonoBehaviour{
 
     public string note1Color;
     public string note2Color;
-    public Sprite buildIcon;
-    public Sprite note1Icon;
-    public Sprite note2Icon;
-    public Sprite undoIcon;
-    public Sprite redoIcon;
 
     public string onButtonColorInterior;
     public string onButtonColorExterior;

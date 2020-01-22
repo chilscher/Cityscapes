@@ -83,6 +83,13 @@ public class PuzzleTile : Tile {
             toggleNote2(selectedNumber);
             gameManager.addToPuzzleHistory();
         }
+        else if(gameManager.clickTileAction == "Clear Tile") {
+            if (doesTileContainAnything()) {
+                clearColoredNotes();
+                removeNumberFromTile();
+                gameManager.addToPuzzleHistory();
+            }
+        }
         else {
             print(gameManager.clickTileAction + " is not a valid action!");
         }
@@ -291,6 +298,10 @@ public class PuzzleTile : Tile {
                 number.color = numberColor;
             }
         }
+    }
+
+    public void unhighlightBuildingNumber() {
+        number.color = numberColor;
     }
 
 }

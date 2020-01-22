@@ -231,7 +231,19 @@ public class MainMenuCanvasController : MonoBehaviour {
 
 
     public void pushReturnToPuzzleButton() {
-        startPuzzle(StaticVariables.savedPuzzleSize);
+
+        if (!StaticVariables.isFading) {
+
+            StaticVariables.size = StaticVariables.savedPuzzleSize;
+            StaticVariables.isTutorial = false;
+
+            StaticVariables.fadingTo = "puzzle";
+            startFadeOut();
+        }
+        else {
+            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
+            StaticVariables.buttonClickInWaiting = "puzzle" + StaticVariables.savedPuzzleSize;
+        }
     }
 
     public void pushAbandonPuzzleButton() {
