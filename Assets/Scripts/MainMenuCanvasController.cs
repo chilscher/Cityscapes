@@ -103,6 +103,9 @@ public class MainMenuCanvasController : MonoBehaviour {
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            Application.Quit();
+        }
     }
 
 
