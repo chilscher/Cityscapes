@@ -37,4 +37,6 @@ public class Skin: MonoBehaviour{
     public Sprite buildingSprite;
 
     public string streetColor;
+
+    public string highlightBuildingColor;
 }

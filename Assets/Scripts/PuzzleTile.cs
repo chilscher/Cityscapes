@@ -64,7 +64,8 @@ public class PuzzleTile : Tile {
         ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out numberColor);
         ColorUtility.TryParseHtmlString(gameManager.skin.note1Color, out note1Color);
         ColorUtility.TryParseHtmlString(gameManager.skin.note2Color, out note2Color);
-        ColorUtility.TryParseHtmlString(gameManager.skin.onButtonColorInterior, out highlightBuildingColor);
+        ColorUtility.TryParseHtmlString(gameManager.skin.highlightBuildingColor, out highlightBuildingColor);
+        //print(gameManager.skin.highlightBuildingColor);
     }
 
     public void clicked() {

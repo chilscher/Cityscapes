@@ -42,6 +42,7 @@ public class MainMenuCanvasController : MonoBehaviour {
             StaticVariables.allSkins = skins;
             SaveSystem.LoadGame();
             StaticVariables.isApplicationLaunchingFirstTime = false;
+            //StaticVariables.coins = 10000;
         }
         background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.mainMenuBackground;
         colorButtons();
