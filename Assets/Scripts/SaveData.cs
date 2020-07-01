@@ -1,11 +1,15 @@
-﻿using System.Collections;
+﻿//for Cityscapes, copyright Cole Hilscher 2020
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 [System.Serializable]
 public class SaveData{
+    //handles the player's save data
 
+    //all of the upgrades that need to be saved and loaded, as well as the player's current skin and coin amounts
     public int coins;
     public bool includeNotes1;
     public bool includeNotes2;
@@ -45,8 +49,12 @@ public class SaveData{
 
     public bool hasBeatenTutorial;
 
-
+    // ---------------------------------------------------
+    //ALL OF THE FUNCTIONS THAT ARE USED TO SAVE PLAYER DATA
+    // ---------------------------------------------------
+    
     public SaveData() {
+        //takes all of the necessary variables from StaticVariables and stores them into the SaveData object variables
         coins = StaticVariables.coins;
         includeNotes1 = StaticVariables.includeNotes1Button;
         includeNotes2 = StaticVariables.includeNotes2Button;
@@ -78,6 +86,7 @@ public class SaveData{
 
         hasBeatenTutorial = StaticVariables.hasBeatenTutorial;
 
+        //stores the player's puzzle states
         hasSavedPuzzleState = StaticVariables.hasSavedPuzzleState;
         if (hasSavedPuzzleState) {
             previousPuzzleStates = getPuzzleStateStringsFromList(StaticVariables.previousPuzzleStates);
@@ -88,11 +97,40 @@ public class SaveData{
             savedBuildNumber = StaticVariables.savedBuildNumber;
             savedBuildType = StaticVariables.savedBuildType;
         }
-
     }
 
-    public void LoadData() {
+    private string getPuzzleStateStringsFromList(List<PuzzleState> list) {
+        //takes the player's list of puzzle states and stores it as a string, specifically for saving
+        string result = "";
+        foreach (PuzzleState ps in list) {
+            result += ps.returnStateAsString();
+            result += ",";
+        }
+        if (result.Length > 1) {
+            result = result.Substring(0, result.Length - 1);
+        }
+        return result;
+    }
 
+    private string getUnlockedSkinNames() {
+        //takes the player's unlocked skins and stores them as a string, specifically for saving
+        string result = "";
+        foreach (Skin skin in StaticVariables.unlockedSkins) {
+            result += skin.skinName + " ";
+        }
+        if (result.Length > 1) {
+            result = result.Substring(0, result.Length - 1);
+        }
+        return result;
+    }
+
+
+    // ---------------------------------------------------
+    //ALL OF THE FUNCTIONS THAT ARE USED TO LOAD PLAYER DATA
+    // ---------------------------------------------------
+
+    public void LoadData() {
+        //takes all of the variables stored in the SaveData object and stores them into StaticVariables
         StaticVariables.coins = coins;
         StaticVariables.includeNotes1Button = includeNotes1;
         StaticVariables.includeNotes2Button = includeNotes2;
@@ -124,6 +162,7 @@ public class SaveData{
 
         StaticVariables.hasBeatenTutorial = hasBeatenTutorial;
 
+        //loads the player's puzzle states
         StaticVariables.hasSavedPuzzleState = hasSavedPuzzleState;
         if (hasSavedPuzzleState) {
             StaticVariables.previousPuzzleStates = getPuzzleStateListFromString(previousPuzzleStates, savedPuzzleSize);
@@ -135,22 +174,9 @@ public class SaveData{
             StaticVariables.savedBuildType = savedBuildType;
         }
     }
-
-    private string getPuzzleStateStringsFromList(List<PuzzleState> list) {
-        string result = "";
-        foreach (PuzzleState ps in list) {
-            result += ps.returnStateAsString();
-            result += ",";
-        }
-        if (result.Length > 1) {
-            result = result.Substring(0, result.Length - 1);
-        }
-        
-
-        return result;
-    }
-
+    
     private List<PuzzleState> getPuzzleStateListFromString(string s, int size) {
+        //parses the string that stores the player's current puzzle's states, specifically for loading
         List<PuzzleState> list = new List<PuzzleState>();
         if (s != "") {
             string[] strings = s.Split(',');
@@ -163,18 +189,8 @@ public class SaveData{
         return list;
     }
     
-    private string getUnlockedSkinNames() {
-        string result = "";
-        foreach (Skin skin in StaticVariables.unlockedSkins) {
-            result += skin.skinName + " ";
-        }
-        if (result.Length > 1) {
-            result = result.Substring(0, result.Length - 1);
-        }
-        return result;
-    }
-
     private List<Skin> getUnlockedSkins() {
+        //parses the string containing the player's unlocked skins, specifically for loading
         List<Skin> skins = new List<Skin>();
         if (unlockedSkinNames != "") {
             string[] strings = unlockedSkinNames.Split(' ');

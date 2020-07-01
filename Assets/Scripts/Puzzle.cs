@@ -1,21 +1,21 @@
-﻿using System.Collections;
+﻿//for Cityscapes, copyright Cole Hilscher 2020
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Puzzle{
-
+    //contains the solution of a puzzle, as well as all of the side hints, all in the form of ints
     public int size = 5;
     public int[,] solution;
     public int[] topNums;
     public int[] bottomNums;
     public int[] leftNums;
     public int[] rightNums;
-    private System.Random random = new System.Random();
-
-    
-
 
     public Puzzle(int size) {
+        //randomly create a puzzle with defined size
+        //specifically, creates one puzzle at random, checks if it is solvable, and repeats until it gets a valid puzzle
         this.size = size;
         bool cont = true;
         while (cont) {
@@ -28,15 +28,14 @@ public class Puzzle{
     }
 
     public Puzzle(int[,] predeterminedSolution) {
+        //create a puzzle object based off of a predetermined solution
         this.size = (int)Mathf.Sqrt(predeterminedSolution.Length);
         solution = predeterminedSolution;
-        //Debug.Log(predeterminedSolution[0, 3]);
         generateSideNumbers();
-        hasUniqueSolution();
     }
 
     private void generatePuzzle() {
-
+        //create a puzzle by randomly picking valid values
         try {
             //create empty puzzle, made of all zeroes
             solution = new int[size, size];
@@ -52,29 +51,20 @@ public class Puzzle{
                     solution[i, j] = pickValue(i, j);
                 }
             }
-
-            /*
-            if (!hasUniqueSolution()) {
-                generatePuzzle();
-            }
-            */
         }
         catch {
             //if the puzzle generation failed, try again
             generatePuzzle();
         }
-
-        
     }
 
     private int pickValue(int i, int j) {
         //returns the chosen value to be placed on tile i,j
-        
+        //the value returned is chosen from a list of random possible values
         ArrayList freeValues = new ArrayList();
         for (int k = 0; k < size; k++) {
             freeValues.Add(k + 1);
         }
-        
         for (int k = 0; k < i; k++) {
             if (solution[k,j] != 0) {
                 freeValues.Remove(solution[k, j]);
@@ -85,13 +75,12 @@ public class Puzzle{
                 freeValues.Remove(solution[i, l]);
             }
         }
-
-
-        int index = random.Next(freeValues.Count);
+        int index = StaticVariables.rand.Next(freeValues.Count);
         return((int)freeValues[index]);
     }
 
     private void generateSideNumbers() {
+        //given a solution puzzle, creates the side hint numbers to match
         topNums = new int[size];
         bottomNums = new int[size];
         leftNums = new int[size];
@@ -132,6 +121,7 @@ public class Puzzle{
     }
 
     private int[] reverseList(int[] original) {
+        //returns a list backwards
         int[] newList = new int[size];
         for (int i = 0; i < size; i++) {
             int oppositeIndex = size - i;
@@ -140,29 +130,10 @@ public class Puzzle{
         return newList;
     }
 
-    private bool hasUniqueSolution() {
-        solvePuzzle();
-        return true;
-    }
-
-    private void solvePuzzle() {
-        PuzzleSolver p = new PuzzleSolver();
-        p.solvePuzzle(topNums, bottomNums, leftNums, rightNums, solution);
-        //puzzleSolver.GetComponent<PuzzleSolver>();
-    }
-
-    public void getUniqueSolution() {
-        //returns the unique solution, if there is one, or returns the most complete the puzzle can be without a unique solution
-        
-        PuzzleSolver p = new PuzzleSolver();
-        solution = p.getUniqueSolution(topNums, bottomNums, leftNums, rightNums, solution);
-
-    }
-
     public bool isPuzzleValid() {
-        //returns true if the puzzle has exactly one unique solution
+        //returns true if the puzzle has less than 7 unique solutions
         PuzzleSolver p = new PuzzleSolver();
-        return p.isPuzzleValid(topNums, bottomNums, leftNums, rightNums, solution);
+        return p.isPuzzleValid(topNums, bottomNums, leftNums, rightNums);
     }
 
 }

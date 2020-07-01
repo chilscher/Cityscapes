@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//for Cityscapes, copyright Cole Hilscher 2020
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,15 +8,14 @@ public class PuzzleGenerator : MonoBehaviour{
 
     private int size;
     [HideInInspector]
-    public Puzzle puzzle;
-    public GameObject puzzleTilePrefab;
-    public GameObject sideHintTilePrefab;
-    [HideInInspector]
-    public List<PuzzleTile> puzzleTiles;
+    public Puzzle puzzle; //the Puzzle object that creates the solution and side hints
+    public GameObject puzzleTilePrefab; //the prefab to generate a bunch of Puzzle Tiles
+    public GameObject sideHintTilePrefab; //the prefab to generate a bunch of SideHintTiles
 
     public bool usePredeterminedSolution;
-    public string predeterminedSolution;
+    public string predeterminedSolution; //provided by the inspector
     
+    //the lists of Puzzle Tile and SideHintTile objects
     [HideInInspector]
     public SideHintTile[] topHints;
     [HideInInspector]
@@ -23,7 +24,8 @@ public class PuzzleGenerator : MonoBehaviour{
     public SideHintTile[] leftHints;
     [HideInInspector]
     public SideHintTile[] rightHints;
-
+    [HideInInspector]
+    public List<PuzzleTile> puzzleTiles;
     [HideInInspector]
     public SideHintTile[] allHints;
     [HideInInspector]
@@ -33,6 +35,7 @@ public class PuzzleGenerator : MonoBehaviour{
     
 
     public void createPuzzle(int size) {
+        //creates a random puzzle using the Puzzle class, unless there is a predermined solution provided, in which case just use that
         this.size = size;
         puzzleTiles = new List<PuzzleTile>();
         bool makePuzzle = true;
@@ -59,10 +62,9 @@ public class PuzzleGenerator : MonoBehaviour{
             createHints();
         }
     }
-
     
-
     private void createTiles() {
+        //create an array of PuzzleTiles to hold the puzzle's buildings and notes
         tilesArray = new PuzzleTile[size, size];
         for (int i = 0; i < puzzle.size; i++) {
             for (int j = 0; j < puzzle.size; j++) {
@@ -75,7 +77,7 @@ public class PuzzleGenerator : MonoBehaviour{
     }
 
     private void createHints() {
-
+        //create 4 arrays of SideHintTiles to hold the resident hints
         topHints = new SideHintTile[size];
         bottomHints = new SideHintTile[size];
         leftHints = new SideHintTile[size];
@@ -98,7 +100,9 @@ public class PuzzleGenerator : MonoBehaviour{
         }
         addRowsToSideHints();
     }
+
     public bool checkPuzzle() {
+        //checks if the puzzle is solved, based on the SideHintTiles and their PuzzleTiles
         bool isCorrect = true;
         foreach (SideHintTile h in allHints) {
             if (!h.isRowValid()) {
@@ -108,8 +112,9 @@ public class PuzzleGenerator : MonoBehaviour{
         return isCorrect;
     }
     
-    
     private void addRowsToSideHints() {
+        //provides each SideHintTile with its list of PuzzleTiles that it looks towards
+        //this list of PuzzleTiles is used to check the puzzle for solutions while the player is solving it
         createHintsList();
         foreach(SideHintTile h in allHints) {
             h.row = new PuzzleTile[size];
@@ -119,7 +124,6 @@ public class PuzzleGenerator : MonoBehaviour{
                 topHints[j].row[i] = tilesArray[i, j];
                 leftHints[i].row[j] = tilesArray[i, j];
             }
-
         }
         for (int i = 0; i < size; i++) {
             bottomHints[i].row = reverseList(topHints[i].row);
@@ -128,6 +132,7 @@ public class PuzzleGenerator : MonoBehaviour{
     }
 
     private PuzzleTile[] reverseList(PuzzleTile[] original) {
+        //reverses a list
         PuzzleTile[] newList = new PuzzleTile[size];
         for (int i = 0; i < original.Length; i++) {
             int oppositeIndex = original.Length - i;
@@ -137,6 +142,7 @@ public class PuzzleGenerator : MonoBehaviour{
     }
 
     private void createHintsList() {
+        //compiles all of the SideHintTiles into one list
         allHints = new SideHintTile[size * 4];
         for (int i = 0; i < size; i++) {
             allHints[i] = topHints[i];
@@ -147,15 +153,17 @@ public class PuzzleGenerator : MonoBehaviour{
     }
 
     public string makeSolutionString() {
+        //creates a string that represents the puzzle solution
+        //used for loading a saved puzzle, or using a predetermined puzzle from the inspector
         string s = "";
         foreach (PuzzleTile t in tilesArray) {
             s += t.solution;
         }
-        //print(s);
         return s;
     }
 
     public void restoreSavedPuzzle(string solutionString, int size) {
+        //creates a puzzle based off of a provided solution string
         predeterminedSolution = solutionString;
         usePredeterminedSolution = true;
         createPuzzle(size);

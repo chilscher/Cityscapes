@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿//for Cityscapes, copyright Cole Hilscher 2020
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

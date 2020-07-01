@@ -1,19 +1,20 @@
-﻿using System;
+﻿//for Cityscapes, copyright Cole Hilscher 2020
+
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SettingsCanvasController : MonoBehaviour {
-
-    public GameObject scrollView;
-
-
+    
     public GameObject blackForeground; //used to transition to/from the puzzle menu
-    private SpriteRenderer blackSprite;
-    public float fadeOutTime;
-    public float fadeInTime;
-    private float fadeTimer;
+    private SpriteRenderer blackSprite; //derived from the blackForeground gameObject
+    public float fadeOutTime; //total time for fade-out, from complete light to complete darkness
+    public float fadeInTime; //total time for fade-in, from complete darkness to complete light
+    private float fadeTimer; //the timer on which the fadeout and fadein mechanics operate
+    public GameObject scrollView; //the gameobject that is used to hide all buttons and text outside of the scrollable shop window
 
+    //the toggle buttons for the different upgrades
     public GameObject medCityButton;
     public GameObject largeCityButton;
     public GameObject hugeCityButton;
@@ -25,17 +26,19 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject clearPuzzleButton;
     public GameObject highlightBuildingsButton;
 
-    public GameObject background;
-
-    public GameObject menuButton;
-
-    public GameObject hidePurchasedUpgradesButton;
-
+    //the following deal with switching between different skins
     private bool expandedSkinButton = false;
     public GameObject expandSkinButton;
-
     public GameObject currentSkinText;
 
+    //the buttons that are not related to any upgrades
+    public GameObject hidePurchasedUpgradesButton;
+
+    //the following are properties taken from the skin
+    public GameObject background;
+    public GameObject menuButton;
+    
+    //headers for the different types of buttons you can interact with in the setting scene
     public GameObject cosmeticsTitle;
     public GameObject visualTitle;
     public GameObject buttonsTitle;
@@ -43,32 +46,39 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject othersTitle;
 
     private void Start() {
+        //show the buttons and headers based on what upgrades you have purchased
+        //update the visuals for the buttons based on what is toggled on or off at the current time
         showAndHideButtons();
         showAndHideText();
         setCurrentToggleTexts();
         updateCurrentSkinText();
         showChooseSkinButton();
         blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+        //also apply the current skin
         loadSkin();
 
+        //starts the fade-in process, which is carried out in the Update function
         if (StaticVariables.isFading && StaticVariables.fadingTo == "settings") {
             fadeTimer = fadeInTime;
         }
 
+        //determine the full scope of the scroll view, determined by what elements are expanded within the scrollview
         setScrollViewHeight();
     }
     
     private void Update() {
+        //if the player is fading from the settings scene to another scene, this block handles that fading process
         if (StaticVariables.isFading && StaticVariables.fadingFrom == "settings") {
             fadeTimer -= Time.deltaTime;
             Color c = blackSprite.color;
             c.a = (fadeOutTime - fadeTimer) / fadeOutTime;
             blackSprite.color = c;
-            if (fadeTimer <= 0f) {
+            if (fadeTimer <= 0f) { //after the fade timer is done, and the screen is dark, transition to another scene.
                 if (StaticVariables.fadingTo == "menu") { SceneManager.LoadScene("MainMenu"); }
                 if (StaticVariables.fadingTo == "credits") { SceneManager.LoadScene("Credits"); }
             }
         }
+        //if the player is fading into the shop scene, this block handles that fading process
         if (StaticVariables.isFading && StaticVariables.fadingTo == "settings") {
             fadeTimer -= Time.deltaTime;
             Color c = blackSprite.color;
@@ -84,21 +94,28 @@ public class SettingsCanvasController : MonoBehaviour {
                 }
             }
         }
-
+        //if the player presses their phone's back button, call the goToMainMenu function
+        //identical to if the player just pushed the on-screen menu button
         if (Input.GetKeyDown(KeyCode.Escape)) {
             goToMainMenu();
         }
     }
+    
+    // ---------------------------------------------------
+    //ALL OF THE FUNCTIONS THAT ARE USED TO LEAVE THE SETTINGS SCENE
+    // ---------------------------------------------------
     
     private void OnApplicationQuit() {
         SaveSystem.SaveGame();
     }
 
     public void goToMainMenu() {
+        //pushing the on-screen menu button calls this function, which returns the player to the main menu
         if (!StaticVariables.isFading) {
             StaticVariables.fadingTo = "menu";
             startFadeOut();
         }
+        //if the player pushes the menu button while the scene is still fading in, then implement the button press after the fade-in is done
         else {
             StaticVariables.waitingOnButtonClickAfterFadeIn = true;
             StaticVariables.buttonClickInWaiting = "menu";
@@ -106,12 +123,19 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void startFadeOut() {
+        //begin the fade-out process. This function is called by goToMainMenu
+        //the fade-out mechanics of darkening the screen are implemented in the Update function
         fadeTimer = fadeOutTime;
         StaticVariables.isFading = true;
         StaticVariables.fadingFrom = "settings";
     }
 
+    // ---------------------------------------------------
+    //ALL OF THE FUNCTIONS THAT ARE USED TO CHANGE WHAT THE BUTTONS, TEXT, AND COLORS OF THE SETTINGS MENU LOOK LIKE, EXCEPT FOR THE ONES THAT DEAL WITH SKIN SELECTION
+    // ---------------------------------------------------
+    
     public void showAndHideButtons() {
+        //shows all of the upgrades that the player has purchased, except for skins
         medCityButton.SetActive(StaticVariables.unlockedMedium);
         largeCityButton.SetActive(StaticVariables.unlockedLarge);
         hugeCityButton.SetActive(StaticVariables.unlockedHuge);
@@ -128,6 +152,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void showAndHideText() {
+        //shows any header text if the player has any of the relevant unlocks purchased
         bool anyCosmetics = StaticVariables.unlockedSkins.Count > 0;
         bool anyVisuals = residentColorButton.activeSelf || highlightBuildingsButton.activeSelf;
         bool anyButtons = notes1Button.activeSelf || notes2Button.activeSelf || undoRedoButton.activeSelf || removeNumbersButton.activeSelf || clearPuzzleButton.activeSelf;
@@ -142,6 +167,8 @@ public class SettingsCanvasController : MonoBehaviour {
 }
 
     public void setCurrentToggleTexts() {
+        //changes the text and text-color of the buttons that toggle settings
+        //ex: the MedCityButton will either have CURRENTLY: ON in green, or CURRENTLY: OFF in red displayed
         toggleText(medCityButton, StaticVariables.showMed);
         toggleText(largeCityButton, StaticVariables.showLarge);
         toggleText(hugeCityButton, StaticVariables.showHuge);
@@ -157,9 +184,51 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void toggleText(GameObject button, bool cond) {
+        //changes the toggle text on an invidual button to one of two pre-defined layouts
         button.transform.Find("Button").Find("On").gameObject.SetActive(cond);
         button.transform.Find("Button").Find("Off").gameObject.SetActive(!cond);
     }
+
+    public void setScrollViewHeight() {
+        //sets the scroll viewer (vertical layout group) height to match its contents. minimum is the height of its parent scrollable container
+        //to be called whenever an item is shown or hidden in the settings window
+
+        //define the current top height - for use at the end of the function
+        float topHeight = (float)Math.Round(((1 - scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition) * (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y)), 2);
+
+        resizeToFitChildren(scrollView, true);
+
+        //set the scroll view to be at the same position as previously
+        scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - (topHeight / (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y));
+
+    }
+
+    public void resizeToFitChildren(GameObject parent, bool minSize) {
+        //get height of contents, including spaces between objects and top and bottom padding
+        //if minSize is true, the container height has to be at least the height of its parent
+        float newHeight = 0f;
+        int activeCount = 0;
+        for (int i = 0; i < parent.transform.childCount; i++) {
+            float h = parent.transform.GetChild(i).GetComponent<RectTransform>().sizeDelta.y;
+            if (parent.transform.GetChild(i).gameObject.activeSelf) {
+                newHeight += h;
+                activeCount++;
+            }
+        }
+        newHeight += ((activeCount - 1) * parent.GetComponent<VerticalLayoutGroup>().spacing);
+        newHeight += parent.GetComponent<VerticalLayoutGroup>().padding.top + parent.GetComponent<VerticalLayoutGroup>().padding.bottom;
+
+        //set the container height to be at least the height of the parent
+        if (minSize && newHeight < parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y) { newHeight = parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y; }
+
+        Vector2 newSize = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, newHeight);
+        parent.GetComponent<RectTransform>().sizeDelta = newSize;
+
+    }
+
+    // ---------------------------------------------------
+    //ALL OF THE FUNCTIONS THAT GET CALLED WHEN A SETTING-TOGGLE BUTTON GETS PUSHED
+    // ---------------------------------------------------
 
     public void pushMedButton() {
         StaticVariables.showMed = !StaticVariables.showMed;
@@ -258,60 +327,26 @@ public class SettingsCanvasController : MonoBehaviour {
         SaveSystem.SaveGame();
     }
 
-    public void setScrollViewHeight() {
-        //sets the scroll viewer (vertical layout group) height to match its contents. minimum is the height of its parent scrollable container
-        //to be called whenever an item is shown or hidden in the settings window
-
-        //define the current top height - for use at the end of the function
-        float topHeight = (float)Math.Round(((1 - scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition) * (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y)), 2);
-
-        resizeToFitChildren(scrollView, true);
-
-        //set the scroll view to be at the same position as previously
-        scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - (topHeight / (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y));
-
-    }
-
-    public void resizeToFitChildren(GameObject parent, bool minSize) {
-        //get height of contents, including spaces between objects and top and bottom padding
-        //if minSize is true, the container height has to be at least the height of its parent
-        float newHeight = 0f;
-        int activeCount = 0;
-        for (int i = 0; i < parent.transform.childCount; i++) {
-            float h = parent.transform.GetChild(i).GetComponent<RectTransform>().sizeDelta.y;
-            if (parent.transform.GetChild(i).gameObject.activeSelf) {
-                newHeight += h;
-                activeCount++;
-            }
-        }
-        newHeight += ((activeCount - 1) * parent.GetComponent<VerticalLayoutGroup>().spacing);
-        newHeight += parent.GetComponent<VerticalLayoutGroup>().padding.top + parent.GetComponent<VerticalLayoutGroup>().padding.bottom;
-
-        //set the container height to be at least the height of the parent
-        if (minSize && newHeight < parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y) { newHeight = parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y; }
-
-        Vector2 newSize = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, newHeight);
-        parent.GetComponent<RectTransform>().sizeDelta = newSize;
-
-    }
-
-
-
-
+    // ---------------------------------------------------
+    //ALL OF THE FUNCTIONS THAT LET THE PLAYER CHOOSE A SKIN TO EQUIP
+    // ---------------------------------------------------
+    
     public void chooseSkin(Skin s) {
+        //changes the selected skin
         StaticVariables.skin = s;
         loadSkin();
 
         SaveSystem.SaveGame();
     }
     
-
     private void loadSkin() {
+        //updates the visuals of the settings scene based on what skin is used
         background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
         InterfaceFunctions.colorMenuButton(menuButton);
     }
 
     public void clickedExpandSkinButton() {
+        //expands or contracts the selected skin button's dropdown
         if (!expandedSkinButton) {
             expandSkinButtons();
             expandedSkinButton = true;
@@ -320,11 +355,10 @@ public class SettingsCanvasController : MonoBehaviour {
             contractSkinButtons();
             expandedSkinButton = false;
         }
-
-        
     }
 
     private void expandSkinButtons() {
+        //expands the skin details button beneath the "Choose Skin" button
         GameObject parentBox = expandSkinButton.transform.parent.gameObject;
         parentBox.transform.Find("Basic").gameObject.SetActive(true);
         for (int i = 2; i < parentBox.transform.childCount; i++) {
@@ -337,6 +371,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     private void contractSkinButtons() {
+        //contracts the dropdowns beneath the "Choose Skin" button
         GameObject parentBox = expandSkinButton.transform.parent.gameObject;
         for (int i = 1; i < parentBox.transform.childCount; i++) {
             bool switchTo = false;
@@ -347,14 +382,14 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void clickedSkinButton(GameObject button) {
+        //equips a particular skin
         chooseSkin(InterfaceFunctions.getSkinFromName(button.transform.parent.gameObject.name));
         updateCurrentSkinText();
     }
 
     private void updateCurrentSkinText() {
+        //updates the text on the "Current Skin" button
         currentSkinText.GetComponent<Text>().text = "CURRENT SKIN:\n" + StaticVariables.skin.skinName.ToUpper();
-
-
         GameObject parentBox = expandSkinButton.transform.parent.gameObject;
         for (int i = 1; i < parentBox.transform.childCount; i++) {
             bool isActive = (InterfaceFunctions.getSkinFromName(parentBox.transform.GetChild(i).name) == StaticVariables.skin);
@@ -364,8 +399,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     private void showChooseSkinButton() {
+        //only shows the "current skin" button if the player has purchased at least one skin.
         expandSkinButton.transform.parent.gameObject.SetActive(StaticVariables.unlockedSkins.Count >= 1);
     }
-
-
 }

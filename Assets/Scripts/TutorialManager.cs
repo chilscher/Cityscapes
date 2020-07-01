@@ -1,23 +1,28 @@
-﻿using System.Collections;
+﻿//for Cityscapes, copyright Cole Hilscher 2020
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class TutorialManager{
+    //runs the tutorial, following a specific set of steps in a defined order
+    //the tutorial goes through 2 full puzzles
 
-    public string puzzle = "231312123";
-    public GameManager gameManager;
-    private int tutorialStage = 0;
-    public string advanceRequirement;
-    public Text tutorialText;
-    public Text continueClue;
+    public string puzzle = "231312123"; //the first puzzle
+    public GameManager gameManager; //the tutorial relies heavily on functions from the gameManager
+    private int tutorialStage = 0; //each time you complete a tutorial step, increment this int. Its value determines what to do next
+    public string advanceRequirement; //the requirement to complete the next tutorial step
+    public Text tutorialText; //the text shown on the text box on the bottom of the screen to guide you through the tutorial
+    public Text continueClue; //at the bottom of the tutorial text box, there is a small hint saying more clearly what you specifically need to do to proceed
     private string text;
     private string continueText;
     private string skipRequirement = ""; //if you complete this requirement, skip a few steps until you get to "skipToStage"
-    private int skipToStage = 0;
+    private int skipToStage = 0; //skipToStage is changed every few steps
 
     public void startTutorial() {
+        //begins the tutorial process. Calls functions here to alter the default gameManager setup
         gameManager.puzzlePositioning = gameManager.tutorialCanvas.transform.Find("Puzzle Positioning").gameObject;
         gameManager.blackForeground = gameManager.tutorialCanvas.transform.Find("Black Foreground").gameObject;
         gameManager.blackSprite = gameManager.blackForeground.GetComponent<SpriteRenderer>();
@@ -32,10 +37,16 @@ public class TutorialManager{
         tutorialText = gameManager.tutorialTextBox.transform.Find("Text").GetComponent<Text>();
         continueClue = gameManager.tutorialTextBox.transform.Find("Continue clue").GetComponent<Text>();
         gameManager.tutorialCanvas.transform.Find("Numbers").gameObject.SetActive(false);
+        //proceed to stage 1
         advanceStage();
     }
 
+    // ---------------------------------------------------
+    //ADVANCE STAGE IS THE CORE OF THE TUTORIAL, WHERE ALL OF THE TEXT, CONTINUE REQUIREMENTS, VISUAL UPDATES, AND SPECIAL TUTORIAL MECHANICS ARE IMPLEMENTED
+    // ---------------------------------------------------
+
     private void advanceStage() {
+        //each stage has its own text, required step to proceed, and stage you can jump to if you complete a specific requirement ahead of time
         tutorialStage++;
 
         switch (tutorialStage) {
@@ -383,27 +394,34 @@ public class TutorialManager{
 
     }
 
+    // ---------------------------------------------------
+    //HERE ARE THE FUNCTIONS THAT ARE USED TO ADVANCE THE PLAYER THROUGH THE TUTORIAL
+    // ---------------------------------------------------
+
     private void skipStage() {
+        //skips to a stage defined by the current stage in the tutorial
         while(tutorialStage < skipToStage) {
             advanceStage();
         }
     }
-
-
-
+    
     public void tappedScreen() {
+        //when the player taps the screen, sometimes that is enough to advance to another dialogue box, or stage
         if (advanceRequirement == "tap screen") {
             advanceStage();
         }
     }
 
     public void tappedNumberButton(int num) {
+        //tapping a number button is sometimes required to advance the stage
         if (advanceRequirement == "tap number button " + num) {
             advanceStage();
         }
     }
 
     public void clickedTile(PuzzleTile t) {
+        //some stages require the player to input a specific number into a specific tile
+        //some stages require the player to input several numbers in sequence to advance
         int chosenNumber = gameManager.selectedNumber;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -439,6 +457,8 @@ public class TutorialManager{
     }
 
     private void fillInSpace(int spaceNum, int value) {
+        //the first few stages fill in some basic puzzle numbers for you automatically as you proceed
+        //takes a number corresponding to the relevant space, and a value to fill it with, and adds that number to that space
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (((i * 3) + j) == spaceNum){
@@ -449,39 +469,14 @@ public class TutorialManager{
         }
     }
 
-    private void addRedBoxAroundNumButton(int num) {
-        gameManager.numberButtons[num - 1].transform.Find("Red Border").gameObject.SetActive(true);
-    }
-
-    private void removeRedBoxesAroundNums() {
-        for (int i = 1; i<gameManager.size + 1; i++) {
-
-            gameManager.numberButtons[i - 1].transform.Find("Red Border").gameObject.SetActive(false);
-
-        }
-    }
-
-    private void addRedBoxAroundTile(int spaceNum) {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (((i * 3) + j) == spaceNum) {
-                    PuzzleTile t = gameManager.puzzleGenerator.tilesArray[i, j];
-                    t.addRedBorder();
-                }
-            }
-        }
-    }
-
-    private void removeRedBoxesAroundTiles() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                PuzzleTile t = gameManager.puzzleGenerator.tilesArray[i, j];
-                t.removeRedBorder();
-            }
-        }
+    private void deleteOldCity() {
+        //clears the entire city to make room for a new one. Called exactly once in the tutorial
+        gameManager.deleteCityForTutorial();
     }
 
     public bool canPlayerClickTile(PuzzleTile t) {
+        //when the player clicks a tile during the tutorial, this function is called
+        //if the tutorial is at the right stage to process that input, it is processed here
         int chosenNumber = gameManager.selectedNumber;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -514,7 +509,7 @@ public class TutorialManager{
         }
         if (advanceRequirement == "complete the city") {
             if (t.shownNumber == 0) {
-                if  (t.solution == gameManager.selectedNumber) {
+                if (t.solution == gameManager.selectedNumber) {
                     return true;
                 }
             }
@@ -522,7 +517,48 @@ public class TutorialManager{
         return false;
     }
 
+    // ---------------------------------------------------
+    //HERE ARE THE FUNCTIONS THAT SPECIFICALLY ADD RED BORDERS AROUND OBJECTS THE PLAYER IS SUPPOSED TO INTERACT WITH
+    // ---------------------------------------------------
+
+    private void addRedBoxAroundNumButton(int num) {
+        //adds a border around a number button, to draw attention to that button
+        gameManager.numberButtons[num - 1].transform.Find("Red Border").gameObject.SetActive(true);
+    }
+
+    private void removeRedBoxesAroundNums() {
+        //removes all red boxes around all number buttons
+        for (int i = 1; i<gameManager.size + 1; i++) {
+
+            gameManager.numberButtons[i - 1].transform.Find("Red Border").gameObject.SetActive(false);
+
+        }
+    }
+
+    private void addRedBoxAroundTile(int spaceNum) {
+        //adds a red border around a PuzzleTile, to draw attention to that tile
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (((i * 3) + j) == spaceNum) {
+                    PuzzleTile t = gameManager.puzzleGenerator.tilesArray[i, j];
+                    t.addRedBorder();
+                }
+            }
+        }
+    }
+
+    private void removeRedBoxesAroundTiles() {
+        //removes all red borders around all tiles
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                PuzzleTile t = gameManager.puzzleGenerator.tilesArray[i, j];
+                t.removeRedBorder();
+            }
+        }
+    }
+
     private void addRedBoxAroundStreet(string vertOrHoriz, int streetNum) {
+        //adds a red border around an entire street, to draw attention to it
         int rotation = 0;
         if (vertOrHoriz == "vertical"){
             rotation = 90;
@@ -544,10 +580,12 @@ public class TutorialManager{
     }
 
     private void removeRedBoxesAroundStreets() {
+        //removes all red borders around all streets
         gameManager.removeRedStreetBordersForTutorial();
     }
 
     private void addRedBoxAroundResident(string side, int num) {
+        //adds a red border around a resident, to draw attention to that resident
         SideHintTile[] row;
         if (side == "top"){
             row = gameManager.puzzleGenerator.topHints;
@@ -566,12 +604,9 @@ public class TutorialManager{
     }
 
     public void removeRedBoxesAroundResidents() {
+        //removes a red border around all residents
         foreach (SideHintTile s in gameManager.puzzleGenerator.allHints) {
             s.removeRedBorder();
         }
-    }
-
-    private void deleteOldCity() {
-        gameManager.deleteCityForTutorial();
     }
 }

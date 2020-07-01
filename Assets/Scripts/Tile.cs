@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿//for Cityscapes, copyright Cole Hilscher 2020
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Tile : MonoBehaviour {
+    //the parent class of SideHintTile and PuzzleTile and NumberButton
 
     [HideInInspector]
     public Vector3 position;

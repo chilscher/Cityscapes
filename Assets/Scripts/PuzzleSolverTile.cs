@@ -1,32 +1,43 @@
-﻿using System.Collections;
+﻿//for Cityscapes, copyright Cole Hilscher 2020
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PuzzleSolverTile {
+    //an object used by PuzzleSolver to store the value and crossed-out values for a specific square of the Cityscapes Puzzle
+    //all of these functions are just used to store data
+    public int value = 0; //the tile's value, only filled if the value is definitely determined
+    public List<int> prohibitedValues = new List<int>(); //the list of values that this tile cannot hold
 
-    public int value = 0;
-    public List<int> prohibitedValues = new List<int>();
+    //the 4 hints that have this tile as part of their designated rows
     public PuzzleSolverSideTile topHintTile;
     public PuzzleSolverSideTile bottomHintTile;
     public PuzzleSolverSideTile leftHintTile;
     public PuzzleSolverSideTile rightHintTile;
+
     public bool populated = false;
+
+    //the "coordinates" of this tile within the puzzle
     public int xValue; //j
     public int yValue; //i
 
     public void prohibitValue(int x) {
+        //add a value to the list of impossible, prohibited values for this tile
         if ((!prohibitedValues.Contains(x))) {
             prohibitedValues.Add(x);
         }
     }
 
     public void prohibitValues(List<int> x) {
+        //add several values to the prohibited list
         foreach (int i in x) {
             prohibitValue(i);
         }
     }
 
     public void populate(int val) {
+        //add val to this tile, as a known solution
         if (!populated) {
             value = val;
             populated = true;
@@ -45,30 +56,4 @@ public class PuzzleSolverTile {
             }
         }
     }
-
-    
-    public void printProhibited() {
-        int x = xValue + 1;
-        int y = yValue + 1;
-        string output = "";
-        output += "tile at " + x + ", " + y + " has prohibited values ";
-
-        foreach (int p in prohibitedValues) {
-            output += p + ", ";
-        }
-        output = output.Substring(0, (output.Length - 2));
-
-        if (populated) {
-            output = "tile at " + x + ", " + y + " has already been populated! ";
-        }
-        else if(prohibitedValues.Count == 0) {
-            output = "tile at " + x + ", " + y + " has no prohibited values ";
-        }
-
-        Debug.Log(output);
-
-    }
-    
-    
-
 }

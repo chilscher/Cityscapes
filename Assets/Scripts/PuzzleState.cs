@@ -1,17 +1,19 @@
-﻿using System.Collections;
+﻿//for Cityscapes, copyright Cole Hilscher 2020
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
 
 public class PuzzleState {
-
+    //holds a single puzzle state, specifically the positions of the buildings and notes. Does not include the solution or the player's current selection tools
     private int size;
     public int[,] buildings;
     public int[,][] notes1;
     public int[,][] notes2;
-
-
+    
     public PuzzleState(PuzzleGenerator puzzle) {
+        //takes a snapshot of the puzzle and saves it in this PuzzleState object
         size = puzzle.puzzle.size;
         buildings = new int[size, size];
         for (int i =0; i<size; i++) {
@@ -19,7 +21,6 @@ public class PuzzleState {
                 buildings[i, j] = puzzle.tilesArray[i, j].shownNumber;
             }
         }
-
         notes1 = new int[size, size][];
 
         for (int i = 0; i < size; i++) {
@@ -36,7 +37,10 @@ public class PuzzleState {
         }
 
     }
+
     public PuzzleState(string str, int s) {
+        //generates a Puzzle State from a string containing the puzzle's data, and an int with the puzzle's size
+        //used in the SaveData loading process
         size = s;
         string[] split1 = str.Split(' ');
         string buildingString = split1[0];
@@ -86,6 +90,7 @@ public class PuzzleState {
     }
 
     public int[] toList(List<int> array) {
+        //takes an array and returns a list with the same elements
         int[] result;
         result = new int[array.Count];
         for (int i = 0; i<array.Count; i++) {
@@ -95,16 +100,13 @@ public class PuzzleState {
     }
 
     public void restorePuzzleState(PuzzleGenerator puzzle) {
-
+        //takes a PuzzleGenerator object and sets all of the building and note values to be the ones contained in this PuzzleState
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 puzzle.tilesArray[i, j].shownNumber = buildings[i, j];
                 puzzle.tilesArray[i, j].addNumberToTile(buildings[i, j]);
             }
         }
-        
-
-
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 puzzle.tilesArray[i, j].clearColoredNotes();
@@ -121,6 +123,7 @@ public class PuzzleState {
     }
 
     public string returnStateAsString() {
+        //takes the PuzzleState and represents it as a string, used in the SaveData saving process
         //every tile is separated by a dash, building/notes1/notes2 is separated by a space
         string buildingsString = "";
         string notes1String = "";
