@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class SettingsCanvasController : MonoBehaviour {
     
     public GameObject blackForeground; //used to transition to/from the puzzle menu
-    private SpriteRenderer blackSprite; //derived from the blackForeground gameObject
+    private Image blackSprite; //derived from the blackForeground gameObject
     public float fadeOutTime; //total time for fade-out, from complete light to complete darkness
     public float fadeInTime; //total time for fade-in, from complete darkness to complete light
     private float fadeTimer; //the timer on which the fadeout and fadein mechanics operate
@@ -53,7 +53,7 @@ public class SettingsCanvasController : MonoBehaviour {
         setCurrentToggleTexts();
         updateCurrentSkinText();
         showChooseSkinButton();
-        blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+        blackSprite = blackForeground.GetComponent<Image>();
         //also apply the current skin
         loadSkin();
 
@@ -341,7 +341,7 @@ public class SettingsCanvasController : MonoBehaviour {
     
     private void loadSkin() {
         //updates the visuals of the settings scene based on what skin is used
-        background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
+        background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
         InterfaceFunctions.colorMenuButton(menuButton);
     }
 

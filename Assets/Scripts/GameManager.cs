@@ -35,9 +35,9 @@ public class GameManager : MonoBehaviour {
 
     //game canvases
     public GameObject canvas;
-    public GameObject winCanvas; //the canvas that is used when the player beats a puzzle
-    public GameObject puzzleCanvas;
-    public GameObject tutorialCanvas;
+    public GameObject winParent; //the canvas that is used when the player beats a puzzle
+    public GameObject puzzleParent;
+    public GameObject tutorialParent;
 
     //the tools that the player can choose from
     private GameObject buildButton;
@@ -69,14 +69,14 @@ public class GameManager : MonoBehaviour {
     //variables used in screen fade-in and fade-out
     public GameObject blackForeground; //used to transition to/from the main menu
     [HideInInspector]
-    public SpriteRenderer blackSprite;
+    public Image blackSprite;
     public float fadeOutTime;
     public float fadeInTime;
     private float fadeTimer;
 
     //UI elements
     public GameObject streetCorner;
-    public SpriteRenderer winBlackSprite;
+    public Image winBlackSprite;
     private bool fadingToWin = false;
     private float fadingToWinTimer;
     public float fadeToWinTime;
@@ -117,15 +117,13 @@ public class GameManager : MonoBehaviour {
     private void Start() {
         //choose which skin to use
         skin = StaticVariables.skin;
-        if (StaticVariables.isTutorial) {
+        if (StaticVariables.isTutorial)
             skin = basicSkin;
-        }
         //set up the fade-in timer
-        if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle") {
+        if (StaticVariables.isFading && StaticVariables.fadingTo == "puzzle")
             fadeTimer = fadeInTime;
-        }
-        blackSprite = blackForeground.GetComponent<SpriteRenderer>();
-        winPopupScale = winCanvas.transform.GetChild(1).localScale.x;
+        blackSprite = blackForeground.GetComponent<Image>();
+        winPopupScale = winParent.transform.GetChild(1).localScale.x;
 
         size = StaticVariables.size;
         includeNote1Btn = StaticVariables.includeNotes1Button;
@@ -141,10 +139,10 @@ public class GameManager : MonoBehaviour {
         if (StaticVariables.isTutorial) { //set up the tutorial. uses tutorialmanager
             originalPuzzleScale = puzzlePositioning.transform.localScale.x;
             setTutorialNumberButtons();
-            tutorialCanvas.SetActive(true);
-            puzzleCanvas.SetActive(false);
+            tutorialParent.SetActive(true);
+            puzzleParent.SetActive(false);
             //hide menu button if it is your first time playing the tutorial
-            tutorialCanvas.transform.Find("Menu").gameObject.SetActive(StaticVariables.hasBeatenTutorial);
+            tutorialParent.transform.Find("Menu").gameObject.SetActive(StaticVariables.hasBeatenTutorial);
 
             tutorialManager = new TutorialManager();
             tutorialManager.gameManager = this;
@@ -152,8 +150,8 @@ public class GameManager : MonoBehaviour {
         }
 
         else if (!StaticVariables.isTutorial) { //continue with the puzzle generation and setup
-            tutorialCanvas.SetActive(false);
-            puzzleCanvas.SetActive(true); 
+            tutorialParent.SetActive(false);
+            puzzleParent.SetActive(true); 
             //load a puzzle if you already have one saved, otherwise generate a new one based on the size
             if (StaticVariables.hasSavedPuzzleState) {
                 puzzleGenerator.restoreSavedPuzzle(StaticVariables.puzzleSolution, size);
@@ -176,16 +174,16 @@ public class GameManager : MonoBehaviour {
             setUndoRedoButtons();
             highlightBuildType();
             //apply the current skin
-            puzzleBackground.GetComponent<SpriteRenderer>().sprite = skin.puzzleBackground;
-            InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Menu"));
-            InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Another Puzzle"));
-            InterfaceFunctions.colorPuzzleButton(winCanvas.transform.Find("Win Popup").Find("Shop"));
-            winCanvas.transform.Find("Win Popup").Find("Win Popup Background Exterior").GetComponent<SpriteRenderer>().color = winBackgroundColorExterior;
-            winCanvas.transform.Find("Win Popup").Find("Win Popup Background Interior").GetComponent<SpriteRenderer>().color = winBackgroundColorInterior;
+            puzzleBackground.GetComponent<Image>().sprite = skin.puzzleBackground;
+            InterfaceFunctions.colorPuzzleButton(winParent.transform.Find("Win Popup").Find("Menu"));
+            InterfaceFunctions.colorPuzzleButton(winParent.transform.Find("Win Popup").Find("Another Puzzle"));
+            InterfaceFunctions.colorPuzzleButton(winParent.transform.Find("Win Popup").Find("Shop"));
+            winParent.transform.Find("Win Popup").Find("Win Popup Background Exterior").GetComponent<Image>().color = winBackgroundColorExterior;
+            winParent.transform.Find("Win Popup").Find("Win Popup Background Interior").GetComponent<Image>().color = winBackgroundColorInterior;
             //set up the win popup process
-            Color c = winCanvas.transform.Find("Black Background").GetComponent<SpriteRenderer>().color;
+            Color c = winParent.transform.Find("Black Background").GetComponent<Image>().color;
             c.a = fadeToWinDarknessRatio;
-            winCanvas.transform.Find("Black Background").GetComponent<SpriteRenderer>().color = c;
+            winParent.transform.Find("Black Background").GetComponent<Image>().color = c;
             showCorrectCityArtOnWinScreen();
             int coins = 0;
             switch(size){
@@ -197,8 +195,8 @@ public class GameManager : MonoBehaviour {
             int onesDigit = coins % 10;
             int tensDigit = (coins / 10) % 10;
 
-            coinsBox1s.GetComponent<SpriteRenderer>().sprite = numberSprites[onesDigit];
-            coinsBox10s.GetComponent<SpriteRenderer>().sprite = numberSprites[tensDigit];
+            coinsBox1s.GetComponent<Image>().sprite = numberSprites[onesDigit];
+            coinsBox10s.GetComponent<Image>().sprite = numberSprites[tensDigit];
 
             //set the first puzzle state, and you are ready to start playing!
             currentPuzzleState = new PuzzleState(puzzleGenerator);
@@ -214,7 +212,7 @@ public class GameManager : MonoBehaviour {
         if (!hasWonYet && puzzleGenerator.checkPuzzle() && !StaticVariables.isTutorial) {
             hasWonYet = true;
             
-            winCanvas.SetActive(true);
+            winParent.SetActive(true);
             canClick = false;
             incrementCoinsForWin();
 
@@ -306,7 +304,7 @@ public class GameManager : MonoBehaviour {
 
             float scale = fadePercent * winPopupScale;
 
-            winCanvas.transform.GetChild(1).localScale = new Vector3(scale, scale, scale);
+            winParent.transform.GetChild(1).localScale = new Vector3(scale, scale, scale);
 
             if (fadingToWinTimer <= 0f) {
                 fadingToWin = false;
@@ -441,7 +439,7 @@ public class GameManager : MonoBehaviour {
 
     public void hidePositioningObjects() {
         //hide the puzzle positioning before the game starts
-        puzzlePositioning.transform.Find("Image").gameObject.SetActive(false);
+        //puzzlePositioning.transform.Find("Image").gameObject.SetActive(false);
     }
 
     public void drawFullPuzzle() {
@@ -511,10 +509,10 @@ public class GameManager : MonoBehaviour {
         corner.transform.position = p;
         corner.transform.localScale *= scale;
         corner.transform.Rotate(new Vector3(0, 0, rot));
-        corner.transform.parent = parent;
+        corner.transform.SetParent(parent);
 
 
-        corner.GetComponent<SpriteRenderer>().color = InterfaceFunctions.getColorFromString(skin.streetColor);
+        corner.GetComponent<Image>().color = InterfaceFunctions.getColorFromString(skin.streetColor);
 
 
         Vector3 pos = corner.transform.localPosition;
@@ -528,18 +526,18 @@ public class GameManager : MonoBehaviour {
 
     private void showCorrectCityArtOnWinScreen() {
         //shows the "city art" on the win popup, depending on which skin and which city size the player is using
-        GameObject small = winCanvas.transform.Find("Win Popup").Find("City Art - Small").gameObject;
-        GameObject med = winCanvas.transform.Find("Win Popup").Find("City Art - Medium").gameObject;
-        GameObject large = winCanvas.transform.Find("Win Popup").Find("City Art - Large").gameObject;
-        GameObject huge = winCanvas.transform.Find("Win Popup").Find("City Art - Huge").gameObject;
+        GameObject small = winParent.transform.Find("Win Popup").Find("City Art - Small").gameObject;
+        GameObject med = winParent.transform.Find("Win Popup").Find("City Art - Medium").gameObject;
+        GameObject large = winParent.transform.Find("Win Popup").Find("City Art - Large").gameObject;
+        GameObject huge = winParent.transform.Find("Win Popup").Find("City Art - Huge").gameObject;
         small.SetActive(false);
         med.SetActive(false);
         large.SetActive(false);
         huge.SetActive(false);
-        small.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.smallCityArt;
-        med.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.medCityArt;
-        large.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.largeCityArt;
-        huge.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.hugeCityArt;
+        small.GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
+        med.GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
+        large.GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
+        huge.GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
         switch (size) {
             case 3: small.SetActive(true); break;
             case 4: med.SetActive(true); break;
@@ -555,11 +553,11 @@ public class GameManager : MonoBehaviour {
         int value100s = (StaticVariables.coins / 100) % 10;
         int value1000s = (StaticVariables.coins / 1000) % 10;
         int value10000s = (StaticVariables.coins / 10000) % 10;
-        totalCoinsBox1s.GetComponent<SpriteRenderer>().sprite = numberSprites[value1s];
-        totalCoinsBox10s.GetComponent<SpriteRenderer>().sprite = numberSprites[value10s];
-        totalCoinsBox100s.GetComponent<SpriteRenderer>().sprite = numberSprites[value100s];
-        totalCoinsBox1000s.GetComponent<SpriteRenderer>().sprite = numberSprites[value1000s];
-        totalCoinsBox10000s.GetComponent<SpriteRenderer>().sprite = numberSprites[value10000s];
+        totalCoinsBox1s.GetComponent<Image>().sprite = numberSprites[value1s];
+        totalCoinsBox10s.GetComponent<Image>().sprite = numberSprites[value10s];
+        totalCoinsBox100s.GetComponent<Image>().sprite = numberSprites[value100s];
+        totalCoinsBox1000s.GetComponent<Image>().sprite = numberSprites[value1000s];
+        totalCoinsBox10000s.GetComponent<Image>().sprite = numberSprites[value10000s];
 
         totalCoinsBox1s.SetActive(true);
         totalCoinsBox10s.SetActive(true);
@@ -632,9 +630,9 @@ public class GameManager : MonoBehaviour {
     public void setTutorialNumberButtons() {
         //show the number buttons, specifically used for the tutorial
         numberButtons = new GameObject[3];
-        numberButtons[0] = tutorialCanvas.transform.Find("Numbers").Find("1").gameObject;
-        numberButtons[1] = tutorialCanvas.transform.Find("Numbers").Find("2").gameObject;
-        numberButtons[2] = tutorialCanvas.transform.Find("Numbers").Find("3").gameObject;
+        numberButtons[0] = tutorialParent.transform.Find("Numbers").Find("1").gameObject;
+        numberButtons[1] = tutorialParent.transform.Find("Numbers").Find("2").gameObject;
+        numberButtons[2] = tutorialParent.transform.Find("Numbers").Find("3").gameObject;
         disselectNumber(numberButtons[0]);
         disselectNumber(numberButtons[1]);
         disselectNumber(numberButtons[2]);
@@ -934,7 +932,7 @@ public class GameManager : MonoBehaviour {
         if (!StaticVariables.isTutorial && StaticVariables.includeRemoveAllOfNumber) {
             removeAllOfNumberButton.transform.Find("Dash").gameObject.SetActive(false);
             removeAllOfNumberButton.transform.Find("Number").gameObject.SetActive(true);
-            removeAllOfNumberButton.transform.Find("Number").GetComponent<SpriteRenderer>().sprite = numberSprites[selectedNumber];
+            removeAllOfNumberButton.transform.Find("Number").GetComponent<Image>().sprite = numberSprites[selectedNumber];
             Color buildingColor;
             Color note1Color;
             Color note2Color;
@@ -951,7 +949,7 @@ public class GameManager : MonoBehaviour {
             else if (clickTileAction == "Toggle Note 2") {
                 c = note2Color;
             }
-            removeAllOfNumberButton.transform.Find("Number").GetComponent<SpriteRenderer>().color = c;
+            removeAllOfNumberButton.transform.Find("Number").GetComponent<Image>().color = c;
 
             if (clickTileAction == "Clear Tile") {
                 removeAllOfNumberButton.transform.Find("Dash").gameObject.SetActive(true);

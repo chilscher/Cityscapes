@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.UI;
 
 public class PuzzleTile : Tile {
     //a Puzzle Tile object which holds the notes and building for one specific square of the Cityscapes Puzzle
@@ -23,11 +24,10 @@ public class PuzzleTile : Tile {
     public Sprite emptyTileSprite;
 
     //the different visual aspects that make up the PuzzleTile
-    private SpriteRenderer background;
-    private SpriteRenderer road;
-    private SpriteRenderer building;
-    private SpriteRenderer number;
-    private SpriteRenderer redBorder;
+    private Image road;
+    private Image building;
+    private Image number;
+    private Image redBorder;
 
     public Sprite[] whiteSprites; //the numbers in a basic white/black color scheme, so the spriterenderer can apply its own color.
     private Color numberColor;
@@ -45,11 +45,10 @@ public class PuzzleTile : Tile {
         this.maxValue = maxValue;
         this.gameManager = gameManager;
 
-        background = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        road = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        building = transform.GetChild(2).GetComponent<SpriteRenderer>();
-        number = transform.GetChild(3).GetComponent<SpriteRenderer>();
-        redBorder = transform.GetChild(4).GetComponent<SpriteRenderer>();
+        road = transform.GetChild(1).GetComponent<Image>();
+        building = transform.GetChild(2).GetComponent<Image>();
+        number = transform.GetChild(3).GetComponent<Image>();
+        redBorder = transform.GetChild(4).GetComponent<Image>();
 
         // pick a random tile rotation direction
         if (randomRotation) {
@@ -199,16 +198,16 @@ public class PuzzleTile : Tile {
         noteGroup1.Sort();
         noteGroup2.Sort();
 
-        Transform hintsList = transform.GetChild(5);
+        Transform hintsList = transform.GetChild(4);
 
         for (int i = 0; i<hintsList.transform.childCount; i++) {
-            SpriteRenderer s = hintsList.GetChild(i).GetComponent<SpriteRenderer>();
+            Image s = hintsList.GetChild(i).GetComponent<Image>();
             s.enabled = false;
         }
 
         for (int i = 0; i < noteGroup1.Count; i++) {
             int value = noteGroup1[i];
-            SpriteRenderer s = hintsList.GetChild(i).GetComponent<SpriteRenderer>();
+            Image s = hintsList.GetChild(i).GetComponent<Image>();
             s.sprite = whiteSprites[value - 1];
             s.color = note1Color;
             s.enabled = true;
@@ -218,7 +217,7 @@ public class PuzzleTile : Tile {
 
         for (int i = 0; i < noteGroup2.Count; i++) {
             int value = noteGroup2[i];
-            SpriteRenderer s = hintsList.GetChild(startPos + i).GetComponent<SpriteRenderer>();
+            Image s = hintsList.GetChild(startPos + i).GetComponent<Image>();
             s.sprite = whiteSprites[value - 1];
             s.color = note2Color;
             s.enabled = true;

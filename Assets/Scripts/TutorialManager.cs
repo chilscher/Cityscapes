@@ -20,12 +20,13 @@ public class TutorialManager{
     private string continueText;
     private string skipRequirement = ""; //if you complete this requirement, skip a few steps until you get to "skipToStage"
     private int skipToStage = 0; //skipToStage is changed every few steps
+    public List<GameObject> redBorders;
 
     public void startTutorial() {
         //begins the tutorial process. Calls functions here to alter the default gameManager setup
-        gameManager.puzzlePositioning = gameManager.tutorialCanvas.transform.Find("Puzzle Positioning").gameObject;
-        gameManager.blackForeground = gameManager.tutorialCanvas.transform.Find("Black Foreground").gameObject;
-        gameManager.blackSprite = gameManager.blackForeground.GetComponent<SpriteRenderer>();
+        gameManager.puzzlePositioning = gameManager.tutorialParent.transform.Find("Puzzle Positioning").gameObject;
+        gameManager.blackForeground = gameManager.tutorialParent.transform.Find("Black Foreground").gameObject;
+        gameManager.blackSprite = gameManager.blackForeground.GetComponent<Image>();
         gameManager.puzzleGenerator.usePredeterminedSolution = true;
         gameManager.puzzleGenerator.predeterminedSolution = puzzle;
         gameManager.puzzleGenerator.createPuzzle(3);
@@ -36,7 +37,10 @@ public class TutorialManager{
         gameManager.hitBuildButton();
         tutorialText = gameManager.tutorialTextBox.transform.Find("Text").GetComponent<Text>();
         continueClue = gameManager.tutorialTextBox.transform.Find("Continue clue").GetComponent<Text>();
-        gameManager.tutorialCanvas.transform.Find("Numbers").gameObject.SetActive(false);
+        redBorders = new List<GameObject>();
+        foreach (Transform t in gameManager.tutorialParent.transform.Find("Tile Borders").transform)
+            redBorders.Add(t.gameObject);
+        gameManager.tutorialParent.transform.Find("Numbers").gameObject.SetActive(false);
         //proceed to stage 1
         advanceStage();
     }
@@ -91,7 +95,7 @@ public class TutorialManager{
             case 6:
                 text = "To place a building, tap the building size you would like to place...";
                 continueText = "Choose the right building size...";
-                gameManager.tutorialCanvas.transform.Find("Numbers").gameObject.SetActive(true);
+                gameManager.tutorialParent.transform.Find("Numbers").gameObject.SetActive(true);
                 addRedBoxAroundNumButton(2);
                 tutorialText.text = text;
                 continueClue.text = continueText;
@@ -537,6 +541,8 @@ public class TutorialManager{
 
     private void addRedBoxAroundTile(int spaceNum) {
         //adds a red border around a PuzzleTile, to draw attention to that tile
+        redBorders[spaceNum].SetActive(true);
+        /*
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (((i * 3) + j) == spaceNum) {
@@ -545,16 +551,21 @@ public class TutorialManager{
                 }
             }
         }
+        */
     }
 
     private void removeRedBoxesAroundTiles() {
         //removes all red borders around all tiles
+        foreach (GameObject go in redBorders)
+            go.SetActive(false);
+        /*
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 PuzzleTile t = gameManager.puzzleGenerator.tilesArray[i, j];
                 t.removeRedBorder();
             }
         }
+        */
     }
 
     private void addRedBoxAroundStreet(string vertOrHoriz, int streetNum) {

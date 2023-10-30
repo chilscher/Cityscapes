@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SideHintTile : Tile {
     //contains information for the Side Hints, also known as Residents, which are the clues on the side of the puzzle
@@ -13,10 +14,10 @@ public class SideHintTile : Tile {
     public PuzzleTile[] row; //all of the Puzzle Tiles that this SideHintTile's hint references (this SideHintTile is the number at the end of a row of buildings)
 
     //some visual elements of the SideHintTile Prefab
-    private SpriteRenderer background;
-    private SpriteRenderer arrow;
-    private SpriteRenderer number;
-    private SpriteRenderer redBorder;
+    private Image background;
+    private Image arrow;
+    private Image number;
+    private Image redBorder;
 
     //the number sprites
     public Sprite[] whiteSprites;
@@ -28,17 +29,17 @@ public class SideHintTile : Tile {
     public void initialize(int hintValue) {
         //creates the sideHintTile. Here goes all of the code that defines the private variables used later
         this.hintValue = hintValue;
-        background = transform.GetChild(0).GetComponent<SpriteRenderer>();
-        arrow = transform.GetChild(1).GetComponent<SpriteRenderer>();
-        number = transform.GetChild(2).GetComponent<SpriteRenderer>();
-        redBorder = transform.GetChild(3).GetComponent<SpriteRenderer>();
+        background = transform.GetChild(0).GetComponent<Image>();
+        arrow = transform.GetChild(1).GetComponent<Image>();
+        number = transform.GetChild(2).GetComponent<Image>();
+        redBorder = transform.GetChild(3).GetComponent<Image>();
 
         setNumberColors();
         addNumberToTile(hintValue);
 
         Skin tempSkin = StaticVariables.skin;
         if (StaticVariables.isTutorial) { tempSkin = StaticVariables.allSkins[0]; }
-        background.GetComponent<SpriteRenderer>().color = InterfaceFunctions.getColorFromString(tempSkin.streetColor);
+        background.GetComponent<Image>().color = InterfaceFunctions.getColorFromString(tempSkin.streetColor);
     }
 
     public int numBuildingsCurrentlyVisible() {
