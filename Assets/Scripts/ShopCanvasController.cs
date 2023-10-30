@@ -141,7 +141,7 @@ public class ShopCanvasController : MonoBehaviour {
         }
 
         //determine the full scope of the scroll view, determined by what elements are expanded within the scrollview
-        setScrollViewHeight();
+        //setScrollViewHeight();
 
     }
 
@@ -283,7 +283,7 @@ public class ShopCanvasController : MonoBehaviour {
         }
 
         //after all of that, resize the scroll view
-        setScrollViewHeight();
+        //setScrollViewHeight();
     }
 
     private void updateButton(GameObject button, bool condition, int cost, bool uniqueUnlockCondition = true) {
@@ -374,7 +374,7 @@ public class ShopCanvasController : MonoBehaviour {
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
         }
         resizeToFitChildren(parentBox, false);
-        setScrollViewHeight();
+        //setScrollViewHeight();
     }
 
     public void contractSiblings(GameObject button) {
@@ -389,7 +389,7 @@ public class ShopCanvasController : MonoBehaviour {
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
         }
         resizeToFitChildren(parentBox, false);
-        setScrollViewHeight();
+        //setScrollViewHeight();
     }
 
     public void contractPreviousExpansion() {
@@ -434,6 +434,7 @@ public class ShopCanvasController : MonoBehaviour {
         parent.GetComponent<RectTransform>().sizeDelta = newSize;
     }
 
+    /*
     public void setScrollViewHeight() {
         //sets the scroll viewer (vertical layout group) height to match its contents. minimum is the height of its parent scrollable container
         //to be called whenever an item is shown or hidden in the settings window
@@ -447,6 +448,7 @@ public class ShopCanvasController : MonoBehaviour {
         //set the scroll view to be at the same position as previously
         scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - (topHeight / (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y));
     }
+    */
 
     public void displayCoinsOnButton(GameObject button, int cost) {
         //assumes coins are all image components, with the ones place being child(1), all the way through thousands place being child(4).

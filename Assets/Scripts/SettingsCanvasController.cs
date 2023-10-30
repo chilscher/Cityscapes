@@ -63,7 +63,7 @@ public class SettingsCanvasController : MonoBehaviour {
         }
 
         //determine the full scope of the scroll view, determined by what elements are expanded within the scrollview
-        setScrollViewHeight();
+        //setScrollViewHeight();
     }
     
     private void Update() {
@@ -189,6 +189,7 @@ public class SettingsCanvasController : MonoBehaviour {
         button.transform.Find("Button").Find("Off").gameObject.SetActive(!cond);
     }
 
+    /*
     public void setScrollViewHeight() {
         //sets the scroll viewer (vertical layout group) height to match its contents. minimum is the height of its parent scrollable container
         //to be called whenever an item is shown or hidden in the settings window
@@ -202,7 +203,9 @@ public class SettingsCanvasController : MonoBehaviour {
         scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - (topHeight / (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y));
 
     }
+    */
 
+    /*
     public void resizeToFitChildren(GameObject parent, bool minSize) {
         //get height of contents, including spaces between objects and top and bottom padding
         //if minSize is true, the container height has to be at least the height of its parent
@@ -225,6 +228,7 @@ public class SettingsCanvasController : MonoBehaviour {
         parent.GetComponent<RectTransform>().sizeDelta = newSize;
 
     }
+    */
 
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT GET CALLED WHEN A SETTING-TOGGLE BUTTON GETS PUSHED
@@ -366,8 +370,8 @@ public class SettingsCanvasController : MonoBehaviour {
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
             parentBox.transform.GetChild(i).Find("Button").Find("Text").GetComponent<Text>().text = parentBox.transform.GetChild(i).name.ToUpper() + " SKIN";
         }
-        resizeToFitChildren(parentBox, false);
-        setScrollViewHeight();
+        //resizeToFitChildren(parentBox, false);
+        //setScrollViewHeight();
     }
 
     private void contractSkinButtons() {
@@ -377,8 +381,8 @@ public class SettingsCanvasController : MonoBehaviour {
             bool switchTo = false;
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
         }
-        resizeToFitChildren(parentBox, false);
-        setScrollViewHeight();
+        //resizeToFitChildren(parentBox, false);
+        //setScrollViewHeight();
     }
 
     public void clickedSkinButton(GameObject button) {
