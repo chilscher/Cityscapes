@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NumberButton: Tile {
     //one of the buttons that the player can click
@@ -11,12 +12,12 @@ public class NumberButton: Tile {
     public int value;
     public Sprite[] numberSprites;
     private GameManager gameManager;
-    private SpriteRenderer number;
+    private Image number;
 
     public void initialize(int value, GameManager gm) {
         this.value = value;
         gameManager = gm;
-        number = transform.GetChild(1).GetComponent<SpriteRenderer>();
+        number = transform.GetChild(1).GetComponent<Image>();
         addNumberToTile(value);
     }
     

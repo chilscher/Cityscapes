@@ -27,7 +27,7 @@ public class MainMenuCanvasController : MonoBehaviour {
     public GameObject settingsButton;
 
     public GameObject blackForeground; //used to transition to/from the main menu
-    private SpriteRenderer blackSprite; //derived from the blackForeground gameObject
+    private Image blackSprite; //derived from the blackForeground gameObject
     public float fadeOutTime; //total time for fade-out, from complete light to complete darkness
     public float fadeInTime; //total time for fade-in, from complete darkness to complete light
     private float fadeTimer; //the timer on which the fadeout and fadein mechanics operate
@@ -45,12 +45,12 @@ public class MainMenuCanvasController : MonoBehaviour {
             StaticVariables.isApplicationLaunchingFirstTime = false;
         }
         //apply the current skin
-        background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.mainMenuBackground;
+        background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
         colorButtons();
         applyCityArtSkin();
 
         //start the fade-in process from another scene
-        blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+        blackSprite = blackForeground.GetComponent<Image>();
         if (StaticVariables.isFading && StaticVariables.fadingTo == "menu") {
             fadeTimer = fadeInTime;
         }
@@ -132,8 +132,8 @@ public class MainMenuCanvasController : MonoBehaviour {
         Color inter;
         ColorUtility.TryParseHtmlString(StaticVariables.skin.resumePuzzleExterior, out exter);
         ColorUtility.TryParseHtmlString(StaticVariables.skin.resumePuzzleInterior, out inter);
-        returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Border").GetComponent<SpriteRenderer>().color = exter;
-        returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Interior").GetComponent<SpriteRenderer>().color = inter;
+        returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Border").GetComponent<Image>().color = exter;
+        returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Interior").GetComponent<Image>().color = inter;
 
         InterfaceFunctions.colorMenuButton(shopButton);
         InterfaceFunctions.colorMenuButton(tutorialButton);
@@ -214,6 +214,7 @@ public class MainMenuCanvasController : MonoBehaviour {
             hugeText.SetActive(highestUnlockedSize >= 6);
         }
 
+        /*
         if (!StaticVariables.hasBeatenTutorial) {
             returnOrAbandonButtons.SetActive(false);
             shopButton.SetActive(false);
@@ -224,12 +225,15 @@ public class MainMenuCanvasController : MonoBehaviour {
             largeCenterTutorialButton.SetActive(true);
 
             //temp while testing
-            //largeCenterTutorialButton.SetActive(false);
-            //puzzleButtons.SetActive(true);
-            //shopButton.SetActive(true);
-            //tutorialButton.SetActive(true);
-            //settingsButton.SetActive(true);
+            
+            largeCenterTutorialButton.SetActive(false);
+            puzzleButtons.SetActive(true);
+            shopButton.SetActive(true);
+            tutorialButton.SetActive(true);
+            settingsButton.SetActive(true);
+            
         }
+        */
     }
 
     public int getHighestUnlockedSize() {
@@ -265,7 +269,8 @@ public class MainMenuCanvasController : MonoBehaviour {
 
     public void startPuzzle(int size) {
         //start fading out, and after the fade-out process is completed, go to the puzzle scene
-        if (getHighestUnlockedSize() >= size) {
+        //if (getHighestUnlockedSize() >= size) {
+        if (true){
             if (!StaticVariables.isFading) {
                 StaticVariables.size = size;
                 StaticVariables.isTutorial = false;

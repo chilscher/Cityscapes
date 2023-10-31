@@ -33,11 +33,11 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject coinsBox1000s;
     public GameObject coinsBox10000s;
     //the sprites below are derived from the coins box gameObjects
-    private SpriteRenderer sprite1s;
-    private SpriteRenderer sprite10s;
-    private SpriteRenderer sprite100s;
-    private SpriteRenderer sprite1000s;
-    private SpriteRenderer sprite10000s;
+    private Image sprite1s;
+    private Image sprite10s;
+    private Image sprite100s;
+    private Image sprite1000s;
+    private Image sprite10000s;
     
     //the following are the buttons that expand to show purchasable upgrades
     public GameObject expandMedButton;
@@ -64,7 +64,7 @@ public class ShopCanvasController : MonoBehaviour {
 
 
     public GameObject blackForeground; //used to transition to/from the puzzle menu
-    private SpriteRenderer blackSprite; //derived from the blackForeground gameObject
+    private Image blackSprite; //derived from the blackForeground gameObject
     public float fadeOutTime; //total time for fade-out, from complete light to complete darkness
     public float fadeInTime; //total time for fade-in, from complete darkness to complete light
     private float fadeTimer; //the timer on which the fadeout and fadein mechanics operate
@@ -103,12 +103,12 @@ public class ShopCanvasController : MonoBehaviour {
         ColorUtility.TryParseHtmlString(purchaseButtonInterior, out purchaseButtonInteriorColor);
         ColorUtility.TryParseHtmlString(noPurchaseButtonExterior, out noPurchaseButtonExteriorColor);
         ColorUtility.TryParseHtmlString(noPurchaseButtonInterior, out noPurchaseButtonInteriorColor);
-        sprite1s = coinsBox1s.GetComponent<SpriteRenderer>();
-        sprite10s = coinsBox10s.GetComponent<SpriteRenderer>();
-        sprite100s = coinsBox100s.GetComponent<SpriteRenderer>();
-        sprite1000s = coinsBox1000s.GetComponent<SpriteRenderer>();
-        sprite10000s = coinsBox10000s.GetComponent<SpriteRenderer>();
-        blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+        sprite1s = coinsBox1s.GetComponent<Image>();
+        sprite10s = coinsBox10s.GetComponent<Image>();
+        sprite100s = coinsBox100s.GetComponent<Image>();
+        sprite1000s = coinsBox1000s.GetComponent<Image>();
+        sprite10000s = coinsBox10000s.GetComponent<Image>();
+        blackSprite = blackForeground.GetComponent<Image>();
 
         //show the amount of coins the player has, and also the cost of various upgrades
         displayCoinsAmount();
@@ -133,7 +133,7 @@ public class ShopCanvasController : MonoBehaviour {
         updateButtons();
 
         //apply the cosmetics from the current skin
-        background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
+        background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
         InterfaceFunctions.colorMenuButton(menuButton);
 
         //starts the fade-in process, which is carried out in the Update function
@@ -646,7 +646,7 @@ public class ShopCanvasController : MonoBehaviour {
         if (canPurchase(StaticVariables.unlockedSkins.Contains(skin), getSkinPrice(skin))){
             StaticVariables.unlockedSkins.Add(skin);
             StaticVariables.skin = skin;
-            background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
+            background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
             InterfaceFunctions.colorMenuButton(menuButton);
             doPurchase(getSkinPrice(skin));
         }
@@ -692,7 +692,7 @@ public class ShopCanvasController : MonoBehaviour {
 
         StaticVariables.unlockedSkins = new List<Skin>();
         StaticVariables.skin = InterfaceFunctions.getDefaultSkin();
-        background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
+        background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
         InterfaceFunctions.colorMenuButton(menuButton);
         updateButtons();
     }

@@ -29,7 +29,7 @@ public class PuzzleTile : Tile {
     private Image number;
     private Image redBorder;
 
-    public Sprite[] whiteSprites; //the numbers in a basic white/black color scheme, so the spriterenderer can apply its own color.
+    public Sprite[] whiteSprites; //the numbers in a basic white/black color scheme, so the image can apply its own color.
     private Color numberColor;
     private Color note1Color;
     private Color note2Color;
