@@ -92,6 +92,7 @@ public class ShopCanvasController : MonoBehaviour {
     //the following are properties taken from the skin
     public GameObject background;
     public GameObject menuButton;
+    private bool stopScrollRect = false;
 
 
     private void Start() {
@@ -174,6 +175,15 @@ public class ShopCanvasController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             goToMainMenu();
         }
+    }
+
+    void LateUpdate(){
+
+        if (stopScrollRect){
+            stopScrollRect = false;
+            scrollView.GetComponent<ScrollRect>().StopMovement();
+        }
+
     }
 
     // ---------------------------------------------------
@@ -371,7 +381,24 @@ public class ShopCanvasController : MonoBehaviour {
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
         }
         resizeToFitChildren(parentBox, false);
-        //setScrollViewHeight();
+
+        //if bottom of new stuff is out of view of the scroll view, then move the scroll view up
+
+
+        float originalPos = parentBox.transform.localPosition.y;
+        float totalHeight = parentBox.transform.GetChild(0).GetComponent<RectTransform>().rect.height;
+        totalHeight += parentBox.transform.GetChild(1).GetComponent<RectTransform>().rect.height;
+        totalHeight += parentBox.transform.GetChild(2).GetComponent<RectTransform>().rect.height;
+        float scrollDepth = parentBox.transform.parent.localPosition.y;
+        float distOffscreen = originalPos - totalHeight + scrollDepth + 1830f;
+        if (distOffscreen < 0)
+            parentBox.transform.parent.localPosition += new Vector3(0,-distOffscreen,0);
+
+        Canvas.ForceUpdateCanvases();
+        
+        parentBox.transform.parent.parent.parent.GetComponent<ScrollRect>().StopMovement();
+        //stopScrollRect = true;
+        //if ()
     }
 
     public void contractSiblings(GameObject button) {
@@ -386,7 +413,6 @@ public class ShopCanvasController : MonoBehaviour {
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
         }
         resizeToFitChildren(parentBox, false);
-        //setScrollViewHeight();
     }
 
     public void contractPreviousExpansion() {
