@@ -140,9 +140,6 @@ public class ShopCanvasController : MonoBehaviour {
             fadeTimer = fadeInTime;
         }
 
-        //determine the full scope of the scroll view, determined by what elements are expanded within the scrollview
-        //setScrollViewHeight();
-
     }
 
     private void Update() {
@@ -433,22 +430,6 @@ public class ShopCanvasController : MonoBehaviour {
         Vector2 newSize = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, newHeight);
         parent.GetComponent<RectTransform>().sizeDelta = newSize;
     }
-
-    /*
-    public void setScrollViewHeight() {
-        //sets the scroll viewer (vertical layout group) height to match its contents. minimum is the height of its parent scrollable container
-        //to be called whenever an item is shown or hidden in the settings window
-
-        //define the current top height - for use at the end of the function
-        float topHeight = (float)Math.Round(((1 - scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition) * (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y)), 2);
-
-        //resizeToFitChildrenMinSize(scrollView);
-        resizeToFitChildren(scrollView, true);
-
-        //set the scroll view to be at the same position as previously
-        scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - (topHeight / (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y));
-    }
-    */
 
     public void displayCoinsOnButton(GameObject button, int cost) {
         //assumes coins are all image components, with the ones place being child(1), all the way through thousands place being child(4).

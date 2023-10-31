@@ -11,7 +11,7 @@ public class CreditsCanvasController : MonoBehaviour {
     //controls the credits canvas. Only one is used, and only on the credits scene.
  
     public GameObject blackForeground; //used to transition to/from the settings menu
-    private SpriteRenderer blackSprite; //derived from the blackForeground gameObject
+    private Image blackSprite; //derived from the blackForeground gameObject
     public float fadeOutTime; //total time for fade-out, from complete light to complete darkness
     public float fadeInTime; //total time for fade-in, from complete darkness to complete light
     private float fadeTimer; //the timer on which the fadeout and fadein mechanics operate
@@ -26,8 +26,8 @@ public class CreditsCanvasController : MonoBehaviour {
 
     private void Start() {
         //apply the cosmetics from the current skin
-        background.GetComponent<SpriteRenderer>().sprite = StaticVariables.skin.shopBackground;
-        blackSprite = blackForeground.GetComponent<SpriteRenderer>();
+        background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
+        blackSprite = blackForeground.GetComponent<Image>();
         InterfaceFunctions.colorMenuButton(menuButton);
 
         //starts the fade-in process, which is carried out in the Update function

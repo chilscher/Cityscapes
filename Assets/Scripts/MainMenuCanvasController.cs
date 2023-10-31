@@ -224,11 +224,11 @@ public class MainMenuCanvasController : MonoBehaviour {
             largeCenterTutorialButton.SetActive(true);
 
             //temp while testing
-            largeCenterTutorialButton.SetActive(false);
-            puzzleButtons.SetActive(true);
-            shopButton.SetActive(true);
-            tutorialButton.SetActive(true);
-            settingsButton.SetActive(true);
+            //largeCenterTutorialButton.SetActive(false);
+            //puzzleButtons.SetActive(true);
+            //shopButton.SetActive(true);
+            //tutorialButton.SetActive(true);
+            //settingsButton.SetActive(true);
         }
     }
 

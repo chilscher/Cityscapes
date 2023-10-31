@@ -61,9 +61,6 @@ public class SettingsCanvasController : MonoBehaviour {
         if (StaticVariables.isFading && StaticVariables.fadingTo == "settings") {
             fadeTimer = fadeInTime;
         }
-
-        //determine the full scope of the scroll view, determined by what elements are expanded within the scrollview
-        //setScrollViewHeight();
     }
     
     private void Update() {
@@ -188,47 +185,6 @@ public class SettingsCanvasController : MonoBehaviour {
         button.transform.Find("Button").Find("On").gameObject.SetActive(cond);
         button.transform.Find("Button").Find("Off").gameObject.SetActive(!cond);
     }
-
-    /*
-    public void setScrollViewHeight() {
-        //sets the scroll viewer (vertical layout group) height to match its contents. minimum is the height of its parent scrollable container
-        //to be called whenever an item is shown or hidden in the settings window
-
-        //define the current top height - for use at the end of the function
-        float topHeight = (float)Math.Round(((1 - scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition) * (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y)), 2);
-
-        resizeToFitChildren(scrollView, true);
-
-        //set the scroll view to be at the same position as previously
-        scrollView.transform.parent.GetComponent<ScrollRect>().verticalNormalizedPosition = 1 - (topHeight / (scrollView.GetComponent<RectTransform>().sizeDelta.y - scrollView.transform.parent.GetComponent<RectTransform>().sizeDelta.y));
-
-    }
-    */
-
-    /*
-    public void resizeToFitChildren(GameObject parent, bool minSize) {
-        //get height of contents, including spaces between objects and top and bottom padding
-        //if minSize is true, the container height has to be at least the height of its parent
-        float newHeight = 0f;
-        int activeCount = 0;
-        for (int i = 0; i < parent.transform.childCount; i++) {
-            float h = parent.transform.GetChild(i).GetComponent<RectTransform>().sizeDelta.y;
-            if (parent.transform.GetChild(i).gameObject.activeSelf) {
-                newHeight += h;
-                activeCount++;
-            }
-        }
-        newHeight += ((activeCount - 1) * parent.GetComponent<VerticalLayoutGroup>().spacing);
-        newHeight += parent.GetComponent<VerticalLayoutGroup>().padding.top + parent.GetComponent<VerticalLayoutGroup>().padding.bottom;
-
-        //set the container height to be at least the height of the parent
-        if (minSize && newHeight < parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y) { newHeight = parent.transform.parent.GetComponent<RectTransform>().sizeDelta.y; }
-
-        Vector2 newSize = new Vector2(parent.GetComponent<RectTransform>().sizeDelta.x, newHeight);
-        parent.GetComponent<RectTransform>().sizeDelta = newSize;
-
-    }
-    */
 
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT GET CALLED WHEN A SETTING-TOGGLE BUTTON GETS PUSHED
@@ -370,8 +326,6 @@ public class SettingsCanvasController : MonoBehaviour {
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
             parentBox.transform.GetChild(i).Find("Button").Find("Text").GetComponent<Text>().text = parentBox.transform.GetChild(i).name.ToUpper() + " SKIN";
         }
-        //resizeToFitChildren(parentBox, false);
-        //setScrollViewHeight();
     }
 
     private void contractSkinButtons() {
@@ -381,8 +335,6 @@ public class SettingsCanvasController : MonoBehaviour {
             bool switchTo = false;
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
         }
-        //resizeToFitChildren(parentBox, false);
-        //setScrollViewHeight();
     }
 
     public void clickedSkinButton(GameObject button) {
