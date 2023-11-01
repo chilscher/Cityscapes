@@ -60,6 +60,16 @@ public class PuzzleGenerator : MonoBehaviour{
         if (makePuzzle) {
             createTiles();
             createHints();
+            //autofillStartingBuildings();
+        }
+    }
+
+    public void autofillStartingBuildings(){
+        for (int i = 0; i < puzzle.size; i++) {
+            for (int j = 0; j < puzzle.size; j++) {
+                if (puzzle.startingSolution[i,j] != 0)
+                    tilesArray[i,j].addStartingNumberToTile(puzzle.startingSolution[i,j]);
+            }
         }
     }
     

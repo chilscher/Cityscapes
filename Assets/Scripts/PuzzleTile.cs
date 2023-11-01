@@ -39,16 +39,20 @@ public class PuzzleTile : Tile {
     private bool scaleBuildingSizes = true; //if this is true, building sizes are scaled dynamically based on the number placed in the tile. Then the skin only needs to apply one building design
     private float minBuildingScale = 0.5f; //the smallest size that a building will be relative to the highest size. So if this is 0.5, then a #1 building will be half the dimensions of a #3 building on a small city (where the max building size is 3)
    
+    public bool hasStartingValue = false; //if hasStartingValue is true, the tile's building size cannot be overwritten or removed.
+    public Color startingBuildingColor;
+    public GameObject darkenedBackground;
+    public Sprite darkenedRoadSprite;
     public void initialize(int solution, Transform parent, int maxValue, GameManager gameManager) {
         //create the PuzzleTile object, called by PuzzleGenerator
         this.solution = solution;
         this.maxValue = maxValue;
         this.gameManager = gameManager;
 
-        road = transform.GetChild(1).GetComponent<Image>();
-        building = transform.GetChild(2).GetComponent<Image>();
-        number = transform.GetChild(3).GetComponent<Image>();
-        redBorder = transform.GetChild(4).GetComponent<Image>();
+        road = transform.GetChild(2).GetComponent<Image>();
+        building = transform.GetChild(3).GetComponent<Image>();
+        number = transform.GetChild(4).GetComponent<Image>();
+        redBorder = transform.GetChild(5).GetComponent<Image>();
 
         // pick a random tile rotation direction
         if (randomRotation) {
@@ -72,7 +76,10 @@ public class PuzzleTile : Tile {
 
     public void clicked() {
         //when the PuzzleTile is clicked, do whatever the GameManger.clickTileAction says to do
-        if(gameManager.clickTileAction == "Apply Selected") {
+        if (hasStartingValue){
+            //do nothing, cannot edit starting tiles
+        }
+        else if(gameManager.clickTileAction == "Apply Selected") {
             int selectedNumber = gameManager.selectedNumber;
             toggleNumber(selectedNumber);
             gameManager.addToPuzzleHistory();
@@ -198,7 +205,7 @@ public class PuzzleTile : Tile {
         noteGroup1.Sort();
         noteGroup2.Sort();
 
-        Transform hintsList = transform.GetChild(4);
+        Transform hintsList = transform.GetChild(5);
 
         for (int i = 0; i<hintsList.transform.childCount; i++) {
             Image s = hintsList.GetChild(i).GetComponent<Image>();
@@ -231,6 +238,15 @@ public class PuzzleTile : Tile {
         showColoredNotes();
     }
 
+    public void addStartingNumberToTile(int num){
+        shownNumber = num;
+        addNumberToTile(num);
+        hasStartingValue = true;
+        building.color = startingBuildingColor;
+        number.color = startingBuildingColor;
+        darkenedBackground.SetActive(true);
+        road.sprite = darkenedRoadSprite;
+    }
 
     public void addNumberToTile(int num) {
         //sets the number on this tile to be num. Also displays the building and sets it to the appropriate scale based on the puzzle size

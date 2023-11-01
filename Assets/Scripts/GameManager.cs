@@ -163,6 +163,7 @@ public class GameManager : MonoBehaviour {
             }
             else {
                 puzzleGenerator.createPuzzle(size);
+                puzzleGenerator.autofillStartingBuildings();
                 selectedNumber = size; //you automatically start with the highest building size selected
                 clickTileAction = "Apply Selected";
             }
@@ -932,7 +933,7 @@ public class GameManager : MonoBehaviour {
             }
             if (colorNum == 0 && num != 0) {
                 foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
-                    if (t.shownNumber == num) {
+                    if ((t.shownNumber == num) && (!t.hasStartingValue)) {
                         foundAnything = true;
                         t.removeNumberFromTile();
                     }
@@ -948,9 +949,10 @@ public class GameManager : MonoBehaviour {
         //removes all buildings and notes of all types from the puzzle
         bool changedAnything = false;
         foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
-            if (t.doesTileContainAnything()) { changedAnything = true; }
+            if ((t.doesTileContainAnything()) && (!t.hasStartingValue)) { changedAnything = true; }
             t.clearColoredNotes();
-            t.removeNumberFromTile();
+            if (!t.hasStartingValue)
+                t.removeNumberFromTile();
 
         }
         if (changedAnything) { addToPuzzleHistory(); }

@@ -26,7 +26,7 @@ public class PuzzleSolver{
     //FUNCTIONS THAT SET UP THE SOLVING SYSTEM, INCLUDING CREATING AND ORGANIZING OBJECTS
     // ---------------------------------------------------
 
-    private void setUp(int[] topHints, int[] bottomHints, int[] leftHints, int[] rightHints) {
+    private void setUp(int[] topHints, int[] bottomHints, int[] leftHints, int[] rightHints, int[,] startingSetup) {
         //creates all of the PuzzleSolverSideTile and PuzzleSolverTile objects necessary to iteratively solve the puzzle
         size = topHints.Length;
         this.topHints = createHintTiles(topHints);
@@ -35,11 +35,14 @@ public class PuzzleSolver{
         this.rightHints = createHintTiles(rightHints);
 
         createEmptyPuzzle();
+        fillEmptyPuzzle(startingSetup);
         createHintsList();
         addOppositeHints(this.topHints, this.bottomHints);
         addOppositeHints(this.leftHints, this.rightHints);
         addHintsToTiles();
         addTilesToHints();
+        
+        //Debug.Log("after populating with all numbers: " + getNumEmptyTiles() + " empty tiles");
 
     }
 
@@ -54,6 +57,16 @@ public class PuzzleSolver{
                 tilesList[(i * size) + j] = x;
                 x.xValue = j;
                 x.yValue = i;
+            }
+        }
+    }
+
+    private void fillEmptyPuzzle(int[,] startingSetup){
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                //Debug.Log(startingSetup[i,j]);
+                if (startingSetup[i,j] != 0)
+                    tilesArray[i,j].populate(startingSetup[i,j]);
             }
         }
     }
@@ -124,11 +137,11 @@ public class PuzzleSolver{
     //FUNCTIONS THAT SOLVE THE PUZZLE AS MUCH AS CAN BE DONE WITH THE PROVIDED HINTS
     // ---------------------------------------------------
 
-    public void solvePuzzle(int[] topHints, int[] bottomHints, int[] leftHints, int[] rightHints) {
+    public void solvePuzzle(int[] topHints, int[] bottomHints, int[] leftHints, int[] rightHints, int[,] startingSetup) {
         //uses the hints provided to solve the puzzle
         //this is done in two stages - immediate and iterative
         //first, create all necessary objects to store data, in the setUp function
-        setUp(topHints, bottomHints, leftHints, rightHints);
+        setUp(topHints, bottomHints, leftHints, rightHints, startingSetup);
 
         //next, using just the numbers on the sides, fill in any immediately-knowable information
         immediatePopulation();
@@ -323,12 +336,13 @@ public class PuzzleSolver{
     //FUNCTIONS THAT CHECK THE SOLUTION, AND ALSO THE FUNCTION THAT STARTS THIS WHOLE CHECKING PROCESS
     // ---------------------------------------------------
     
-    public bool isPuzzleValid(int[] topHints, int[] bottomHints, int[] leftHints, int[] rightHints) {
+    public bool isPuzzleValid(int[] topHints, int[] bottomHints, int[] leftHints, int[] rightHints, int[,] startingSetup) {
         //attempts to solve the puzzle using the provided hints. The puzzle is valid if there are fewer than 7 empty spots remaining in the puzzle after being solved as much as possible
-        solvePuzzle(topHints, bottomHints, leftHints, rightHints);
-        if ((getNumEmptyTiles() < 7)) {
+        solvePuzzle(topHints, bottomHints, leftHints, rightHints, startingSetup);
+        if (getNumEmptyTiles() < 2) {
             return true;
         }
+        //Debug.Log(getNumEmptyTiles() + " empty tiles");
         return false;
     }
 
