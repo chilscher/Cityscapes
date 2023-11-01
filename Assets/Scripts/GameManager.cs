@@ -163,7 +163,7 @@ public class GameManager : MonoBehaviour {
             }
             else {
                 puzzleGenerator.createPuzzle(size);
-                puzzleGenerator.autoFillPermanentBuildings();
+                puzzleGenerator.autofillStartingBuildings();
                 selectedNumber = size; //you automatically start with the highest building size selected
                 clickTileAction = "Apply Selected";
             }
@@ -175,6 +175,8 @@ public class GameManager : MonoBehaviour {
             setUndoRedoRemoveClearButtons();
             highlightSelectedNumber(); 
             if (clickTileAction == "Clear Tile") { disselectNumber(prevClickedNumButton); }
+
+            hidePositioningObjects();
             highlightBuildType();
             puzzleBackground.GetComponent<Image>().sprite = skin.puzzleBackground;
             InterfaceFunctions.colorPuzzleButton(winParent.transform.Find("Win Popup").Find("Menu"));
@@ -456,6 +458,11 @@ public class GameManager : MonoBehaviour {
             specialButtonClear.SetActive(false);
         }
 
+    }
+
+    public void hidePositioningObjects() {
+        //hide the puzzle positioning before the game starts
+        //puzzlePositioning.transform.Find("Image").gameObject.SetActive(false);
     }
 
     public void drawFullPuzzle() {
@@ -926,7 +933,7 @@ public class GameManager : MonoBehaviour {
             }
             if (colorNum == 0 && num != 0) {
                 foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
-                    if ((t.shownNumber == num) && (!t.isPermanentBuilding)) {
+                    if ((t.shownNumber == num) && (!t.hasStartingValue)) {
                         foundAnything = true;
                         t.removeNumberFromTile();
                     }
@@ -942,9 +949,9 @@ public class GameManager : MonoBehaviour {
         //removes all buildings and notes of all types from the puzzle
         bool changedAnything = false;
         foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
-            if ((t.doesTileContainAnything()) && (!t.isPermanentBuilding)) { changedAnything = true; }
+            if ((t.doesTileContainAnything()) && (!t.hasStartingValue)) { changedAnything = true; }
             t.clearColoredNotes();
-            if (!t.isPermanentBuilding)
+            if (!t.hasStartingValue)
                 t.removeNumberFromTile();
 
         }

@@ -41,6 +41,8 @@ public class PuzzleSolver{
         addOppositeHints(this.leftHints, this.rightHints);
         addHintsToTiles();
         addTilesToHints();
+        
+        //Debug.Log("after populating with all numbers: " + getNumEmptyTiles() + " empty tiles");
 
     }
 
@@ -62,6 +64,7 @@ public class PuzzleSolver{
     private void fillEmptyPuzzle(int[,] startingSetup){
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
+                //Debug.Log(startingSetup[i,j]);
                 if (startingSetup[i,j] != 0)
                     tilesArray[i,j].populate(startingSetup[i,j]);
             }
@@ -336,7 +339,11 @@ public class PuzzleSolver{
     public bool isPuzzleValid(int[] topHints, int[] bottomHints, int[] leftHints, int[] rightHints, int[,] startingSetup) {
         //attempts to solve the puzzle using the provided hints. The puzzle is valid if there are fewer than 7 empty spots remaining in the puzzle after being solved as much as possible
         solvePuzzle(topHints, bottomHints, leftHints, rightHints, startingSetup);
-        return getNumEmptyTiles() < 2;
+        if (getNumEmptyTiles() < 2) {
+            return true;
+        }
+        //Debug.Log(getNumEmptyTiles() + " empty tiles");
+        return false;
     }
 
     private int getNumEmptyTiles() {

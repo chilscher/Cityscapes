@@ -39,12 +39,10 @@ public class PuzzleTile : Tile {
     private bool scaleBuildingSizes = true; //if this is true, building sizes are scaled dynamically based on the number placed in the tile. Then the skin only needs to apply one building design
     private float minBuildingScale = 0.5f; //the smallest size that a building will be relative to the highest size. So if this is 0.5, then a #1 building will be half the dimensions of a #3 building on a small city (where the max building size is 3)
    
-    public bool isPermanentBuilding = false; //if true, the tile's building size cannot be overwritten or removed.
-
-    //stuff used to denote permanent buildings
-    public Color permanentBuildingColor;
-    public GameObject permanentDarkenedBackground;
-    public Color permanentNumberColor;
+    public bool hasStartingValue = false; //if hasStartingValue is true, the tile's building size cannot be overwritten or removed.
+    public Color startingBuildingColor;
+    public GameObject darkenedBackground;
+    public Sprite darkenedRoadSprite;
     public void initialize(int solution, Transform parent, int maxValue, GameManager gameManager) {
         //create the PuzzleTile object, called by PuzzleGenerator
         this.solution = solution;
@@ -78,7 +76,7 @@ public class PuzzleTile : Tile {
 
     public void clicked() {
         //when the PuzzleTile is clicked, do whatever the GameManger.clickTileAction says to do
-        if (isPermanentBuilding){
+        if (hasStartingValue){
             //do nothing, cannot edit starting tiles
         }
         else if(gameManager.clickTileAction == "Apply Selected") {
@@ -240,12 +238,14 @@ public class PuzzleTile : Tile {
         showColoredNotes();
     }
 
-    public void addPermanentBuildingToTile(int num){
+    public void addStartingNumberToTile(int num){
         shownNumber = num;
         addNumberToTile(num);
-        isPermanentBuilding = true;
-        building.color = permanentBuildingColor;
-        permanentDarkenedBackground.SetActive(true);
+        hasStartingValue = true;
+        building.color = startingBuildingColor;
+        number.color = startingBuildingColor;
+        darkenedBackground.SetActive(true);
+        road.sprite = darkenedRoadSprite;
     }
 
     public void addNumberToTile(int num) {
@@ -316,8 +316,6 @@ public class PuzzleTile : Tile {
             }
             else {
                 number.color = numberColor;
-                if (isPermanentBuilding)
-                    number.color = permanentNumberColor;
             }
         }
     }
@@ -325,8 +323,6 @@ public class PuzzleTile : Tile {
     public void unhighlightBuildingNumber() {
         //un-highlights the building color on this tile
         number.color = numberColor;
-        if (isPermanentBuilding)
-            number.color = permanentNumberColor;
     }
 
 }

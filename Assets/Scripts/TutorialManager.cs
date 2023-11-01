@@ -32,6 +32,7 @@ public class TutorialManager{
         gameManager.puzzleGenerator.createPuzzle(3);
         gameManager.drawFullPuzzle();
         gameManager.hideHints();
+        gameManager.hidePositioningObjects();
         gameManager.setSelectionModeButtons();
         gameManager.hitBuildButton();
         tutorialText = gameManager.tutorialTextBox.transform.Find("Text").GetComponent<Text>();

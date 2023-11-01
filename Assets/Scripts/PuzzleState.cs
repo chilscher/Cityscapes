@@ -11,7 +11,7 @@ public class PuzzleState {
     public int[,] buildings;
     public int[,][] notes1;
     public int[,][] notes2;
-    public bool[,] permanentBuildings;
+    public bool[,] nonOverwritables;
     
     public PuzzleState(PuzzleGenerator puzzle) {
         //takes a snapshot of the puzzle and saves it in this PuzzleState object
@@ -20,6 +20,7 @@ public class PuzzleState {
         for (int i =0; i<size; i++) {
             for (int j = 0; j<size; j++) {
                 buildings[i, j] = puzzle.tilesArray[i, j].shownNumber;
+                //Debug.Log(buildings[i, j]);
             }
         }
         notes1 = new int[size, size][];
@@ -37,11 +38,11 @@ public class PuzzleState {
             }
         }
 
-        permanentBuildings = new bool[size, size];
+        nonOverwritables = new bool[size, size];
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                permanentBuildings[i, j] = puzzle.tilesArray[i, j].isPermanentBuilding;
+                nonOverwritables[i, j] = puzzle.tilesArray[i, j].hasStartingValue;
             }
         }
 
@@ -56,28 +57,20 @@ public class PuzzleState {
         string buildingString = split1[0];
         string notes1String = split1[1];
         string notes2String = split1[2];
-
-        bool puzzleWasMadeBeforePermanentBuildings = true;
-        string permanentBuildingsString = "";
-        if (split1.Length > 3)
-            puzzleWasMadeBeforePermanentBuildings = false;
-        if (!puzzleWasMadeBeforePermanentBuildings)
-            permanentBuildingsString = split1[3];
+        string nonOverwritablesString = split1[3];
 
         string[] buildingList = buildingString.Split('-');
-        string[] permanentBuildingsList = new string[0];
-        if (!puzzleWasMadeBeforePermanentBuildings)
-         permanentBuildingsList = permanentBuildingsString.Split('-');
+        string[] nonOverwritablesList = nonOverwritablesString.Split('-');
 
         buildings = new int[size, size];
-        permanentBuildings = new bool[size, size];
+        nonOverwritables = new bool[size, size];
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 buildings[i, j] = Int32.Parse(buildingList[(size * i) + j]);
-                if (!puzzleWasMadeBeforePermanentBuildings && permanentBuildingsList[(size * i ) + j] == "T")
-                    permanentBuildings[i,j] = true;
+                if (nonOverwritablesList[(size * i ) + j] == "T")
+                    nonOverwritables[i,j] = true;
                 else    
-                    permanentBuildings[i,j] = false;
+                    nonOverwritables[i,j] = false;
             }
         }
 
@@ -128,9 +121,9 @@ public class PuzzleState {
         //takes a PuzzleGenerator object and sets all of the building and note values to be the ones contained in this PuzzleState
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (permanentBuildings[i,j]){
-                    puzzle.tilesArray[i, j].isPermanentBuilding = true;
-                    puzzle.tilesArray[i,j].addPermanentBuildingToTile(buildings[i,j]);
+                if (nonOverwritables[i,j]){
+                    puzzle.tilesArray[i, j].hasStartingValue = true;
+                    puzzle.tilesArray[i,j].addStartingNumberToTile(buildings[i,j]);
                 }
                 else{
                     puzzle.tilesArray[i, j].shownNumber = buildings[i, j];
@@ -159,21 +152,21 @@ public class PuzzleState {
         string buildingsString = "";
         string notes1String = "";
         string notes2String = "";
-        string permanentBuildingsString = "";
+        string nonOverwritablesString = "";
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 buildingsString += buildings[i, j];
                 buildingsString += "-";
-                if (permanentBuildings[i,j])
-                    permanentBuildingsString += "T";
+                if (nonOverwritables[i,j])
+                    nonOverwritablesString += "T";
                 else
-                    permanentBuildingsString += "F";
-                permanentBuildingsString += "-";
+                    nonOverwritablesString += "F";
+                nonOverwritablesString += "-";
             }
         }
         buildingsString = buildingsString.Substring(0, buildingsString.Length - 1);
-        permanentBuildingsString = permanentBuildingsString.Substring(0, permanentBuildingsString.Length - 1);
+        nonOverwritablesString = nonOverwritablesString.Substring(0, nonOverwritablesString.Length - 1);
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
@@ -190,7 +183,7 @@ public class PuzzleState {
         notes1String = notes1String.Substring(0, notes1String.Length - 1);
         notes2String = notes2String.Substring(0, notes2String.Length - 1);
 
-        string result = buildingsString + " " + notes1String + " " + notes2String + " " + permanentBuildingsString;
+        string result = buildingsString + " " + notes1String + " " + notes2String + " " + nonOverwritablesString;
         return result;
     }
 

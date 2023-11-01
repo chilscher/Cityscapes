@@ -189,10 +189,10 @@ MonoBehaviour:
   - {fileID: 21300000, guid: aa1a003c9b186484b8f9c1f8a3e5e6bb, type: 3}
   - {fileID: 21300000, guid: 7a50ec299ed3ec44ba37309b5eac6c1c, type: 3}
   - {fileID: 21300000, guid: 634d37160e3535646b62307941d5f90b, type: 3}
-  isPermanentBuilding: 0
-  permanentBuildingColor: {r: 0.6981132, g: 0.6981132, b: 0.6981132, a: 1}
-  permanentDarkenedBackground: {fileID: 4641651626179308636}
-  permanentNumberColor: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+  hasStartingValue: 0
+  startingBuildingColor: {r: 0.4528302, g: 0.4528302, b: 0.4528302, a: 1}
+  darkenedBackground: {fileID: 4641651626179308636}
+  darkenedRoadSprite: {fileID: 21300000, guid: ef11ad1fe5638f44f902689f0c3440c1, type: 3}
 --- !u!1 &209756070809780426
 GameObject:
   m_ObjectHideFlags: 0
@@ -551,7 +551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.18431373}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.2627451}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
