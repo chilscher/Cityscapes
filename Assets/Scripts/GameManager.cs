@@ -169,14 +169,11 @@ public class GameManager : MonoBehaviour {
             }
             //set up the visuals of the screen based on the puzzle size and what tools you have unlocked
             drawFullPuzzle();
-            //setRemoveAllAndClearButtons();
             setNumberButtons();
             setSelectionModeButtons();
             setUndoRedoRemoveClearButtons();
             highlightSelectedNumber(); 
             if (clickTileAction == "Clear Tile") { disselectNumber(prevClickedNumButton); }
-
-            hidePositioningObjects();
             highlightBuildType();
             puzzleBackground.GetComponent<Image>().sprite = skin.puzzleBackground;
             InterfaceFunctions.colorPuzzleButton(winParent.transform.Find("Win Popup").Find("Menu"));
@@ -241,9 +238,8 @@ public class GameManager : MonoBehaviour {
 
                     if (StaticVariables.waitingOnButtonClickAfterFadeIn) {
                         StaticVariables.waitingOnButtonClickAfterFadeIn = false;
-                        if (StaticVariables.buttonClickInWaiting.Contains("menu")) {
+                        if (StaticVariables.buttonClickInWaiting.Contains("menu"))
                             goToMainMenu();
-                        }
                     }
                 }
             }
@@ -254,9 +250,8 @@ public class GameManager : MonoBehaviour {
                 blackSprite.color = c;
                 if (fadeTimer <= 0f) {
                     StaticVariables.fadingIntoPuzzleSameSize = true;
-                    if (StaticVariables.fadingTo == "puzzle") {
+                    if (StaticVariables.fadingTo == "puzzle")
                         SceneManager.LoadScene("InPuzzle");
-                    }
 
                 }
             }
@@ -287,12 +282,10 @@ public class GameManager : MonoBehaviour {
             c.a = (fadeOutTime - fadeTimer) / fadeOutTime;
             blackSprite.color = c;
             if (fadeTimer <= 0f) {
-                if (StaticVariables.fadingTo == "menu") {
+                if (StaticVariables.fadingTo == "menu")
                     SceneManager.LoadScene("MainMenu");
-                }
-                if (StaticVariables.fadingTo == "shop") {
+                if (StaticVariables.fadingTo == "shop")
                     SceneManager.LoadScene("Shop");
-                }
 
             }
         }
@@ -458,11 +451,6 @@ public class GameManager : MonoBehaviour {
             specialButtonClear.SetActive(false);
         }
 
-    }
-
-    public void hidePositioningObjects() {
-        //hide the puzzle positioning before the game starts
-        //puzzlePositioning.transform.Find("Image").gameObject.SetActive(false);
     }
 
     public void drawFullPuzzle() {
@@ -933,7 +921,7 @@ public class GameManager : MonoBehaviour {
             }
             if (colorNum == 0 && num != 0) {
                 foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
-                    if ((t.shownNumber == num) && (!t.hasStartingValue)) {
+                    if ((t.shownNumber == num) && (!t.isPermanentBuilding)) {
                         foundAnything = true;
                         t.removeNumberFromTile();
                     }
@@ -949,9 +937,9 @@ public class GameManager : MonoBehaviour {
         //removes all buildings and notes of all types from the puzzle
         bool changedAnything = false;
         foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
-            if ((t.doesTileContainAnything()) && (!t.hasStartingValue)) { changedAnything = true; }
+            if ((t.doesTileContainAnything()) && (!t.isPermanentBuilding)) { changedAnything = true; }
             t.clearColoredNotes();
-            if (!t.hasStartingValue)
+            if (!t.isPermanentBuilding)
                 t.removeNumberFromTile();
 
         }
