@@ -42,6 +42,7 @@ public class Skin: MonoBehaviour{
     public Sprite medCityArt;
     public Sprite largeCityArt;
     public Sprite hugeCityArt;
+    public Sprite massiveCityArt;
 
 
     /* TO ADD A NEW SKIN, FOLLOW THESE INSTRUCTIONS!

@@ -48,6 +48,8 @@ public class SaveData{
     public string savedBuildType;
 
     public bool hasBeatenTutorial;
+    public bool unlockedMassive;
+    public bool showMassive;
 
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT ARE USED TO SAVE PLAYER DATA
@@ -68,10 +70,12 @@ public class SaveData{
         showMed = StaticVariables.showMed;
         showLarge = StaticVariables.showLarge;
         showHuge = StaticVariables.showHuge;
+        showMassive = StaticVariables.showMassive;
 
         unlockedMed = StaticVariables.unlockedMedium;
         unlockedLarge = StaticVariables.unlockedLarge;
         unlockedHuge = StaticVariables.unlockedHuge;
+        unlockedMassive = StaticVariables.unlockedMassive;
         unlockedNotes1 = StaticVariables.unlockedNotes1;
         unlockedNotes2 = StaticVariables.unlockedNotes2;
         unlockedResidentsChangeColor = StaticVariables.unlockedResidentsChangeColor;
@@ -144,10 +148,12 @@ public class SaveData{
         StaticVariables.showMed = showMed;
         StaticVariables.showLarge = showLarge;
         StaticVariables.showHuge = showHuge;
+        StaticVariables.showMassive = showMassive;
 
         StaticVariables.unlockedMedium = unlockedMed;
         StaticVariables.unlockedLarge = unlockedLarge;
         StaticVariables.unlockedHuge = unlockedHuge;
+        StaticVariables.unlockedMassive = unlockedMassive;
         StaticVariables.unlockedNotes1 = unlockedNotes1;
         StaticVariables.unlockedNotes2 = unlockedNotes2;
         StaticVariables.unlockedResidentsChangeColor = unlockedResidentsChangeColor;

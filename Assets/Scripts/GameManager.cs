@@ -26,7 +26,6 @@ public class GameManager : MonoBehaviour {
     public bool includeNote2Btn;
     public PuzzleGenerator puzzleGenerator; //the PuzzleGenerator object that will create the puzzle's solution
     public GameObject puzzlePositioning; //determines where the puzzle is going to go
-    public GameObject puzzlePositioningImage;
     public GameObject selectionModeButtons0;
     public GameObject selectionModeButtons1;
     public GameObject selectionModeButtons2;
@@ -44,18 +43,22 @@ public class GameManager : MonoBehaviour {
     private GameObject note1Button;
     private GameObject note2Button;
     private GameObject clearTileButton;
-    public GameObject undoRedoButtons;
     private GameObject removeAllOfNumberButton;
-    private GameObject clearPuzzleButton;
-    public GameObject removeAllAndClearButtons;
-    public GameObject onlyRemoveAllButton;
-    public GameObject onlyClearButton;
+
+    public GameObject specialButtonsAll;
+    public GameObject specialButtonsUndoRedoRemove;
+    public GameObject specialButtonsUndoRedoClear;
+    public GameObject specialButtonsUndoRedo;
+    public GameObject specialButtonsRemoveClear;
+    public GameObject specialButtonRemove;
+    public GameObject specialButtonClear;
     [HideInInspector]
     public GameObject[] numberButtons;
     public GameObject numbers1to3;
     public GameObject numbers1to4;
     public GameObject numbers1to5;
     public GameObject numbers1to6;
+    public GameObject numbers1to7;
     public GameObject menuButton;
     
     //variables used in the tutorial
@@ -95,6 +98,7 @@ public class GameManager : MonoBehaviour {
     public int coinsFor4Win = 5;
     public int coinsFor5Win = 10;
     public int coinsFor6Win = 20;
+    public int coinsFor7Win = 50;
     [HideInInspector]
     public bool canClick = true;
     private bool hasWonYet = false;
@@ -164,16 +168,15 @@ public class GameManager : MonoBehaviour {
             }
             //set up the visuals of the screen based on the puzzle size and what tools you have unlocked
             drawFullPuzzle();
-            setRemoveAllAndClearButtons();
+            //setRemoveAllAndClearButtons();
             setNumberButtons();
+            setSelectionModeButtons();
+            setUndoRedoRemoveClearButtons();
             highlightSelectedNumber(); 
             if (clickTileAction == "Clear Tile") { disselectNumber(prevClickedNumButton); }
 
             hidePositioningObjects();
-            setSelectionModeButtons();
-            setUndoRedoButtons();
             highlightBuildType();
-            //apply the current skin
             puzzleBackground.GetComponent<Image>().sprite = skin.puzzleBackground;
             InterfaceFunctions.colorPuzzleButton(winParent.transform.Find("Win Popup").Find("Menu"));
             InterfaceFunctions.colorPuzzleButton(winParent.transform.Find("Win Popup").Find("Another Puzzle"));
@@ -191,6 +194,7 @@ public class GameManager : MonoBehaviour {
                 case 4: coins = coinsFor4Win; break;
                 case 5: coins = coinsFor5Win; break;
                 case 6: coins = coinsFor6Win; break;
+                case 7: coins = coinsFor7Win; break;
             }
             int onesDigit = coins % 10;
             int tensDigit = (coins / 10) % 10;
@@ -327,6 +331,7 @@ public class GameManager : MonoBehaviour {
         numbers1to4.SetActive(false);
         numbers1to5.SetActive(false);
         numbers1to6.SetActive(false);
+        numbers1to7.SetActive(false);
     }
 
     private void colorMenuButton() {
@@ -353,6 +358,9 @@ public class GameManager : MonoBehaviour {
                 break;
             case 6:
                 setNBs(numbers1to6);
+                break;
+            case 7:
+                setNBs(numbers1to7);
                 break;
         }
     }
@@ -405,36 +413,50 @@ public class GameManager : MonoBehaviour {
             clearTileButton = selectionModeButtons3.transform.Find("Clear").gameObject;
         }
     }
-    
-    public void setUndoRedoButtons() {
-        //show the undo and redo buttons if they are toggled on
-        InterfaceFunctions.colorPuzzleButton(undoRedoButtons.transform.Find("Undo"));
-        InterfaceFunctions.colorPuzzleButton(undoRedoButtons.transform.Find("Redo"));
-        undoRedoButtons.SetActive(StaticVariables.includeUndoRedo);
-    }
 
-    public void setRemoveAllAndClearButtons() {
-        //show the appropriate remove-all and clear buttons. You can have either one, or both turned on
-        removeAllAndClearButtons.SetActive(false);
-        onlyRemoveAllButton.SetActive(false);
-        onlyClearButton.SetActive(false);
-        removeAllOfNumberButton = onlyRemoveAllButton.transform.GetChild(0).gameObject;
-        clearPuzzleButton = onlyClearButton.transform.GetChild(0).gameObject;
-        if (!StaticVariables.isTutorial) {
-            if (StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle) {
-                removeAllOfNumberButton = removeAllAndClearButtons.transform.Find("Remove All").gameObject;
-                clearPuzzleButton = removeAllAndClearButtons.transform.Find("Clear Puzzle").gameObject;
-                removeAllAndClearButtons.SetActive(true);
-            }
-            else if (StaticVariables.includeRemoveAllOfNumber) {
-                onlyRemoveAllButton.SetActive(true);
-            }
-            else if (StaticVariables.includeClearPuzzle) {
-                onlyClearButton.SetActive(true);
-            }
+    private void setUndoRedoRemoveClearButtons(){
+        if (StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
+            specialButtonsAll.SetActive(true);
+            specialButtonsUndoRedoRemove.SetActive(false);
+            specialButtonsUndoRedoClear.SetActive(false);
+            specialButtonsUndoRedo.SetActive(false);
+            specialButtonsRemoveClear.SetActive(false);
+            specialButtonRemove.SetActive(false);
+            specialButtonClear.SetActive(false);
+            removeAllOfNumberButton = specialButtonsAll.transform.GetChild(2).gameObject;
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(1));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(2));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(3));
         }
-        InterfaceFunctions.colorPuzzleButton(removeAllOfNumberButton);
-        InterfaceFunctions.colorPuzzleButton(clearPuzzleButton);
+        else if (StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
+
+        }
+        else if (StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
+
+        }
+        else if (StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
+
+        }
+        else if (!StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
+
+        }
+        else if (!StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
+
+        }
+        else if (!StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
+
+        }
+        else if (!StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
+            specialButtonsAll.SetActive(false);
+            specialButtonsUndoRedoRemove.SetActive(false);
+            specialButtonsUndoRedoClear.SetActive(false);
+            specialButtonsUndoRedo.SetActive(false);
+            specialButtonsRemoveClear.SetActive(false);
+            specialButtonRemove.SetActive(false);
+            specialButtonClear.SetActive(false);
+        }
+
     }
 
     public void hidePositioningObjects() {
@@ -530,19 +552,23 @@ public class GameManager : MonoBehaviour {
         GameObject med = winParent.transform.Find("Win Popup").Find("City Art - Medium").gameObject;
         GameObject large = winParent.transform.Find("Win Popup").Find("City Art - Large").gameObject;
         GameObject huge = winParent.transform.Find("Win Popup").Find("City Art - Huge").gameObject;
+        GameObject massive = winParent.transform.Find("Win Popup").Find("City Art - Huge").gameObject;
         small.SetActive(false);
         med.SetActive(false);
         large.SetActive(false);
         huge.SetActive(false);
+        massive.SetActive(false);
         small.GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
         med.GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
         large.GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
         huge.GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
+        massive.GetComponent<Image>().sprite = StaticVariables.skin.massiveCityArt;
         switch (size) {
             case 3: small.SetActive(true); break;
             case 4: med.SetActive(true); break;
             case 5: large.SetActive(true); break;
             case 6: huge.SetActive(true); break;
+            case 7: massive.SetActive(true); break;
         }
     }
 
@@ -616,6 +642,9 @@ public class GameManager : MonoBehaviour {
                 break;
             case 6:
                 amt = coinsFor6Win;
+                break;
+            case 7:
+                amt = coinsFor7Win;
                 break;
         }
         StaticVariables.coins += amt;

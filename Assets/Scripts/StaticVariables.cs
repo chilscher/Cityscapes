@@ -23,6 +23,7 @@ public class StaticVariables{
     static public bool unlockedMedium = false;
     static public bool unlockedLarge = false;
     static public bool unlockedHuge = false;
+    static public bool unlockedMassive = false;
     static public bool unlockedNotes1 = false;
     static public bool unlockedNotes2 = false;
     static public bool unlockedResidentsChangeColor = false;
@@ -43,6 +44,7 @@ public class StaticVariables{
     static public bool showMed = false;
     static public bool showLarge = false;
     static public bool showHuge = false;
+    static public bool showMassive = false;
     static public bool hidePurchasedUpgrades = false;
 
     //variables that deal with fading in and out between scenes

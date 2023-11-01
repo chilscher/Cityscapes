@@ -14,6 +14,7 @@ public class ShopCanvasController : MonoBehaviour {
     public int medCityPrice = 10;
     public int largeCityPrice = 40;
     public int hugeCityPrice = 100;
+    public int massiveCityPrice = 300;
     public int notes1Price = 10;
     public int notes2Price = 10;
     public int residentColorPrice = 10;
@@ -43,6 +44,7 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject expandMedButton;
     public GameObject expandLargeButton;
     public GameObject expandHugeButton;
+    public GameObject expandMassiveButton;
     public GameObject expandNotes1Button;
     public GameObject expandNotes2Button;
     public GameObject expandResidentColorButton;
@@ -115,6 +117,7 @@ public class ShopCanvasController : MonoBehaviour {
         displayCoinsOnButton(expandMedButton, medCityPrice);
         displayCoinsOnButton(expandLargeButton, largeCityPrice);
         displayCoinsOnButton(expandHugeButton, hugeCityPrice);
+        displayCoinsOnButton(expandMassiveButton, massiveCityPrice);
         displayCoinsOnButton(expandNotes1Button, notes1Price);
         displayCoinsOnButton(expandNotes2Button, notes2Price);
         displayCoinsOnButton(expandResidentColorButton, residentColorPrice);
@@ -259,6 +262,7 @@ public class ShopCanvasController : MonoBehaviour {
         updateButton(expandMedButton, StaticVariables.unlockedMedium, medCityPrice);
         updateButton(expandLargeButton, StaticVariables.unlockedLarge, largeCityPrice, StaticVariables.unlockedMedium);
         updateButton(expandHugeButton, StaticVariables.unlockedHuge, hugeCityPrice, StaticVariables.unlockedLarge);
+        updateButton(expandMassiveButton, StaticVariables.unlockedMassive, massiveCityPrice, StaticVariables.unlockedMassive);
         updateButton(expandNotes1Button, StaticVariables.unlockedNotes1, notes1Price);
         updateButton(expandNotes2Button, StaticVariables.unlockedNotes2, notes2Price, StaticVariables.unlockedNotes1);
         updateButton(expandResidentColorButton, StaticVariables.unlockedResidentsChangeColor, residentColorPrice);
@@ -273,7 +277,7 @@ public class ShopCanvasController : MonoBehaviour {
 
         //also update text shown when all upgrades of a single type have been purchased.
         //these texts should only appear if the player chooses to hide purchased upgrades
-        bool allCities = StaticVariables.unlockedMedium && StaticVariables.unlockedLarge && StaticVariables.unlockedHuge;
+        bool allCities = StaticVariables.unlockedMedium && StaticVariables.unlockedLarge && StaticVariables.unlockedHuge && StaticVariables.unlockedMassive;
         bool allFeatures = StaticVariables.unlockedNotes1 && StaticVariables.unlockedNotes2 && StaticVariables.unlockedResidentsChangeColor && StaticVariables.unlockedUndoRedo && StaticVariables.unlockedRemoveAllOfNumber && StaticVariables.unlockedClearPuzzle && StaticVariables.unlockedHighlightBuildings;
         bool allSkins = StaticVariables.unlockedSkins.Count + 1 == StaticVariables.allSkins.Length;
         bool allContent = allCities && allFeatures && allSkins;
@@ -589,6 +593,17 @@ public class ShopCanvasController : MonoBehaviour {
             doPurchase(hugeCityPrice);
         }
     }
+    public void unlockMassive() {
+        if (canPurchase(StaticVariables.unlockedMassive, massiveCityPrice) && StaticVariables.unlockedHuge && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
+            StaticVariables.unlockedMassive = true;
+            StaticVariables.highestUnlockedSize = 7;
+            StaticVariables.showMed = true;
+            StaticVariables.showLarge = true;
+            StaticVariables.showHuge = true;
+            StaticVariables.showMassive = true;
+            doPurchase(massiveCityPrice);
+        }
+    }
     public void unlockNotes1() {
         if (canPurchase(StaticVariables.unlockedNotes1,notes1Price)) {
             StaticVariables.unlockedNotes1 = true;
@@ -669,10 +684,12 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.unlockedMedium = false;
         StaticVariables.unlockedLarge = false;
         StaticVariables.unlockedHuge = false;
+        StaticVariables.unlockedMassive = false;
         StaticVariables.highestUnlockedSize = 3;
         StaticVariables.showMed = false;
         StaticVariables.showLarge = false;
         StaticVariables.showHuge = false;
+        StaticVariables.showMassive = false;
 
         StaticVariables.unlockedNotes1 = false;
         StaticVariables.unlockedNotes2 = false;
@@ -702,10 +719,12 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.unlockedMedium = true;
         StaticVariables.unlockedLarge = true;
         StaticVariables.unlockedHuge = true;
-        StaticVariables.highestUnlockedSize = 6;
+        StaticVariables.unlockedMassive = true;
+        StaticVariables.highestUnlockedSize = 7;
         StaticVariables.showMed = true;
         StaticVariables.showLarge = true;
         StaticVariables.showHuge = true;
+        StaticVariables.showMassive = true;
 
         StaticVariables.unlockedNotes1 = true;
         StaticVariables.unlockedNotes2 = true;

@@ -15,10 +15,12 @@ public class MainMenuCanvasController : MonoBehaviour {
     public GameObject mediumShadow;
     public GameObject largeShadow;
     public GameObject hugeShadow;
+    public GameObject massiveShadow;
     public GameObject smallText;
     public GameObject mediumText;
     public GameObject largeText;
     public GameObject hugeText;
+    public GameObject massiveText;
     public GameObject returnOrAbandonButtons;
     public GameObject background;
     public GameObject shopButton;
@@ -148,6 +150,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         puzzleButtons.transform.Find("4").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
         puzzleButtons.transform.Find("5").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
         puzzleButtons.transform.Find("6").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
+        puzzleButtons.transform.Find("7").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.massiveCityArt;
 
         if (StaticVariables.hasSavedPuzzleState) {
             string[] arr = new string[2];
@@ -163,6 +166,8 @@ public class MainMenuCanvasController : MonoBehaviour {
                 returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Large").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
                 returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Huge").gameObject.SetActive(false);
                 returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Huge").GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
+                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Huge").gameObject.SetActive(false);
+                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Massive").GetComponent<Image>().sprite = StaticVariables.skin.massiveCityArt;
                 if (StaticVariables.savedPuzzleSize == 3) {
                     returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Small").gameObject.SetActive(true);
                 }
@@ -174,6 +179,9 @@ public class MainMenuCanvasController : MonoBehaviour {
                 }
                 if (StaticVariables.savedPuzzleSize == 6) {
                     returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Huge").gameObject.SetActive(true);
+                }
+                if (StaticVariables.savedPuzzleSize == 7) {
+                    returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Massive").gameObject.SetActive(true);
                 }
             }
         }
@@ -191,10 +199,12 @@ public class MainMenuCanvasController : MonoBehaviour {
         mediumShadow.SetActive(false);
         largeShadow.SetActive(false);
         hugeShadow.SetActive(false);
+        massiveShadow.SetActive(false);
         smallText.SetActive(true);
         mediumText.SetActive(true);
         largeText.SetActive(true);
         hugeText.SetActive(true);
+        massiveText.SetActive(true);
 
         int highestUnlockedSize = getHighestUnlockedSize();
         if (StaticVariables.hasSavedPuzzleState) {
@@ -207,11 +217,13 @@ public class MainMenuCanvasController : MonoBehaviour {
             mediumShadow.SetActive(!(highestUnlockedSize >= 4));
             largeShadow.SetActive(!(highestUnlockedSize >= 5));
             hugeShadow.SetActive(!(highestUnlockedSize >= 6));
+            massiveShadow.SetActive(!(highestUnlockedSize >= 7));
 
             smallText.SetActive(highestUnlockedSize >= 3);
             mediumText.SetActive(highestUnlockedSize >= 4);
             largeText.SetActive(highestUnlockedSize >= 5);
             hugeText.SetActive(highestUnlockedSize >= 6);
+            massiveText.SetActive(highestUnlockedSize >= 7);
         }
 
         /*
@@ -248,6 +260,9 @@ public class MainMenuCanvasController : MonoBehaviour {
         if (StaticVariables.showHuge) {
             highestUnlockedSize = 6;
         }
+        if (StaticVariables.showMassive) {
+            highestUnlockedSize = 7;
+        }
         return highestUnlockedSize;
     }
 
@@ -269,8 +284,7 @@ public class MainMenuCanvasController : MonoBehaviour {
 
     public void startPuzzle(int size) {
         //start fading out, and after the fade-out process is completed, go to the puzzle scene
-        //if (getHighestUnlockedSize() >= size) {
-        if (true){
+        if (getHighestUnlockedSize() >= size) {
             if (!StaticVariables.isFading) {
                 StaticVariables.size = size;
                 StaticVariables.isTutorial = false;

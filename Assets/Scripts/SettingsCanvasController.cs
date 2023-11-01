@@ -18,6 +18,7 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject medCityButton;
     public GameObject largeCityButton;
     public GameObject hugeCityButton;
+    public GameObject massiveCityButton;
     public GameObject notes1Button;
     public GameObject notes2Button;
     public GameObject residentColorButton;
@@ -136,6 +137,7 @@ public class SettingsCanvasController : MonoBehaviour {
         medCityButton.SetActive(StaticVariables.unlockedMedium);
         largeCityButton.SetActive(StaticVariables.unlockedLarge);
         hugeCityButton.SetActive(StaticVariables.unlockedHuge);
+        massiveCityButton.SetActive(StaticVariables.unlockedMassive);
         notes1Button.SetActive(StaticVariables.unlockedNotes1);
         notes2Button.SetActive(StaticVariables.unlockedNotes2);
         residentColorButton.SetActive(StaticVariables.unlockedResidentsChangeColor);
@@ -153,7 +155,7 @@ public class SettingsCanvasController : MonoBehaviour {
         bool anyCosmetics = StaticVariables.unlockedSkins.Count > 0;
         bool anyVisuals = residentColorButton.activeSelf || highlightBuildingsButton.activeSelf;
         bool anyButtons = notes1Button.activeSelf || notes2Button.activeSelf || undoRedoButton.activeSelf || removeNumbersButton.activeSelf || clearPuzzleButton.activeSelf;
-        bool anyCities = medCityButton.activeSelf || largeCityButton.activeSelf || hugeCityButton.activeSelf;
+        bool anyCities = medCityButton.activeSelf || largeCityButton.activeSelf || hugeCityButton.activeSelf || massiveCityButton.activeSelf;
         bool anyUpgrades = anyCosmetics || anyVisuals || anyButtons || anyCities;
 
         cosmeticsTitle.SetActive(anyCosmetics);
@@ -169,6 +171,7 @@ public class SettingsCanvasController : MonoBehaviour {
         toggleText(medCityButton, StaticVariables.showMed);
         toggleText(largeCityButton, StaticVariables.showLarge);
         toggleText(hugeCityButton, StaticVariables.showHuge);
+        toggleText(massiveCityButton, StaticVariables.showMassive);
         toggleText(notes1Button, StaticVariables.includeNotes1Button);
         toggleText(notes2Button, StaticVariables.includeNotes2Button);
         toggleText(residentColorButton, StaticVariables.changeResidentColorOnCorrectRows);
@@ -195,6 +198,7 @@ public class SettingsCanvasController : MonoBehaviour {
         if (!StaticVariables.showMed) {
             StaticVariables.showLarge = false;
             StaticVariables.showHuge = false;
+            StaticVariables.showMassive = false;
         }
         setCurrentToggleTexts();
         SaveSystem.SaveGame();
@@ -207,6 +211,7 @@ public class SettingsCanvasController : MonoBehaviour {
         }
         else {
             StaticVariables.showHuge = false;
+            StaticVariables.showMassive = false;
         }
         setCurrentToggleTexts();
         SaveSystem.SaveGame();
@@ -215,6 +220,18 @@ public class SettingsCanvasController : MonoBehaviour {
     public void pushHugeButton() {
         StaticVariables.showHuge = !StaticVariables.showHuge;
         if (StaticVariables.showHuge) {
+            StaticVariables.showMed = true;
+            StaticVariables.showLarge = true;
+        }
+        else 
+            StaticVariables.showMassive = false;
+        setCurrentToggleTexts();
+        SaveSystem.SaveGame();
+    }
+    public void pushMassiveButton() {
+        StaticVariables.showMassive = !StaticVariables.showMassive;
+        if (StaticVariables.showMassive) {
+            StaticVariables.showHuge = true;
             StaticVariables.showMed = true;
             StaticVariables.showLarge = true;
         }
