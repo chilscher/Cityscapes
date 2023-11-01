@@ -409,14 +409,16 @@ public class GameManager : MonoBehaviour {
     }
 
     private void setUndoRedoRemoveClearButtons(){
+        specialButtonsAll.SetActive(false);
+        specialButtonsUndoRedoRemove.SetActive(false);
+        specialButtonsUndoRedoClear.SetActive(false);
+        specialButtonsUndoRedo.SetActive(false);
+        specialButtonsRemoveClear.SetActive(false);
+        specialButtonRemove.SetActive(false);
+        specialButtonClear.SetActive(false);
+
         if (StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
             specialButtonsAll.SetActive(true);
-            specialButtonsUndoRedoRemove.SetActive(false);
-            specialButtonsUndoRedoClear.SetActive(false);
-            specialButtonsUndoRedo.SetActive(false);
-            specialButtonsRemoveClear.SetActive(false);
-            specialButtonRemove.SetActive(false);
-            specialButtonClear.SetActive(false);
             removeAllOfNumberButton = specialButtonsAll.transform.GetChild(2).gameObject;
             InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
             InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(1));
@@ -424,32 +426,41 @@ public class GameManager : MonoBehaviour {
             InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(3));
         }
         else if (StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
-
+            specialButtonsUndoRedoRemove.SetActive(true);
+            removeAllOfNumberButton = specialButtonsUndoRedoRemove.transform.GetChild(2).gameObject;
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(1));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(2));
         }
         else if (StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
+            specialButtonsUndoRedoClear.SetActive(true);
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(1));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(2));
 
         }
         else if (StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
+            specialButtonsUndoRedo.SetActive(true);
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(1));
 
         }
         else if (!StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
-
+            specialButtonsRemoveClear.SetActive(true);
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(1));
         }
         else if (!StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
+            specialButtonRemove.SetActive(true);
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
 
         }
         else if (!StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
+            specialButtonClear.SetActive(true);
+            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
 
         }
-        else if (!StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
-            specialButtonsAll.SetActive(false);
-            specialButtonsUndoRedoRemove.SetActive(false);
-            specialButtonsUndoRedoClear.SetActive(false);
-            specialButtonsUndoRedo.SetActive(false);
-            specialButtonsRemoveClear.SetActive(false);
-            specialButtonRemove.SetActive(false);
-            specialButtonClear.SetActive(false);
-        }
+        //else if (!StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle) nothing has to happen here
 
     }
 
