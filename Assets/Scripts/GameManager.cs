@@ -428,36 +428,36 @@ public class GameManager : MonoBehaviour {
         else if (StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
             specialButtonsUndoRedoRemove.SetActive(true);
             removeAllOfNumberButton = specialButtonsUndoRedoRemove.transform.GetChild(2).gameObject;
-            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
-            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(1));
-            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(2));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsUndoRedoRemove.transform.GetChild(0));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsUndoRedoRemove.transform.GetChild(1));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsUndoRedoRemove.transform.GetChild(2));
         }
         else if (StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
             specialButtonsUndoRedoClear.SetActive(true);
-            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
-            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(1));
-            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(2));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsUndoRedoClear.transform.GetChild(0));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsUndoRedoClear.transform.GetChild(1));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsUndoRedoClear.transform.GetChild(2));
 
         }
         else if (StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
             specialButtonsUndoRedo.SetActive(true);
-            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
-            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(1));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsUndoRedo.transform.GetChild(0));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsUndoRedo.transform.GetChild(1));
 
         }
         else if (!StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
             specialButtonsRemoveClear.SetActive(true);
-            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
-            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(1));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsRemoveClear.transform.GetChild(0));
+            InterfaceFunctions.colorPuzzleButton(specialButtonsRemoveClear.transform.GetChild(1));
         }
         else if (!StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
             specialButtonRemove.SetActive(true);
-            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
+            InterfaceFunctions.colorPuzzleButton(specialButtonRemove.transform.GetChild(0));
 
         }
         else if (!StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
             specialButtonClear.SetActive(true);
-            InterfaceFunctions.colorPuzzleButton(specialButtonsAll.transform.GetChild(0));
+            InterfaceFunctions.colorPuzzleButton(specialButtonClear.transform.GetChild(0));
 
         }
         //else if (!StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle) nothing has to happen here

@@ -21,13 +21,13 @@ public class PuzzleTile : Tile {
     [HideInInspector]
     public List<int> noteGroup2 = new List<int>(); //all of the note2s on this tile
 
-    public Sprite emptyTileSprite;
-
     //the different visual aspects that make up the PuzzleTile
-    private Image road;
-    private Image building;
-    private Image number;
-    private Image redBorder;
+    public Image tileBackground;
+    public Image road;
+    public Image building;
+    public Image number;
+    public GameObject permanentBuildingBackground;
+    public Transform hintsList;
 
     public Sprite[] whiteSprites; //the numbers in a basic white/black color scheme, so the image can apply its own color.
     private Color numberColor;
@@ -42,18 +42,12 @@ public class PuzzleTile : Tile {
     public bool isPermanentBuilding = false; //if hasStartingValue is true, the tile's building size cannot be overwritten or removed.
     public Color permanentBuildingColor;
     public Color permanentNumberColor;
-    public GameObject permanentBuildingBackground;
     
     public void initialize(int solution, Transform parent, int maxValue, GameManager gameManager) {
         //create the PuzzleTile object, called by PuzzleGenerator
         this.solution = solution;
         this.maxValue = maxValue;
         this.gameManager = gameManager;
-
-        road = transform.GetChild(1).GetComponent<Image>();
-        building = transform.GetChild(2).GetComponent<Image>();
-        number = transform.GetChild(3).GetComponent<Image>();
-        redBorder = transform.GetChild(4).GetComponent<Image>();
 
         // pick a random tile rotation direction
         if (randomRotation) {
@@ -206,7 +200,7 @@ public class PuzzleTile : Tile {
         noteGroup1.Sort();
         noteGroup2.Sort();
 
-        Transform hintsList = transform.GetChild(4);
+        //Transform hintsList = transform.GetChild(4);
 
         for (int i = 0; i<hintsList.transform.childCount; i++) {
             Image s = hintsList.GetChild(i).GetComponent<Image>();
@@ -273,6 +267,7 @@ public class PuzzleTile : Tile {
         }
     }
 
+    /*
     public void addRedBorder() {
         //add a red border around this tile, used in the tutorial
         redBorder.gameObject.SetActive(true);
@@ -282,6 +277,7 @@ public class PuzzleTile : Tile {
         //removes the red border from this tile, used in the tutorial
         redBorder.gameObject.SetActive(false);
     }
+    */
 
     public bool doesTileContainColoredNote(int colorNum, int noteNum) {
         //returns true if this tile contains a specific note type of a provided color
