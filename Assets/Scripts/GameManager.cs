@@ -558,11 +558,11 @@ public class GameManager : MonoBehaviour {
         large.SetActive(false);
         huge.SetActive(false);
         massive.SetActive(false);
-        small.GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
-        med.GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
-        large.GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
-        huge.GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
-        massive.GetComponent<Image>().sprite = StaticVariables.skin.massiveCityArt;
+        //small.GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
+        //med.GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
+        //large.GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
+        //huge.GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
+        //massive.GetComponent<Image>().sprite = StaticVariables.skin.massiveCityArt;
         switch (size) {
             case 3: small.SetActive(true); break;
             case 4: med.SetActive(true); break;

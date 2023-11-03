@@ -16,6 +16,11 @@ public class MainMenuCanvasController : MonoBehaviour {
     public GameObject largeShadow;
     public GameObject hugeShadow;
     public GameObject massiveShadow;
+    public GameObject smallCityArt;
+    public GameObject mediumCityArt;
+    public GameObject largeCityArt;
+    public GameObject hugeCityArt;
+    public GameObject massiveCityArt;
     public GameObject smallText;
     public GameObject mediumText;
     public GameObject largeText;
@@ -27,6 +32,21 @@ public class MainMenuCanvasController : MonoBehaviour {
     public GameObject tutorialButton;
     public GameObject largeCenterTutorialButton;
     public GameObject settingsButton;
+    public GameObject leftSmallText;
+    public GameObject leftMediumText;
+    public GameObject leftLargeText;
+    public GameObject leftHugeText;
+    public GameObject leftMassiveText;
+    public GameObject returnSmall;
+    public GameObject returnMedium;
+    public GameObject returnLarge;
+    public GameObject returnHuge;
+    public GameObject returnMassive;
+    public GameObject abandonSmall;
+    public GameObject abandonMedium;
+    public GameObject abandonLarge;
+    public GameObject abandonHuge;
+    public GameObject abandonMassive;
 
     public GameObject blackForeground; //used to transition to/from the main menu
     private Image blackSprite; //derived from the blackForeground gameObject
@@ -49,7 +69,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         //apply the current skin
         background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
         colorButtons();
-        applyCityArtSkin();
+        showReturnAbandon();
 
         //start the fade-in process from another scene
         blackSprite = blackForeground.GetComponent<Image>();
@@ -126,6 +146,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("4").gameObject);
         InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("5").gameObject);
         InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("6").gameObject);
+        InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("7").gameObject);
 
         InterfaceFunctions.colorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Return").gameObject);
         InterfaceFunctions.colorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Abandon").gameObject);
@@ -143,49 +164,24 @@ public class MainMenuCanvasController : MonoBehaviour {
         InterfaceFunctions.colorMenuButton(largeCenterTutorialButton);
     }
 
-    private void applyCityArtSkin() {
-        //update the "city art" on the main menu to match the current skin
-        //also updates the "return to puzzle/abandon puzzle" buttons to match the same city art
-        puzzleButtons.transform.Find("3").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
-        puzzleButtons.transform.Find("4").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
-        puzzleButtons.transform.Find("5").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
-        puzzleButtons.transform.Find("6").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
-        puzzleButtons.transform.Find("7").Find("City Art").GetComponent<Image>().sprite = StaticVariables.skin.massiveCityArt;
-
+    private void showReturnAbandon() {
         if (StaticVariables.hasSavedPuzzleState) {
-            string[] arr = new string[2];
-            arr[0] = "Return";
-            arr[1] = "Abandon";
-            foreach (string s in arr) {
-
-                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Small").gameObject.SetActive(false);
-                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Small").GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
-                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Med").gameObject.SetActive(false);
-                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Med").GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
-                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Large").gameObject.SetActive(false);
-                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Large").GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
-                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Huge").gameObject.SetActive(false);
-                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Huge").GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
-                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Huge").gameObject.SetActive(false);
-                returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Massive").GetComponent<Image>().sprite = StaticVariables.skin.massiveCityArt;
-                if (StaticVariables.savedPuzzleSize == 3) {
-                    returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Small").gameObject.SetActive(true);
-                }
-                if (StaticVariables.savedPuzzleSize == 4) {
-                    returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Med").gameObject.SetActive(true);
-                }
-                if (StaticVariables.savedPuzzleSize == 5) {
-                    returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Large").gameObject.SetActive(true);
-                }
-                if (StaticVariables.savedPuzzleSize == 6) {
-                    returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Huge").gameObject.SetActive(true);
-                }
-                if (StaticVariables.savedPuzzleSize == 7) {
-                    returnOrAbandonButtons.transform.Find("Popup").Find(s).Find("City Art - Massive").gameObject.SetActive(true);
-                }
-            }
+            leftSmallText.SetActive(StaticVariables.savedPuzzleSize == 3);
+            returnSmall.SetActive(StaticVariables.savedPuzzleSize == 3);
+            abandonSmall.SetActive(StaticVariables.savedPuzzleSize == 3);
+            returnMedium.SetActive(StaticVariables.savedPuzzleSize == 4);
+            abandonMedium.SetActive(StaticVariables.savedPuzzleSize == 4);
+            leftMediumText.SetActive(StaticVariables.savedPuzzleSize == 4);
+            returnLarge.SetActive(StaticVariables.savedPuzzleSize == 5);
+            abandonLarge.SetActive(StaticVariables.savedPuzzleSize == 5);
+            leftLargeText.SetActive(StaticVariables.savedPuzzleSize == 5);
+            returnHuge.SetActive(StaticVariables.savedPuzzleSize == 6);
+            abandonHuge.SetActive(StaticVariables.savedPuzzleSize == 6);
+            leftHugeText.SetActive(StaticVariables.savedPuzzleSize == 6);
+            returnMassive.SetActive(StaticVariables.savedPuzzleSize == 7);
+            abandonMassive.SetActive(StaticVariables.savedPuzzleSize == 7);
+            leftMassiveText.SetActive(StaticVariables.savedPuzzleSize == 7);
         }
-
     }
 
     private void showCityButtons() {
@@ -214,10 +210,15 @@ public class MainMenuCanvasController : MonoBehaviour {
         else {
             puzzleButtons.SetActive(true);
             smallShadow.SetActive(!(highestUnlockedSize >= 3));
+            smallCityArt.SetActive(highestUnlockedSize >= 3);
             mediumShadow.SetActive(!(highestUnlockedSize >= 4));
+            mediumCityArt.SetActive(highestUnlockedSize >= 4);
             largeShadow.SetActive(!(highestUnlockedSize >= 5));
+            largeCityArt.SetActive(highestUnlockedSize >= 5);
             hugeShadow.SetActive(!(highestUnlockedSize >= 6));
+            hugeCityArt.SetActive(highestUnlockedSize >= 6);
             massiveShadow.SetActive(!(highestUnlockedSize >= 7));
+            massiveCityArt.SetActive(highestUnlockedSize >= 7);
 
             smallText.SetActive(highestUnlockedSize >= 3);
             mediumText.SetActive(highestUnlockedSize >= 4);
