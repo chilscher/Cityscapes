@@ -252,9 +252,9 @@ public class GameManager : MonoBehaviour {
     private void ColorMenuButton() {
         //apply the current skin colors to the menu button
         if (!StaticVariables.isTutorial) {
-            InterfaceFunctions.ColorPuzzleButton(menuButton);
-            InterfaceFunctions.ColorPuzzleButton(shopButton);
-            InterfaceFunctions.ColorPuzzleButton(settingsButton);
+            InterfaceFunctions.ColorMenuButton(menuButton);
+            InterfaceFunctions.ColorMenuButton(shopButton);
+            InterfaceFunctions.ColorMenuButton(settingsButton);
         }
 
     }
