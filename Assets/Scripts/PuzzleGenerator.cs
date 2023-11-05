@@ -34,7 +34,7 @@ public class PuzzleGenerator : MonoBehaviour{
     public GameManager gameManagerObject;
     
 
-    public void createPuzzle(int size) {
+    public void CreatePuzzle(int size) {
         //creates a random puzzle using the Puzzle class, unless there is a predermined solution provided, in which case just use that
         this.size = size;
         puzzleTiles = new List<PuzzleTile>();
@@ -58,34 +58,34 @@ public class PuzzleGenerator : MonoBehaviour{
             puzzle = new Puzzle(size);
         }
         if (makePuzzle) {
-            createTiles();
-            createHints();
+            CreateTiles();
+            CreateHints();
         }
     }
 
-    public void autofillStartingBuildings(){
+    public void AutofillStartingBuildings(){
         for (int i = 0; i < puzzle.size; i++) {
             for (int j = 0; j < puzzle.size; j++) {
                 if (puzzle.startingSolution[i,j] != 0)
-                    tilesArray[i,j].addPermanentBuildingToTile(puzzle.startingSolution[i,j]);
+                    tilesArray[i,j].AddPermanentBuildingToTile(puzzle.startingSolution[i,j]);
             }
         }
     }
     
-    private void createTiles() {
+    private void CreateTiles() {
         //create an array of PuzzleTiles to hold the puzzle's buildings and notes
         tilesArray = new PuzzleTile[size, size];
         for (int i = 0; i < puzzle.size; i++) {
             for (int j = 0; j < puzzle.size; j++) {
                 GameObject tile = Instantiate(puzzleTilePrefab);
-                tile.GetComponent<PuzzleTile>().initialize(puzzle.solution[i, j], this.transform, puzzle.size, gameManagerObject.GetComponent<GameManager>());
+                tile.GetComponent<PuzzleTile>().Initialize(puzzle.solution[i, j], this.transform, puzzle.size, gameManagerObject.GetComponent<GameManager>());
                 puzzleTiles.Add(tile.GetComponent<PuzzleTile>());
                 tilesArray[i, j] = tile.GetComponent<PuzzleTile>();
             }
         }
     }
 
-    private void createHints() {
+    private void CreateHints() {
         //create 4 arrays of SideHintTiles to hold the resident hints
         topHints = new SideHintTile[size];
         bottomHints = new SideHintTile[size];
@@ -97,34 +97,34 @@ public class PuzzleGenerator : MonoBehaviour{
             GameObject bottomTile = Instantiate(sideHintTilePrefab);
             GameObject rightTile = Instantiate(sideHintTilePrefab);
             GameObject leftTile = Instantiate(sideHintTilePrefab);
-            topTile.GetComponent<SideHintTile>().initialize(puzzle.topNums[i]);
-            bottomTile.GetComponent<SideHintTile>().initialize(puzzle.bottomNums[i]);
-            leftTile.GetComponent<SideHintTile>().initialize(puzzle.leftNums[i]);
-            rightTile.GetComponent<SideHintTile>().initialize(puzzle.rightNums[i]);
+            topTile.GetComponent<SideHintTile>().Initialize(puzzle.topNums[i]);
+            bottomTile.GetComponent<SideHintTile>().Initialize(puzzle.bottomNums[i]);
+            leftTile.GetComponent<SideHintTile>().Initialize(puzzle.leftNums[i]);
+            rightTile.GetComponent<SideHintTile>().Initialize(puzzle.rightNums[i]);
 
             topHints[i] = topTile.GetComponent<SideHintTile>();
             bottomHints[i] = bottomTile.GetComponent<SideHintTile>();
             leftHints[i] = leftTile.GetComponent<SideHintTile>();
             rightHints[i] = rightTile.GetComponent<SideHintTile>();
         }
-        addRowsToSideHints();
+        AddRowsToSideHints();
     }
 
-    public bool checkPuzzle() {
+    public bool CheckPuzzle() {
         //checks if the puzzle is solved, based on the SideHintTiles and their PuzzleTiles
         bool isCorrect = true;
         foreach (SideHintTile h in allHints) {
-            if (!h.isRowValid()) {
+            if (!h.IsRowValid()) {
                 isCorrect = false;
             }
         }
         return isCorrect;
     }
     
-    private void addRowsToSideHints() {
+    private void AddRowsToSideHints() {
         //provides each SideHintTile with its list of PuzzleTiles that it looks towards
         //this list of PuzzleTiles is used to check the puzzle for solutions while the player is solving it
-        createHintsList();
+        CreateHintsList();
         foreach(SideHintTile h in allHints) {
             h.row = new PuzzleTile[size];
         }
@@ -135,12 +135,12 @@ public class PuzzleGenerator : MonoBehaviour{
             }
         }
         for (int i = 0; i < size; i++) {
-            bottomHints[i].row = reverseList(topHints[i].row);
-            rightHints[i].row = reverseList(leftHints[i].row);
+            bottomHints[i].row = ReverseList(topHints[i].row);
+            rightHints[i].row = ReverseList(leftHints[i].row);
         }
     }
 
-    private PuzzleTile[] reverseList(PuzzleTile[] original) {
+    private PuzzleTile[] ReverseList(PuzzleTile[] original) {
         //reverses a list
         PuzzleTile[] newList = new PuzzleTile[size];
         for (int i = 0; i < original.Length; i++) {
@@ -150,7 +150,7 @@ public class PuzzleGenerator : MonoBehaviour{
         return newList;
     }
 
-    private void createHintsList() {
+    private void CreateHintsList() {
         //compiles all of the SideHintTiles into one list
         allHints = new SideHintTile[size * 4];
         for (int i = 0; i < size; i++) {
@@ -161,7 +161,7 @@ public class PuzzleGenerator : MonoBehaviour{
         }
     }
 
-    public string makeSolutionString() {
+    public string MakeSolutionString() {
         //creates a string that represents the puzzle solution
         //used for loading a saved puzzle, or using a predetermined puzzle from the inspector
         string s = "";
@@ -171,11 +171,11 @@ public class PuzzleGenerator : MonoBehaviour{
         return s;
     }
 
-    public void restoreSavedPuzzle(string solutionString, int size) {
+    public void RestoreSavedPuzzle(string solutionString, int size) {
         //creates a puzzle based off of a provided solution string
         predeterminedSolution = solutionString;
         usePredeterminedSolution = true;
-        createPuzzle(size);
+        CreatePuzzle(size);
     }
 
 }

@@ -63,7 +63,7 @@ public class Puzzle{
                 currentStep.possibleSpaces = createListOfAvailableSpaces(currentStep.numberToPlace);
                 currentStep.hasSearchedForPossibleSpaces = true;
             }
-            Space space = currentStep.pickRandomSpace();
+            Space space = currentStep.PickRandomSpace();
             if (space != null){
                 solution[space.x, space.y] = currentStep.numberToPlace;
                 currentStep.selectedSpace = space;
@@ -261,7 +261,7 @@ public class Puzzle{
     public bool isPuzzleValid() {
         //returns true if the puzzle has less than 7 unique solutions
         PuzzleSolver p = new PuzzleSolver();
-        return p.isPuzzleValid(topNums, bottomNums, leftNums, rightNums, startingSolution);
+        return p.IsPuzzleValid(topNums, bottomNums, leftNums, rightNums, startingSolution);
     }
 
 }
@@ -286,7 +286,7 @@ public class Step{
     public Step(int num){
         numberToPlace = num;
     }
-    public Space pickRandomSpace(){
+    public Space PickRandomSpace(){
         if (possibleSpaces.Count == 0)
             return null;
         return possibleSpaces[StaticVariables.rand.Next(possibleSpaces.Count)];

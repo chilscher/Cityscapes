@@ -26,7 +26,7 @@ public class SideHintTile : Tile {
     private Color correctColor;
     private Color incorrectColor;
 
-    public void initialize(int hintValue) {
+    public void Initialize(int hintValue) {
         //creates the sideHintTile. Here goes all of the code that defines the private variables used later
         this.hintValue = hintValue;
         background = transform.GetChild(0).GetComponent<Image>();
@@ -34,15 +34,15 @@ public class SideHintTile : Tile {
         number = transform.GetChild(2).GetComponent<Image>();
         redBorder = transform.GetChild(3).GetComponent<Image>();
 
-        setNumberColors();
-        addNumberToTile(hintValue);
+        SetNumberColors();
+        AddNumberToTile(hintValue);
 
         Skin tempSkin = StaticVariables.skin;
         if (StaticVariables.isTutorial) { tempSkin = StaticVariables.allSkins[0]; }
-        background.GetComponent<Image>().color = InterfaceFunctions.getColorFromString(tempSkin.streetColor);
+        background.GetComponent<Image>().color = InterfaceFunctions.GetColorFromString(tempSkin.streetColor);
     }
 
-    public int numBuildingsCurrentlyVisible() {
+    public int NumBuildingsCurrentlyVisible() {
         //iterates through the PuzzleTiles that this SideHintTile looks upon, and determines how many buildings are currently visible
         //note: does NOT reference the solution, but instead whatever buildings are actually there
         int count = 0;
@@ -58,7 +58,7 @@ public class SideHintTile : Tile {
         return count;
     }
 
-    public void setNumberColors() {
+    public void SetNumberColors() {
         //sets the colors that the SideHintTile number can be, based off of the current skin.
         //the tutorial uses its own colors, which are the ones used in the basic skin
         if (!StaticVariables.isTutorial) {
@@ -67,12 +67,12 @@ public class SideHintTile : Tile {
             ColorUtility.TryParseHtmlString(StaticVariables.skin.satisfiedCitizenColor, out correctColor);
         }
         else {
-            ColorUtility.TryParseHtmlString(InterfaceFunctions.getDefaultSkin().citizenColor, out incorrectColor);
-            ColorUtility.TryParseHtmlString(InterfaceFunctions.getDefaultSkin().satisfiedCitizenColor, out correctColor);
+            ColorUtility.TryParseHtmlString(InterfaceFunctions.GetDefaultSkin().citizenColor, out incorrectColor);
+            ColorUtility.TryParseHtmlString(InterfaceFunctions.GetDefaultSkin().satisfiedCitizenColor, out correctColor);
         }
     }
 
-    public bool isRowValid() {
+    public bool IsRowValid() {
         //checks if this SideHintTile's building requirement is satisfied. Part of the PuzzleGenerator function to check if the player has won
         List<int> usedValues = new List<int>();
         foreach (PuzzleTile t in row) {
@@ -84,34 +84,34 @@ public class SideHintTile : Tile {
             }
             usedValues.Add(t.shownNumber);
         }
-        return (numBuildingsCurrentlyVisible() == hintValue);
+        return (NumBuildingsCurrentlyVisible() == hintValue);
     }
 
-    public void addHint() {
+    public void AddHint() {
         //shows the number on the tile
-        addNumberToTile(hintValue);
+        AddNumberToTile(hintValue);
     }
     
 
-    public void addNumberToTile(int num) {
+    public void AddNumberToTile(int num) {
         //shows the number on the tile
         number.sprite = whiteSprites[num - 1];
         number.color = incorrectColor;
 
     }
 
-    public void setAppropriateColor() {
+    public void SetAppropriateColor() {
         //colors the SideHintTile number based on if its building criterion is satisfied
         //does nothing if the relevant upgrade is not toggled, or if this is the tutorial
         number.color = incorrectColor;
         if (StaticVariables.changeResidentColorOnCorrectRows && !StaticVariables.isTutorial) {
-            if ((numBuildingsCurrentlyVisible() == hintValue) && (row[0].shownNumber != 0)) {
+            if ((NumBuildingsCurrentlyVisible() == hintValue) && (row[0].shownNumber != 0)) {
                 number.color = correctColor;
             }
         }
     }
 
-    public void rotateHint(int amt, float tileSize) {
+    public void RotateHint(int amt, float tileSize) {
         //rotate the arrow and puzzle border to face the interior of the puzzle
         background.transform.Rotate(new Vector3(0, 0, amt));
         arrow.transform.Rotate(new Vector3(0, 0, amt));
@@ -142,12 +142,12 @@ public class SideHintTile : Tile {
         }
     }
 
-    public void addRedBorder() {
+    public void AddRedBorder() {
         //add a border around the Side Hint Tile number. Used in the tutorial
         redBorder.gameObject.SetActive(true);
     }
 
-    public void removeRedBorder() {
+    public void RemoveRedBorder() {
         //removes the border around the SideHintTile number. Used in the tutorial
         redBorder.gameObject.SetActive(false);
     }

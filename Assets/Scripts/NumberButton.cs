@@ -14,21 +14,20 @@ public class NumberButton: Tile {
     private GameManager gameManager;
     private Image number;
 
-    public void initialize(int value, GameManager gm) {
+    public void Initialize(int value, GameManager gm) {
         this.value = value;
         gameManager = gm;
         number = transform.GetChild(1).GetComponent<Image>();
-        addNumberToTile(value);
+        AddNumberToTile(value);
     }
     
     private void OnMouseDown() {
         //click the button, set the GameManager number, easy peasy
-        if (gameManager.canClick) {
-            gameManager.switchNumber(value);
-        }
+        if (gameManager.canClick)
+            gameManager.SwitchNumber(value);
     }
     
-    public void addNumberToTile(int num) {
+    public void AddNumberToTile(int num) {
         //adds the sprite for num to the tile, called when the puzzle visuals are being configured
         number.sprite = numberSprites[num];
     }

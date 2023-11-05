@@ -64,12 +64,6 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject newFeaturesText;
     public GameObject cosmeticsText;
 
-
-    public GameObject blackForeground; //used to transition to/from the puzzle menu
-    private Image blackSprite; //derived from the blackForeground gameObject
-    public float fadeOutTime; //total time for fade-out, from complete light to complete darkness
-    public float fadeInTime; //total time for fade-in, from complete darkness to complete light
-    private float fadeTimer; //the timer on which the fadeout and fadein mechanics operate
     public GameObject scrollView; //the gameobject that is used to hide all buttons and text outside of the scrollable shop window
     public Sprite[] numbers = new Sprite[10]; //the sprites for numbers 0-9
 
@@ -94,6 +88,7 @@ public class ShopCanvasController : MonoBehaviour {
     //the following are properties taken from the skin
     public GameObject background;
     public GameObject menuButton;
+    public GameObject settingsButton;
     private bool stopScrollRect = false;
 
 
@@ -110,78 +105,41 @@ public class ShopCanvasController : MonoBehaviour {
         sprite100s = coinsBox100s.GetComponent<Image>();
         sprite1000s = coinsBox1000s.GetComponent<Image>();
         sprite10000s = coinsBox10000s.GetComponent<Image>();
-        blackSprite = blackForeground.GetComponent<Image>();
 
         //show the amount of coins the player has, and also the cost of various upgrades
-        displayCoinsAmount();
-        displayCoinsOnButton(expandMedButton, medCityPrice);
-        displayCoinsOnButton(expandLargeButton, largeCityPrice);
-        displayCoinsOnButton(expandHugeButton, hugeCityPrice);
-        displayCoinsOnButton(expandMassiveButton, massiveCityPrice);
-        displayCoinsOnButton(expandNotes1Button, notes1Price);
-        displayCoinsOnButton(expandNotes2Button, notes2Price);
-        displayCoinsOnButton(expandResidentColorButton, residentColorPrice);
-        displayCoinsOnButton(expandUndoRedoButton, undoRedoPrice);
-        displayCoinsOnButton(expandRemoveAllButton, removeAllPrice);
-        displayCoinsOnButton(expandClearButton, clearPrice);
-        displayCoinsOnButton(expandHighlightBuildingsButton, highlightBuildingsPrice);
+        DisplayCoinsAmount();
+        DisplayCoinsOnButton(expandMedButton, medCityPrice);
+        DisplayCoinsOnButton(expandLargeButton, largeCityPrice);
+        DisplayCoinsOnButton(expandHugeButton, hugeCityPrice);
+        DisplayCoinsOnButton(expandMassiveButton, massiveCityPrice);
+        DisplayCoinsOnButton(expandNotes1Button, notes1Price);
+        DisplayCoinsOnButton(expandNotes2Button, notes2Price);
+        DisplayCoinsOnButton(expandResidentColorButton, residentColorPrice);
+        DisplayCoinsOnButton(expandUndoRedoButton, undoRedoPrice);
+        DisplayCoinsOnButton(expandRemoveAllButton, removeAllPrice);
+        DisplayCoinsOnButton(expandClearButton, clearPrice);
+        DisplayCoinsOnButton(expandHighlightBuildingsButton, highlightBuildingsPrice);
 
         //show the cost of the various skins
-        findSkinButtons();
-        foreach (GameObject parent in skinButtons) {
-            displayCoinsOnButton(parent.transform.Find("Expand Button").gameObject, getSkinPrice((InterfaceFunctions.getSkinFromName(parent.name))));
-        }
+        FindSkinButtons();
+        foreach (GameObject parent in skinButtons)
+            DisplayCoinsOnButton(parent.transform.Find("Expand Button").gameObject, GetSkinPrice((InterfaceFunctions.GetSkinFromName(parent.name))));
 
         //update the buttons for the various upgrades to denote if they can be purchased right now
-        updateButtons();
+        UpdateButtons();
 
         //apply the cosmetics from the current skin
         background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
-        InterfaceFunctions.colorMenuButton(menuButton);
-
-        //starts the fade-in process, which is carried out in the Update function
-        if (StaticVariables.isFading && StaticVariables.fadingTo == "shop") {
-            fadeTimer = fadeInTime;
-        }
-
+        InterfaceFunctions.ColorMenuButton(menuButton);
+        InterfaceFunctions.ColorMenuButton(settingsButton);
     }
 
     private void Update() {
-        //if the player is fading from the shop scene back to the main menu, this block handles that fading process
-        if (StaticVariables.isFading && StaticVariables.fadingFrom == "shop") {
-            fadeTimer -= Time.deltaTime;
-            Color c = blackSprite.color;
-            c.a = (fadeOutTime - fadeTimer) / fadeOutTime;
-            blackSprite.color = c;
-            if (fadeTimer <= 0f) { //after the fade timer is done, and the screen is dark, transition to another scene.
-                if (StaticVariables.fadingTo == "menu") { SceneManager.LoadScene("MainMenu"); }
-            }
-        }
-        //if the player is fading into the shop scene, this block handles that fading process
-        if (StaticVariables.isFading && StaticVariables.fadingTo == "shop") {
-            fadeTimer -= Time.deltaTime;
-            Color c = blackSprite.color;
-            c.a = (fadeTimer) / fadeInTime;
-            blackSprite.color = c;
-            if (fadeTimer <= 0f) {
-                StaticVariables.isFading = false;
-                if (StaticVariables.waitingOnButtonClickAfterFadeIn) {
-                    StaticVariables.waitingOnButtonClickAfterFadeIn = false;
-                    if (StaticVariables.buttonClickInWaiting.Contains("menu")) {
-                        goToMainMenu();
-                    }
-                }
-            }
-        }
-        //if the player presses their phone's back button, call the goToMainMenu function
-        //identical to if the player just pushed the on-screen menu button
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            goToMainMenu();
-        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 
     void LateUpdate(){
-
         if (stopScrollRect){
             stopScrollRect = false;
             scrollView.GetComponent<ScrollRect>().StopMovement();
@@ -193,25 +151,11 @@ public class ShopCanvasController : MonoBehaviour {
     //ALL OF THE FUNCTIONS THAT ARE USED TO LEAVE THE SHOP SCENE
     // ---------------------------------------------------
 
-    public void goToMainMenu() {
-        //pushing the on-screen menu button calls this function, which returns the player to the main menu
-        if (!StaticVariables.isFading) {
-            StaticVariables.fadingTo = "menu";
-            startFadeOut();
-        }
-        //if the player pushes the menu button while the scene is still fading in, then implement the button press after the fade-in is done
-        else {
-            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
-            StaticVariables.buttonClickInWaiting = "menu";
-        }
+    public void PushMainMenuButton() {
+        StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
-
-    public void startFadeOut() {
-        //begin the fade-out process. This function is called by goToMainMenu
-        //the fade-out mechanics of darkening the screen are implemented in the Update function
-        fadeTimer = fadeOutTime;
-        StaticVariables.isFading = true;
-        StaticVariables.fadingFrom = "shop";
+    public void PushSettingsButton() {
+        StaticVariables.FadeOutThenLoadScene("Settings");
     }
 
     private void OnApplicationQuit() {
@@ -222,7 +166,7 @@ public class ShopCanvasController : MonoBehaviour {
     //ALL OF THE FUNCTIONS THAT ARE USED TO UPDATE THE VISUALS FOR THE SHOP SCENE
     // ---------------------------------------------------
 
-    public void displayCoinsAmount() {
+    public void DisplayCoinsAmount() {
         //show the amount of coins the player has in the top-right corner of the shop screen
         int value1s = StaticVariables.coins % 10;
         int value10s = (StaticVariables.coins / 10) % 10;
@@ -255,25 +199,24 @@ public class ShopCanvasController : MonoBehaviour {
         }
     }
     
-    private void updateButtons() {
+    private void UpdateButtons() {
         //updates every button's color to denote if the player can purchase it
         //each button has a price that must be met, and also some have a prerequisite purchase that must be made
         Color grey = Color.grey;
-        updateButton(expandMedButton, StaticVariables.unlockedMedium, medCityPrice);
-        updateButton(expandLargeButton, StaticVariables.unlockedLarge, largeCityPrice, StaticVariables.unlockedMedium);
-        updateButton(expandHugeButton, StaticVariables.unlockedHuge, hugeCityPrice, StaticVariables.unlockedLarge);
-        updateButton(expandMassiveButton, StaticVariables.unlockedMassive, massiveCityPrice, StaticVariables.unlockedMassive);
-        updateButton(expandNotes1Button, StaticVariables.unlockedNotes1, notes1Price);
-        updateButton(expandNotes2Button, StaticVariables.unlockedNotes2, notes2Price, StaticVariables.unlockedNotes1);
-        updateButton(expandResidentColorButton, StaticVariables.unlockedResidentsChangeColor, residentColorPrice);
-        updateButton(expandUndoRedoButton, StaticVariables.unlockedUndoRedo, undoRedoPrice);
-        updateButton(expandRemoveAllButton, StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice, StaticVariables.unlockedUndoRedo);
-        updateButton(expandClearButton, StaticVariables.unlockedClearPuzzle, clearPrice, StaticVariables.unlockedUndoRedo);
-        updateButton(expandHighlightBuildingsButton, StaticVariables.unlockedHighlightBuildings, highlightBuildingsPrice);
+        UpdateButton(expandMedButton, StaticVariables.unlockedMedium, medCityPrice);
+        UpdateButton(expandLargeButton, StaticVariables.unlockedLarge, largeCityPrice, StaticVariables.unlockedMedium);
+        UpdateButton(expandHugeButton, StaticVariables.unlockedHuge, hugeCityPrice, StaticVariables.unlockedLarge);
+        UpdateButton(expandMassiveButton, StaticVariables.unlockedMassive, massiveCityPrice, StaticVariables.unlockedMassive);
+        UpdateButton(expandNotes1Button, StaticVariables.unlockedNotes1, notes1Price);
+        UpdateButton(expandNotes2Button, StaticVariables.unlockedNotes2, notes2Price, StaticVariables.unlockedNotes1);
+        UpdateButton(expandResidentColorButton, StaticVariables.unlockedResidentsChangeColor, residentColorPrice);
+        UpdateButton(expandUndoRedoButton, StaticVariables.unlockedUndoRedo, undoRedoPrice);
+        UpdateButton(expandRemoveAllButton, StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice, StaticVariables.unlockedUndoRedo);
+        UpdateButton(expandClearButton, StaticVariables.unlockedClearPuzzle, clearPrice, StaticVariables.unlockedUndoRedo);
+        UpdateButton(expandHighlightBuildingsButton, StaticVariables.unlockedHighlightBuildings, highlightBuildingsPrice);
 
-        foreach (GameObject parent in skinButtons) {
-            updateButton(parent.transform.Find("Expand Button").gameObject, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.getSkinFromName(parent.name)), getSkinPrice((InterfaceFunctions.getSkinFromName(parent.name))));
-        }
+        foreach (GameObject parent in skinButtons)
+            UpdateButton(parent.transform.Find("Expand Button").gameObject, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.GetSkinFromName(parent.name)), GetSkinPrice((InterfaceFunctions.GetSkinFromName(parent.name))));
 
         //also update text shown when all upgrades of a single type have been purchased.
         //these texts should only appear if the player chooses to hide purchased upgrades
@@ -292,12 +235,9 @@ public class ShopCanvasController : MonoBehaviour {
             newFeaturesText.SetActive(false);
             cosmeticsText.SetActive(false);
         }
-
-        //after all of that, resize the scroll view
-        //setScrollViewHeight();
     }
 
-    private void updateButton(GameObject button, bool condition, int cost, bool uniqueUnlockCondition = true) {
+    private void UpdateButton(GameObject button, bool condition, int cost, bool uniqueUnlockCondition = true) {
         //shows if the item has already been purchased or not, and also sets the coin amount to the appropriate color
         //uniqueUnlockCondition for purchasing the large puzzle would be that the medium puzzle has to already have been purchased
 
@@ -368,27 +308,33 @@ public class ShopCanvasController : MonoBehaviour {
 
     }
     
-    public void pushButton(GameObject parent) {
-        //takes the parent of the current button as a parameter. Expands/contracts child dropdown
-        clickedButton(parent.transform.Find("Expand Button").gameObject);
+    public void PushExpandContractButton(GameObject parent) {
+        //takes the parent of the current button as a parameter.
+        //expands/contracts the children of the button that the player clicked. Also contracts the previous expanded button, if there is one
+        GameObject button = parent.transform.Find("Expand Button").gameObject;
+        if (expandedButton == null)
+            ExpandSiblings(button);
+        else if (expandedButton == button)
+            ContractPreviousExpansion();
+        else {
+            ContractPreviousExpansion();
+            ExpandSiblings(button);
+        }
     }
 
 
-    public void expandSiblings(GameObject button) {
+    public void ExpandSiblings(GameObject button) {
         //sets all siblings of the chosen button to be active, and resizes the scroll view
         expandedButton = button;
 
         GameObject parentBox = button.transform.parent.gameObject;
         bool switchTo = true;
 
-        for (int i = 1; i < parentBox.transform.childCount; i++) {
+        for (int i = 1; i < parentBox.transform.childCount; i++)
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
-        }
-        resizeToFitChildren(parentBox, false);
+        ResizeToFitChildren(parentBox, false);
 
         //if bottom of new stuff is out of view of the scroll view, then move the scroll view up
-
-
         float originalPos = parentBox.transform.localPosition.y;
         float totalHeight = parentBox.transform.GetChild(0).GetComponent<RectTransform>().rect.height;
         totalHeight += parentBox.transform.GetChild(1).GetComponent<RectTransform>().rect.height;
@@ -401,43 +347,25 @@ public class ShopCanvasController : MonoBehaviour {
         Canvas.ForceUpdateCanvases();
         
         parentBox.transform.parent.parent.parent.GetComponent<ScrollRect>().StopMovement();
-        //stopScrollRect = true;
-        //if ()
     }
 
-    public void contractSiblings(GameObject button) {
+    public void ContractSiblings(GameObject button) {
         //sets all siblings of the chosen button to be inactive, and resizes the scroll view
-        if (expandedButton == button) {
+        if (expandedButton == button)
             expandedButton = null;
-        }
         GameObject parentBox = button.transform.parent.gameObject;
         bool switchTo = false;
 
-        for (int i = 1; i < parentBox.transform.childCount; i++) {
+        for (int i = 1; i < parentBox.transform.childCount; i++)
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
-        }
-        resizeToFitChildren(parentBox, false);
+        ResizeToFitChildren(parentBox, false);
     }
 
-    public void contractPreviousExpansion() {
-        contractSiblings(expandedButton);
-    }
-
-    public void clickedButton(GameObject button) {
-        //expands/contracts the children of the button that the player clicked. Also contracts the previous expanded button, if there is one
-        if (expandedButton == null) {
-            expandSiblings(button);
-        }
-        else if (expandedButton == button) {
-            contractPreviousExpansion();
-        }
-        else {
-            contractPreviousExpansion();
-            expandSiblings(button);
-        }
+    public void ContractPreviousExpansion() {
+        ContractSiblings(expandedButton);
     }
     
-    public void resizeToFitChildren(GameObject parent, bool minSize) {
+    public void ResizeToFitChildren(GameObject parent, bool minSize) {
         //resizes the bounds of an element so that all of the child gameobjects are visibile. Used for expandButton and setScrollViewHeight
 
         //get height of contents, including spaces between objects and top and bottom padding
@@ -461,7 +389,7 @@ public class ShopCanvasController : MonoBehaviour {
         parent.GetComponent<RectTransform>().sizeDelta = newSize;
     }
 
-    public void displayCoinsOnButton(GameObject button, int cost) {
+    public void DisplayCoinsOnButton(GameObject button, int cost) {
         //assumes coins are all image components, with the ones place being child(1), all the way through thousands place being child(4).
         //also colors the coin amount depending on if the player can afford them.
 
@@ -488,9 +416,8 @@ public class ShopCanvasController : MonoBehaviour {
             imageObject1000s.SetActive(false);
             if (value100s == 0) {
                 imageObject100s.SetActive(false);
-                if (value10s == 0) {
+                if (value10s == 0)
                     imageObject10s.SetActive(false);
-                }
             }
         }
 
@@ -512,7 +439,7 @@ public class ShopCanvasController : MonoBehaviour {
     //ALL OF THE FUNCTIONS THAT PARSE THROUGH SKIN-SPECIFIC INFORMATION
     // ---------------------------------------------------
 
-    private void findSkinButtons() {
+    private void FindSkinButtons() {
         //finds all of the buttons that let the player unlock various skins
         //specifically, finds all gameobjects between the skin start and and points from the inspector
         int start = skinsStart.transform.GetSiblingIndex();
@@ -525,7 +452,7 @@ public class ShopCanvasController : MonoBehaviour {
         skinButtons = buttons.ToArray();
     }
 
-    private int getSkinPrice(Skin skin) {
+    private int GetSkinPrice(Skin skin) {
         //gets the price in coins for a skin, based on the skinTier from the skin's script and the corresponding price from the inspector in the shop
         switch (skin.skinTier) {
             case 1:
@@ -540,130 +467,131 @@ public class ShopCanvasController : MonoBehaviour {
     //ALL OF THE FUNCTIONS THAT HELP PURCHASE AN UPGRADE. FUNCTIONS THAT MAKE THE PURCHASE FOR ONE SPECIFIC UPGRADE ARE LATER
     // ---------------------------------------------------
 
-    private bool canPurchase(bool notCond, int cost) {
+    private bool CanPurchase(bool notCond, int cost) {
         //if the prerequisite purchase condition is met, and the upgrade's cost is met, then returns true
         //used in the unlock functions
         return (!notCond && StaticVariables.coins >= cost);
     }
 
-    private void doPurchase(int price) {
+    private void DoPurchase(int price) {
         //purchases an upgrade and contracts the expanded drop-down under the purchased upgrade's title
         //used in the unlock functions
-        makePurchase(price);
-        updateButtons();
-        contractPreviousExpansion();
+        MakePurchase(price);
+        UpdateButtons();
+        ContractPreviousExpansion();
 
         SaveSystem.SaveGame();
     }
 
-    public void makePurchase(int cost) {
+    public void MakePurchase(int cost) {
         //deducts the cost of a purchase from the player's coin total, and displays the new amount
         StaticVariables.coins -= cost;
-        displayCoinsAmount();
+        DisplayCoinsAmount();
     }
 
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT DIRECTLY UNLOCK AN UPGRADE. EACH ONE ALSO SETS THE UNLOCK AS ACTIVE, WHICH CAN BE DEACTIVATED FROM SETTINGS
     // ---------------------------------------------------
 
-    public void unlockMedium() {
-        if (canPurchase(StaticVariables.unlockedMedium,medCityPrice)) {
+    public void PushUnlockMediumButton() {
+        if (CanPurchase(StaticVariables.unlockedMedium,medCityPrice)) {
             StaticVariables.unlockedMedium = true;
             StaticVariables.highestUnlockedSize = 4;
             StaticVariables.showMed = true;
-            doPurchase(medCityPrice);
+            DoPurchase(medCityPrice);
         }
     }
-    public void unlockLarge() {
-        if (canPurchase(StaticVariables.unlockedLarge, largeCityPrice) && StaticVariables.unlockedMedium) {
+    public void PushUnlockLargeButton() {
+        if (CanPurchase(StaticVariables.unlockedLarge, largeCityPrice) && StaticVariables.unlockedMedium) {
             StaticVariables.unlockedLarge = true;
             StaticVariables.highestUnlockedSize = 5;
             StaticVariables.showMed = true;
             StaticVariables.showLarge = true;
-            doPurchase(largeCityPrice);
+            DoPurchase(largeCityPrice);
         }
     }
-    public void unlockHuge() {
-        if (canPurchase(StaticVariables.unlockedHuge, hugeCityPrice) && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
+    public void PushUnlockHugeButton() {
+        if (CanPurchase(StaticVariables.unlockedHuge, hugeCityPrice) && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
             StaticVariables.unlockedHuge = true;
             StaticVariables.highestUnlockedSize = 6;
             StaticVariables.showMed = true;
             StaticVariables.showLarge = true;
             StaticVariables.showHuge = true;
-            doPurchase(hugeCityPrice);
+            DoPurchase(hugeCityPrice);
         }
     }
-    public void unlockMassive() {
-        if (canPurchase(StaticVariables.unlockedMassive, massiveCityPrice) && StaticVariables.unlockedHuge && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
+    public void PushUnlockMassiveButton() {
+        if (CanPurchase(StaticVariables.unlockedMassive, massiveCityPrice) && StaticVariables.unlockedHuge && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
             StaticVariables.unlockedMassive = true;
             StaticVariables.highestUnlockedSize = 7;
             StaticVariables.showMed = true;
             StaticVariables.showLarge = true;
             StaticVariables.showHuge = true;
             StaticVariables.showMassive = true;
-            doPurchase(massiveCityPrice);
+            DoPurchase(massiveCityPrice);
         }
     }
-    public void unlockNotes1() {
-        if (canPurchase(StaticVariables.unlockedNotes1,notes1Price)) {
+    public void PushUnlockNotes1Button() {
+        if (CanPurchase(StaticVariables.unlockedNotes1,notes1Price)) {
             StaticVariables.unlockedNotes1 = true;
             StaticVariables.includeNotes1Button = true;
-            doPurchase(notes1Price);
+            DoPurchase(notes1Price);
         }
     }
-    public void unlockNotes2() {
-        if (canPurchase(StaticVariables.unlockedNotes2, notes2Price) && StaticVariables.unlockedNotes1) {
+    public void PushUnlockNotes2Button() {
+        if (CanPurchase(StaticVariables.unlockedNotes2, notes2Price) && StaticVariables.unlockedNotes1) {
             StaticVariables.unlockedNotes2 = true;
             StaticVariables.includeNotes2Button = true;
-            doPurchase(notes2Price);
+            DoPurchase(notes2Price);
         }
     }
-    public void unlockResidentsChangeColor() {
-        if (canPurchase(StaticVariables.unlockedResidentsChangeColor,residentColorPrice)) {
+    public void PushUnlockResidentColorButton() {
+        if (CanPurchase(StaticVariables.unlockedResidentsChangeColor,residentColorPrice)) {
             StaticVariables.unlockedResidentsChangeColor = true;
             StaticVariables.changeResidentColorOnCorrectRows = true;
-            doPurchase(residentColorPrice);
+            DoPurchase(residentColorPrice);
         }
     }
-    public void unlockUndoRedo() {
-        if (canPurchase(StaticVariables.unlockedUndoRedo,undoRedoPrice)) {
+    public void PushUnlockUndoRedoButton() {
+        if (CanPurchase(StaticVariables.unlockedUndoRedo,undoRedoPrice)) {
             StaticVariables.unlockedUndoRedo = true;
             StaticVariables.includeUndoRedo = true;
-            doPurchase(undoRedoPrice);
+            DoPurchase(undoRedoPrice);
         }
     }
-    public void unlockRemoveAllOfNumber() {
-        if (canPurchase(StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice) && StaticVariables.unlockedUndoRedo) {
+    public void PushUnlockRemoveAllButton() {
+        if (CanPurchase(StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice) && StaticVariables.unlockedUndoRedo) {
             StaticVariables.unlockedRemoveAllOfNumber = true;
             StaticVariables.includeRemoveAllOfNumber = true;
-            doPurchase(removeAllPrice);
+            DoPurchase(removeAllPrice);
         }
     }
-    public void unlockClearPuzzle() {
-        if (canPurchase(StaticVariables.unlockedClearPuzzle, clearPrice) && StaticVariables.unlockedUndoRedo) {
+    public void PushUnlockClearPuzzleButton() {
+        if (CanPurchase(StaticVariables.unlockedClearPuzzle, clearPrice) && StaticVariables.unlockedUndoRedo) {
             StaticVariables.unlockedClearPuzzle = true;
             StaticVariables.includeClearPuzzle = true;
-            doPurchase(clearPrice);
+            DoPurchase(clearPrice);
         }
     }
 
-    public void unlockHighlightBuildings() {
-        if (canPurchase(StaticVariables.unlockedHighlightBuildings, highlightBuildingsPrice)) {
+    public void PushUnlockHighlightBuildingsButton() {
+        if (CanPurchase(StaticVariables.unlockedHighlightBuildings, highlightBuildingsPrice)) {
             StaticVariables.unlockedHighlightBuildings = true;
             StaticVariables.includeHighlightBuildings = true;
-            doPurchase(highlightBuildingsPrice);
+            DoPurchase(highlightBuildingsPrice);
         }
     }
 
 
-    public void unlockSkin(GameObject parent) {
-        Skin skin = InterfaceFunctions.getSkinFromName(parent.name);
-        if (canPurchase(StaticVariables.unlockedSkins.Contains(skin), getSkinPrice(skin))){
+    public void PushUnlockSkinButton(GameObject parent) {
+        Skin skin = InterfaceFunctions.GetSkinFromName(parent.name);
+        if (CanPurchase(StaticVariables.unlockedSkins.Contains(skin), GetSkinPrice(skin))){
             StaticVariables.unlockedSkins.Add(skin);
             StaticVariables.skin = skin;
             background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
-            InterfaceFunctions.colorMenuButton(menuButton);
-            doPurchase(getSkinPrice(skin));
+            InterfaceFunctions.ColorMenuButton(menuButton);
+            InterfaceFunctions.ColorMenuButton(settingsButton);
+            DoPurchase(GetSkinPrice(skin));
         }
 
     }
@@ -672,14 +600,15 @@ public class ShopCanvasController : MonoBehaviour {
     //ALL OF THE FUNCTIONS THAT WERE USED IN TESTING THE SHOP FUNCTIONALITY. THE BUTTONS THAT CALL THESE FUNCTIONS ARE HIDDEN IN THE INSPECTOR
     // ---------------------------------------------------
 
-    public void clearPurchases() {
+    public void PushClearPurchasesButton() {
         //the clear purchases button is only used during testing, for the purposes of testing shop mechanics 
-        lockAll();
-        if (StaticVariables.coins < 50) { StaticVariables.coins = 300; }
-        displayCoinsAmount();
+        PushLockAllButton();
+        if (StaticVariables.coins < 50) 
+            StaticVariables.coins = 300;
+        DisplayCoinsAmount();
     }
 
-    public void lockAll() {
+    public void PushLockAllButton() {
         //lock all is also only used during testing
         StaticVariables.unlockedMedium = false;
         StaticVariables.unlockedLarge = false;
@@ -708,13 +637,14 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeHighlightBuildings = false;
 
         StaticVariables.unlockedSkins = new List<Skin>();
-        StaticVariables.skin = InterfaceFunctions.getDefaultSkin();
+        StaticVariables.skin = InterfaceFunctions.GetDefaultSkin();
         background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
-        InterfaceFunctions.colorMenuButton(menuButton);
-        updateButtons();
+        InterfaceFunctions.ColorMenuButton(menuButton);
+        InterfaceFunctions.ColorMenuButton(settingsButton);
+        UpdateButtons();
     }
 
-    public void unlockAll() {
+    public void PushUnlockAllButton() {
         //unlock all is also only used during testing
         StaticVariables.unlockedMedium = true;
         StaticVariables.unlockedLarge = true;
@@ -742,38 +672,37 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeClearPuzzle = true;
         StaticVariables.includeHighlightBuildings = true;
 
-        unlockAllSkins();
-        updateButtons();
+        PushUnlockAllSkinsButton();
+        UpdateButtons();
     }
 
-    private void unlockAllSkins() {
+    private void PushUnlockAllSkinsButton() {
         //unlockAllSkins is also only used during testing
         foreach (Skin skin in StaticVariables.allSkins) {
-            if (skin != InterfaceFunctions.getDefaultSkin() && !StaticVariables.unlockedSkins.Contains(skin)) {
+            if (skin != InterfaceFunctions.GetDefaultSkin() && !StaticVariables.unlockedSkins.Contains(skin))
                 StaticVariables.unlockedSkins.Add(skin);
-            }
 
         }
     }
 
-    public void addCoins() {
+    public void PushAddCoinsButton() {
         //addCoins is also only used during testing
         StaticVariables.coins += 400;
-        displayCoinsAmount();
-        updateButtons();
+        DisplayCoinsAmount();
+        UpdateButtons();
     }
 
-    public void foreshInstall() {
-        //the name of this function is misspelled, but that is okay because this is also only used during testing
-        removeCoins();
-        lockAll();
+    public void PushFreshInstallButton() {
+        //also only used during testing
+        PushRemoveCoinsButton();
+        PushLockAllButton();
         StaticVariables.hasBeatenTutorial = false;
-        goToMainMenu();
+        StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 
-    public void removeCoins() {
+    public void PushRemoveCoinsButton() {
         //also only used during testing
         StaticVariables.coins = 0;
-        displayCoinsAmount();
+        DisplayCoinsAmount();
     }
 }

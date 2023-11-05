@@ -25,13 +25,13 @@ public class PuzzleState {
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++)
-                notes1[i, j] = toList(puzzle.tilesArray[i, j].noteGroup1);
+                notes1[i, j] = ToList(puzzle.tilesArray[i, j].noteGroup1);
         }
         notes2 = new int[size, size][];
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++)
-                notes2[i, j] = toList(puzzle.tilesArray[i, j].noteGroup2);
+                notes2[i, j] = ToList(puzzle.tilesArray[i, j].noteGroup2);
         }
 
         permanentBuildings = new bool[size, size];
@@ -80,8 +80,7 @@ public class PuzzleState {
                     int n = c - '0';
                     numbersList.Add(n);
                 }
-
-                notes1[i, j] = toList(numbersList);
+                notes1[i, j] = ToList(numbersList);
             }
         }
 
@@ -97,50 +96,46 @@ public class PuzzleState {
                     numbersList.Add(n);
                 }
 
-                notes2[i, j] = toList(numbersList);
+                notes2[i, j] = ToList(numbersList);
             }
         }
     }
 
-    public int[] toList(List<int> array) {
+    public int[] ToList(List<int> array) {
         //takes an array and returns a list with the same elements
         int[] result;
         result = new int[array.Count];
-        for (int i = 0; i<array.Count; i++) {
+        for (int i = 0; i<array.Count; i++) 
             result[i] = array[i];
-        }
         return result;
     }
 
-    public void restorePuzzleState(PuzzleGenerator puzzle) {
+    public void RestorePuzzleState(PuzzleGenerator puzzle) {
         //takes a PuzzleGenerator object and sets all of the building and note values to be the ones contained in this PuzzleState
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                if (permanentBuildings[i,j]){
-                    puzzle.tilesArray[i,j].addPermanentBuildingToTile(buildings[i,j]);
-                }
+                if (permanentBuildings[i,j])
+                    puzzle.tilesArray[i,j].AddPermanentBuildingToTile(buildings[i,j]);
                 else{
                     puzzle.tilesArray[i, j].shownNumber = buildings[i, j];
-                    puzzle.tilesArray[i, j].addNumberToTile(buildings[i, j]);
+                    puzzle.tilesArray[i, j].AddNumberToTile(buildings[i, j]);
                 }
             }
         }
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                puzzle.tilesArray[i, j].clearColoredNotes();
-                for (int k = 0; k< notes1[i,j].Length; k++) {
-                    puzzle.tilesArray[i, j].toggleNote1(notes1[i, j][k]);
-                }
-                for (int k = 0; k < notes2[i, j].Length; k++) {
-                    puzzle.tilesArray[i, j].toggleNote2(notes2[i, j][k]);
-                }
+                puzzle.tilesArray[i, j].ClearColoredNotes();
+                for (int k = 0; k< notes1[i,j].Length; k++) 
+                    puzzle.tilesArray[i, j].ToggleNote1(notes1[i, j][k]);
+                for (int k = 0; k < notes2[i, j].Length; k++) 
+                    puzzle.tilesArray[i, j].ToggleNote2(notes2[i, j][k]);
             }
         }
         
 
     }
 
-    public string returnStateAsString() {
+    public string ReturnStateAsString() {
         //takes the PuzzleState and represents it as a string, used in the SaveData saving process
         //every tile is separated by a dash, building/notes1/notes2 is separated by a space
         string buildingsString = "";

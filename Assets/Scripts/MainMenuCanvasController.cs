@@ -48,12 +48,6 @@ public class MainMenuCanvasController : MonoBehaviour {
     public GameObject abandonHuge;
     public GameObject abandonMassive;
 
-    public GameObject blackForeground; //used to transition to/from the main menu
-    private Image blackSprite; //derived from the blackForeground gameObject
-    public float fadeOutTime; //total time for fade-out, from complete light to complete darkness
-    public float fadeInTime; //total time for fade-in, from complete darkness to complete light
-    private float fadeTimer; //the timer on which the fadeout and fadein mechanics operate
-
     public Skin defaultSkin; //the default skin used when the player boots up the game for the first time
 
     public Skin[] skins; //a list of all skins. To work effectively, any new skin must be added to this list in the inspector
@@ -68,88 +62,28 @@ public class MainMenuCanvasController : MonoBehaviour {
         }
         //apply the current skin
         background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
-        colorButtons();
-        showReturnAbandon();
-
-        //start the fade-in process from another scene
-        blackSprite = blackForeground.GetComponent<Image>();
-        if (StaticVariables.isFading && StaticVariables.fadingTo == "menu") {
-            fadeTimer = fadeInTime;
-        }
+        ColorButtons();
+        ShowReturnAbandon();
 
         //update the puzzle buttons based on what puzzle sizes the player has unlocked
-        showCityButtons();
+        ShowCityButtons();
        
-    }
-
-    private void Update() {
-        //if the player is fading from main menu to another scene, this block handles that fading process
-        if (StaticVariables.isFading && StaticVariables.fadingFrom == "menu") {
-            fadeTimer -= Time.deltaTime;
-            Color c = blackSprite.color;
-            c.a = (fadeOutTime - fadeTimer) / fadeOutTime;
-            blackSprite.color = c;
-            if (fadeTimer <= 0f) { //after the fade timer is done, and the screen is dark, transition to another scene.
-                if (StaticVariables.fadingTo == "puzzle") { SceneManager.LoadScene("InPuzzle"); }
-                if (StaticVariables.fadingTo == "shop") { SceneManager.LoadScene("Shop"); }
-                if (StaticVariables.fadingTo == "settings") { SceneManager.LoadScene("Settings"); }
-                if (StaticVariables.fadingTo == "reload") {
-                    StaticVariables.fadingTo = "menu";
-                    StaticVariables.fadingFrom = "reloaded";
-                    SceneManager.LoadScene("MainMenu");
-                }
-            }
-        }
-        //if the player is fading into the main menu scene, this block handles that fading process
-        else if (StaticVariables.isFading && StaticVariables.fadingTo == "menu") {
-            fadeTimer -= Time.deltaTime;
-            Color c = blackSprite.color;
-            c.a = (fadeTimer) / fadeInTime;
-            blackSprite.color = c;
-            if (fadeTimer <= 0f) {
-                StaticVariables.isFading = false;
-                if (StaticVariables.waitingOnButtonClickAfterFadeIn) {
-                    StaticVariables.waitingOnButtonClickAfterFadeIn = false;
-                    if (StaticVariables.buttonClickInWaiting.Contains("puzzle")) {
-                        int s = int.Parse(StaticVariables.buttonClickInWaiting[StaticVariables.buttonClickInWaiting.Length -1] + "");
-                        startPuzzle(s);
-                    }
-                    else if (StaticVariables.buttonClickInWaiting == "tutorial") {
-                        startTutorial();
-                    }
-                    else if (StaticVariables.buttonClickInWaiting == "shop") {
-                        goToShop();
-                    }
-                    else if (StaticVariables.buttonClickInWaiting == "settings") {
-                        goToSettings();
-                    }
-                    else if (StaticVariables.buttonClickInWaiting == "abandon") {
-                        pushAbandonPuzzleButton();
-                    }
-                }
-            }
-        }
-        //if the player presses their phone's back button, call the Quit function
-        //identical to if the player closed the game
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            Application.Quit();
-        }
     }
     
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT ARE USED TO UPDATE THE VISUALS FOR THE MAIN MENU SCENE
     // ---------------------------------------------------
 
-    private void colorButtons() {
+    private void ColorButtons() {
         //color all of the menu buttons to fit the current skin
-        InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("3").gameObject);
-        InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("4").gameObject);
-        InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("5").gameObject);
-        InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("6").gameObject);
-        InterfaceFunctions.colorMenuButton(puzzleButtons.transform.Find("7").gameObject);
+        InterfaceFunctions.ColorMenuButton(puzzleButtons.transform.Find("3").gameObject);
+        InterfaceFunctions.ColorMenuButton(puzzleButtons.transform.Find("4").gameObject);
+        InterfaceFunctions.ColorMenuButton(puzzleButtons.transform.Find("5").gameObject);
+        InterfaceFunctions.ColorMenuButton(puzzleButtons.transform.Find("6").gameObject);
+        InterfaceFunctions.ColorMenuButton(puzzleButtons.transform.Find("7").gameObject);
 
-        InterfaceFunctions.colorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Return").gameObject);
-        InterfaceFunctions.colorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Abandon").gameObject);
+        InterfaceFunctions.ColorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Return").gameObject);
+        InterfaceFunctions.ColorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Abandon").gameObject);
 
         Color exter;
         Color inter;
@@ -158,13 +92,13 @@ public class MainMenuCanvasController : MonoBehaviour {
         returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Border").GetComponent<Image>().color = exter;
         returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Interior").GetComponent<Image>().color = inter;
 
-        InterfaceFunctions.colorMenuButton(shopButton);
-        InterfaceFunctions.colorMenuButton(tutorialButton);
-        InterfaceFunctions.colorMenuButton(settingsButton);
-        InterfaceFunctions.colorMenuButton(largeCenterTutorialButton);
+        InterfaceFunctions.ColorMenuButton(shopButton);
+        InterfaceFunctions.ColorMenuButton(tutorialButton);
+        InterfaceFunctions.ColorMenuButton(settingsButton);
+        InterfaceFunctions.ColorMenuButton(largeCenterTutorialButton);
     }
 
-    private void showReturnAbandon() {
+    private void ShowReturnAbandon() {
         if (StaticVariables.hasSavedPuzzleState) {
             leftSmallText.SetActive(StaticVariables.savedPuzzleSize == 3);
             returnSmall.SetActive(StaticVariables.savedPuzzleSize == 3);
@@ -184,7 +118,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         }
     }
 
-    private void showCityButtons() {
+    private void ShowCityButtons() {
         //shows or hides buttons on the menu depending on if the player has completed the tutorial, has a puzzle currently in progress, or has not unlocked all of the puzzle size upgrades yet
         largeCenterTutorialButton.SetActive(false);
         returnOrAbandonButtons.SetActive(false);
@@ -202,7 +136,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         hugeText.SetActive(true);
         massiveText.SetActive(true);
 
-        int highestUnlockedSize = getHighestUnlockedSize();
+        int highestUnlockedSize = GetHighestUnlockedSize();
         if (StaticVariables.hasSavedPuzzleState) {
             puzzleButtons.SetActive(false);
             returnOrAbandonButtons.SetActive(true);
@@ -249,7 +183,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         */
     }
 
-    public int getHighestUnlockedSize() {
+    public int GetHighestUnlockedSize() {
         //gets the highest size puzzle that the player has unlocked as an int
         int highestUnlockedSize = 3;
         if (StaticVariables.showMed) {
@@ -275,94 +209,40 @@ public class MainMenuCanvasController : MonoBehaviour {
         SaveSystem.SaveGame();
     }
 
-    public void startFadeOut() {
-        //begin the fade-out process. This function is called by several functions that transition to another scene
-        //the fade-out mechanics of darkening the screen are implemented in the Update function
-        fadeTimer = fadeOutTime;
-        StaticVariables.isFading = true;
-        StaticVariables.fadingFrom = "menu";
-    }
-
-    public void startPuzzle(int size) {
+    public void PushStartPuzzleButton(int size) {
         //start fading out, and after the fade-out process is completed, go to the puzzle scene
-        if (getHighestUnlockedSize() >= size) {
-            if (!StaticVariables.isFading) {
-                StaticVariables.size = size;
-                StaticVariables.isTutorial = false;
-                StaticVariables.fadingTo = "puzzle";
-                startFadeOut();
-            }
-            else {
-                StaticVariables.waitingOnButtonClickAfterFadeIn = true;
-                StaticVariables.buttonClickInWaiting = "puzzle" + size;
-            }
-        }
+        if (GetHighestUnlockedSize() >= size)
+            StaticVariables.size = size;
+            StaticVariables.isTutorial = false;
+            StaticVariables.FadeOutThenLoadScene("InPuzzle");
     }
     
-    public void startTutorial() {
+    public void PushStartTutorialButton() {
         //start fading out, and after the fade-out process is completed, go to the puzzle scene, in tutorial mode
-        if (!StaticVariables.isFading) {
-            StaticVariables.size = 3;
-            StaticVariables.isTutorial = true;
-            StaticVariables.fadingTo = "puzzle";
-            startFadeOut();
-        }
-        else {
-            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
-            StaticVariables.buttonClickInWaiting = "tutorial";
-        }
+        StaticVariables.size = 3;
+        StaticVariables.isTutorial = true;
+        StaticVariables.FadeOutThenLoadScene("InPuzzle");
     }
 
-    public void goToShop() {
-        //start fading out, and after the fade-out process is completed, go to the shop scene
-        if (!StaticVariables.isFading) {
-            StaticVariables.fadingTo = "shop";
-            startFadeOut();
-        }
-        else {
-            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
-            StaticVariables.buttonClickInWaiting = "shop";
-        }
+    public void PushShopButton() {
+        StaticVariables.FadeOutThenLoadScene("Shop");
     }
 
-    public void goToSettings() {
-        //start fading out, and after the fade-out process is completed, go to the settings scene
-        if (!StaticVariables.isFading) {
-            StaticVariables.fadingTo = "settings";
-            startFadeOut();
-        }
-        else {
-            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
-            StaticVariables.buttonClickInWaiting = "settings";
-        }
+    public void PushSettingsButton() {
+        StaticVariables.FadeOutThenLoadScene("Settings");
     }
 
 
-    public void pushReturnToPuzzleButton() {
-        //start fading out, and after the fade-out process is completed, go to the puzzle scene and load a previous puzzle
-        if (!StaticVariables.isFading) {
-            StaticVariables.size = StaticVariables.savedPuzzleSize;
-            StaticVariables.isTutorial = false;
-            StaticVariables.fadingTo = "puzzle";
-            startFadeOut();
-        }
-        else {
-            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
-            StaticVariables.buttonClickInWaiting = "puzzle" + StaticVariables.savedPuzzleSize;
-        }
+    public void PushReturnToPuzzleButton() {
+        StaticVariables.size = StaticVariables.savedPuzzleSize;
+        StaticVariables.isTutorial = false;
+        StaticVariables.FadeOutThenLoadScene("InPuzzle");
     }
 
-    public void pushAbandonPuzzleButton() {
+    public void PushAbandonPuzzleButton() {
         //start fading out, and after the fade-out process is completed, reload the main menu scene, but without the "return/abandon puzzle" options
         StaticVariables.hasSavedPuzzleState = false;
         SaveSystem.SaveGame();
-        if (!StaticVariables.isFading) {
-            StaticVariables.fadingTo = "reload";
-            startFadeOut();
-        }
-        else {
-            StaticVariables.waitingOnButtonClickAfterFadeIn = true;
-            StaticVariables.buttonClickInWaiting = "abandon";
-        }
+        StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 }

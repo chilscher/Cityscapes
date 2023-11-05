@@ -85,7 +85,7 @@ public class SaveData{
         unlockedHighlightBuildings = StaticVariables.unlockedHighlightBuildings;
 
         skinName = StaticVariables.skin.skinName;
-        unlockedSkinNames = getUnlockedSkinNames();
+        unlockedSkinNames = GetUnlockedSkinNames();
         hidePurchasedUpgrades = StaticVariables.hidePurchasedUpgrades;
 
         hasBeatenTutorial = StaticVariables.hasBeatenTutorial;
@@ -93,9 +93,9 @@ public class SaveData{
         //stores the player's puzzle states
         hasSavedPuzzleState = StaticVariables.hasSavedPuzzleState;
         if (hasSavedPuzzleState) {
-            previousPuzzleStates = getPuzzleStateStringsFromList(StaticVariables.previousPuzzleStates);
-            currentPuzzleState = StaticVariables.currentPuzzleState.returnStateAsString();
-            nextPuzzleStates = getPuzzleStateStringsFromList(StaticVariables.nextPuzzleStates);
+            previousPuzzleStates = GetPuzzleStateStringsFromList(StaticVariables.previousPuzzleStates);
+            currentPuzzleState = StaticVariables.currentPuzzleState.ReturnStateAsString();
+            nextPuzzleStates = GetPuzzleStateStringsFromList(StaticVariables.nextPuzzleStates);
             puzzleSolution = StaticVariables.puzzleSolution;
             savedPuzzleSize = StaticVariables.savedPuzzleSize;
             savedBuildNumber = StaticVariables.savedBuildNumber;
@@ -103,28 +103,25 @@ public class SaveData{
         }
     }
 
-    private string getPuzzleStateStringsFromList(List<PuzzleState> list) {
+    private string GetPuzzleStateStringsFromList(List<PuzzleState> list) {
         //takes the player's list of puzzle states and stores it as a string, specifically for saving
         string result = "";
         foreach (PuzzleState ps in list) {
-            result += ps.returnStateAsString();
+            result += ps.ReturnStateAsString();
             result += ",";
         }
-        if (result.Length > 1) {
+        if (result.Length > 1) 
             result = result.Substring(0, result.Length - 1);
-        }
         return result;
     }
 
-    private string getUnlockedSkinNames() {
+    private string GetUnlockedSkinNames() {
         //takes the player's unlocked skins and stores them as a string, specifically for saving
         string result = "";
-        foreach (Skin skin in StaticVariables.unlockedSkins) {
+        foreach (Skin skin in StaticVariables.unlockedSkins) 
             result += skin.skinName + " ";
-        }
-        if (result.Length > 1) {
+        if (result.Length > 1)
             result = result.Substring(0, result.Length - 1);
-        }
         return result;
     }
 
@@ -162,8 +159,8 @@ public class SaveData{
         StaticVariables.unlockedClearPuzzle = unlockedClearPuzzle;
         StaticVariables.unlockedHighlightBuildings = unlockedHighlightBuildings;
         
-        StaticVariables.skin = InterfaceFunctions.getSkinFromName(skinName);
-        StaticVariables.unlockedSkins = getUnlockedSkins();
+        StaticVariables.skin = InterfaceFunctions.GetSkinFromName(skinName);
+        StaticVariables.unlockedSkins = GetUnlockedSkins();
         StaticVariables.hidePurchasedUpgrades = hidePurchasedUpgrades;
 
         StaticVariables.hasBeatenTutorial = hasBeatenTutorial;
@@ -171,9 +168,9 @@ public class SaveData{
         //loads the player's puzzle states
         StaticVariables.hasSavedPuzzleState = hasSavedPuzzleState;
         if (hasSavedPuzzleState) {
-            StaticVariables.previousPuzzleStates = getPuzzleStateListFromString(previousPuzzleStates, savedPuzzleSize);
+            StaticVariables.previousPuzzleStates = GetPuzzleStateListFromString(previousPuzzleStates, savedPuzzleSize);
             StaticVariables.currentPuzzleState = new PuzzleState(currentPuzzleState, savedPuzzleSize);
-            StaticVariables.nextPuzzleStates = getPuzzleStateListFromString(nextPuzzleStates, savedPuzzleSize);
+            StaticVariables.nextPuzzleStates = GetPuzzleStateListFromString(nextPuzzleStates, savedPuzzleSize);
             StaticVariables.puzzleSolution = puzzleSolution;
             StaticVariables.savedPuzzleSize = savedPuzzleSize;
             StaticVariables.savedBuildNumber = savedBuildNumber;
@@ -181,7 +178,7 @@ public class SaveData{
         }
     }
     
-    private List<PuzzleState> getPuzzleStateListFromString(string s, int size) {
+    private List<PuzzleState> GetPuzzleStateListFromString(string s, int size) {
         //parses the string that stores the player's current puzzle's states, specifically for loading
         List<PuzzleState> list = new List<PuzzleState>();
         if (s != "") {
@@ -189,20 +186,18 @@ public class SaveData{
             foreach (string str in strings) {
                 PuzzleState p = new PuzzleState(str, size);
                 list.Add(p);
-
             }
         }
         return list;
     }
     
-    private List<Skin> getUnlockedSkins() {
+    private List<Skin> GetUnlockedSkins() {
         //parses the string containing the player's unlocked skins, specifically for loading
         List<Skin> skins = new List<Skin>();
         if (unlockedSkinNames != "") {
             string[] strings = unlockedSkinNames.Split(' ');
-            foreach (string str in strings) {
-                skins.Add(InterfaceFunctions.getSkinFromName(str));
-            }
+            foreach (string str in strings)
+                skins.Add(InterfaceFunctions.GetSkinFromName(str));
         }
         return skins;
     }

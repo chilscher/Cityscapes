@@ -37,13 +37,6 @@ public class Skin: MonoBehaviour{
     public string resumePuzzleInterior;
     public string resumePuzzleExterior;
 
-    //city art, used on the main menu and during the win pop-up after you beat a puzzle
-    //public Sprite smallCityArt;
-    //public Sprite medCityArt;
-    //public Sprite largeCityArt;
-    //public Sprite hugeCityArt;
-    //public Sprite massiveCityArt;
-
 
     /* TO ADD A NEW SKIN, FOLLOW THESE INSTRUCTIONS!
     

@@ -123,6 +123,108 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &1571371
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1571374}
+  - component: {fileID: 1571373}
+  - component: {fileID: 1571372}
+  m_Layer: 0
+  m_Name: MainMenuCanvasController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1571372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67b54781628a9354f99d186adbc4c30c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fadeImage: {fileID: 2055686840}
+--- !u!114 &1571373
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571371}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9e9ffa0d5447894b964057d76f68bc7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzleButtons: {fileID: 1034229281}
+  smallShadow: {fileID: 820414645}
+  mediumShadow: {fileID: 416389093}
+  largeShadow: {fileID: 1503629237}
+  hugeShadow: {fileID: 1459023280}
+  massiveShadow: {fileID: 216875811}
+  smallCityArt: {fileID: 445105579}
+  mediumCityArt: {fileID: 771439442}
+  largeCityArt: {fileID: 570133412}
+  hugeCityArt: {fileID: 216896805}
+  massiveCityArt: {fileID: 1638785378}
+  smallText: {fileID: 1045004446}
+  mediumText: {fileID: 265127324}
+  largeText: {fileID: 441733445}
+  hugeText: {fileID: 1226148811}
+  massiveText: {fileID: 464710695}
+  returnOrAbandonButtons: {fileID: 434550103}
+  background: {fileID: 1863834607}
+  shopButton: {fileID: 438263058}
+  tutorialButton: {fileID: 443763566}
+  largeCenterTutorialButton: {fileID: 733327465}
+  settingsButton: {fileID: 631664034}
+  leftSmallText: {fileID: 579603532}
+  leftMediumText: {fileID: 1311404003}
+  leftLargeText: {fileID: 207351888}
+  leftHugeText: {fileID: 1162733501}
+  leftMassiveText: {fileID: 878474374}
+  returnSmall: {fileID: 180029446}
+  returnMedium: {fileID: 202437053}
+  returnLarge: {fileID: 1703431551}
+  returnHuge: {fileID: 2138157238}
+  returnMassive: {fileID: 1238068400}
+  abandonSmall: {fileID: 1716775126}
+  abandonMedium: {fileID: 1644686274}
+  abandonLarge: {fileID: 1977465660}
+  abandonHuge: {fileID: 1163108559}
+  abandonMassive: {fileID: 2088734130}
+  defaultSkin: {fileID: 2135032764033575535, guid: 83513b0b1be6dbc4884f648b2c97455a,
+    type: 3}
+  skins:
+  - {fileID: 2135032764033575535, guid: 83513b0b1be6dbc4884f648b2c97455a, type: 3}
+  - {fileID: 2135032764033575535, guid: 0b92125c21674b44da0a398f129e4a43, type: 3}
+  - {fileID: 2135032764033575535, guid: 3ce6c8f571c169e429d025da56ce6654, type: 3}
+  - {fileID: 2135032764033575535, guid: c362d7300470e5348a8f2f004e50da57, type: 3}
+--- !u!4 &1571374
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1571371}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.22471558, y: -0.30387005, z: -0.671431}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &31303127
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,9 +611,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1005856051}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: startPuzzle
+      - m_Target: {fileID: 1571373}
+        m_TargetAssemblyTypeName: MainMenuCanvasController, Assembly-CSharp
+        m_MethodName: PushStartPuzzleButton
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2435,9 +2537,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1005856051}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: pushAbandonPuzzleButton
+      - m_Target: {fileID: 1571373}
+        m_TargetAssemblyTypeName: MainMenuCanvasController, Assembly-CSharp
+        m_MethodName: PushAbandonPuzzleButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2917,9 +3019,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1005856051}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: pushReturnToPuzzleButton
+      - m_Target: {fileID: 1571373}
+        m_TargetAssemblyTypeName: MainMenuCanvasController, Assembly-CSharp
+        m_MethodName: PushReturnToPuzzleButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4037,9 +4139,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1005856051}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: goToShop
+      - m_Target: {fileID: 1571373}
+        m_TargetAssemblyTypeName: MainMenuCanvasController, Assembly-CSharp
+        m_MethodName: PushShopButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4372,9 +4474,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1005856051}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: startTutorial
+      - m_Target: {fileID: 1571373}
+        m_TargetAssemblyTypeName: MainMenuCanvasController, Assembly-CSharp
+        m_MethodName: PushStartTutorialButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5776,9 +5878,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1005856051}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: startPuzzle
+      - m_Target: {fileID: 1571373}
+        m_TargetAssemblyTypeName: MainMenuCanvasController, Assembly-CSharp
+        m_MethodName: PushStartPuzzleButton
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6913,9 +7015,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1005856051}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: goToSettings
+      - m_Target: {fileID: 1571373}
+        m_TargetAssemblyTypeName: MainMenuCanvasController, Assembly-CSharp
+        m_MethodName: PushSettingsButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7889,9 +7991,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1005856051}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: startTutorial
+      - m_Target: {fileID: 1571373}
+        m_TargetAssemblyTypeName: MainMenuCanvasController, Assembly-CSharp
+        m_MethodName: PushStartTutorialButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8540,9 +8642,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1005856051}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: startPuzzle
+      - m_Target: {fileID: 1571373}
+        m_TargetAssemblyTypeName: MainMenuCanvasController, Assembly-CSharp
+        m_MethodName: PushStartPuzzleButton
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -9209,9 +9311,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1005856051}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: startPuzzle
+      - m_Target: {fileID: 1571373}
+        m_TargetAssemblyTypeName: MainMenuCanvasController, Assembly-CSharp
+        m_MethodName: PushStartPuzzleButton
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10144,9 +10246,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1005856051}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: startPuzzle
+      - m_Target: {fileID: 1571373}
+        m_TargetAssemblyTypeName: MainMenuCanvasController, Assembly-CSharp
+        m_MethodName: PushStartPuzzleButton
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10550,7 +10652,6 @@ GameObject:
   - component: {fileID: 1005856050}
   - component: {fileID: 1005856049}
   - component: {fileID: 1005856048}
-  - component: {fileID: 1005856051}
   - component: {fileID: 1005856052}
   m_Layer: 0
   m_Name: Main Camera
@@ -10633,65 +10734,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1005856051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1005856047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9e9ffa0d5447894b964057d76f68bc7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  puzzleButtons: {fileID: 1034229281}
-  smallShadow: {fileID: 820414645}
-  mediumShadow: {fileID: 416389093}
-  largeShadow: {fileID: 1503629237}
-  hugeShadow: {fileID: 1459023280}
-  massiveShadow: {fileID: 216875811}
-  smallCityArt: {fileID: 445105579}
-  mediumCityArt: {fileID: 771439442}
-  largeCityArt: {fileID: 570133412}
-  hugeCityArt: {fileID: 216896805}
-  massiveCityArt: {fileID: 1638785378}
-  smallText: {fileID: 1045004446}
-  mediumText: {fileID: 265127324}
-  largeText: {fileID: 441733445}
-  hugeText: {fileID: 1226148811}
-  massiveText: {fileID: 464710695}
-  returnOrAbandonButtons: {fileID: 434550103}
-  background: {fileID: 1863834607}
-  shopButton: {fileID: 438263058}
-  tutorialButton: {fileID: 443763566}
-  largeCenterTutorialButton: {fileID: 733327465}
-  settingsButton: {fileID: 631664034}
-  leftSmallText: {fileID: 579603532}
-  leftMediumText: {fileID: 1311404003}
-  leftLargeText: {fileID: 207351888}
-  leftHugeText: {fileID: 1162733501}
-  leftMassiveText: {fileID: 878474374}
-  returnSmall: {fileID: 180029446}
-  returnMedium: {fileID: 202437053}
-  returnLarge: {fileID: 1703431551}
-  returnHuge: {fileID: 2138157238}
-  returnMassive: {fileID: 1238068400}
-  abandonSmall: {fileID: 1716775126}
-  abandonMedium: {fileID: 1644686274}
-  abandonLarge: {fileID: 1977465660}
-  abandonHuge: {fileID: 1163108559}
-  abandonMassive: {fileID: 2088734130}
-  blackForeground: {fileID: 2055686838}
-  fadeOutTime: 0.5
-  fadeInTime: 0.5
-  defaultSkin: {fileID: 2135032764033575535, guid: 83513b0b1be6dbc4884f648b2c97455a,
-    type: 3}
-  skins:
-  - {fileID: 2135032764033575535, guid: 83513b0b1be6dbc4884f648b2c97455a, type: 3}
-  - {fileID: 2135032764033575535, guid: 0b92125c21674b44da0a398f129e4a43, type: 3}
-  - {fileID: 2135032764033575535, guid: 3ce6c8f571c169e429d025da56ce6654, type: 3}
-  - {fileID: 2135032764033575535, guid: c362d7300470e5348a8f2f004e50da57, type: 3}
 --- !u!114 &1005856052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14816,7 +14858,7 @@ RectTransform:
   m_GameObject: {fileID: 1411922980}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -0.01}
-  m_LocalScale: {x: 136.14474, y: 136.14474, z: 136.14474}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 631664035}
@@ -14824,7 +14866,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 167.1, y: -0.001545}
-  m_SizeDelta: {x: 0.85, y: 1.8}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1411922982
 MonoBehaviour:
@@ -14846,7 +14888,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5e81d3e8414c61b4b85f43e45c953f8f, type: 3}
+  m_Sprite: {fileID: -1325015331, guid: b5ca1c401fd424242946748afa3a4fa3, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -21127,5 +21169,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1005856050}
+  - {fileID: 1571374}
   - {fileID: 1182900866}
   - {fileID: 283620848}

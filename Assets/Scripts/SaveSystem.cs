@@ -29,7 +29,7 @@ public static class SaveSystem{
             FileStream stream = new FileStream(path, FileMode.Open);
             if (stream.Length == 0) {
                 stream.Close();
-                firstTimePlayingEver();
+                FirstTimePlayingEver();
 
             }
             else {
@@ -39,14 +39,14 @@ public static class SaveSystem{
             }
         }
         else {
-            firstTimePlayingEver();
+            FirstTimePlayingEver();
         }
 
     }
 
-    private static void firstTimePlayingEver() {
+    private static void FirstTimePlayingEver() {
         //if this is the first time that the player has opened the game, load the default values for some staticVariables elements
-        StaticVariables.skin = InterfaceFunctions.getDefaultSkin();
+        StaticVariables.skin = InterfaceFunctions.GetDefaultSkin();
         StaticVariables.coins = 0;
         StaticVariables.highestUnlockedSize = 3;
         SaveGame();

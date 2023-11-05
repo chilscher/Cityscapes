@@ -15,7 +15,7 @@ public class Tile : MonoBehaviour {
     public float tileScaleFactor;
 
 
-    public void setValues(Vector2 position, float tileSize, Transform parent) {
+    public void SetValues(Vector2 position, float tileSize, Transform parent) {
         this.position = position;
         this.tileSize = tileSize;
         this.transform.SetParent(parent);

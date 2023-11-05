@@ -22,18 +22,16 @@ public class TutorialManager{
     private int skipToStage = 0; //skipToStage is changed every few steps
     public List<GameObject> redBorders;
 
-    public void startTutorial() {
+    public void StartTutorial() {
         //begins the tutorial process. Calls functions here to alter the default gameManager setup
         gameManager.puzzlePositioning = gameManager.tutorialParent.transform.Find("Puzzle Positioning").gameObject;
-        gameManager.blackForeground = gameManager.tutorialParent.transform.Find("Black Foreground").gameObject;
-        gameManager.blackSprite = gameManager.blackForeground.GetComponent<Image>();
         gameManager.puzzleGenerator.usePredeterminedSolution = true;
         gameManager.puzzleGenerator.predeterminedSolution = puzzle;
-        gameManager.puzzleGenerator.createPuzzle(3);
-        gameManager.drawFullPuzzle();
-        gameManager.hideHints();
-        gameManager.setSelectionModeButtons();
-        gameManager.hitBuildButton();
+        gameManager.puzzleGenerator.CreatePuzzle(3);
+        gameManager.DrawFullPuzzle();
+        gameManager.HideHints();
+        gameManager.SetSelectionModeButtons();
+        gameManager.PushBuildButton();
         tutorialText = gameManager.tutorialTextBox.transform.Find("Text").GetComponent<Text>();
         continueClue = gameManager.tutorialTextBox.transform.Find("Continue clue").GetComponent<Text>();
         redBorders = new List<GameObject>();
@@ -41,14 +39,14 @@ public class TutorialManager{
             redBorders.Add(t.gameObject);
         gameManager.tutorialParent.transform.Find("Numbers").gameObject.SetActive(false);
         //proceed to stage 1
-        advanceStage();
+        AdvanceStage();
     }
 
     // ---------------------------------------------------
     //ADVANCE STAGE IS THE CORE OF THE TUTORIAL, WHERE ALL OF THE TEXT, CONTINUE REQUIREMENTS, VISUAL UPDATES, AND SPECIAL TUTORIAL MECHANICS ARE IMPLEMENTED
     // ---------------------------------------------------
 
-    private void advanceStage() {
+    private void AdvanceStage() {
         //each stage has its own text, required step to proceed, and stage you can jump to if you complete a specific requirement ahead of time
         tutorialStage++;
 
@@ -70,7 +68,7 @@ public class TutorialManager{
             case 3:
                 text = "The buildings you place will either be one story...";
                 continueText = "Tap to continue...";
-                fillInSpace(6, 1);
+                FillInSpace(6, 1);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -78,7 +76,7 @@ public class TutorialManager{
             case 4:
                 text = "The buildings you place will either be one story...\ntwo stories...";
                 continueText = "Tap to continue...";
-                fillInSpace(7, 2);
+                FillInSpace(7, 2);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -86,7 +84,7 @@ public class TutorialManager{
             case 5:
                 text = "The buildings you place will either be one story...\ntwo stories...\nor three stories tall.";
                 continueText = "Tap to continue...";
-                fillInSpace(8, 3);
+                FillInSpace(8, 3);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -95,7 +93,7 @@ public class TutorialManager{
                 text = "To place a building, tap the building size you would like to place...";
                 continueText = "Choose the right building size...";
                 gameManager.tutorialParent.transform.Find("Numbers").gameObject.SetActive(true);
-                addRedBoxAroundNumButton(2);
+                AddRedBoxAroundNumButton(2);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap number button 2";
@@ -103,8 +101,8 @@ public class TutorialManager{
             case 7:
                 text = "To place a building, tap the building size you would like to place...\n\nthen tap the space you would like to build on.";
                 continueText = "Place the building...";
-                removeRedBoxesAroundNums();
-                addRedBoxAroundTile(0);
+                RemoveRedBoxesAroundNums();
+                AddRedBoxAroundTile(0);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "add building of height 2 to tile 0";
@@ -112,7 +110,7 @@ public class TutorialManager{
             case 8:
                 text = "Congratulations! You have built your first building!";
                 continueText = "Tap to continue...";
-                removeRedBoxesAroundTiles();
+                RemoveRedBoxesAroundTiles();
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -136,7 +134,7 @@ public class TutorialManager{
             case 11:
                 text = "Firstly, every street has to contain exactly one building of each height.\n\nThese three buildings form a street and already satisfy this rule.";
                 continueText = "Tap to continue...";
-                addRedBoxAroundStreet("horizontal", 2);
+                AddRedBoxAroundStreet("horizontal", 2);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -144,8 +142,8 @@ public class TutorialManager{
             case 12:
                 text = "However, this street does not yet have one of every building!";
                 continueText = "Tap to continue...";
-                removeRedBoxesAroundStreets();
-                addRedBoxAroundStreet("vertical", 0);
+                RemoveRedBoxesAroundStreets();
+                AddRedBoxAroundStreet("vertical", 0);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -161,7 +159,7 @@ public class TutorialManager{
             case 14:
                 text = "Great! The second building requirement involves the residents of the city...";
                 continueText = "Tap to continue...";
-                removeRedBoxesAroundStreets();
+                RemoveRedBoxesAroundStreets();
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -169,7 +167,7 @@ public class TutorialManager{
             case 15:
                 text = "Great! The second building requirement involves the residents of the city...\n\nwho are now standing at the ends of every street!";
                 continueText = "Tap to continue...";
-                gameManager.showHints();
+                gameManager.ShowHints();
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -177,7 +175,7 @@ public class TutorialManager{
             case 16:
                 text = "This resident...";
                 continueText = "Tap to continue...";
-                addRedBoxAroundResident("top", 1);
+                AddRedBoxAroundResident("top", 1);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -185,8 +183,8 @@ public class TutorialManager{
             case 17:
                 text = "This resident...\nis looking down this street...";
                 continueText = "Tap to continue...";
-                addRedBoxAroundResident("top", 1);
-                addRedBoxAroundStreet("vertical", 1);
+                AddRedBoxAroundResident("top", 1);
+                AddRedBoxAroundStreet("vertical", 1);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -218,8 +216,8 @@ public class TutorialManager{
             case 21:
                 text = "Awesome!";
                 continueText = "Tap to continue...";
-                removeRedBoxesAroundStreets();
-                removeRedBoxesAroundResidents();
+                RemoveRedBoxesAroundStreets();
+                RemoveRedBoxesAroundResidents();
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -227,7 +225,7 @@ public class TutorialManager{
             case 22:
                 text = "Awesome!\n\nNow, you can fill in the last missing building on the topmost street.";
                 continueText = "Place the correct building...";
-                addRedBoxAroundStreet("horizontal", 0);
+                AddRedBoxAroundStreet("horizontal", 0);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "add building of height 1 to tile 2";
@@ -235,8 +233,8 @@ public class TutorialManager{
             case 23:
                 text = "And now you can fill in the missing building on the middle street.";
                 continueText = "Place the correct building...";
-                removeRedBoxesAroundStreets();
-                addRedBoxAroundStreet("vertical", 1);
+                RemoveRedBoxesAroundStreets();
+                AddRedBoxAroundStreet("vertical", 1);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "add building of height 1 to tile 4";
@@ -244,8 +242,8 @@ public class TutorialManager{
             case 24:
                 text = "And finally, you can fill in the last remaining building of the city.";
                 continueText = "Place the correct building...";
-                removeRedBoxesAroundStreets();
-                addRedBoxAroundTile(5);
+                RemoveRedBoxesAroundStreets();
+                AddRedBoxAroundTile(5);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "add building of height 2 to tile 5";
@@ -253,7 +251,7 @@ public class TutorialManager{
             case 25:
                 text = "Congratulations! You have completed your first city in Cityscapes!";
                 continueText = "Tap to continue...";
-                removeRedBoxesAroundTiles();
+                RemoveRedBoxesAroundTiles();
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -269,10 +267,10 @@ public class TutorialManager{
                 text = "Welcome to another city. From now on, you can see all residents from the start!";
                 continueText = "Tap to continue...";
                 puzzle = "213132321";
-                deleteOldCity();
+                DeleteOldCity();
                 gameManager.puzzleGenerator.predeterminedSolution = puzzle;
-                gameManager.puzzleGenerator.createPuzzle(3);
-                gameManager.drawFullPuzzle();
+                gameManager.puzzleGenerator.CreatePuzzle(3);
+                gameManager.DrawFullPuzzle();
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -287,10 +285,10 @@ public class TutorialManager{
             case 29:
                 text = "These four residents only want to see one building...";
                 continueText = "Tap to continue...";
-                addRedBoxAroundResident("top", 2);
-                addRedBoxAroundResident("left", 2);
-                addRedBoxAroundResident("right", 0);
-                addRedBoxAroundResident("bottom", 0);
+                AddRedBoxAroundResident("top", 2);
+                AddRedBoxAroundResident("left", 2);
+                AddRedBoxAroundResident("right", 0);
+                AddRedBoxAroundResident("bottom", 0);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -308,7 +306,7 @@ public class TutorialManager{
             case 31:
                 text = "Well done!";
                 continueText = "Tap to continue...";
-                removeRedBoxesAroundResidents();
+                RemoveRedBoxesAroundResidents();
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -330,7 +328,7 @@ public class TutorialManager{
             case 34:
                 text = "This resident only wants to see two buildings down their street...";
                 continueText = "Tap to continue...";
-                addRedBoxAroundResident("left", 0);
+                AddRedBoxAroundResident("left", 0);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -340,7 +338,7 @@ public class TutorialManager{
             case 35:
                 text = "This resident only wants to see two buildings down their street...\nTherefore, we know that this building...";
                 continueText = "Tap to continue...";
-                addRedBoxAroundTile(0);
+                AddRedBoxAroundTile(0);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "tap screen";
@@ -356,9 +354,9 @@ public class TutorialManager{
             case 37:
                 text = "And now you know enough to completely fill the top street!";
                 continueText = "Place the correct building...";
-                removeRedBoxesAroundResidents();
-                removeRedBoxesAroundTiles();
-                addRedBoxAroundTile(1);
+                RemoveRedBoxesAroundResidents();
+                RemoveRedBoxesAroundTiles();
+                AddRedBoxAroundTile(1);
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "add building of height 1 to tile 1";
@@ -366,7 +364,7 @@ public class TutorialManager{
             case 38:
                 text = "Try to finish building the rest of the city!";
                 continueText = "Complete the city!";
-                removeRedBoxesAroundTiles();
+                RemoveRedBoxesAroundTiles();
                 tutorialText.text = text;
                 continueClue.text = continueText;
                 advanceRequirement = "complete the city";
@@ -391,7 +389,7 @@ public class TutorialManager{
                 if (StaticVariables.highestUnlockedSize < 3) {
                     StaticVariables.highestUnlockedSize = 3;
                 }
-                gameManager.goToMainMenu();
+                gameManager.PushMainMenuButton();
                 break;
         }
 
@@ -401,28 +399,25 @@ public class TutorialManager{
     //HERE ARE THE FUNCTIONS THAT ARE USED TO ADVANCE THE PLAYER THROUGH THE TUTORIAL
     // ---------------------------------------------------
 
-    private void skipStage() {
+    private void SkipStage() {
         //skips to a stage defined by the current stage in the tutorial
-        while(tutorialStage < skipToStage) {
-            advanceStage();
-        }
+        while(tutorialStage < skipToStage)
+            AdvanceStage();
     }
     
-    public void tappedScreen() {
+    public void TappedScreen() {
         //when the player taps the screen, sometimes that is enough to advance to another dialogue box, or stage
-        if (advanceRequirement == "tap screen") {
-            advanceStage();
-        }
+        if (advanceRequirement == "tap screen")
+            AdvanceStage();
     }
 
-    public void tappedNumberButton(int num) {
+    public void TappedNumberButton(int num) {
         //tapping a number button is sometimes required to advance the stage
-        if (advanceRequirement == "tap number button " + num) {
-            advanceStage();
-        }
+        if (advanceRequirement == "tap number button " + num)
+            AdvanceStage();
     }
 
-    public void clickedTile(PuzzleTile t) {
+    public void ClickedTile(PuzzleTile t) {
         //some stages require the player to input a specific number into a specific tile
         //some stages require the player to input several numbers in sequence to advance
         int chosenNumber = gameManager.selectedNumber;
@@ -430,54 +425,49 @@ public class TutorialManager{
             for (int j = 0; j < 3; j++) {
                 int tileNum = (i * 3) + j;
                 if (gameManager.puzzleGenerator.tilesArray[i, j] == t) {
-                    if (advanceRequirement == "add building of height " + chosenNumber + " to tile " + tileNum) {
-                        advanceStage();
-                    }
-                    if (skipRequirement == "add building of height " + chosenNumber + " to tile " + tileNum) {
-                        skipStage();
-                    }
+                    if (advanceRequirement == "add building of height " + chosenNumber + " to tile " + tileNum)
+                        AdvanceStage();
+                    if (skipRequirement == "add building of height " + chosenNumber + " to tile " + tileNum)
+                        SkipStage();
                 }
             }
         }
 
         if (advanceRequirement == "add buildings of height 3 to tiles 2 and 6") {
             PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
-            if (ts[0, 2].shownNumber == 3 && ts[2,0].shownNumber == 3) {
-                advanceStage();
-            }
+            if (ts[0, 2].shownNumber == 3 && ts[2,0].shownNumber == 3)
+                AdvanceStage();
         }
         if (skipRequirement == "add buildings of height 3 to tiles 2 and 6") {
             PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
-            if (ts[0, 2].shownNumber == 3 && ts[2, 0].shownNumber == 3) {
-                skipStage();
-            }
+            if (ts[0, 2].shownNumber == 3 && ts[2, 0].shownNumber == 3)
+                SkipStage();
         }
         if (advanceRequirement == "complete the city") {
-            if (gameManager.puzzleGenerator.checkPuzzle()) {
-                advanceStage();
-            }
+            if (gameManager.puzzleGenerator.CheckPuzzle())
+                AdvanceStage();
         }
     }
 
-    private void fillInSpace(int spaceNum, int value) {
+    private void FillInSpace(int spaceNum, int value) {
         //the first few stages fill in some basic puzzle numbers for you automatically as you proceed
         //takes a number corresponding to the relevant space, and a value to fill it with, and adds that number to that space
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 if (((i * 3) + j) == spaceNum){
                     PuzzleTile t = gameManager.puzzleGenerator.tilesArray[i, j];
-                    t.toggleNumber(value);
+                    t.ToggleNumber(value);
                 }
             }
         }
     }
 
-    private void deleteOldCity() {
+    private void DeleteOldCity() {
         //clears the entire city to make room for a new one. Called exactly once in the tutorial
-        gameManager.deleteCityForTutorial();
+        gameManager.DeleteCityForTutorial();
     }
 
-    public bool canPlayerClickTile(PuzzleTile t) {
+    public bool CanPlayerClickTile(PuzzleTile t) {
         //when the player clicks a tile during the tutorial, this function is called
         //if the tutorial is at the right stage to process that input, it is processed here
         int chosenNumber = gameManager.selectedNumber;
@@ -485,36 +475,31 @@ public class TutorialManager{
             for (int j = 0; j < 3; j++) {
                 int tileNum = (i * 3) + j;
                 if (gameManager.puzzleGenerator.tilesArray[i, j] == t) {
-                    if (advanceRequirement == "add building of height " + chosenNumber + " to tile " + tileNum) {
+                    if (advanceRequirement == "add building of height " + chosenNumber + " to tile " + tileNum)
                         return true;
-                    }
-                    if (skipRequirement == "add building of height " + chosenNumber + " to tile " + tileNum) {
+                    if (skipRequirement == "add building of height " + chosenNumber + " to tile " + tileNum)
                         return true;
-                    }
                 }
             }
         }
         if (advanceRequirement == "add buildings of height 3 to tiles 2 and 6") {
             PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
             if (gameManager.selectedNumber == 3) {
-                if (ts[0, 2] == t || ts[2, 0] == t) {
+                if (ts[0, 2] == t || ts[2, 0] == t)
                     return true;
-                }
             }
         }
         if (skipRequirement == "add buildings of height 3 to tiles 2 and 6") {
             PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
             if (gameManager.selectedNumber == 3) {
-                if (ts[0, 2] == t || ts[2, 0] == t) {
+                if (ts[0, 2] == t || ts[2, 0] == t)
                     return true;
-                }
             }
         }
         if (advanceRequirement == "complete the city") {
             if (t.shownNumber == 0) {
-                if (t.solution == gameManager.selectedNumber) {
+                if (t.solution == gameManager.selectedNumber)
                     return true;
-                }
             }
         }
         return false;
@@ -524,55 +509,33 @@ public class TutorialManager{
     //HERE ARE THE FUNCTIONS THAT SPECIFICALLY ADD RED BORDERS AROUND OBJECTS THE PLAYER IS SUPPOSED TO INTERACT WITH
     // ---------------------------------------------------
 
-    private void addRedBoxAroundNumButton(int num) {
+    private void AddRedBoxAroundNumButton(int num) {
         //adds a border around a number button, to draw attention to that button
         gameManager.numberButtons[num - 1].transform.Find("Red Border").gameObject.SetActive(true);
     }
 
-    private void removeRedBoxesAroundNums() {
+    private void RemoveRedBoxesAroundNums() {
         //removes all red boxes around all number buttons
-        for (int i = 1; i<gameManager.size + 1; i++) {
-
+        for (int i = 1; i<gameManager.size + 1; i++)
             gameManager.numberButtons[i - 1].transform.Find("Red Border").gameObject.SetActive(false);
-
-        }
     }
 
-    private void addRedBoxAroundTile(int spaceNum) {
+    private void AddRedBoxAroundTile(int spaceNum) {
         //adds a red border around a PuzzleTile, to draw attention to that tile
         redBorders[spaceNum].SetActive(true);
-        /*
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (((i * 3) + j) == spaceNum) {
-                    PuzzleTile t = gameManager.puzzleGenerator.tilesArray[i, j];
-                    t.addRedBorder();
-                }
-            }
-        }
-        */
     }
 
-    private void removeRedBoxesAroundTiles() {
+    private void RemoveRedBoxesAroundTiles() {
         //removes all red borders around all tiles
         foreach (GameObject go in redBorders)
             go.SetActive(false);
-        /*
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                PuzzleTile t = gameManager.puzzleGenerator.tilesArray[i, j];
-                t.removeRedBorder();
-            }
-        }
-        */
     }
 
-    private void addRedBoxAroundStreet(string vertOrHoriz, int streetNum) {
+    private void AddRedBoxAroundStreet(string vertOrHoriz, int streetNum) {
         //adds a red border around an entire street, to draw attention to it
         int rotation = 0;
-        if (vertOrHoriz == "vertical"){
+        if (vertOrHoriz == "vertical")
             rotation = 90;
-        }
 
         int centerX = 0;
         int centerY = 0;
@@ -586,37 +549,32 @@ public class TutorialManager{
         }
 
         Vector3 centerPoint = gameManager.puzzleGenerator.tilesArray[centerY, centerX].transform.position;
-        gameManager.addRedStreetBorderForTutorial(centerPoint, rotation);
+        gameManager.AddRedStreetBorderForTutorial(centerPoint, rotation);
     }
 
-    private void removeRedBoxesAroundStreets() {
+    private void RemoveRedBoxesAroundStreets() {
         //removes all red borders around all streets
-        gameManager.removeRedStreetBordersForTutorial();
+        gameManager.RemoveRedStreetBordersForTutorial();
     }
 
-    private void addRedBoxAroundResident(string side, int num) {
+    private void AddRedBoxAroundResident(string side, int num) {
         //adds a red border around a resident, to draw attention to that resident
         SideHintTile[] row;
-        if (side == "top"){
+        if (side == "top")
             row = gameManager.puzzleGenerator.topHints;
-        }
-        else if (side == "bottom") {
+        else if (side == "bottom") 
             row = gameManager.puzzleGenerator.bottomHints;
-        }
-        else if (side == "left") {
+        else if (side == "left") 
             row = gameManager.puzzleGenerator.leftHints;
-        }
-        else{
+        else
             row = gameManager.puzzleGenerator.rightHints;
-        }
         SideHintTile s = row[num];
-        s.addRedBorder();
+        s.AddRedBorder();
     }
 
-    public void removeRedBoxesAroundResidents() {
+    public void RemoveRedBoxesAroundResidents() {
         //removes a red border around all residents
-        foreach (SideHintTile s in gameManager.puzzleGenerator.allHints) {
-            s.removeRedBorder();
-        }
+        foreach (SideHintTile s in gameManager.puzzleGenerator.allHints)
+            s.RemoveRedBorder();
     }
 }

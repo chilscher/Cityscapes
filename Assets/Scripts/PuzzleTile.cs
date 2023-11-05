@@ -43,7 +43,7 @@ public class PuzzleTile : Tile {
     public Color permanentBuildingColor;
     public Color permanentNumberColor;
     
-    public void initialize(int solution, Transform parent, int maxValue, GameManager gameManager) {
+    public void Initialize(int solution, Transform parent, int maxValue, GameManager gameManager) {
         //create the PuzzleTile object, called by PuzzleGenerator
         this.solution = solution;
         this.maxValue = maxValue;
@@ -56,12 +56,12 @@ public class PuzzleTile : Tile {
             building.transform.Rotate(new Vector3(0, 0, directions[r]));
         }
         //set colors and sprites from the current skin
-        setNumberColors();
+        SetNumberColors();
         building.sprite = gameManager.skin.buildingSprite;
-        road.color = InterfaceFunctions.getColorFromString(gameManager.skin.streetColor);
+        road.color = InterfaceFunctions.GetColorFromString(gameManager.skin.streetColor);
     }
 
-    public void setNumberColors() {
+    public void SetNumberColors() {
         //sets some color variables based on the current skin
         ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out numberColor);
         ColorUtility.TryParseHtmlString(gameManager.skin.note1Color, out note1Color);
@@ -69,55 +69,51 @@ public class PuzzleTile : Tile {
         ColorUtility.TryParseHtmlString(gameManager.skin.highlightBuildingColor, out highlightBuildingColor);
     }
 
-    public void clicked() {
+    public void Clicked() {
         //when the PuzzleTile is clicked, do whatever the GameManger.clickTileAction says to do
-        if (isPermanentBuilding){
-            //do nothing, cannot edit starting tiles
-        }
-        else if(gameManager.clickTileAction == "Apply Selected") {
+        //if (isPermanentBuilding)   //do nothing, cannot edit starting tiles
+        if(gameManager.clickTileAction == "Apply Selected") {
             int selectedNumber = gameManager.selectedNumber;
-            toggleNumber(selectedNumber);
-            gameManager.addToPuzzleHistory();
+            ToggleNumber(selectedNumber);
+            gameManager.AddToPuzzleHistory();
         }
         else if (gameManager.clickTileAction == "Toggle Note 1") {
             int selectedNumber = gameManager.selectedNumber;
-            toggleNote1(selectedNumber);
-            gameManager.addToPuzzleHistory();
+            ToggleNote1(selectedNumber);
+            gameManager.AddToPuzzleHistory();
         }
         else if (gameManager.clickTileAction == "Toggle Note 2") {
             int selectedNumber = gameManager.selectedNumber;
-            toggleNote2(selectedNumber);
-            gameManager.addToPuzzleHistory();
+            ToggleNote2(selectedNumber);
+            gameManager.AddToPuzzleHistory();
         }
         else if(gameManager.clickTileAction == "Clear Tile") {
-            if (doesTileContainAnything()) {
-                clearColoredNotes();
-                removeNumberFromTile();
-                gameManager.addToPuzzleHistory();
+            if (DoesTileContainAnything()) {
+                ClearColoredNotes();
+                RemoveNumberFromTile();
+                gameManager.AddToPuzzleHistory();
             }
         }
-        else {
+        else
             print(gameManager.clickTileAction + " is not a valid action!");
-        }
     }
 
     private void OnMouseDown() {
         //when the player clicks this tile, process the click, unless this is part of the tutorial, in which case process the click selectively
         if (gameManager.canClick) {
-            if (!StaticVariables.isTutorial) {
-                clicked();
-            }
+            if (!StaticVariables.isTutorial)
+                Clicked();
             else {
-                if (gameManager.tutorialManager.canPlayerClickTile(this)){
-                    clicked();
-                    gameManager.tutorialManager.clickedTile(this);
+                if (gameManager.tutorialManager.CanPlayerClickTile(this)){
+                    Clicked();
+                    gameManager.tutorialManager.ClickedTile(this);
                 }
             }
         }
         
     }
 
-    public void removeNumberFromTile() {
+    public void RemoveNumberFromTile() {
         //removes the building number from the PuzzleTile
         if (scaleBuildingSizes && shownNumber != 0) {
             float scale1 = ((float)shownNumber - 1) / (maxValue - 1);
@@ -130,70 +126,60 @@ public class PuzzleTile : Tile {
         number.enabled = false;
     }
 
-    public void toggleNumber(int num) {
+    public void ToggleNumber(int num) {
         //apply the selected number to the tile
         //if the number is already on this tile, then remove it
         //if there are any notes on the tile, clear them
-        if (num == 0) {
-            removeNumberFromTile();
-        }
+        if (num == 0)
+            RemoveNumberFromTile();
         else {
-            if (num == shownNumber) {
-                removeNumberFromTile();
-            }
+            if (num == shownNumber)
+                RemoveNumberFromTile();
             else {
-                removeNumberFromTile();
+                RemoveNumberFromTile();
                 shownNumber = num;
-                addNumberToTile(shownNumber);
-                clearColoredNotes();
+                AddNumberToTile(shownNumber);
+                ClearColoredNotes();
             }
         }
     }
 
-    public void toggleNote1(int num) {
+    public void ToggleNote1(int num) {
         //add/remove a note1 for the provided number to this tile
         //there is a limit of 4 of each type of note per tile
         if (num != 0) {
             if (shownNumber == 0) { //you cant add a hint to a tile that already has a number on it
 
-                if (noteGroup1.Contains(num)) {
+                if (noteGroup1.Contains(num))
                     noteGroup1.Remove(num);
-                }
-                else {
+                else
                     noteGroup1.Add(num);
-                }
                 //for space reasons, there is a limit on the number of hints you can add
-                if (noteGroup1.Count > 4) {
-                    //print("you can only have 4 hints of each color!");
+                if (noteGroup1.Count > 4) //you can only have 4 hints of each color!
                     noteGroup1.Remove(num);
-                }
-                showColoredNotes();
+                ShowColoredNotes();
             }
         }
     }
 
-    public void toggleNote2(int num) {
+    public void ToggleNote2(int num) {
         //add/remove a note2 for the provided number to this tile
         //there is a limit of 4 of each type of note per tile
         if (num != 0) {
             if (shownNumber == 0) { //you cant add a hint to a tile that already has a number on it
-                if (noteGroup2.Contains(num)) {
+                if (noteGroup2.Contains(num))
                     noteGroup2.Remove(num);
-                }
-                else {
+                else
                     noteGroup2.Add(num);
-                }
-                if (noteGroup2.Count > 4) {
-                    //print("you can only have 4 hints of each color!");
+                if (noteGroup2.Count > 4) //you can only have 4 hints of each color!
                     noteGroup2.Remove(num);
-                }
-                showColoredNotes();
+                ShowColoredNotes();
             }
         }
     }
     
 
-    private void showColoredNotes() {
+    private void ShowColoredNotes() {
         //shows the colored notes, in the appropriate position, of the appropriate color, on this tile
         //note1s start at the top-left of the tile and fill in to the right, to a max of 4 note1s
         //note2s start at the bottom-right of the tile and fill in to the left, to a max of 4 note2s
@@ -226,23 +212,23 @@ public class PuzzleTile : Tile {
         }
     }
 
-    public void clearColoredNotes() {
+    public void ClearColoredNotes() {
         //remove all notes from this tile
         noteGroup1 = new List<int>();
         noteGroup2 = new List<int>();
-        showColoredNotes();
+        ShowColoredNotes();
     }
 
-    public void addPermanentBuildingToTile(int num){
+    public void AddPermanentBuildingToTile(int num){
         shownNumber = num;
-        addNumberToTile(num);
+        AddNumberToTile(num);
         isPermanentBuilding = true;
         building.color = permanentBuildingColor;
         number.color = permanentNumberColor;
         permanentBuildingBackground.SetActive(true);
     }
 
-    public void addNumberToTile(int num) {
+    public void AddNumberToTile(int num) {
         //sets the number on this tile to be num. Also displays the building and sets it to the appropriate scale based on the puzzle size
         if (num == 0) {
             building.enabled = false;
@@ -263,38 +249,24 @@ public class PuzzleTile : Tile {
             building.enabled = true;
             number.enabled = true;
 
-            highlightIfBuildingNumber(gameManager.selectedNumber);
+            HighlightIfBuildingNumber(gameManager.selectedNumber);
         }
     }
 
-    /*
-    public void addRedBorder() {
-        //add a red border around this tile, used in the tutorial
-        redBorder.gameObject.SetActive(true);
-    }
-
-    public void removeRedBorder() {
-        //removes the red border from this tile, used in the tutorial
-        redBorder.gameObject.SetActive(false);
-    }
-    */
-
-    public bool doesTileContainColoredNote(int colorNum, int noteNum) {
+    public bool DoesTileContainColoredNote(int colorNum, int noteNum) {
         //returns true if this tile contains a specific note type of a provided color
         //for example, one might ask if this tile contains a RED 3, and this function will provide a boolean answer
         List<int> noteGroup = noteGroup1;
-        if (colorNum == 2) {
+        if (colorNum == 2) 
             noteGroup = noteGroup2;
-        }
         foreach (int n in noteGroup) {
-            if (noteNum == n) {
+            if (noteNum == n)
                 return true;
-            }
         }
         return false;
     }
 
-    public bool doesTileContainAnything() {
+    public bool DoesTileContainAnything() {
         //returns false if the tile is completely empty
         bool doesIt = false;
         if (shownNumber != 0) { doesIt = true; }
@@ -303,7 +275,7 @@ public class PuzzleTile : Tile {
         return doesIt;
     }
 
-    public void highlightIfBuildingNumber(int num) {
+    public void HighlightIfBuildingNumber(int num) {
         //changes the color of the building on this tile to be the highlight color, if that is equal to the provided num
         //buildings do not change color during the tutorial
         if (!StaticVariables.isTutorial && StaticVariables.includeHighlightBuildings) {
@@ -317,7 +289,7 @@ public class PuzzleTile : Tile {
         }
     }
 
-    public void unhighlightBuildingNumber() {
+    public void UnhighlightBuildingNumber() {
         //un-highlights the building color on this tile
         number.color = numberColor;
         if (isPermanentBuilding)

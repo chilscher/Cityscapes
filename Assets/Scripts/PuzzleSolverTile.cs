@@ -22,21 +22,19 @@ public class PuzzleSolverTile {
     public int xValue; //j
     public int yValue; //i
 
-    public void prohibitValue(int x) {
+    public void ProhibitValue(int x) {
         //add a value to the list of impossible, prohibited values for this tile
-        if ((!prohibitedValues.Contains(x))) {
+        if (!prohibitedValues.Contains(x))
             prohibitedValues.Add(x);
-        }
     }
 
-    public void prohibitValues(List<int> x) {
+    public void ProhibitValues(List<int> x) {
         //add several values to the prohibited list
-        foreach (int i in x) {
-            prohibitValue(i);
-        }
+        foreach (int i in x)
+            ProhibitValue(i);
     }
 
-    public void populate(int val) {
+    public void Populate(int val) {
         //add val to this tile, as a known solution
         if (!populated) {
             value = val;
@@ -45,13 +43,13 @@ public class PuzzleSolverTile {
         }
     }
 
-    public void populateLastValue() {
+    public void PopulateLastValue() {
         //uses the last unprohibited value to populate the tile
         int maxValue = prohibitedValues.Count + 1;
         for (int i = 0; i<maxValue; i++) {
             int v = i + 1;
             if (!prohibitedValues.Contains(v)) {
-                populate(v);
+                Populate(v);
                 break;
             }
         }
