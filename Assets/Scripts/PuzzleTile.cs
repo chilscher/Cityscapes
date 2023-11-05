@@ -71,7 +71,8 @@ public class PuzzleTile : Tile {
 
     public void Clicked() {
         //when the PuzzleTile is clicked, do whatever the GameManger.clickTileAction says to do
-        //if (isPermanentBuilding)   //do nothing, cannot edit starting tiles
+        if (isPermanentBuilding) //do nothing, cannot edit starting tiles
+            return;   
         if(gameManager.clickTileAction == "Apply Selected") {
             int selectedNumber = gameManager.selectedNumber;
             ToggleNumber(selectedNumber);

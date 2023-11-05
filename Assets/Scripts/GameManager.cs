@@ -99,6 +99,12 @@ public class GameManager : MonoBehaviour {
     public GameObject totalCoinsBox100s;
     public GameObject totalCoinsBox1000s;
     public GameObject totalCoinsBox10000s;
+    public GameObject smallCityArt;
+    public GameObject mediumCityArt;
+    public GameObject largeCityArt;
+    public GameObject hugeCityArt;
+    public GameObject massiveCityArt;
+    public Text anotherPuzzleText;
 
 
     //storing puzzle states
@@ -162,11 +168,12 @@ public class GameManager : MonoBehaviour {
             if (clickTileAction == "Clear Tile") { DisselectNumber(prevClickedNumButton); }
             HighlightBuildType();
             puzzleBackground.GetComponent<Image>().sprite = skin.puzzleBackground;
-            InterfaceFunctions.ColorPuzzleButton(winParent.transform.Find("Win Popup").Find("Menu"));
-            InterfaceFunctions.ColorPuzzleButton(winParent.transform.Find("Win Popup").Find("Another Puzzle"));
-            InterfaceFunctions.ColorPuzzleButton(winParent.transform.Find("Win Popup").Find("Shop"));
-            winParent.transform.Find("Win Popup").Find("Win Popup Background Exterior").GetComponent<Image>().color = winBackgroundColorExterior;
-            winParent.transform.Find("Win Popup").Find("Win Popup Background Interior").GetComponent<Image>().color = winBackgroundColorInterior;
+            InterfaceFunctions.ColorMenuButton(winParent.transform.Find("Win Popup").Find("Menu"));
+            InterfaceFunctions.ColorMenuButton(winParent.transform.Find("Win Popup").Find("Another Puzzle"));
+            InterfaceFunctions.ColorMenuButton(winParent.transform.Find("Win Popup").Find("Shop"));
+            InterfaceFunctions.ColorMenuButton(winParent.transform.Find("Win Popup").Find("Settings"));
+            winParent.transform.Find("Win Popup").Find("Backdrop").Find("Border").GetComponent<Image>().color = winBackgroundColorExterior;
+            winParent.transform.Find("Win Popup").Find("Backdrop").Find("Interior").GetComponent<Image>().color = winBackgroundColorInterior;
             //set up the win popup process
             Color c = winParent.transform.Find("Black Background").GetComponent<Image>().color;
             c.a = fadeToWinDarknessRatio;
@@ -454,27 +461,18 @@ public class GameManager : MonoBehaviour {
 
     private void ShowCorrectCityArtOnWinScreen() {
         //shows the "city art" on the win popup, depending on which skin and which city size the player is using
-        GameObject small = winParent.transform.Find("Win Popup").Find("City Art - Small").gameObject;
-        GameObject med = winParent.transform.Find("Win Popup").Find("City Art - Medium").gameObject;
-        GameObject large = winParent.transform.Find("Win Popup").Find("City Art - Large").gameObject;
-        GameObject huge = winParent.transform.Find("Win Popup").Find("City Art - Huge").gameObject;
-        GameObject massive = winParent.transform.Find("Win Popup").Find("City Art - Massive").gameObject;
-        small.SetActive(false);
-        med.SetActive(false);
-        large.SetActive(false);
-        huge.SetActive(false);
-        massive.SetActive(false);
-        //small.GetComponent<Image>().sprite = StaticVariables.skin.smallCityArt;
-        //med.GetComponent<Image>().sprite = StaticVariables.skin.medCityArt;
-        //large.GetComponent<Image>().sprite = StaticVariables.skin.largeCityArt;
-        //huge.GetComponent<Image>().sprite = StaticVariables.skin.hugeCityArt;
-        //massive.GetComponent<Image>().sprite = StaticVariables.skin.massiveCityArt;
+        smallCityArt.SetActive(size == 3);
+        mediumCityArt.SetActive(size == 4);
+        largeCityArt.SetActive(size == 5);
+        hugeCityArt.SetActive(size == 6);
+        massiveCityArt.SetActive(size == 7);
+
         switch (size) {
-            case 3: small.SetActive(true); break;
-            case 4: med.SetActive(true); break;
-            case 5: large.SetActive(true); break;
-            case 6: huge.SetActive(true); break;
-            case 7: massive.SetActive(true); break;
+            case 3: anotherPuzzleText.text = "ANOTHER SMALL CITY"; break;
+            case 4: anotherPuzzleText.text = "ANOTHER MEDIUM CITY"; break;
+            case 5: anotherPuzzleText.text = "ANOTHER LARGE CITY"; break;
+            case 6: anotherPuzzleText.text = "ANOTHER HUGE CITY"; break;
+            case 7: anotherPuzzleText.text = "ANOTHER MASSIVE CITY"; break;
         }
     }
 
