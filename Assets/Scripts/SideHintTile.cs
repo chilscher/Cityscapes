@@ -39,7 +39,7 @@ public class SideHintTile : Tile {
 
         Skin tempSkin = StaticVariables.skin;
         if (StaticVariables.isTutorial) { tempSkin = StaticVariables.allSkins[0]; }
-        background.GetComponent<Image>().color = InterfaceFunctions.GetColorFromString(tempSkin.streetColor);
+        background.GetComponent<Image>().color = tempSkin.street;
     }
 
     public int NumBuildingsCurrentlyVisible() {
@@ -61,14 +61,18 @@ public class SideHintTile : Tile {
     public void SetNumberColors() {
         //sets the colors that the SideHintTile number can be, based off of the current skin.
         //the tutorial uses its own colors, which are the ones used in the basic skin
-        if (!StaticVariables.isTutorial) {
-
-            ColorUtility.TryParseHtmlString(StaticVariables.skin.citizenColor, out incorrectColor);
-            ColorUtility.TryParseHtmlString(StaticVariables.skin.satisfiedCitizenColor, out correctColor);
+        if (StaticVariables.isTutorial) {
+            incorrectColor = InterfaceFunctions.GetDefaultSkin().normalCitizen;
+            correctColor = InterfaceFunctions.GetDefaultSkin().satisfiedCitizen;
+            //ColorUtility.TryParseHtmlString(StaticVariables.skin.citizenColor, out incorrectColor);
+            //ColorUtility.TryParseHtmlString(StaticVariables.skin.satisfiedCitizenColor, out correctColor);
         }
         else {
-            ColorUtility.TryParseHtmlString(InterfaceFunctions.GetDefaultSkin().citizenColor, out incorrectColor);
-            ColorUtility.TryParseHtmlString(InterfaceFunctions.GetDefaultSkin().satisfiedCitizenColor, out correctColor);
+            incorrectColor = StaticVariables.skin.normalCitizen;
+            correctColor = StaticVariables.skin.satisfiedCitizen;
+
+            //ColorUtility.TryParseHtmlString(InterfaceFunctions.GetDefaultSkin().citizenColor, out incorrectColor);
+            //ColorUtility.TryParseHtmlString(InterfaceFunctions.GetDefaultSkin().satisfiedCitizenColor, out correctColor);
         }
     }
 

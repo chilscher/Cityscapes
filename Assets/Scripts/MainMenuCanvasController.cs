@@ -85,12 +85,12 @@ public class MainMenuCanvasController : MonoBehaviour {
         InterfaceFunctions.ColorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Return").gameObject);
         InterfaceFunctions.ColorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Abandon").gameObject);
 
-        Color exter;
-        Color inter;
-        ColorUtility.TryParseHtmlString(StaticVariables.skin.resumePuzzleExterior, out exter);
-        ColorUtility.TryParseHtmlString(StaticVariables.skin.resumePuzzleInterior, out inter);
-        returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Border").GetComponent<Image>().color = exter;
-        returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Interior").GetComponent<Image>().color = inter;
+        //Color exter;
+        //Color inter;
+        //ColorUtility.TryParseHtmlString(StaticVariables.skin.resumePuzzleExterior, out exter);
+        //ColorUtility.TryParseHtmlString(StaticVariables.skin.resumePuzzleInterior, out inter);
+        returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Border").GetComponent<Image>().color = StaticVariables.skin.popupBorder;
+        returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.popupInside;
 
         InterfaceFunctions.ColorMenuButton(shopButton);
         InterfaceFunctions.ColorMenuButton(tutorialButton);

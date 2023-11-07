@@ -57,16 +57,20 @@ public class PuzzleTile : Tile {
         }
         //set colors and sprites from the current skin
         SetNumberColors();
-        building.sprite = gameManager.skin.buildingSprite;
-        road.color = InterfaceFunctions.GetColorFromString(gameManager.skin.streetColor);
+        building.sprite = StaticVariables.skin.buildingSprite;
+        road.color = StaticVariables.skin.street;
     }
 
     public void SetNumberColors() {
         //sets some color variables based on the current skin
-        ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out numberColor);
-        ColorUtility.TryParseHtmlString(gameManager.skin.note1Color, out note1Color);
-        ColorUtility.TryParseHtmlString(gameManager.skin.note2Color, out note2Color);
-        ColorUtility.TryParseHtmlString(gameManager.skin.highlightBuildingColor, out highlightBuildingColor);
+        numberColor = Color.white;
+        note1Color = StaticVariables.skin.note1;
+        note2Color = StaticVariables.skin.note2;
+        highlightBuildingColor = StaticVariables.skin.highlightBuilding;
+        //ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out numberColor);
+        //ColorUtility.TryParseHtmlString(gameManager.skin.note1Color, out note1Color);
+        //ColorUtility.TryParseHtmlString(gameManager.skin.note2Color, out note2Color);
+        //ColorUtility.TryParseHtmlString(gameManager.skin.highlightBuildingColor, out highlightBuildingColor);
     }
 
     public void Clicked() {

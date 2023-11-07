@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &440273601514678775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8584492471566220470}
+  - component: {fileID: 2135032764033575535}
+  m_Layer: 0
+  m_Name: Mountains Skin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8584492471566220470
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440273601514678775}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1508085, y: -4.279265, z: 90}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2135032764033575535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440273601514678775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7fa59bcee1bb94a9c5123c4458fe9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinName: Mountains
+  skinTier: 2
+  puzzleBackground: {fileID: 21300000, guid: 4e1d46a0e26648d4486d21a73672c3c4, type: 3}
+  mainMenuBackground: {fileID: 21300000, guid: 28f8f0a6066f1de4797343cadf0757f5, type: 3}
+  shopBackground: {fileID: 21300000, guid: 632ed6f31417b0e4095d79a52ae2521a, type: 3}
+  puzzleButtonInside_On: {r: 0.50980395, g: 0.42352942, b: 0.80784315, a: 1}
+  puzzleButtonBorder_On: {r: 0.41960785, g: 0.3529412, b: 0.63529414, a: 1}
+  puzzleButtonInside_Off: {r: 0.8392157, g: 0.8117647, b: 0.92941177, a: 1}
+  puzzleButtonBorder_Off: {r: 0.6862745, g: 0.627451, b: 0.8980392, a: 1}
+  menuButtonInside: {r: 0.69803923, g: 0.8627451, b: 0.9372549, a: 1}
+  menuButtonBorder: {r: 0.3137255, g: 0.53333336, b: 0.63529414, a: 1}
+  popupInside: {r: 0.5176471, g: 0.77254903, b: 0.8901961, a: 1}
+  popupBorder: {r: 0.30980393, g: 0.52156866, b: 0.63529414, a: 1}
+  normalCitizen: {r: 0.8039216, g: 0.7607843, b: 0.9411765, a: 1}
+  satisfiedCitizen: {r: 0.5411765, g: 0.46666667, b: 0.7882353, a: 1}
+  street: {r: 0.654902, g: 0.8235294, b: 0.8235294, a: 1}
+  highlightBuilding: {r: 0.50980395, g: 0.42352942, b: 0.80784315, a: 1}
+  note1: {r: 0.972549, g: 0.37254903, b: 0.39607844, a: 1}
+  note2: {r: 0.6, g: 0.8509804, b: 0.91764706, a: 1}
+  tileBackground: {r: 0, g: 0, b: 0, a: 1}
+  onButtonColorInterior: '#826cce'
+  onButtonColorExterior: '#6b5aa2'
+  offButtonColorInterior: '#d6cfed'
+  offButtonColorExterior: '#afa0e5'
+  citizenColor: '#cdc2f0'
+  satisfiedCitizenColor: '#8a77c9'
+  buildingSprite: {fileID: 21300000, guid: 079b606957b3cb042b05782f2be54ab9, type: 3}
+  streetColor: '#A7D2D2'
+  highlightBuildingColor: '#826cce'
+  note1Color: '#f85f65'
+  note2Color: '#99d9ea'
+  mainMenuButtonInterior: '#b2dcef'
+  mainMenuButtonExterior: '#5088A2'
+  resumePuzzleInterior: '#84C5E3'
+  resumePuzzleExterior: '#4F85A2'
