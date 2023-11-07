@@ -22,8 +22,8 @@ public class CreditsCanvasController : MonoBehaviour {
     private void Start() {
         //apply the cosmetics from the current skin
         background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
-        InterfaceFunctions.ColorMenuButton(menuButton);
-        InterfaceFunctions.ColorMenuButton(settingsButton);
+        InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
+        InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
     }
     
     private void Update() {

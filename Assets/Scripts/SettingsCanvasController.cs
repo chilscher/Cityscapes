@@ -262,8 +262,8 @@ public class SettingsCanvasController : MonoBehaviour {
     private void LoadSkin() {
         //updates the visuals of the settings scene based on what skin is used
         background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
-        InterfaceFunctions.ColorMenuButton(menuButton);
-        InterfaceFunctions.ColorMenuButton(shopButton);
+        InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
+        InterfaceFunctions.ColorMenuButton(shopButton, StaticVariables.skin);
     }
 
     public void PushExpandSkinsButton() {

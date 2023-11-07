@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour {
     //controls the puzzle canvas and gameplay. Only one is used, and only on the InPuzzle scene.
@@ -69,18 +70,10 @@ public class GameManager : MonoBehaviour {
 
     //UI elements
     public GameObject streetCorner;
-    public Image winBlackSprite;
-    private bool fadingToWin = false;
-    private float fadingToWinTimer;
-    public float fadeToWinTime;
-    public float fadeToWinDarknessRatio;
-    private float winPopupScale;
     public Sprite[] numberSprites;
 
     //properties of the current skin
     public Skin skin;
-    private Color winBackgroundColorInterior;
-    private Color winBackgroundColorExterior;
     public GameObject puzzleBackground;
 
     //variables used in determining a win, and handling the win pop-up
@@ -106,6 +99,15 @@ public class GameManager : MonoBehaviour {
     public GameObject massiveCityArt;
     public Text anotherPuzzleText;
 
+    //win popup stuff
+    public GameObject winPopupMenuButton;
+    public GameObject winPopupShopButton;
+    public GameObject winPopupSettingsButton;
+    public GameObject winPopupPuzzleButton;
+    public Image winPopupBorder;
+    public Image winPopupInterior;
+    public Image winBlackSprite;
+
 
     //storing puzzle states
     private List<PuzzleState> previousPuzzleStates = new List<PuzzleState>(); // the list of puzzle states to be restored by the undo button
@@ -119,17 +121,11 @@ public class GameManager : MonoBehaviour {
         skin = StaticVariables.skin;
         if (StaticVariables.isTutorial)
             skin = basicSkin;
-        winPopupScale = winParent.transform.GetChild(1).localScale.x;
+        //winPopupScale = winParent.transform.GetChild(1).localScale.x;
 
         size = StaticVariables.size;
         includeNote1Btn = StaticVariables.includeNotes1Button;
         includeNote2Btn = StaticVariables.includeNotes2Button;
-        
-        //ColorUtility.TryParseHtmlString(skin.mainMenuButtonExterior, out winBackgroundColorExterior);
-        //ColorUtility.TryParseHtmlString(skin.mainMenuButtonInterior, out winBackgroundColorInterior);
-
-        winBackgroundColorExterior = skin.menuButtonBorder;
-        winBackgroundColorInterior = skin.menuButtonInside;
 
         HideNumberButtons();
 
@@ -171,16 +167,19 @@ public class GameManager : MonoBehaviour {
             if (clickTileAction == "Clear Tile") { DisselectNumber(prevClickedNumButton); }
             HighlightBuildType();
             puzzleBackground.GetComponent<Image>().sprite = skin.puzzleBackground;
-            InterfaceFunctions.ColorMenuButton(winParent.transform.Find("Win Popup").Find("Menu"));
-            InterfaceFunctions.ColorMenuButton(winParent.transform.Find("Win Popup").Find("Another Puzzle"));
-            InterfaceFunctions.ColorMenuButton(winParent.transform.Find("Win Popup").Find("Shop"));
-            InterfaceFunctions.ColorMenuButton(winParent.transform.Find("Win Popup").Find("Settings"));
-            winParent.transform.Find("Win Popup").Find("Backdrop").Find("Border").GetComponent<Image>().color = winBackgroundColorExterior;
-            winParent.transform.Find("Win Popup").Find("Backdrop").Find("Interior").GetComponent<Image>().color = winBackgroundColorInterior;
+            InterfaceFunctions.ColorMenuButton(winPopupMenuButton, skin);
+            InterfaceFunctions.ColorMenuButton(winPopupShopButton, skin);
+            InterfaceFunctions.ColorMenuButton(winPopupSettingsButton, skin);
+            InterfaceFunctions.ColorMenuButton(winPopupPuzzleButton, skin);
+            
+            winPopupBorder.color = skin.popupBorder;
+            winPopupInterior.color = skin.popupInside;
+
             //set up the win popup process
-            Color c = winParent.transform.Find("Black Background").GetComponent<Image>().color;
-            c.a = fadeToWinDarknessRatio;
-            winParent.transform.Find("Black Background").GetComponent<Image>().color = c;
+            winParent.SetActive(false);
+            //Color c = winParent.transform.Find("Black Background").GetComponent<Image>().color;
+            //c.a = fadeToWinDarknessRatio;
+            //winParent.transform.Find("Black Background").GetComponent<Image>().color = c;
             ShowCorrectCityArtOnWinScreen();
             int coins = 0;
             switch(size){
@@ -214,36 +213,23 @@ public class GameManager : MonoBehaviour {
             canClick = false;
             IncrementCoinsForWin();
 
-            fadingToWin = true;
-            fadingToWinTimer = fadeToWinTime;
+            Color nextColor = winBlackSprite.color;
+            Color currentColor = Color.black;
+            currentColor.a = 0;
+            winBlackSprite.color = currentColor;
+            winBlackSprite.gameObject.SetActive(true);
+            winBlackSprite.DOColor(nextColor, 0.5f);
+
+            winParent.transform.localScale = Vector3.zero;
+            winParent.transform.DOScale(Vector3.one, 0.5f);
 
             StaticVariables.hasSavedPuzzleState = false;
             Save();
         }
 
-        //if the player has just won, the win popup needs to appear and fade in
-        if (fadingToWin) {
-            fadingToWinTimer -= Time.deltaTime;
-            if (fadingToWinTimer < 0f) { fadingToWinTimer = 0f; }
-            float fadePercent = 1 - (fadingToWinTimer / fadeToWinTime); // goes from 0 to 1 as time progresses
-
-            Color c = winBlackSprite.color;
-            c.a = fadePercent * fadeToWinDarknessRatio;
-            winBlackSprite.color = c;
-
-            float scale = fadePercent * winPopupScale;
-
-            winParent.transform.GetChild(1).localScale = new Vector3(scale, scale, scale);
-
-            if (fadingToWinTimer <= 0f) {
-                fadingToWin = false;
-            }
-        }
-
         //if the player pushes the back button on their phone, go to the main menu. Identical to pushing the "Menu" button on-screen
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+        if (Input.GetKeyDown(KeyCode.Escape))
             PushMainMenuButton();
-        }
     }
 
     // ---------------------------------------------------
@@ -262,11 +248,10 @@ public class GameManager : MonoBehaviour {
     private void ColorMenuButton() {
         //apply the current skin colors to the menu button
         if (!StaticVariables.isTutorial) {
-            InterfaceFunctions.ColorMenuButton(menuButton);
-            InterfaceFunctions.ColorMenuButton(shopButton);
-            InterfaceFunctions.ColorMenuButton(settingsButton);
+            InterfaceFunctions.ColorMenuButton(menuButton, skin);
+            InterfaceFunctions.ColorMenuButton(shopButton, skin);
+            InterfaceFunctions.ColorMenuButton(settingsButton, skin);
         }
-
     }
 
     public void SetNumberButtons() {
@@ -350,29 +335,29 @@ public class GameManager : MonoBehaviour {
         if (StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
             specialButtonsAll.SetActive(true);
             removeAllOfNumberButton = specialButtonsAll.transform.GetChild(2).gameObject;
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsAll.transform.GetChild(0).gameObject);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsAll.transform.GetChild(1).gameObject);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsAll.transform.GetChild(2).gameObject);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsAll.transform.GetChild(3).gameObject);
+            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsAll.transform.GetChild(0).gameObject, skin);
+            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsAll.transform.GetChild(1).gameObject, skin);
+            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsAll.transform.GetChild(2).gameObject, skin);
+            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsAll.transform.GetChild(3).gameObject, skin);
         }
         else if (StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
             specialButtonsUndoRedoRemove.SetActive(true);
             removeAllOfNumberButton = specialButtonsUndoRedoRemove.transform.GetChild(2).gameObject;
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoRemove.transform.GetChild(0).gameObject);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoRemove.transform.GetChild(1).gameObject);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoRemove.transform.GetChild(2).gameObject);
+            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoRemove.transform.GetChild(0).gameObject, skin);
+            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoRemove.transform.GetChild(1).gameObject, skin);
+            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoRemove.transform.GetChild(2).gameObject, skin);
         }
         else if (StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
             specialButtonsUndoRedoClear.SetActive(true);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoClear.transform.GetChild(0).gameObject);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoClear.transform.GetChild(1).gameObject);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoClear.transform.GetChild(2).gameObject);
+            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoClear.transform.GetChild(0).gameObject, skin);
+            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoClear.transform.GetChild(1).gameObject, skin);
+            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoClear.transform.GetChild(2).gameObject, skin);
 
         }
         else if (StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
             specialButtonsUndoRedo.SetActive(true);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedo.transform.GetChild(0).gameObject);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedo.transform.GetChild(1).gameObject);
+            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedo.transform.GetChild(0).gameObject, skin);
+            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedo.transform.GetChild(1).gameObject, skin);
 
         }
         //there is no way to include remove and clear without undo/redo
@@ -652,7 +637,7 @@ public class GameManager : MonoBehaviour {
         }
         clickTileAction = "Apply Selected";
         DisselectBuildAndNotes();
-        InterfaceFunctions.ColorPuzzleButtonOn(buildButton);
+        InterfaceFunctions.ColorPuzzleButtonOn(buildButton, skin);
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -665,7 +650,7 @@ public class GameManager : MonoBehaviour {
         }
         clickTileAction = "Toggle Note 1";
         DisselectBuildAndNotes();
-        InterfaceFunctions.ColorPuzzleButtonOn(note1Button);
+        InterfaceFunctions.ColorPuzzleButtonOn(note1Button, skin);
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -679,7 +664,7 @@ public class GameManager : MonoBehaviour {
         clickTileAction = "Toggle Note 2";
         DisselectBuildAndNotes();
 
-        InterfaceFunctions.ColorPuzzleButtonOn(note2Button);
+        InterfaceFunctions.ColorPuzzleButtonOn(note2Button, skin);
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -690,19 +675,19 @@ public class GameManager : MonoBehaviour {
         DisselectNumber(prevClickedNumButton);
         DisselectBuildAndNotes();
         foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.UnhighlightBuildingNumber(); }
-        InterfaceFunctions.ColorPuzzleButtonOn(clearTileButton);
+        InterfaceFunctions.ColorPuzzleButtonOn(clearTileButton, skin);
         UpdateRemoveSelectedNumber();
         Save();
     }
 
     public void DisselectBuildAndNotes() {
         //select the clear tile button and disselect the others
-        InterfaceFunctions.ColorPuzzleButtonOff(buildButton);
+        InterfaceFunctions.ColorPuzzleButtonOff(buildButton, skin);
         if (includeNote1Btn)
-            InterfaceFunctions.ColorPuzzleButtonOff(note1Button);
+            InterfaceFunctions.ColorPuzzleButtonOff(note1Button, skin);
         if (includeNote2Btn)
-            InterfaceFunctions.ColorPuzzleButtonOff(note2Button);
-        InterfaceFunctions.ColorPuzzleButtonOff(clearTileButton);
+            InterfaceFunctions.ColorPuzzleButtonOff(note2Button, skin);
+        InterfaceFunctions.ColorPuzzleButtonOff(clearTileButton, skin);
     }
     
     public void ShowNumberButtonClicked(GameObject nB) {
@@ -721,12 +706,12 @@ public class GameManager : MonoBehaviour {
 
     private void SelectNumber(GameObject btn) {
         //color chosen the number button to the "on" coloration from the current skin
-        InterfaceFunctions.ColorPuzzleButtonOn(btn);
+        InterfaceFunctions.ColorPuzzleButtonOn(btn, skin);
     }
 
     private void DisselectNumber(GameObject btn) {
         //color chosen the number button to the "off" coloration from the current skin
-        InterfaceFunctions.ColorPuzzleButtonOff(btn);
+        InterfaceFunctions.ColorPuzzleButtonOff(btn, skin);
     }
     
     public void AddToPuzzleHistory() {
@@ -799,7 +784,7 @@ public class GameManager : MonoBehaviour {
             clickTileAction = "Apply Selected";
             button = buildButton;
         }
-        InterfaceFunctions.ColorPuzzleButtonOn(button);
+        InterfaceFunctions.ColorPuzzleButtonOn(button, skin);
     }
     
     public void PushRemoveAllButton() {

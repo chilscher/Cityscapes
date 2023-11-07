@@ -10,7 +10,22 @@ public class MainMenuCanvasController : MonoBehaviour {
     //controls the main menu canvas. Only one is used, and only on the main menu scene.
 
     //buttons, and children of buttons, that the player interacts with from the main menu
-    public GameObject puzzleButtons;
+    [Header("UI Elements to color")]
+    public GameObject shopButton;
+    public GameObject tutorialButton;
+    public GameObject largeCenterTutorialButton;
+    public GameObject settingsButton;
+    public GameObject smallCityButton;
+    public GameObject mediumCityButton;
+    public GameObject largeCityButton;
+    public GameObject hugeCityButton;
+    public GameObject massiveCityButton;
+    public GameObject returnToPuzzleButton;
+    public GameObject abandonPuzzleButton;
+    public Image progressPopupBorder;
+    public Image progressPopupInside;
+
+    [Header("Everything else")]
     public GameObject smallShadow;
     public GameObject mediumShadow;
     public GameObject largeShadow;
@@ -21,17 +36,14 @@ public class MainMenuCanvasController : MonoBehaviour {
     public GameObject largeCityArt;
     public GameObject hugeCityArt;
     public GameObject massiveCityArt;
+    public GameObject puzzleButtons;
+    public GameObject returnOrAbandonButtons;
+    public GameObject background;
     public GameObject smallText;
     public GameObject mediumText;
     public GameObject largeText;
     public GameObject hugeText;
     public GameObject massiveText;
-    public GameObject returnOrAbandonButtons;
-    public GameObject background;
-    public GameObject shopButton;
-    public GameObject tutorialButton;
-    public GameObject largeCenterTutorialButton;
-    public GameObject settingsButton;
     public GameObject leftSmallText;
     public GameObject leftMediumText;
     public GameObject leftLargeText;
@@ -76,26 +88,22 @@ public class MainMenuCanvasController : MonoBehaviour {
 
     private void ColorButtons() {
         //color all of the menu buttons to fit the current skin
-        InterfaceFunctions.ColorMenuButton(puzzleButtons.transform.Find("3").gameObject);
-        InterfaceFunctions.ColorMenuButton(puzzleButtons.transform.Find("4").gameObject);
-        InterfaceFunctions.ColorMenuButton(puzzleButtons.transform.Find("5").gameObject);
-        InterfaceFunctions.ColorMenuButton(puzzleButtons.transform.Find("6").gameObject);
-        InterfaceFunctions.ColorMenuButton(puzzleButtons.transform.Find("7").gameObject);
+        InterfaceFunctions.ColorMenuButton(smallCityButton, StaticVariables.skin);
+        InterfaceFunctions.ColorMenuButton(mediumCityButton, StaticVariables.skin);
+        InterfaceFunctions.ColorMenuButton(largeCityButton, StaticVariables.skin);
+        InterfaceFunctions.ColorMenuButton(hugeCityButton, StaticVariables.skin);
+        InterfaceFunctions.ColorMenuButton(massiveCityButton, StaticVariables.skin);
 
-        InterfaceFunctions.ColorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Return").gameObject);
-        InterfaceFunctions.ColorMenuButton(returnOrAbandonButtons.transform.Find("Popup").Find("Abandon").gameObject);
+        InterfaceFunctions.ColorMenuButton(returnToPuzzleButton, StaticVariables.skin);
+        InterfaceFunctions.ColorMenuButton(abandonPuzzleButton, StaticVariables.skin);
 
-        //Color exter;
-        //Color inter;
-        //ColorUtility.TryParseHtmlString(StaticVariables.skin.resumePuzzleExterior, out exter);
-        //ColorUtility.TryParseHtmlString(StaticVariables.skin.resumePuzzleInterior, out inter);
-        returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Border").GetComponent<Image>().color = StaticVariables.skin.popupBorder;
-        returnOrAbandonButtons.transform.Find("Popup").Find("Backdrop").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.popupInside;
+        progressPopupBorder.color = StaticVariables.skin.popupBorder;
+        progressPopupInside.color = StaticVariables.skin.popupInside;
 
-        InterfaceFunctions.ColorMenuButton(shopButton);
-        InterfaceFunctions.ColorMenuButton(tutorialButton);
-        InterfaceFunctions.ColorMenuButton(settingsButton);
-        InterfaceFunctions.ColorMenuButton(largeCenterTutorialButton);
+        InterfaceFunctions.ColorMenuButton(shopButton, StaticVariables.skin);
+        InterfaceFunctions.ColorMenuButton(tutorialButton, StaticVariables.skin);
+        InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
+        InterfaceFunctions.ColorMenuButton(largeCenterTutorialButton, StaticVariables.skin);
     }
 
     private void ShowReturnAbandon() {

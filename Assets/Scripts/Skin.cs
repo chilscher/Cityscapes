@@ -12,10 +12,11 @@ public class Skin: MonoBehaviour{
     public string skinName;
     public int skinTier; //price tier, for use in the shop
 
-    [Header("Background Art")]
+    [Header("Sprites")]
     public Sprite puzzleBackground;
     public Sprite mainMenuBackground;
     public Sprite shopBackground;
+    public Sprite buildingSprite;
     
     [Header("UI element Colors")]
     public Color puzzleButtonInside_On; //ex: the build button when build is selected
@@ -35,29 +36,6 @@ public class Skin: MonoBehaviour{
     public Color note1;
     public Color note2;
     public Color tileBackground;
-
-    [Header("these are outdated lmao")]
-    
-    //the interior and exterior colors of buttons when they are toggled on or off.
-    public string onButtonColorInterior; 
-    public string onButtonColorExterior;
-    public string offButtonColorInterior;
-    public string offButtonColorExterior;
-
-    //colors and sprites used while the player is doing a puzzle
-    public string citizenColor;
-    public string satisfiedCitizenColor;
-    public Sprite buildingSprite;
-    public string streetColor;
-    public string highlightBuildingColor;
-    public string note1Color;
-    public string note2Color;
-
-    //the interior and exterior colors of main menu buttons
-    public string mainMenuButtonInterior;
-    public string mainMenuButtonExterior;
-    public string resumePuzzleInterior;
-    public string resumePuzzleExterior;
 
 
     /* TO ADD A NEW SKIN, FOLLOW THESE INSTRUCTIONS!

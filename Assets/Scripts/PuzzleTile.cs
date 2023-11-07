@@ -57,8 +57,8 @@ public class PuzzleTile : Tile {
         }
         //set colors and sprites from the current skin
         SetNumberColors();
-        building.sprite = StaticVariables.skin.buildingSprite;
-        road.color = StaticVariables.skin.street;
+        building.sprite = gameManager.skin.buildingSprite;
+        road.color = gameManager.skin.street;
     }
 
     public void SetNumberColors() {

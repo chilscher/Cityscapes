@@ -27852,8 +27852,6 @@ MonoBehaviour:
   streetCorner: {fileID: 7404936744469136690, guid: 57225bd2d53397a4290711c7f0353a3f,
     type: 3}
   winBlackSprite: {fileID: 1830224955}
-  fadeToWinTime: 0.5
-  fadeToWinDarknessRatio: 0.9
   numberSprites:
   - {fileID: 21300000, guid: 60bf04151db46044f925dc39c03de385, type: 3}
   - {fileID: 21300000, guid: b0ef6449205cf72419c3bd21a2018daf, type: 3}
@@ -27886,6 +27884,12 @@ MonoBehaviour:
   hugeCityArt: {fileID: 1056157232}
   massiveCityArt: {fileID: 997971176}
   anotherPuzzleText: {fileID: 1637186135}
+  winPopupMenuButton: {fileID: 1564430003}
+  winPopupShopButton: {fileID: 1990178621}
+  winPopupSettingsButton: {fileID: 51904499}
+  winPopupPuzzleButton: {fileID: 920379923}
+  winPopupBorder: {fileID: 2012327572}
+  winPopupInterior: {fileID: 1699400065}
   showBuildings: 1
 --- !u!114 &1357166983
 MonoBehaviour:
@@ -37416,7 +37420,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5882353}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
