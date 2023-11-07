@@ -59,6 +59,7 @@ public class PuzzleTile : Tile {
         SetNumberColors();
         building.sprite = gameManager.skin.buildingSprite;
         road.color = gameManager.skin.street;
+        tileBackground.color = gameManager.skin.tileBackground;
     }
 
     public void SetNumberColors() {
@@ -67,10 +68,6 @@ public class PuzzleTile : Tile {
         note1Color = StaticVariables.skin.note1;
         note2Color = StaticVariables.skin.note2;
         highlightBuildingColor = StaticVariables.skin.highlightBuilding;
-        //ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out numberColor);
-        //ColorUtility.TryParseHtmlString(gameManager.skin.note1Color, out note1Color);
-        //ColorUtility.TryParseHtmlString(gameManager.skin.note2Color, out note2Color);
-        //ColorUtility.TryParseHtmlString(gameManager.skin.highlightBuildingColor, out highlightBuildingColor);
     }
 
     public void Clicked() {

@@ -42,6 +42,10 @@ public class Skin: MonoBehaviour{
     
     I will update these instructions next time I add a new skin :/
 
+    duplicate one of the pre-existing skin prefabs
+    change the images and colors in the skin script attached to the prefab
+    duplicate one of the purchase buttons in the shop scene, and update the button text and dropdown text
+    duplicate one of the skin selection buttons in the settings scene, and update the button text
 
     */
 

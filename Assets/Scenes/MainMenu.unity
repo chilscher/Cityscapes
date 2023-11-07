@@ -166,7 +166,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9e9ffa0d5447894b964057d76f68bc7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  puzzleButtons: {fileID: 1034229281}
+  shopButton: {fileID: 438263058}
+  tutorialButton: {fileID: 443763566}
+  largeCenterTutorialButton: {fileID: 733327465}
+  settingsButton: {fileID: 631664034}
+  smallCityButton: {fileID: 932214098}
+  mediumCityButton: {fileID: 787754929}
+  largeCityButton: {fileID: 50120985}
+  hugeCityButton: {fileID: 557508779}
+  massiveCityButton: {fileID: 835948243}
+  returnToPuzzleButton: {fileID: 306695470}
+  abandonPuzzleButton: {fileID: 255124718}
+  progressPopupBorder: {fileID: 471225064}
+  progressPopupInside: {fileID: 426539207}
   smallShadow: {fileID: 820414645}
   mediumShadow: {fileID: 416389093}
   largeShadow: {fileID: 1503629237}
@@ -177,17 +189,14 @@ MonoBehaviour:
   largeCityArt: {fileID: 205693226}
   hugeCityArt: {fileID: 1269794357}
   massiveCityArt: {fileID: 304095952}
+  puzzleButtons: {fileID: 1034229281}
+  returnOrAbandonButtons: {fileID: 434550103}
+  background: {fileID: 1863834607}
   smallText: {fileID: 1045004446}
   mediumText: {fileID: 265127324}
   largeText: {fileID: 441733445}
   hugeText: {fileID: 1226148811}
   massiveText: {fileID: 464710695}
-  returnOrAbandonButtons: {fileID: 434550103}
-  background: {fileID: 1863834607}
-  shopButton: {fileID: 438263058}
-  tutorialButton: {fileID: 443763566}
-  largeCenterTutorialButton: {fileID: 733327465}
-  settingsButton: {fileID: 631664034}
   leftSmallText: {fileID: 579603532}
   leftMediumText: {fileID: 1311404003}
   leftLargeText: {fileID: 207351888}
@@ -210,6 +219,7 @@ MonoBehaviour:
   - {fileID: 2135032764033575535, guid: 0b92125c21674b44da0a398f129e4a43, type: 3}
   - {fileID: 2135032764033575535, guid: 3ce6c8f571c169e429d025da56ce6654, type: 3}
   - {fileID: 2135032764033575535, guid: c362d7300470e5348a8f2f004e50da57, type: 3}
+  - {fileID: 2135032764033575535, guid: c702f47222a745442972e5556eac60d8, type: 3}
 --- !u!4 &1571374
 Transform:
   m_ObjectHideFlags: 0
