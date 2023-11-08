@@ -18,15 +18,19 @@ public class Skin: MonoBehaviour{
     public Sprite shopBackground;
     public Sprite buildingSprite;
     
-    [Header("UI element Colors")]
-    public Color puzzleButtonInside_On; //ex: the build button when build is selected
-    public Color puzzleButtonBorder_On;
-    public Color puzzleButtonInside_Off;  //ex: the build button when note 1 is selected
-    public Color puzzleButtonBorder_Off;
+    [Header("Main Menu Button Colors")]
     public Color menuButtonInside; //ex: the buttons on the home screen or in puzzle scene
     public Color menuButtonBorder;
     public Color popupInside; //ex: the win popup or return to puzzle popup
     public Color popupBorder;
+    public Color settingsText_On;
+    public Color settingsText_Off;
+
+    [Header("Puzzle Button Colors")]
+    public Color puzzleButtonInside_On; //ex: the build button when build is selected
+    public Color puzzleButtonBorder_On;
+    public Color puzzleButtonInside_Off;  //ex: the build button when note 1 is selected
+    public Color puzzleButtonBorder_Off;
 
     [Header("Puzzle component colors")]
     public Color normalCitizen;

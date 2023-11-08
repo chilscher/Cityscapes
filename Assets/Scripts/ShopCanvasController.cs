@@ -90,6 +90,8 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject menuButton;
     public GameObject settingsButton;
     private bool stopScrollRect = false;
+    public Image popupBorder;
+    public Image popupInside;
 
 
     private void Start() {
@@ -128,10 +130,7 @@ public class ShopCanvasController : MonoBehaviour {
         //update the buttons for the various upgrades to denote if they can be purchased right now
         UpdateButtons();
 
-        //apply the cosmetics from the current skin
-        background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
-        InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
+        ApplySkin();
     }
 
     private void Update() {
@@ -166,6 +165,37 @@ public class ShopCanvasController : MonoBehaviour {
     //ALL OF THE FUNCTIONS THAT ARE USED TO UPDATE THE VISUALS FOR THE SHOP SCENE
     // ---------------------------------------------------
 
+    private void ApplySkin(){
+        background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
+        InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
+        InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
+        popupBorder.color = StaticVariables.skin.popupBorder;
+        popupInside.color = StaticVariables.skin.popupInside;
+
+        ColorShopButton(expandResidentColorButton);
+        ColorShopButton(expandHighlightBuildingsButton);
+        ColorShopButton(expandMedButton);
+        ColorShopButton(expandUndoRedoButton);
+        ColorShopButton(expandNotes1Button);
+        ColorShopButton(expandRemoveAllButton);
+        ColorShopButton(expandClearButton);
+        ColorShopButton(expandLargeButton);
+        ColorShopButton(expandNotes2Button);
+        ColorShopButton(expandHugeButton);
+        ColorShopButton(expandMassiveButton);
+
+        foreach(GameObject go in skinButtons)
+            ColorShopButton(go.transform.GetChild(0).gameObject);
+        
+    }
+
+    private void ColorShopButton(GameObject button){
+        button.transform.GetChild(0).Find("Borders").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
+        button.transform.GetChild(0).Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
+        Transform dropdown = button.transform.parent.Find("Dropdown");
+        dropdown.Find("Dropdown Image").Find("Exterior").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
+        dropdown.Find("Dropdown Image").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
+    }
     public void DisplayCoinsAmount() {
         //show the amount of coins the player has in the top-right corner of the shop screen
         int value1s = StaticVariables.coins % 10;
@@ -441,14 +471,13 @@ public class ShopCanvasController : MonoBehaviour {
 
     private void FindSkinButtons() {
         //finds all of the buttons that let the player unlock various skins
-        //specifically, finds all gameobjects between the skin start and and points from the inspector
+        //specifically, finds all gameobjects between the skin start and end points from the inspector
         int start = skinsStart.transform.GetSiblingIndex();
         int end = skinsEnd.transform.GetSiblingIndex();
         List<GameObject> buttons = new List<GameObject>();
         GameObject parent = expandMedButton.transform.parent.parent.gameObject;
-        for (int i = start + 1; i<end; i++) {
+        for (int i = start + 1; i<end; i++)
             buttons.Add(parent.transform.GetChild(i).gameObject);
-        }
         skinButtons = buttons.ToArray();
     }
 

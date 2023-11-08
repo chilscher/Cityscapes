@@ -34,11 +34,14 @@ public class SettingsCanvasController : MonoBehaviour {
 
     //the buttons that are not related to any upgrades
     public GameObject hidePurchasedUpgradesButton;
+    public GameObject creditsButton;
 
     //the following are properties taken from the skin
     public GameObject background;
     public GameObject menuButton;
     public GameObject shopButton;
+    public Image popupBorder;
+    public Image popupInside;
     
     //headers for the different types of buttons you can interact with in the setting scene
     public GameObject cosmeticsTitle;
@@ -264,6 +267,43 @@ public class SettingsCanvasController : MonoBehaviour {
         background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
         InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
         InterfaceFunctions.ColorMenuButton(shopButton, StaticVariables.skin);
+        popupBorder.color = StaticVariables.skin.popupBorder;
+        popupInside.color = StaticVariables.skin.popupInside;
+        ColorSkinButtons();
+        ColorSettingsButton(residentColorButton);
+        ColorSettingsButton(highlightBuildingsButton);
+        ColorSettingsButton(notes1Button);
+        ColorSettingsButton(notes2Button);
+        ColorSettingsButton(undoRedoButton);
+        ColorSettingsButton(removeNumbersButton);
+        ColorSettingsButton(clearPuzzleButton);
+        ColorSettingsButton(medCityButton);
+        ColorSettingsButton(largeCityButton);
+        ColorSettingsButton(hugeCityButton);
+        ColorSettingsButton(massiveCityButton);
+        ColorSettingsButton(hidePurchasedUpgradesButton);
+        ColorSettingsButton(creditsButton, false);
+    }
+
+    private void ColorSkinButtons(){
+        InterfaceFunctions.ColorMenuButton(expandSkinButton, StaticVariables.skin);
+        expandSkinButton.transform.Find("On").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
+        GameObject parentBox = expandSkinButton.transform.parent.gameObject;
+        for (int i = 1; i < parentBox.transform.childCount; i++) {
+            Transform button = parentBox.transform.GetChild(i).transform.Find("Button");
+            button.Find("Dropdown Image").Find("Exterior").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
+            button.Find("Dropdown Image").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
+            button.Find("On").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
+            button.Find("Off").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
+        }
+    }
+
+    private void ColorSettingsButton(GameObject button, bool changeText=true){
+        InterfaceFunctions.ColorMenuButton(button.transform.GetChild(0).gameObject, StaticVariables.skin);
+        if (changeText){
+            button.transform.GetChild(0).Find("On").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
+            button.transform.GetChild(0).Find("Off").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
+        }
     }
 
     public void PushExpandSkinsButton() {

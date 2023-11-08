@@ -12,10 +12,11 @@ public class CreditsCanvasController : MonoBehaviour {
 
     //the following are properties taken from the skin
     public GameObject background;
-    private Color buttonColorExterior;
-    private Color buttonColorInterior;
     public GameObject menuButton;
     public GameObject settingsButton;
+    public Image popupBorder;
+    public Image popupInside;
+    
     
 
 
@@ -24,6 +25,8 @@ public class CreditsCanvasController : MonoBehaviour {
         background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
         InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
         InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
+        popupBorder.color = StaticVariables.skin.popupBorder;
+        popupInside.color = StaticVariables.skin.popupInside;
     }
     
     private void Update() {
