@@ -14,10 +14,10 @@ public class SideHintTile : Tile {
     public PuzzleTile[] row; //all of the Puzzle Tiles that this SideHintTile's hint references (this SideHintTile is the number at the end of a row of buildings)
 
     //some visual elements of the SideHintTile Prefab
-    private Image background;
-    private Image arrow;
-    private Image number;
-    private Image redBorder;
+    public Image background;
+    public Image arrow;
+    public Image number;
+    public Image redBorder;
 
     //the number sprites
     public Sprite[] whiteSprites;
@@ -29,10 +29,6 @@ public class SideHintTile : Tile {
     public void Initialize(int hintValue) {
         //creates the sideHintTile. Here goes all of the code that defines the private variables used later
         this.hintValue = hintValue;
-        background = transform.GetChild(0).GetComponent<Image>();
-        arrow = transform.GetChild(1).GetComponent<Image>();
-        number = transform.GetChild(2).GetComponent<Image>();
-        redBorder = transform.GetChild(3).GetComponent<Image>();
 
         SetNumberColors();
         AddNumberToTile(hintValue);
@@ -64,15 +60,10 @@ public class SideHintTile : Tile {
         if (StaticVariables.isTutorial) {
             incorrectColor = InterfaceFunctions.GetDefaultSkin().normalCitizen;
             correctColor = InterfaceFunctions.GetDefaultSkin().satisfiedCitizen;
-            //ColorUtility.TryParseHtmlString(StaticVariables.skin.citizenColor, out incorrectColor);
-            //ColorUtility.TryParseHtmlString(StaticVariables.skin.satisfiedCitizenColor, out correctColor);
         }
         else {
             incorrectColor = StaticVariables.skin.normalCitizen;
             correctColor = StaticVariables.skin.satisfiedCitizen;
-
-            //ColorUtility.TryParseHtmlString(InterfaceFunctions.GetDefaultSkin().citizenColor, out incorrectColor);
-            //ColorUtility.TryParseHtmlString(InterfaceFunctions.GetDefaultSkin().satisfiedCitizenColor, out correctColor);
         }
     }
 
@@ -108,9 +99,11 @@ public class SideHintTile : Tile {
         //colors the SideHintTile number based on if its building criterion is satisfied
         //does nothing if the relevant upgrade is not toggled, or if this is the tutorial
         number.color = incorrectColor;
+        arrow.color = incorrectColor;
         if (StaticVariables.changeResidentColorOnCorrectRows && !StaticVariables.isTutorial) {
             if ((NumBuildingsCurrentlyVisible() == hintValue) && (row[0].shownNumber != 0)) {
                 number.color = correctColor;
+                arrow.color = correctColor;
             }
         }
     }
@@ -119,31 +112,31 @@ public class SideHintTile : Tile {
         //rotate the arrow and puzzle border to face the interior of the puzzle
         background.transform.Rotate(new Vector3(0, 0, amt));
         arrow.transform.Rotate(new Vector3(0, 0, amt));
-        float numberMoveAmt = tileSize / 4;
-        if (amt == 0) {
-            Vector3 pos = number.transform.position;
-            pos.y += numberMoveAmt;
-            number.transform.position = pos;
-            redBorder.transform.position = pos;
+        float numberOffset_Vert = tileSize / 6;
+        float numberOffset_Horiz = tileSize / 15;
+        float arrowOffset_Vert = -1.25f;
+        float arrowOffset_Horiz = -1.25f;
+        Vector3 numberPos = number.transform.position;
+        Vector3 arrowPos = Vector3.zero;
+        if (amt == 0){
+            numberPos.y += numberOffset_Vert;
+            arrowPos.y += arrowOffset_Vert;
         }
-        else if(amt == 180) {
-            Vector3 pos = number.transform.position;
-            pos.y -= numberMoveAmt;
-            number.transform.position = pos;
-            redBorder.transform.position = pos;
+        else if(amt == 180){
+            numberPos.y -= numberOffset_Vert;
+            arrowPos.y -= arrowOffset_Vert;
         }
-        else if (amt == 90) {
-            Vector3 pos = number.transform.position;
-            pos.x -= numberMoveAmt;
-            number.transform.position = pos;
-            redBorder.transform.position = pos;
+        else if (amt == 90){
+            numberPos.x -= numberOffset_Horiz;
+            arrowPos.x -= arrowOffset_Horiz;
         }
-        else if (amt == 270) {
-            Vector3 pos = number.transform.position;
-            pos.x += numberMoveAmt;
-            number.transform.position = pos;
-            redBorder.transform.position = pos;
+        else if (amt == 270){
+            numberPos.x += numberOffset_Horiz;
+            arrowPos.x += arrowOffset_Horiz;
         }
+        number.transform.position = numberPos;
+        redBorder.transform.position = numberPos;
+        arrow.transform.localPosition = arrowPos;
     }
 
     public void AddRedBorder() {
