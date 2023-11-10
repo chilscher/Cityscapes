@@ -842,15 +842,7 @@ public class GameManager : MonoBehaviour {
             removeAllOfNumberButton.transform.Find("Dash").gameObject.SetActive(false);
             removeAllOfNumberButton.transform.Find("Number").gameObject.SetActive(true);
             removeAllOfNumberButton.transform.Find("Number").GetComponent<Image>().sprite = numberSprites[selectedNumber];
-            //Color buildingColor;
-            //Color note1Color;
-            //Color note2Color;
-            //ColorUtility.TryParseHtmlString(StaticVariables.whiteHex, out buildingColor);
-            //ColorUtility.TryParseHtmlString(skin.note1Color, out note1Color);
-            //ColorUtility.TryParseHtmlString(skin.note2Color, out note2Color);
             Color c = Color.white;
-            //if (clickTileAction == "Apply Selected" || selectedNumber == 0)
-            //    c = Color.white;
             if (clickTileAction == "Toggle Note 1")
                 c = StaticVariables.skin.note1;
             else if (clickTileAction == "Toggle Note 2")
