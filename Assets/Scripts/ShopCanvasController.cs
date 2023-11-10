@@ -166,7 +166,7 @@ public class ShopCanvasController : MonoBehaviour {
     // ---------------------------------------------------
 
     private void ApplySkin(){
-        background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
+        background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
         InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
         InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
         popupBorder.color = StaticVariables.skin.popupBorder;
@@ -617,7 +617,7 @@ public class ShopCanvasController : MonoBehaviour {
         if (CanPurchase(StaticVariables.unlockedSkins.Contains(skin), GetSkinPrice(skin))){
             StaticVariables.unlockedSkins.Add(skin);
             StaticVariables.skin = skin;
-            background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
+            background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
             InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
             InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
             DoPurchase(GetSkinPrice(skin));
@@ -667,7 +667,7 @@ public class ShopCanvasController : MonoBehaviour {
 
         StaticVariables.unlockedSkins = new List<Skin>();
         StaticVariables.skin = InterfaceFunctions.GetDefaultSkin();
-        background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
+        background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
         InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
         InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
         UpdateButtons();

@@ -22,7 +22,7 @@ public class CreditsCanvasController : MonoBehaviour {
 
     private void Start() {
         //apply the cosmetics from the current skin
-        background.GetComponent<Image>().sprite = StaticVariables.skin.shopBackground;
+        background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
         InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
         InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
         popupBorder.color = StaticVariables.skin.popupBorder;

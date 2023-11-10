@@ -15,7 +15,6 @@ public class Skin: MonoBehaviour{
     [Header("Sprites")]
     public Sprite puzzleBackground;
     public Sprite mainMenuBackground;
-    public Sprite shopBackground;
     public Sprite buildingSprite;
     
     [Header("Main Menu Button Colors")]
