@@ -13,8 +13,8 @@ public class Skin: MonoBehaviour{
     public int skinTier; //price tier, for use in the shop
 
     [Header("Sprites")]
-    public Sprite puzzleBackground;
     public Sprite mainMenuBackground;
+    public Sprite puzzleBackground;
     public Sprite buildingSprite;
     
     [Header("Main Menu Button Colors")]
