@@ -14,6 +14,7 @@ public class PuzzleGenerator : MonoBehaviour{
 
     public bool usePredeterminedSolution;
     public string predeterminedSolution; //provided by the inspector
+    public int predeterminedPermanentBuilding = 0;
     
     //the lists of Puzzle Tile and SideHintTile objects
     [HideInInspector]
@@ -48,7 +49,7 @@ public class PuzzleGenerator : MonoBehaviour{
                 int ind2 = (i - ind1) / size;
                 x[ind2, ind1] = (int)char.GetNumericValue(c);
             }
-            puzzle = new Puzzle(x);
+            puzzle = new Puzzle(x, predeterminedPermanentBuilding);
         }
         else {
             if (size < 2 || size > 7) {
@@ -63,7 +64,7 @@ public class PuzzleGenerator : MonoBehaviour{
         }
     }
 
-    public void AutofillStartingBuildings(){
+    public void AutofillPermanentBuildings(){
         for (int i = 0; i < puzzle.size; i++) {
             for (int j = 0; j < puzzle.size; j++) {
                 if (puzzle.startingSolution[i,j] != 0)

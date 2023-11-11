@@ -17,19 +17,22 @@ public class Puzzle{
 
     public Puzzle(int size) {
         //randomly create a puzzle with defined size
-        //specifically, creates one puzzle at random, checks if it is solvable, and repeats until it gets a valid puzzle
         this.size = size;        
         GeneratePuzzle();
         GenerateSideNumbers();
         GenerateStartingSolution();
-        AddStartingSpacesBasedOnSize();
+        AddPermanentBuildingsBasedOnSize();
     }
 
-    public Puzzle(int[,] predeterminedSolution) {
+    public Puzzle(int[,] predeterminedSolution, int predeterminedPermanentBuilding) {
         //create a puzzle object based off of a predetermined solution
         this.size = (int)Mathf.Sqrt(predeterminedSolution.Length);
         solution = predeterminedSolution;
         GenerateSideNumbers();
+        if (predeterminedPermanentBuilding == 7){
+            startingSolution = new int[size, size];
+            startingSolution[2,1] = solution[2,1];
+        }
     }
 
     private void GeneratePuzzle() {
@@ -101,7 +104,7 @@ public class Puzzle{
         }
     }
 
-    private void AddStartingSpacesBasedOnSize(){
+    private void AddPermanentBuildingsBasedOnSize(){
         int numToAdd = 0;
         if (size == 3)
             numToAdd = 1;
@@ -123,7 +126,6 @@ public class Puzzle{
                     y = -1;
                 }
                 else if (solution[x,y] == size){
-                    Debug.Log(size);
                     x = -1;
                     y = -1;
                 }

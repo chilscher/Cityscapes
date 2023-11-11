@@ -154,7 +154,7 @@ public class GameManager : MonoBehaviour {
             }
             else {
                 puzzleGenerator.CreatePuzzle(size);
-                puzzleGenerator.AutofillStartingBuildings();
+                puzzleGenerator.AutofillPermanentBuildings();
                 selectedNumber = size; //you automatically start with the highest building size selected
                 clickTileAction = "Apply Selected";
             }
@@ -369,10 +369,8 @@ public class GameManager : MonoBehaviour {
         //draws the visuals for the puzzle tiles, borders, residents, and street corners
         float desiredPuzzleSize = puzzlePositioning.transform.localScale.x;
 
-        if (canvas.GetComponent<RectTransform>().rect.height > canvas.GetComponent<CanvasScaler>().referenceResolution.y) {
+        if (canvas.GetComponent<RectTransform>().rect.height > canvas.GetComponent<CanvasScaler>().referenceResolution.y) 
             desiredPuzzleSize *= (canvas.GetComponent<CanvasScaler>().referenceResolution.y / canvas.GetComponent<RectTransform>().rect.height);
-        }
-
 
         float defaultTileScale = puzzleGenerator.puzzleTilePrefab.GetComponent<BoxCollider2D>().size.x;
         float currentPuzzleSize = (size + 2) * defaultTileScale;
@@ -411,9 +409,8 @@ public class GameManager : MonoBehaviour {
             leftTile.RotateHint(90, (totalSize / size));
             rightTile.RotateHint(270, (totalSize / size));
         }
-        foreach (SideHintTile h in puzzleGenerator.allHints) {
+        foreach (SideHintTile h in puzzleGenerator.allHints)
             h.AddHint();
-        }
 
         //draw street corners
         Vector2 topLeftPos = new Vector2(leftx, topy);

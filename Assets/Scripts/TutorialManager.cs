@@ -47,352 +47,368 @@ public class TutorialManager{
     // ---------------------------------------------------
 
     private void AdvanceStage() {
-        //each stage has its own text, required step to proceed, and stage you can jump to if you complete a specific requirement ahead of time
-        tutorialStage++;
-
-        switch (tutorialStage) {
-            case 1:
-                text = "Welcome to Cityscapes! This is a number-placement puzzle game. In Cityscapes, you are a city designer, and your job is to build a city to fit its new residents' wishes.";
-                continueText = "Tap to continue...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 2:
-                text = "The above 3x3 grid is your city, and each space on the grid can hold one building.";
-                continueText = "Tap to continue...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 3:
-                text = "The buildings you place will either be one story...";
-                continueText = "Tap to continue...";
-                FillInSpace(6, 1);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 4:
-                text = "The buildings you place will either be one story...\ntwo stories...";
-                continueText = "Tap to continue...";
-                FillInSpace(7, 2);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 5:
-                text = "The buildings you place will either be one story...\ntwo stories...\nor three stories tall.";
-                continueText = "Tap to continue...";
-                FillInSpace(8, 3);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 6:
-                text = "To place a building, tap the building size you would like to place...";
-                continueText = "Choose the right building size...";
-                gameManager.tutorialParent.transform.Find("Numbers").gameObject.SetActive(true);
-                AddRedBoxAroundNumButton(2);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap number button 2";
-                break;
-            case 7:
-                text = "To place a building, tap the building size you would like to place...\n\nthen tap the space you would like to build on.";
-                continueText = "Place the building...";
-                RemoveRedBoxesAroundNums();
-                AddRedBoxAroundTile(0);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "add building of height 2 to tile 0";
-                break;
-            case 8:
-                text = "Congratulations! You have built your first building!";
-                continueText = "Tap to continue...";
-                RemoveRedBoxesAroundTiles();
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 9:
-                text = "The residents have very particular requirements for their perfect city.";
-                continueText = "Tap to continue...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 10:
-                text = "Firstly, every street has to contain exactly one building of each height.";
-                continueText = "Tap to continue...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                skipRequirement = "add building of height 3 to tile 3";
-                skipToStage = 14;
-                break;
-            case 11:
-                text = "Firstly, every street has to contain exactly one building of each height.\n\nThese three buildings form a street and already satisfy this rule.";
-                continueText = "Tap to continue...";
-                AddRedBoxAroundStreet("horizontal", 2);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 12:
-                text = "However, this street does not yet have one of every building!";
-                continueText = "Tap to continue...";
-                RemoveRedBoxesAroundStreets();
-                AddRedBoxAroundStreet("vertical", 0);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 13:
-                text = "However, this street does not yet have one of every building!\n\nIt still needs a three-story building in the middle.";
-                continueText = "Place the correct building...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "add building of height 3 to tile 3";
-                skipRequirement = "";
-                break;
-            case 14:
-                text = "Great! The second building requirement involves the residents of the city...";
-                continueText = "Tap to continue...";
-                RemoveRedBoxesAroundStreets();
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 15:
-                text = "Great! The second building requirement involves the residents of the city...\n\nwho are now standing at the ends of every street!";
-                continueText = "Tap to continue...";
-                gameManager.ShowHints();
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 16:
-                text = "This resident...";
-                continueText = "Tap to continue...";
-                AddRedBoxAroundResident("top", 1);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 17:
-                text = "This resident...\nis looking down this street...";
-                continueText = "Tap to continue...";
-                AddRedBoxAroundResident("top", 1);
-                AddRedBoxAroundStreet("vertical", 1);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 18:
-                text = "This resident...\nis looking down this street...\nand only wants to be able to see one building.";
-                continueText = "Tap to continue...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                skipRequirement = "add building of height 3 to tile 1";
-                skipToStage = 21;
-                break;
-            case 19:
-                text = "This resident...\nis looking down this street...\nand only wants to be able to see one building.\nSo we know that the building closest to them has to be the tallest one on the whole street!";
-                continueText = "Tap to continue...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 20:
-                text = "Place the tallest building on the street closest to the resident.";
-                continueText = "Place the correct building...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "add building of height 3 to tile 1";
-                skipRequirement = "";
-                break;
-            case 21:
-                text = "Awesome!";
-                continueText = "Tap to continue...";
-                RemoveRedBoxesAroundStreets();
-                RemoveRedBoxesAroundResidents();
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 22:
-                text = "Awesome!\n\nNow, you can fill in the last missing building on the topmost street.";
-                continueText = "Place the correct building...";
-                AddRedBoxAroundStreet("horizontal", 0);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "add building of height 1 to tile 2";
-                break;
-            case 23:
-                text = "And now you can fill in the missing building on the middle street.";
-                continueText = "Place the correct building...";
-                RemoveRedBoxesAroundStreets();
-                AddRedBoxAroundStreet("vertical", 1);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "add building of height 1 to tile 4";
-                break;
-            case 24:
-                text = "And finally, you can fill in the last remaining building of the city.";
-                continueText = "Place the correct building...";
-                RemoveRedBoxesAroundStreets();
-                AddRedBoxAroundTile(5);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "add building of height 2 to tile 5";
-                break;
-            case 25:
-                text = "Congratulations! You have completed your first city in Cityscapes!";
-                continueText = "Tap to continue...";
-                RemoveRedBoxesAroundTiles();
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 26:
-                text = "Congratulations! You have completed your first city in Cityscapes!\n\nNow let's start a new city from scratch!";
-                continueText = "Tap to continue...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 27:
-                text = "Welcome to another city. From now on, you can see all residents from the start!";
-                continueText = "Tap to continue...";
-                puzzle = "213132321";
-                DeleteOldCity();
-                gameManager.puzzleGenerator.predeterminedSolution = puzzle;
-                gameManager.puzzleGenerator.CreatePuzzle(3);
-                gameManager.DrawFullPuzzle();
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 28:
-                text = "The best place to start when building a city is to fill in all the tallest buildings first.";
-                continueText = "Tap to continue...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 29:
-                text = "These four residents only want to see one building...";
-                continueText = "Tap to continue...";
-                AddRedBoxAroundResident("top", 2);
-                AddRedBoxAroundResident("left", 2);
-                AddRedBoxAroundResident("right", 0);
-                AddRedBoxAroundResident("bottom", 0);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                skipRequirement = "add buildings of height 3 to tiles 2 and 6";
-                skipToStage = 31;
-                break;
-            case 30:
-                text = "These four residents only want to see one building...\n\nso you know the spaces next to them have to have three-story buildings.";
-                continueText = "Place the correct buildings...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "add buildings of height 3 to tiles 2 and 6";
-                skipRequirement = "";
-                break;
-            case 31:
-                text = "Well done!";
-                continueText = "Tap to continue...";
-                RemoveRedBoxesAroundResidents();
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 32:
-                text = "Well done!\nNow, you know enough to figure out where the final three-story building has to go! Remember, only one of each building size can go in each street!";
-                continueText = "Place the correct building...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "add building of height 3 to tile 4";
-                break;
-            case 33:
-                text = "Now, you know enough to place a two-story building!";
-                continueText = "Tap to continue...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 34:
-                text = "This resident only wants to see two buildings down their street...";
-                continueText = "Tap to continue...";
-                AddRedBoxAroundResident("left", 0);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                skipRequirement = "add building of height 2 to tile 0";
-                skipToStage = 37;
-                break;
-            case 35:
-                text = "This resident only wants to see two buildings down their street...\nTherefore, we know that this building...";
-                continueText = "Tap to continue...";
-                AddRedBoxAroundTile(0);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 36:
-                text = "This resident only wants to see two buildings down their street...\nTherefore, we know that this building...\nhas to be the second-tallest building in the street!";
-                continueText = "Place the correct building...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "add building of height 2 to tile 0";
-                skipRequirement = "";
-                break;
-            case 37:
-                text = "And now you know enough to completely fill the top street!";
-                continueText = "Place the correct building...";
-                RemoveRedBoxesAroundResidents();
-                RemoveRedBoxesAroundTiles();
-                AddRedBoxAroundTile(1);
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "add building of height 1 to tile 1";
-                break;
-            case 38:
-                text = "Try to finish building the rest of the city!";
-                continueText = "Complete the city!";
-                RemoveRedBoxesAroundTiles();
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "complete the city";
-                break;
-            case 39:
-                text = "Congratulations! You have completed the tutorial for Cityscapes.";
-                continueText = "Tap to continue...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                StaticVariables.hasBeatenTutorial = true;
-                SaveSystem.SaveGame();
-                break;
-            case 40:
-                text = "Congratulations! You have completed the tutorial for Cityscapes.\n\nReturn to the main menu and try a puzzle on your own! You can redo this tutorial at any time.";
-                continueText = "Main Menu...";
-                tutorialText.text = text;
-                continueClue.text = continueText;
-                advanceRequirement = "tap screen";
-                break;
-            case 41:
-                if (StaticVariables.highestUnlockedSize < 3) {
-                    StaticVariables.highestUnlockedSize = 3;
-                }
-                gameManager.PushMainMenuButton();
-                break;
+        tutorialStage ++;
+        //Debug.Log(tutorialStage);
+        int i = 0;
+        if (++i == tutorialStage){
+            text = "Welcome to Cityscapes! This is a number-placement puzzle game. In Cityscapes, you are a city designer, and your job is to build a city to fit its new residents' wishes.";
+            continueText = "Tap to continue...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
         }
-
+        else if (++i == tutorialStage){
+            text = "The above 3x3 grid is your city, and each space on the grid can hold one building.";
+            continueText = "Tap to continue...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "The buildings you place will either be one story...";
+            continueText = "Tap to continue...";
+            FillInSpace(6, 1);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "The buildings you place will either be one story...\ntwo stories...";
+            continueText = "Tap to continue...";
+            FillInSpace(7, 2);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "The buildings you place will either be one story...\ntwo stories...\nor three stories tall.";
+            continueText = "Tap to continue...";
+            FillInSpace(8, 3);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "To place a building, tap the building size you would like to place...";
+            continueText = "Choose the right building size...";
+            gameManager.tutorialParent.transform.Find("Numbers").gameObject.SetActive(true);
+            AddRedBoxAroundNumButton(2);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap number button 2";
+        }
+        else if (++i == tutorialStage){
+            text = "To place a building, tap the building size you would like to place...\n\nthen tap the space you would like to build on.";
+            continueText = "Place the building...";
+            RemoveRedBoxesAroundNums();
+            AddRedBoxAroundTile(0);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "add building of height 2 to tile 0";
+        }
+        else if (++i == tutorialStage){
+            text = "Congratulations! You have built your first building!";
+            continueText = "Tap to continue...";
+            RemoveRedBoxesAroundTiles();
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "The residents have very particular requirements for their perfect city.";
+            continueText = "Tap to continue...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "Firstly, every street has to contain exactly one building of each height.";
+            continueText = "Tap to continue...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+            skipRequirement = "add building of height 3 to tile 3";
+            skipToStage = 14;
+        }
+        else if (++i == tutorialStage){
+            text = "Firstly, every street has to contain exactly one building of each height.\n\nThese three buildings form a street and already satisfy this rule.";
+            continueText = "Tap to continue...";
+            AddRedBoxAroundStreet("horizontal", 2);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "However, this street does not yet have one of every building!";
+            continueText = "Tap to continue...";
+            RemoveRedBoxesAroundStreets();
+            AddRedBoxAroundStreet("vertical", 0);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "However, this street does not yet have one of every building!\n\nIt still needs a three-story building in the middle.";
+            continueText = "Place the correct building...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "add building of height 3 to tile 3";
+            skipRequirement = "";
+        }
+        else if (++i == tutorialStage){
+            text = "Great! The second building requirement involves the residents of the city...";
+            continueText = "Tap to continue...";
+            RemoveRedBoxesAroundStreets();
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "Great! The second building requirement involves the residents of the city...\n\nwho are now standing at the ends of every street!";
+            continueText = "Tap to continue...";
+            gameManager.ShowHints();
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "This resident...";
+            continueText = "Tap to continue...";
+            AddRedBoxAroundResident("top", 1);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "This resident...\nis looking down this street...";
+            continueText = "Tap to continue...";
+            AddRedBoxAroundResident("top", 1);
+            AddRedBoxAroundStreet("vertical", 1);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "This resident...\nis looking down this street...\nand only wants to be able to see one building.";
+            continueText = "Tap to continue...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+            skipRequirement = "add building of height 3 to tile 1";
+            skipToStage = 21;
+        }
+        else if (++i == tutorialStage){
+            text = "This resident...\nis looking down this street...\nand only wants to be able to see one building.\nSo we know that the building closest to them has to be the tallest one on the whole street!";
+            continueText = "Tap to continue...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "Place the tallest building on the street closest to the resident.";
+            continueText = "Place the correct building...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "add building of height 3 to tile 1";
+            skipRequirement = "";
+        }
+        else if (++i == tutorialStage){
+            text = "Awesome!";
+            continueText = "Tap to continue...";
+            RemoveRedBoxesAroundStreets();
+            RemoveRedBoxesAroundResidents();
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "Awesome!\n\nNow, you can fill in the last missing building on the topmost street.";
+            continueText = "Place the correct building...";
+            AddRedBoxAroundStreet("horizontal", 0);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "add building of height 1 to tile 2";
+        }
+        else if (++i == tutorialStage){
+            text = "And now you can fill in the missing building on the middle street.";
+            continueText = "Place the correct building...";
+            RemoveRedBoxesAroundStreets();
+            AddRedBoxAroundStreet("vertical", 1);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "add building of height 1 to tile 4";
+        }
+        else if (++i == tutorialStage){
+            text = "And finally, you can fill in the last remaining building of the city.";
+            continueText = "Place the correct building...";
+            RemoveRedBoxesAroundStreets();
+            AddRedBoxAroundTile(5);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "add building of height 2 to tile 5";
+        }
+        else if (++i == tutorialStage){
+            text = "Congratulations! You have completed your first city in Cityscapes!";
+            continueText = "Tap to continue...";
+            RemoveRedBoxesAroundTiles();
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "Congratulations! You have completed your first city in Cityscapes!\n\nNow let's start a new city from scratch!";
+            continueText = "Tap to continue...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "Welcome to another city. From now on, you will find cities that already have buildings in place.";
+            continueText = "Tap to continue...";
+            puzzle = "213132321";
+            DeleteOldCity();
+            gameManager.puzzleGenerator.predeterminedSolution = puzzle;
+            gameManager.puzzleGenerator.predeterminedPermanentBuilding = 7;
+            gameManager.puzzleGenerator.CreatePuzzle(3);
+            gameManager.puzzleGenerator.AutofillPermanentBuildings();
+            gameManager.DrawFullPuzzle();
+            gameManager.HideHints();
+            AddRedBoxAroundTile(7);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "Welcome to another city. From now on, you will find cities that already have buildings in place.\n\nThese darker buildings are permanent and cannot be removed.";
+            continueText = "Tap to continue...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "Additionally, you can now see all residents from the start!";
+            continueText = "Tap to continue...";
+            gameManager.ShowHints();
+            RemoveRedBoxesAroundTiles();
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "The best place to start when building a city is to fill in all the tallest buildings first.";
+            continueText = "Tap to continue...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "These four residents only want to see one building...";
+            continueText = "Tap to continue...";
+            AddRedBoxAroundResident("top", 2);
+            AddRedBoxAroundResident("left", 2);
+            AddRedBoxAroundResident("right", 0);
+            AddRedBoxAroundResident("bottom", 0);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+            skipRequirement = "add buildings of height 3 to tiles 2 and 6";
+            skipToStage = tutorialStage + 2;
+        }
+        else if (++i == tutorialStage){
+            text = "These four residents only want to see one building...\n\nso you know the spaces next to them have to have three-story buildings.";
+            continueText = "Place the correct buildings...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "add buildings of height 3 to tiles 2 and 6";
+            skipRequirement = "";
+        }
+        else if (++i == tutorialStage){
+            text = "Well done!";
+            continueText = "Tap to continue...";
+            RemoveRedBoxesAroundResidents();
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "Well done!\nNow, you know enough to figure out where the final three-story building has to go! Remember, only one of each building size can go in each street!";
+            continueText = "Place the correct building...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "add building of height 3 to tile 4";
+        }
+        else if (++i == tutorialStage){
+            text = "Now, you know enough to place a two-story building!";
+            continueText = "Tap to continue...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "This resident only wants to see two buildings down their street...";
+            continueText = "Tap to continue...";
+            AddRedBoxAroundResident("left", 0);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+            skipRequirement = "add building of height 2 to tile 0";
+            skipToStage = tutorialStage + 3;
+        }
+        else if (++i == tutorialStage){
+            text = "This resident only wants to see two buildings down their street...\nTherefore, we know that this building...";
+            continueText = "Tap to continue...";
+            AddRedBoxAroundTile(0);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            text = "This resident only wants to see two buildings down their street...\nTherefore, we know that this building...\nhas to be the second-tallest building in the street!";
+            continueText = "Place the correct building...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "add building of height 2 to tile 0";
+            skipRequirement = "";
+        }
+        else if (++i == tutorialStage){
+            text = "And now you know enough to completely fill the top street!";
+            continueText = "Place the correct building...";
+            RemoveRedBoxesAroundResidents();
+            RemoveRedBoxesAroundTiles();
+            AddRedBoxAroundTile(1);
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "add building of height 1 to tile 1";
+        }
+        else if (++i == tutorialStage){
+            text = "Try to finish building the rest of the city!";
+            continueText = "Complete the city!";
+            RemoveRedBoxesAroundTiles();
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "complete the city";
+        }
+        else if (++i == tutorialStage){
+            text = "Congratulations! You have completed the tutorial for Cityscapes.";
+            continueText = "Tap to continue...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+            StaticVariables.hasBeatenTutorial = true;
+            SaveSystem.SaveGame();
+        }
+        else if (++i == tutorialStage){
+            text = "Congratulations! You have completed the tutorial for Cityscapes.\n\nGo try a puzzle on your own! You can redo this tutorial at any time.";
+            continueText = "Tap to exit...";
+            tutorialText.text = text;
+            continueClue.text = continueText;
+            advanceRequirement = "tap screen";
+        }
+        else if (++i == tutorialStage){
+            if (StaticVariables.highestUnlockedSize < 3)
+                StaticVariables.highestUnlockedSize = 3;
+            gameManager.PushMainMenuButton();
+        }
     }
 
     // ---------------------------------------------------
