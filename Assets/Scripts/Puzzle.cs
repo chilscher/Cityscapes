@@ -19,19 +19,20 @@ public class Puzzle{
         //randomly create a puzzle with defined size
         //specifically, creates one puzzle at random, checks if it is solvable, and repeats until it gets a valid puzzle
         this.size = size;        
-        generatePuzzle();
-        generateSideNumbers();
-        generateStartingSolution();
+        GeneratePuzzle();
+        GenerateSideNumbers();
+        GenerateStartingSolution();
+        AddStartingSpacesBasedOnSize();
     }
 
     public Puzzle(int[,] predeterminedSolution) {
         //create a puzzle object based off of a predetermined solution
         this.size = (int)Mathf.Sqrt(predeterminedSolution.Length);
         solution = predeterminedSolution;
-        generateSideNumbers();
+        GenerateSideNumbers();
     }
 
-    private void generatePuzzle() {
+    private void GeneratePuzzle() {
         solution = new int[size, size];
 
         //create a list of steps to follow
@@ -54,13 +55,11 @@ public class Puzzle{
             }
         }
 
-
-
         bool cont = true;
         Step currentStep = allSteps[0];
         while(cont){
             if (!currentStep.hasSearchedForPossibleSpaces){
-                currentStep.possibleSpaces = createListOfAvailableSpaces(currentStep.numberToPlace);
+                currentStep.possibleSpaces = CreateListOfAvailableSpaces(currentStep.numberToPlace);
                 currentStep.hasSearchedForPossibleSpaces = true;
             }
             Space space = currentStep.PickRandomSpace();
@@ -83,7 +82,7 @@ public class Puzzle{
         }
     }
 
-    private void generateStartingSolution(){
+    private void GenerateStartingSolution(){
         //removes each number from the puzzle until it is no longer uniquely solveable
         startingSolution = new int[size, size];
         List<Space> spacesToCheck = new List<Space>();
@@ -97,12 +96,44 @@ public class Puzzle{
             Space space = spacesToCheck[StaticVariables.rand.Next(spacesToCheck.Count)];
             spacesToCheck.Remove(space);
             startingSolution[space.x, space.y] = 0;
-            if (!isPuzzleValid())
+            if (!IsPuzzleValid())
                 startingSolution[space.x,space.y] = solution[space.x,space.y];
         }
     }
 
-    private void printAllSteps(Step[] steps){
+    private void AddStartingSpacesBasedOnSize(){
+        int numToAdd = 0;
+        if (size == 3)
+            numToAdd = 1;
+        if (size == 4)
+            numToAdd = 2;
+        if (size == 5)
+            numToAdd = 2;
+        if (size == 6)
+            numToAdd = 1;
+
+        for (int i = 0; i < numToAdd; i++){
+            int x = -1;
+            int y = -1;
+            while (x == -1){
+                x = StaticVariables.rand.Next(size);
+                y = StaticVariables.rand.Next(size);
+                if (startingSolution[x,y] != 0){
+                    x = -1;
+                    y = -1;
+                }
+                else if (solution[x,y] == size){
+                    Debug.Log(size);
+                    x = -1;
+                    y = -1;
+                }
+            }
+            startingSolution[x,y] = solution[x,y];
+        }
+
+    }
+
+    private void PrintAllSteps(Step[] steps){
         foreach (Step step in steps){
             string s = "step #" + step.index + " is to place " + step.numberToPlace + ". ";
             if (step.previousStep == null)
@@ -117,7 +148,7 @@ public class Puzzle{
         }
     }
 
-    private void printPuzzleState(){
+    private void PrintPuzzleState(){
         Debug.Log("puzzle state: ");
         for (int i = 0; i < size; i++) {
             string s = "";
@@ -129,7 +160,7 @@ public class Puzzle{
     }
 
     
-    private void printStartingSolution(){
+    private void PrintStartingSolution(){
         Debug.Log("starting state: ");
         for (int i = 0; i < size; i++) {
             string s = "";
@@ -140,7 +171,7 @@ public class Puzzle{
         }
     }
 
-    private bool checkIfPuzzleIsValid(){
+    private bool CheckIfPuzzleIsValid(){
         //iterate through each possible building size
         //for each row and column
         
@@ -165,12 +196,12 @@ public class Puzzle{
         return true;
     }
 
-    private List<Space> createListOfAvailableSpaces(int numberToPlace){
+    private List<Space> CreateListOfAvailableSpaces(int numberToPlace){
         //create a list of possible spaces the building can go
         List<Space> spacesAvailable = new List<Space>();
         for (int j = 0; j < size; j++) {
             for (int k = 0; k < size; k++) {
-                if (canSpaceContainValue(j, k, numberToPlace)){
+                if (CanSpaceContainValue(j, k, numberToPlace)){
                     //Debug.Log("the number " + numberToPlace + " can go in the space [" + j + "," + k + "]");
                     spacesAvailable.Add(new Space(j, k));
                 }
@@ -179,7 +210,7 @@ public class Puzzle{
         return spacesAvailable;
     }
 
-    private bool canSpaceContainValue(int xcoord, int ycoord, int value){
+    private bool CanSpaceContainValue(int xcoord, int ycoord, int value){
         if (solution[xcoord, ycoord] != 0)
             return false;
         for (int i = 0; i < size; i++) {
@@ -191,7 +222,7 @@ public class Puzzle{
         return true;
     }
 
-    private int pickValue(int i, int j) {
+    private int PickValue(int i, int j) {
         //returns the chosen value to be placed on tile i,j
         //the value returned is chosen from a list of random possible values
         ArrayList freeValues = new ArrayList();
@@ -209,7 +240,7 @@ public class Puzzle{
         return((int)freeValues[index]);
     }
 
-    private void generateSideNumbers() {
+    private void GenerateSideNumbers() {
         //given a solution puzzle, creates the side hint numbers to match
         topNums = new int[size];
         bottomNums = new int[size];
@@ -222,20 +253,20 @@ public class Puzzle{
             
             for (int j = 0; j < size; j++)
                 row[j] = solution[index, j];
-            leftNums[index] = getSideNum(row);
-            rightNums[index] = getSideNum(reverseList(row));
+            leftNums[index] = GetSideNum(row);
+            rightNums[index] = GetSideNum(ReverseList(row));
         }
 
         for (int index = 0; index < size; index++) {
             int[] column = new int[size];
             for (int i = 0; i < size; i++)
                 column[i] = solution[i, index];
-            topNums[index] = getSideNum(column);
-            bottomNums[index] = getSideNum(reverseList(column));
+            topNums[index] = GetSideNum(column);
+            bottomNums[index] = GetSideNum(ReverseList(column));
         }
     }
 
-    private int getSideNum(int[] nums) {
+    private int GetSideNum(int[] nums) {
         //gets the skyscraper viewing number for a single row/column
         int count = 0;
         int highest = 0;
@@ -248,7 +279,7 @@ public class Puzzle{
         return count;
     }
 
-    private int[] reverseList(int[] original) {
+    private int[] ReverseList(int[] original) {
         //returns a list backwards
         int[] newList = new int[size];
         for (int i = 0; i < size; i++) {
@@ -258,7 +289,7 @@ public class Puzzle{
         return newList;
     }
 
-    public bool isPuzzleValid() {
+    public bool IsPuzzleValid() {
         //returns true if the puzzle has less than 7 unique solutions
         PuzzleSolver p = new PuzzleSolver();
         return p.IsPuzzleValid(topNums, bottomNums, leftNums, rightNums, startingSolution);

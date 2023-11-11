@@ -144,7 +144,7 @@ public class GameManager : MonoBehaviour {
             tutorialManager.StartTutorial();
         }
 
-        else if (!StaticVariables.isTutorial) { //continue with the puzzle generation and setup
+        else { //continue with the puzzle generation and setup
             tutorialParent.SetActive(false);
             puzzleParent.SetActive(true); 
             //load a puzzle if you already have one saved, otherwise generate a new one based on the size
