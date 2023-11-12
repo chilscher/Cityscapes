@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &440273601514678775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8584492471566220470}
+  - component: {fileID: 2135032764033575535}
+  m_Layer: 0
+  m_Name: Wildflowers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8584492471566220470
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440273601514678775}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1508085, y: -4.279265, z: 90}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2135032764033575535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440273601514678775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7fa59bcee1bb94a9c5123c4458fe9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinName: Wildflowers
+  skinTier: 0
+  mainMenuBackground: {fileID: 21300000, guid: a684551828ba70b439a6696feed689de, type: 3}
+  puzzleBackground: {fileID: 21300000, guid: a1cd72e48ad0c2444b9f247aa6b77ec8, type: 3}
+  buildingSprite: {fileID: 21300000, guid: 7ef9639bb47afdd4aa19b67e810e8d61, type: 3}
+  menuButtonInside: {r: 0.4666667, g: 0.8117648, b: 0.39607847, a: 1}
+  menuButtonBorder: {r: 0.26666668, g: 0.45882356, b: 0.19607845, a: 1}
+  popupInside: {r: 0.53333336, g: 0.6784314, b: 0.48235297, a: 1}
+  popupBorder: {r: 0.20784315, g: 0.3529412, b: 0.28235295, a: 1}
+  settingsText_On: {r: 0, g: 0.22352941, b: 0.48235294, a: 1}
+  settingsText_Off: {r: 0.34117648, g: 0, b: 0, a: 1}
+  puzzleButtonInside_On: {r: 0.627451, g: 0.1764706, b: 0.21176471, a: 1}
+  puzzleButtonBorder_On: {r: 0.52156866, g: 0.14509805, b: 0.17254902, a: 1}
+  puzzleButtonInside_Off: {r: 0.85882354, g: 0.5019608, b: 0.5294118, a: 1}
+  puzzleButtonBorder_Off: {r: 0.7882353, g: 0.3137255, b: 0.34901962, a: 1}
+  normalCitizen: {r: 0.98039216, g: 0.8039216, b: 0.6156863, a: 1}
+  satisfiedCitizen: {r: 0.9529412, g: 0.5803922, b: 0.1764706, a: 1}
+  street: {r: 0.4, g: 0.4, b: 0.4, a: 1}
+  highlightBuilding: {r: 0.627451, g: 0.1764706, b: 0.21176471, a: 1}
+  note1: {r: 0.972549, g: 0.37254903, b: 0.39607844, a: 1}
+  note2: {r: 0.6, g: 0.8509804, b: 0.91764706, a: 1}
+  tileBackground: {r: 0.6627451, g: 0.38039216, b: 0.38039216, a: 0.62352943}
