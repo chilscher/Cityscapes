@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using DG.Tweening;
 
 public class ShopCanvasController : MonoBehaviour {
     //controls the shop canvas. Only one is used, and only on the shop scene.
@@ -93,6 +94,14 @@ public class ShopCanvasController : MonoBehaviour {
     public Image popupBorder;
     public Image popupInside;
 
+    public GameObject skinPreview;
+    public Image skinPreviewBorder;
+    public Image skinPreviewInside;
+    public Image skinPreviewBlackBackground;
+    public Image skinPreviewImage;
+    public Text skinPreviewText;
+    private Color previewBackgroundColor;
+
 
     private void Start() {
         //set some private variables based on elements edited by the inspector
@@ -171,6 +180,8 @@ public class ShopCanvasController : MonoBehaviour {
         InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
         popupBorder.color = StaticVariables.skin.popupBorder;
         popupInside.color = StaticVariables.skin.popupInside;
+        skinPreviewBorder.color = StaticVariables.skin.popupBorder;
+        skinPreviewInside.color = StaticVariables.skin.popupInside;
 
         ColorShopButton(expandResidentColorButton);
         ColorShopButton(expandHighlightBuildingsButton);
@@ -336,6 +347,38 @@ public class ShopCanvasController : MonoBehaviour {
             unlockButton.transform.GetChild(1).gameObject.SetActive(true);
         }
 
+    }
+
+    public void PushPreviewSkinButton(GameObject parent){
+        //background.GetComponent<Image>().sprite = InterfaceFunctions.GetSkinFromName(parent.name).mainMenuBackground;
+        skinPreviewImage.sprite = InterfaceFunctions.GetSkinFromName(parent.name).mainMenuBackground;
+        skinPreviewText.text = parent.name.ToUpper() + "\nSKIN PREVIEW";
+
+        Color nextColor = skinPreviewBlackBackground.color;
+        Color currentColor = Color.black;
+        currentColor.a = 0;
+        skinPreviewBlackBackground.color = currentColor;
+        skinPreviewBlackBackground.gameObject.SetActive(true);
+        skinPreviewBlackBackground.DOColor(nextColor, 0.5f);
+
+        skinPreview.transform.parent.gameObject.SetActive(true);
+        skinPreview.transform.localScale = Vector3.zero;
+        skinPreview.transform.DOScale(Vector3.one, 0.5f);
+    }
+
+    public void PushClosePreviewButton(){
+        Color nextColor = Color.black;
+        nextColor.a = 0;
+        previewBackgroundColor = skinPreviewBlackBackground.color;
+        skinPreviewBlackBackground.gameObject.SetActive(true);
+        skinPreviewBlackBackground.DOColor(nextColor, 0.5f);
+        skinPreview.transform.DOScale(Vector3.zero, 0.5f);
+        StaticVariables.WaitTimeThenCallFunction(0.5f, ClosePreview);
+    }
+
+    private void ClosePreview(){
+        skinPreview.transform.parent.gameObject.SetActive(false);
+        skinPreviewBlackBackground.color = previewBackgroundColor;
     }
     
     public void PushExpandContractButton(GameObject parent) {
