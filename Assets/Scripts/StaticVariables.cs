@@ -48,7 +48,7 @@ public class StaticVariables{
     static public bool showLarge = false;
     static public bool showHuge = false;
     static public bool showMassive = false;
-    static public bool hidePurchasedUpgrades = false;
+    static public bool hidePurchasedUpgrades = true;
 
     //variables that deal with fading in and out between scenes
     static public bool fadingIntoPuzzleSameSize;

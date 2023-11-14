@@ -241,8 +241,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.1
-  m_Text: THIS UPGRADE ADDS THE "REMOVE ALL X" BUTTON, WHICH ALLOWS YOU TO REMOVE
-    ALL COPIES OF THE SELECTED NUMBER OR NOTE INSIDE THE CITY. THIS CAN BE UNDONE.
+  m_Text: ADDS THE "REMOVE ALL" BUTTON, WHICH ALLOWS YOU TO REMOVE ALL COPIES OF
+    THE SELECTED NUMBER OR NOTE FROM THE CITY.
 --- !u!222 &3490291
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2066,7 +2066,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 45.9}
+  m_AnchoredPosition: {x: 0, y: 45.900024}
   m_SizeDelta: {x: 80, y: -70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &64106966
@@ -6343,9 +6343,9 @@ RectTransform:
   - {fileID: 551933601}
   m_Father: {fileID: 899494791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -207}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 100}
   m_SizeDelta: {x: 511.4, y: 136.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &225861909
@@ -13238,8 +13238,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.1
-  m_Text: THIS UPGRADE ADDS THE "UNDO" AND "REDO" BUTTONS, WHICH ALLOWS YOU TO UNDO
-    MISTAKES AND MISCLICKS.
+  m_Text: ADDS THE "UNDO" AND "REDO" BUTTONS, WHICH ALLOWS YOU TO UNDO MISTAKES.
 --- !u!222 &478141201
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -14552,10 +14551,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1343092863}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 700, y: 622.1}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &509814058
 MonoBehaviour:
@@ -15168,8 +15167,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 442.39975, y: -786.4608}
-  m_SizeDelta: {x: 835.7, y: 579.86}
+  m_AnchoredPosition: {x: 442.39975, y: -312.5}
+  m_SizeDelta: {x: 835.7, y: 185}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &533489223
 MonoBehaviour:
@@ -15193,7 +15192,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 7e8fde4043dcb834b9a9040106e35758, type: 3}
-    m_FontSize: 45
+    m_FontSize: 40
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 1
@@ -25680,10 +25679,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 899494791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 72.8}
-  m_SizeDelta: {x: 655, y: 398.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 72.275}
+  m_SizeDelta: {x: -45, y: -224.55}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &859783071
 MonoBehaviour:
@@ -25718,9 +25717,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AFTER PURCHASING THIS UPGRADE, THE RESIDENTS OF YOUR CITIES WILL CHANGE
-    COLOR IF THEY ARE SATISFIED. THIS MAKES IT EASIER TO TELL IF YOU ARE ON THE RIGHT
-    TRACK WHILE SOLVING A PUZZLE.
+  m_Text: THE RESIDENTS OF YOUR CITIES CHANGE COLOR IF THEY ARE SATISFIED.
 --- !u!222 &859783072
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -27004,8 +27001,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 385, y: -611.05}
-  m_SizeDelta: {x: 700, y: 622.1}
+  m_AnchoredPosition: {x: 385, y: -513.7}
+  m_SizeDelta: {x: 700, y: 387.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &899494793
 CanvasRenderer:
@@ -29424,8 +29421,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: THIS UPGRADE ALLOWS YOU ADD NOTES TO CITY BLOCKS, WHICH CAN BE USED TO
-    MORE CAREFULLY DETERMINE WHERE A BUILDING MUST GO.
+  m_Text: ALLOWS YOU ADD NOTES TO CITY BLOCKS, FOR CAREFULLY PLANNING BUILDING PLACEMENTS.
 --- !u!222 &979846217
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -32542,8 +32538,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.1
-  m_Text: THIS UPGRADE ADDS THE "CLEAR PUZZLE" BUTTON, WHICH REMOVES ALL BUILDINGS
-    AND NOTES FROM THE CITY TO LET YOU START OVER AGAIN. THIS CAN BE UNDONE.
+  m_Text: ADDS THE "CLEAR PUZZLE" BUTTON, WHICH REMOVES ALL BUILDINGS AND NOTES FROM
+    THE CITY.
 --- !u!222 &1107215471
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -34110,8 +34106,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: THIS UPGRADE ALLOWS YOU TO PLAY 7x7 PUZZLES. YOU CAN SELECT A MASSIVE CITY
-    FROM THE MAIN MENU.
+  m_Text: ALLOWS YOU TO PLAY 7x7 PUZZLES.
 --- !u!222 &1149888777
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -38864,10 +38859,10 @@ RectTransform:
   - {fileID: 509814057}
   m_Father: {fileID: 899494791}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 700, y: 622.1}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1343670559
 GameObject:
@@ -43735,8 +43730,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: THIS UPGRADE ALLOWS YOU TO PLAY 6x6 PUZZLES. YOU CAN SELECT A HUGE CITY
-    FROM THE MAIN MENU.
+  m_Text: ALLOWS YOU TO PLAY 6x6 PUZZLES.
 --- !u!222 &1516929144
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -47307,8 +47301,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: THIS UPGRADE ALLOWS YOU TO PLAY 5x5 PUZZLES. YOU CAN SELECT A LARGE CITY
-    FROM THE MAIN MENU.
+  m_Text: ALLOWS YOU TO PLAY 5x5 PUZZLES.
 --- !u!222 &1657772363
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -53058,8 +53051,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: THIS UPGRADE ALLOWS YOU TO PLAY 4x4 PUZZLES. YOU CAN SELECT A MEDIUM CITY
-    FROM THE MAIN MENU.
+  m_Text: YOU CAN PLAY 4x4 PUZZLES.
 --- !u!222 &1868027589
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -53513,8 +53505,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: THIS UPGRADE UNLOCKS A SECONDARY TYPE OF NOTE. THESE NOTES ARE COLORED
-    DIFFERENTLY FROM THE "NOTETAKING" UPGRADE.
+  m_Text: ADDS A SECOND TYPE OF NOTE, COLORED DIFFERENTLY FROM THE FIRST TYPE.
 --- !u!222 &1880037637
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -54755,10 +54746,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1343092863}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 700, y: 622.1}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1921070314
 MonoBehaviour:
@@ -55277,7 +55268,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1.2
-  m_Text: PURCHASED UPGRADES CAN BE TOGGLED IN SETTINGS
+  m_Text: 'PURCHASES CAN BE
+
+    TOGGLED IN SETTINGS'
 --- !u!222 &1943507206
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -56189,9 +56182,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: AFTER PURCHASING THIS UPGRADE, WHEN YOU SELECT A NUMBER TO BUILD, ANY BUILDINGS
-    OF THAT HEIGHT WILL CHANGE THEIR COLOR. THIS MAKES IT EASIER TO SPOT SPECIFIC
-    BUILDINGS IN YOUR CITY.
+  m_Text: SELECTING A BUILDING SIZE CAUSES ALL BUILDINGS OF THAT SIZE TO CHANGE COLOR.
 --- !u!222 &1979527612
 CanvasRenderer:
   m_ObjectHideFlags: 0
