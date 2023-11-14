@@ -101,6 +101,7 @@ public class ShopCanvasController : MonoBehaviour {
     public Image skinPreviewImage;
     public Text skinPreviewText;
     private Color previewBackgroundColor;
+    private bool hasSetButtonDimensions = false;
 
 
     private void Start() {
@@ -144,7 +145,7 @@ public class ShopCanvasController : MonoBehaviour {
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape))
-        StaticVariables.FadeOutThenLoadScene("MainMenu");
+            StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 
     void LateUpdate(){
@@ -400,6 +401,9 @@ public class ShopCanvasController : MonoBehaviour {
         //sets all siblings of the chosen button to be active, and resizes the scroll view
         expandedButton = button;
 
+        //Canvas.ForceUpdateCanvases();
+        //AdjustButtonDimensions(button.transform.parent);
+
         GameObject parentBox = button.transform.parent.gameObject;
         bool switchTo = true;
 
@@ -417,6 +421,8 @@ public class ShopCanvasController : MonoBehaviour {
         if (distOffscreen < 0)
             parentBox.transform.parent.localPosition += new Vector3(0,-distOffscreen,0);
 
+        Canvas.ForceUpdateCanvases();
+        AdjustButtonDimensions(button.transform.parent);
         Canvas.ForceUpdateCanvases();
         
         parentBox.transform.parent.parent.parent.GetComponent<ScrollRect>().StopMovement();
@@ -506,6 +512,37 @@ public class ShopCanvasController : MonoBehaviour {
             imageObject100s.GetComponent<Image>().color = unaffordableColor;
             imageObject1000s.GetComponent<Image>().color = unaffordableColor;
         }
+    }
+
+    //private void AdjustAllButtonDimensions(){
+    //    AdjustButtonDimensions(expandResidentColorButton.transform.parent);
+        //UpdateButton(expandResidentColorButton, StaticVariables.unlockedResidentsChangeColor, residentColorPrice);
+
+    //}
+
+    private void AdjustButtonDimensions(Transform button){
+        //bool isSkinButton = false;
+        bool isSkinButton = button.Find("Dropdown").Find("Preview") != null;
+        if (!isSkinButton){
+            RectTransform dropdown = button.Find("Dropdown").GetComponent<RectTransform>();
+            RectTransform dropdown1 = dropdown.Find("Dropdown Image").GetChild(0).GetComponent<RectTransform>();
+            RectTransform dropdown2 = dropdown.Find("Dropdown Image").GetChild(1).GetComponent<RectTransform>();
+            RectTransform description = dropdown.Find("Description").GetComponent<RectTransform>();
+            RectTransform unlock = dropdown.Find("Unlock").GetComponent<RectTransform>();
+            float spacing = 30;
+            float descriptionHeight = description.sizeDelta.y;
+            float unlockHeight = unlock.rect.height;
+
+            float unlockPos = -((spacing * 2) + descriptionHeight);
+            float dropdownHeight = (spacing * 3) + descriptionHeight + unlockHeight;
+            //print(dropdownHeight);
+            //print(dropdown1.sizeDelta);
+            unlock.anchoredPosition =new Vector3(unlock.anchoredPosition.x, unlockPos, 0);
+            dropdown1.sizeDelta = new Vector2(dropdown1.rect.width, dropdownHeight);
+            dropdown2.sizeDelta = new Vector2(dropdown2.rect.width, dropdownHeight);
+            dropdown.sizeDelta = new Vector2(dropdown2.rect.width, dropdownHeight);
+        }
+        //print(dropdown1.sizeDelta);
     }
 
     // ---------------------------------------------------
