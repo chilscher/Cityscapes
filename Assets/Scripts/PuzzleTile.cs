@@ -157,7 +157,7 @@ public class PuzzleTile : Tile {
                 else
                     noteGroup1.Add(num);
                 //for space reasons, there is a limit on the number of hints you can add
-                if (noteGroup1.Count > 4) //you can only have 4 hints of each color!
+                if (noteGroup1.Count > 3) //you can only have 4 hints of each color!
                     noteGroup1.Remove(num);
                 ShowColoredNotes();
             }
@@ -173,7 +173,7 @@ public class PuzzleTile : Tile {
                     noteGroup2.Remove(num);
                 else
                     noteGroup2.Add(num);
-                if (noteGroup2.Count > 4) //you can only have 4 hints of each color!
+                if (noteGroup2.Count > 3) //you can only have 4 hints of each color!
                     noteGroup2.Remove(num);
                 ShowColoredNotes();
             }
@@ -203,7 +203,7 @@ public class PuzzleTile : Tile {
             s.enabled = true;
         }
 
-        int startPos = 8 - noteGroup2.Count;
+        int startPos = 6 - noteGroup2.Count;
 
         for (int i = 0; i < noteGroup2.Count; i++) {
             int value = noteGroup2[i];
