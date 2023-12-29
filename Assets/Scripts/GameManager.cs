@@ -138,6 +138,7 @@ public class GameManager : MonoBehaviour {
             puzzleParent.SetActive(false);
             //hide menu button if it is your first time playing the tutorial
             tutorialParent.transform.Find("Menu").gameObject.SetActive(StaticVariables.hasBeatenTutorial);
+            tutorialParent.transform.Find("Background").GetComponent<Image>().sprite = skin.puzzleBackground;
 
             tutorialManager = new TutorialManager();
             tutorialManager.gameManager = this;
@@ -247,11 +248,11 @@ public class GameManager : MonoBehaviour {
 
     private void ColorMenuButton() {
         //apply the current skin colors to the menu button
-        if (!StaticVariables.isTutorial) {
+        //if (!StaticVariables.isTutorial) {
             InterfaceFunctions.ColorMenuButton(menuButton, skin);
             InterfaceFunctions.ColorMenuButton(shopButton, skin);
             InterfaceFunctions.ColorMenuButton(settingsButton, skin);
-        }
+        //}
     }
 
     public void SetNumberButtons() {

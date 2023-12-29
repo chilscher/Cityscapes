@@ -72,6 +72,19 @@ public class MainMenuCanvasController : MonoBehaviour {
             SaveSystem.LoadGame();
             StaticVariables.isApplicationLaunchingFirstTime = false;
         }
+
+        //skip this temporarily for development
+        /*
+        if (!StaticVariables.hasBeatenTutorial){
+            StaticVariables.StopFade();
+
+            StaticVariables.size = 3;
+            StaticVariables.isTutorial = true;
+            SceneManager.LoadScene("InPuzzle");
+            return;
+        }
+        */
+
         //apply the current skin
         background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
         ColorButtons();
@@ -79,7 +92,6 @@ public class MainMenuCanvasController : MonoBehaviour {
 
         //update the puzzle buttons based on what puzzle sizes the player has unlocked
         ShowCityButtons();
-       
     }
     
     // ---------------------------------------------------
@@ -169,6 +181,7 @@ public class MainMenuCanvasController : MonoBehaviour {
             massiveText.SetActive(highestUnlockedSize >= 7);
         }
 
+        //skip this temporarily for development
         /*
         if (!StaticVariables.hasBeatenTutorial) {
             returnOrAbandonButtons.SetActive(false);
@@ -177,18 +190,16 @@ public class MainMenuCanvasController : MonoBehaviour {
             settingsButton.SetActive(false);
 
             puzzleButtons.SetActive(false);
-            largeCenterTutorialButton.SetActive(true);
-
-            //temp while testing
-            
-            largeCenterTutorialButton.SetActive(false);
-            puzzleButtons.SetActive(true);
-            shopButton.SetActive(true);
-            tutorialButton.SetActive(true);
-            settingsButton.SetActive(true);
-            
+            largeCenterTutorialButton.SetActive(true);            
         }
         */
+    }
+
+    public void AutoStartTutorial(){
+        if (StaticVariables.hasBeatenTutorial)
+            return;
+        else
+            PushStartTutorialButton();
     }
 
     public int GetHighestUnlockedSize() {

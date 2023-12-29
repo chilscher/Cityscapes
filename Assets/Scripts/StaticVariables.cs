@@ -116,4 +116,8 @@ public class StaticVariables{
         SceneManager.LoadScene(sceneName);
     }
 
+    static public void StopFade(){
+        DOTween.Kill(fadeImage);
+    }
+
 }

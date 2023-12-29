@@ -42,6 +42,8 @@ public class PuzzleTile : Tile {
     public bool isPermanentBuilding = false; //if hasStartingValue is true, the tile's building size cannot be overwritten or removed.
     public Color permanentBuildingColor;
     public Color permanentNumberColor;
+
+    public Sprite buildingSprite;
     
     public void Initialize(int solution, Transform parent, int maxValue, GameManager gameManager) {
         //create the PuzzleTile object, called by PuzzleGenerator
@@ -57,7 +59,8 @@ public class PuzzleTile : Tile {
         }
         //set colors and sprites from the current skin
         SetNumberColors();
-        building.sprite = gameManager.skin.buildingSprite;
+        //building.sprite = gameManager.skin.buildingSprite;
+        building.sprite = buildingSprite;
         road.color = gameManager.skin.street;
         tileBackground.color = gameManager.skin.tileBackground;
     }

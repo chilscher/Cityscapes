@@ -101,7 +101,6 @@ public class ShopCanvasController : MonoBehaviour {
     public Image skinPreviewImage;
     public Text skinPreviewText;
     private Color previewBackgroundColor;
-    private bool hasSetButtonDimensions = false;
 
 
     private void Start() {
@@ -372,9 +371,9 @@ public class ShopCanvasController : MonoBehaviour {
         nextColor.a = 0;
         previewBackgroundColor = skinPreviewBlackBackground.color;
         skinPreviewBlackBackground.gameObject.SetActive(true);
-        skinPreviewBlackBackground.DOColor(nextColor, 0.5f);
-        skinPreview.transform.DOScale(Vector3.zero, 0.5f);
-        StaticVariables.WaitTimeThenCallFunction(0.5f, ClosePreview);
+        skinPreviewBlackBackground.DOColor(nextColor, 0.3f);
+        skinPreview.transform.DOScale(Vector3.zero, 0.3f);
+        StaticVariables.WaitTimeThenCallFunction(0.3f, ClosePreview);
     }
 
     private void ClosePreview(){
