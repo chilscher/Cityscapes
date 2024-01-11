@@ -33,6 +33,8 @@ public static class InterfaceFunctions{
             if (skin.skinName == name)
                 return skin;
         }
+        if (name == "Basic")
+            return GetDefaultSkin();
         return null;
     }
     public static Skin GetDefaultSkin() {

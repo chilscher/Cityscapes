@@ -87,6 +87,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         */
 
         //apply the current skin
+        if (StaticVariables.skin)
         background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
         ColorButtons();
         ShowReturnAbandon();
