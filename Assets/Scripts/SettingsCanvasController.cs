@@ -321,8 +321,8 @@ public class SettingsCanvasController : MonoBehaviour {
     private void ExpandSkinButtons() {
         //expands the skin details button beneath the "Choose Skin" button
         GameObject parentBox = expandSkinButton.transform.parent.gameObject;
-        parentBox.transform.Find("Basic").gameObject.SetActive(true);
-        for (int i = 2; i < parentBox.transform.childCount; i++) {
+        //parentBox.transform.Find("Basic").gameObject.SetActive(true);
+        for (int i = 1; i < parentBox.transform.childCount; i++) {
             bool switchTo = StaticVariables.unlockedSkins.Contains(InterfaceFunctions.GetSkinFromName(parentBox.transform.GetChild(i).name));
             parentBox.transform.GetChild(i).gameObject.SetActive(switchTo);
             parentBox.transform.GetChild(i).Find("Button").Find("Text").GetComponent<Text>().text = parentBox.transform.GetChild(i).name.ToUpper() + " SKIN";
@@ -357,6 +357,6 @@ public class SettingsCanvasController : MonoBehaviour {
 
     private void ShowChooseSkinButton() {
         //only shows the "current skin" button if the player has purchased at least one skin.
-        expandSkinButton.transform.parent.gameObject.SetActive(StaticVariables.unlockedSkins.Count >= 1);
+        expandSkinButton.transform.parent.gameObject.SetActive(StaticVariables.unlockedSkins.Count >= 2);
     }
 }

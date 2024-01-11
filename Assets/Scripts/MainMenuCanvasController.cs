@@ -69,6 +69,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         //check to see if the game is being opened, or if the game is transitioning from another menu
         if (StaticVariables.isApplicationLaunchingFirstTime) {
             StaticVariables.allSkins = skins;
+            StaticVariables.unlockedSkins = new List<Skin> {skins[0]}; //set up the current unlocked skin list to only include the basic skin (now called "rural")
             SaveSystem.LoadGame();
             StaticVariables.isApplicationLaunchingFirstTime = false;
         }
