@@ -80,6 +80,7 @@ public class PuzzleTile : Tile {
         if(gameManager.clickTileAction == "Apply Selected") {
             int selectedNumber = gameManager.selectedNumber;
             ToggleNumber(selectedNumber);
+            gameManager.UpdateAllBuildingQuantities();
             gameManager.AddToPuzzleHistory();
         }
         else if (gameManager.clickTileAction == "Toggle Note 1") {
@@ -96,6 +97,7 @@ public class PuzzleTile : Tile {
             if (DoesTileContainAnything()) {
                 ClearColoredNotes();
                 RemoveNumberFromTile();
+                gameManager.UpdateAllBuildingQuantities();
                 gameManager.AddToPuzzleHistory();
             }
         }

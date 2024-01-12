@@ -23,6 +23,7 @@ public class ShopCanvasController : MonoBehaviour {
     public int removeAllPrice = 10;
     public int clearPrice = 10;
     public int highlightBuildingsPrice = 10;
+    public int buildingQuantityStatusPrice = 10;
     
     //the cost of different skins based on their tiers
     public int skinTier1Price = 10;
@@ -53,6 +54,7 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject expandRemoveAllButton;
     public GameObject expandClearButton;
     public GameObject expandHighlightBuildingsButton;
+    public GameObject expandBuildingQuantityStatusButton;
     private GameObject[] skinButtons; // a list of all skins. This will expand as more skins are added, and can be done entirely within the inspector
 
     //the following text elements appear when the player has purchased all upgrades of a specific category
@@ -130,6 +132,7 @@ public class ShopCanvasController : MonoBehaviour {
         DisplayCoinsOnButton(expandRemoveAllButton, removeAllPrice);
         DisplayCoinsOnButton(expandClearButton, clearPrice);
         DisplayCoinsOnButton(expandHighlightBuildingsButton, highlightBuildingsPrice);
+        DisplayCoinsOnButton(expandBuildingQuantityStatusButton, buildingQuantityStatusPrice);
 
         //show the cost of the various skins
         FindSkinButtons();
@@ -194,6 +197,7 @@ public class ShopCanvasController : MonoBehaviour {
         ColorShopButton(expandNotes2Button);
         ColorShopButton(expandHugeButton);
         ColorShopButton(expandMassiveButton);
+        ColorShopButton(expandBuildingQuantityStatusButton);
 
         foreach(GameObject go in skinButtons)
             ColorShopButton(go.transform.GetChild(0).gameObject);
@@ -255,6 +259,7 @@ public class ShopCanvasController : MonoBehaviour {
         UpdateButton(expandRemoveAllButton, StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice, StaticVariables.unlockedUndoRedo);
         UpdateButton(expandClearButton, StaticVariables.unlockedClearPuzzle, clearPrice, StaticVariables.unlockedUndoRedo);
         UpdateButton(expandHighlightBuildingsButton, StaticVariables.unlockedHighlightBuildings, highlightBuildingsPrice);
+        UpdateButton(expandBuildingQuantityStatusButton, StaticVariables.unlockedBuildingQuantityStatus, buildingQuantityStatusPrice);
 
         foreach (GameObject parent in skinButtons)
             UpdateButton(parent.transform.Find("Expand Button").gameObject, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.GetSkinFromName(parent.name)), GetSkinPrice((InterfaceFunctions.GetSkinFromName(parent.name))));
@@ -703,6 +708,13 @@ public class ShopCanvasController : MonoBehaviour {
         }
 
     }
+    public void PushUnlockBuildingQuantityStatusButton() {
+        if (CanPurchase(StaticVariables.unlockedBuildingQuantityStatus, buildingQuantityStatusPrice)) {
+            StaticVariables.unlockedBuildingQuantityStatus = true;
+            StaticVariables.includeBuildingQuantityStatus = true;
+            DoPurchase(buildingQuantityStatusPrice);
+        }
+    }
 
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT WERE USED IN TESTING THE SHOP FUNCTIONALITY. THE BUTTONS THAT CALL THESE FUNCTIONS ARE HIDDEN IN THE INSPECTOR
@@ -735,6 +747,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.unlockedRemoveAllOfNumber = false;
         StaticVariables.unlockedClearPuzzle = false;
         StaticVariables.unlockedHighlightBuildings = false;
+        StaticVariables.unlockedBuildingQuantityStatus = false;
 
         StaticVariables.includeNotes1Button = false;
         StaticVariables.includeNotes2Button = false;
@@ -743,6 +756,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeRemoveAllOfNumber = false;
         StaticVariables.includeClearPuzzle = false;
         StaticVariables.includeHighlightBuildings = false;
+        StaticVariables.includeBuildingQuantityStatus = false;
 
         StaticVariables.unlockedSkins = new List<Skin>();
         StaticVariables.skin = InterfaceFunctions.GetDefaultSkin();
@@ -771,6 +785,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.unlockedRemoveAllOfNumber = true;
         StaticVariables.unlockedClearPuzzle = true;
         StaticVariables.unlockedHighlightBuildings = true;
+        StaticVariables.unlockedBuildingQuantityStatus = true;
 
         StaticVariables.includeNotes1Button = true;
         StaticVariables.includeNotes2Button = true;
@@ -779,6 +794,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeRemoveAllOfNumber = true;
         StaticVariables.includeClearPuzzle = true;
         StaticVariables.includeHighlightBuildings = true;
+        StaticVariables.includeBuildingQuantityStatus = true;
 
         PushUnlockAllSkinsButton();
         UpdateButtons();

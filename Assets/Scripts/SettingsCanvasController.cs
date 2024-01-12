@@ -26,6 +26,7 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject removeNumbersButton;
     public GameObject clearPuzzleButton;
     public GameObject highlightBuildingsButton;
+    public GameObject buildingQuantityStatusButton;
 
     //the following deal with switching between different skins
     private bool expandedSkinButton = false;
@@ -101,6 +102,7 @@ public class SettingsCanvasController : MonoBehaviour {
         removeNumbersButton.SetActive(StaticVariables.unlockedRemoveAllOfNumber);
         clearPuzzleButton.SetActive(StaticVariables.unlockedClearPuzzle);
         highlightBuildingsButton.SetActive(StaticVariables.unlockedHighlightBuildings);
+        buildingQuantityStatusButton.SetActive(StaticVariables.unlockedBuildingQuantityStatus);
 
         hidePurchasedUpgradesButton.SetActive(true);
         
@@ -135,6 +137,7 @@ public class SettingsCanvasController : MonoBehaviour {
         ToggleText(removeNumbersButton, StaticVariables.includeRemoveAllOfNumber);
         ToggleText(clearPuzzleButton, StaticVariables.includeClearPuzzle);
         ToggleText(highlightBuildingsButton, StaticVariables.includeHighlightBuildings);
+        ToggleText(buildingQuantityStatusButton, StaticVariables.includeBuildingQuantityStatus);
 
         ToggleText(hidePurchasedUpgradesButton, StaticVariables.hidePurchasedUpgrades);
     }
@@ -250,6 +253,12 @@ public class SettingsCanvasController : MonoBehaviour {
         SaveSystem.SaveGame();
     }
 
+    public void PushBuildingQuantityStatusButton() {
+        StaticVariables.includeBuildingQuantityStatus = !StaticVariables.includeBuildingQuantityStatus;
+        SetCurrentToggleTexts();
+        SaveSystem.SaveGame();
+    }
+
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT LET THE PLAYER CHOOSE A SKIN TO EQUIP
     // ---------------------------------------------------
@@ -282,6 +291,7 @@ public class SettingsCanvasController : MonoBehaviour {
         ColorSettingsButton(hugeCityButton);
         ColorSettingsButton(massiveCityButton);
         ColorSettingsButton(hidePurchasedUpgradesButton);
+        ColorSettingsButton(buildingQuantityStatusButton);
         ColorSettingsButton(creditsButton, false);
     }
 

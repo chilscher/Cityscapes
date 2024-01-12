@@ -115,6 +115,9 @@ public class GameManager : MonoBehaviour {
     private List<PuzzleState> nextPuzzleStates = new List<PuzzleState>();// the list of puzzle states to be restored by the redo button
     
     public bool showBuildings;
+    public Color notEnoughQuantity;
+    public Color rightAmountQuantity;
+    public Color tooMuchQuantity;
     
     private void Start() {
         //choose which skin to use
@@ -198,6 +201,7 @@ public class GameManager : MonoBehaviour {
 
             //set the first puzzle state, and you are ready to start playing!
             currentPuzzleState = new PuzzleState(puzzleGenerator);
+            UpdateAllBuildingQuantities();
         }
     }
 
@@ -733,6 +737,7 @@ public class GameManager : MonoBehaviour {
             currentState.RestorePuzzleState(puzzleGenerator);
             currentPuzzleState = currentState;
             previousPuzzleStates.RemoveAt(previousPuzzleStates.Count - 1);
+            UpdateAllBuildingQuantities();
             Save();
         }
     }
@@ -746,6 +751,7 @@ public class GameManager : MonoBehaviour {
             currentState.RestorePuzzleState(puzzleGenerator);
             currentPuzzleState = currentState;
             nextPuzzleStates.RemoveAt(nextPuzzleStates.Count - 1);
+            UpdateAllBuildingQuantities();
             Save();
         }
     }
@@ -814,8 +820,10 @@ public class GameManager : MonoBehaviour {
                     }
                 }
             }
-            if (foundAnything)
+            if (foundAnything) {
+                UpdateAllBuildingQuantities();
                 AddToPuzzleHistory();
+            }
         }
     }
     
@@ -830,8 +838,10 @@ public class GameManager : MonoBehaviour {
                 t.RemoveNumberFromTile();
 
         }
-        if (changedAnything)
+        if (changedAnything) {
+            UpdateAllBuildingQuantities();
             AddToPuzzleHistory();
+        }
     }
     
     public void UpdateRemoveSelectedNumber() {
@@ -853,6 +863,37 @@ public class GameManager : MonoBehaviour {
 
             }
         }
+    }
+
+    public void UpdateAllBuildingQuantities() {
+        if (!StaticVariables.unlockedBuildingQuantityStatus || !StaticVariables.includeBuildingQuantityStatus || StaticVariables.isTutorial)
+            return;
+        for (int i = 0; i< size; i++) {
+            int buildingSize = i + 1;
+            UpdateBuildingQuantity(buildingSize, GetBuildingSizeCountInPuzzle(buildingSize));
+        }
+    }
+
+    private void UpdateBuildingQuantity(int buildingSize, int quantity) {
+        GameObject numberButton = numberButtons[buildingSize - 1];
+        GameObject correct = numberButton.transform.Find("Quantity Icon - Correct Quantity").gameObject;
+        GameObject tooMany = numberButton.transform.Find("Quantity Icon - Too Many").gameObject;
+        correct.SetActive(false);
+        tooMany.SetActive(false);
+        if (quantity > size)
+            tooMany.SetActive(true);
+        else if (quantity == size)
+            correct.SetActive(true);
+    }
+
+    private int GetBuildingSizeCountInPuzzle(int buildingSize) {
+        //returns the number of buildings of size buildingSize in the entire puzzle
+        int count = 0;
+        foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+            if (t.shownNumber == buildingSize)
+                count++;
+        }
+        return count;
     }
 
     // ---------------------------------------------------

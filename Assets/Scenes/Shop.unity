@@ -2119,6 +2119,7 @@ MonoBehaviour:
   removeAllPrice: 6
   clearPrice: 6
   highlightBuildingsPrice: 2
+  buildingQuantityStatusPrice: 8
   skinTier1Price: 30
   skinTier2Price: 150
   coinsBox1s: {fileID: 1892856175}
@@ -2137,6 +2138,7 @@ MonoBehaviour:
   expandRemoveAllButton: {fileID: 1051668564}
   expandClearButton: {fileID: 696857698}
   expandHighlightBuildingsButton: {fileID: 625773689}
+  expandBuildingQuantityStatusButton: {fileID: 859876936}
   unlockedEverythingText: {fileID: 533489221}
   unlockedAllFeaturesText: {fileID: 240338038}
   unlockedAllSkinsText: {fileID: 928122640}
@@ -3323,6 +3325,7 @@ RectTransform:
   - {fileID: 539804592}
   - {fileID: 1051668563}
   - {fileID: 696857697}
+  - {fileID: 859876935}
   - {fileID: 114595525}
   - {fileID: 630677826}
   - {fileID: 309372980}
@@ -5174,6 +5177,183 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 852287604}
   m_CullTransparentMesh: 0
+--- !u!1001 &859876934
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 543574046}
+    m_Modifications:
+    - target: {fileID: 135942019097233253, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_Name
+      value: Building Quantities
+      objectReference: {fileID: 0}
+    - target: {fileID: 334868479422440027, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 334868479422440027, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 334868479422440027, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 334868479422440027, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1845825394205210872, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 291615877}
+    - target: {fileID: 5980298238379016318, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_Text
+      value: A GREEN CHECK MARK APPEARS ON A BUILDING SIZE BUTTON IF YOU HAVE THE
+        CORRECT AMOUNT OF THAT BUILDING IN YOUR CITY. IF YOU HAVE TOO MANY OF THAT
+        BUILDING, A RED ALERT APPEARS INSTEAD.
+      objectReference: {fileID: 0}
+    - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 291615877}
+    - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushUnlockBuildingQuantityStatusButton
+      objectReference: {fileID: 0}
+    - target: {fileID: 8884811563829328428, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_Text
+      value: BUILDING AMOUNTS
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_Pivot.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_Pivot.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 770
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 68249cd1fef6c9c4db67870433a5625c, type: 3}
+--- !u!224 &859876935 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 8929801365503185619, guid: 68249cd1fef6c9c4db67870433a5625c,
+    type: 3}
+  m_PrefabInstance: {fileID: 859876934}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &859876936 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7440676629102453207, guid: 68249cd1fef6c9c4db67870433a5625c,
+    type: 3}
+  m_PrefabInstance: {fileID: 859876934}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &885338903
 GameObject:
   m_ObjectHideFlags: 0

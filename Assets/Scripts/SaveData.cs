@@ -22,6 +22,7 @@ public class SaveData{
     public bool includeRemoveAllOfNumber;
     public bool includeClearPuzzle;
     public bool includeHighlightBuildings;
+    public bool includeBuildingQuantityStatus;
 
     public bool unlockedMed;
     public bool unlockedLarge;
@@ -33,6 +34,7 @@ public class SaveData{
     public bool unlockedRemoveAllOfNumber;
     public bool unlockedClearPuzzle;
     public bool unlockedHighlightBuildings;
+    public bool unlockedBuildingQuantityStatus;
 
     public string skinName;
     public string unlockedSkinNames;
@@ -66,6 +68,7 @@ public class SaveData{
         includeRemoveAllOfNumber = StaticVariables.includeRemoveAllOfNumber;
         includeClearPuzzle = StaticVariables.includeClearPuzzle;
         includeHighlightBuildings = StaticVariables.includeHighlightBuildings;
+        includeBuildingQuantityStatus = StaticVariables.includeBuildingQuantityStatus;
 
         showMed = StaticVariables.showMed;
         showLarge = StaticVariables.showLarge;
@@ -83,6 +86,7 @@ public class SaveData{
         unlockedRemoveAllOfNumber = StaticVariables.unlockedRemoveAllOfNumber;
         unlockedClearPuzzle = StaticVariables.unlockedClearPuzzle;
         unlockedHighlightBuildings = StaticVariables.unlockedHighlightBuildings;
+        unlockedBuildingQuantityStatus = StaticVariables.unlockedBuildingQuantityStatus;
 
         skinName = StaticVariables.skin.skinName;
         unlockedSkinNames = GetUnlockedSkinNames();
@@ -141,7 +145,7 @@ public class SaveData{
         StaticVariables.includeRemoveAllOfNumber = includeRemoveAllOfNumber;
         StaticVariables.includeClearPuzzle = includeClearPuzzle;
         StaticVariables.includeHighlightBuildings = includeHighlightBuildings;
-
+        StaticVariables.includeBuildingQuantityStatus = includeBuildingQuantityStatus;
         StaticVariables.showMed = showMed;
         StaticVariables.showLarge = showLarge;
         StaticVariables.showHuge = showHuge;
@@ -158,6 +162,7 @@ public class SaveData{
         StaticVariables.unlockedRemoveAllOfNumber = unlockedRemoveAllOfNumber;
         StaticVariables.unlockedClearPuzzle = unlockedClearPuzzle;
         StaticVariables.unlockedHighlightBuildings = unlockedHighlightBuildings;
+        StaticVariables.unlockedBuildingQuantityStatus = unlockedBuildingQuantityStatus;
         
         StaticVariables.skin = InterfaceFunctions.GetSkinFromName(skinName);
         StaticVariables.unlockedSkins = GetUnlockedSkins();

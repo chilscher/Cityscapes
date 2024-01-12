@@ -35,6 +35,7 @@ public class StaticVariables{
     static public bool unlockedClearPuzzle = false;
     static public bool unlockedHighlightBuildings = false;
     static public int highestUnlockedSize = 3;
+    static public bool unlockedBuildingQuantityStatus = false;
     
     //if the player has any of the various upgrades toggled active, which is changed in settings
     static public bool includeNotes1Button = false;
@@ -49,6 +50,7 @@ public class StaticVariables{
     static public bool showHuge = false;
     static public bool showMassive = false;
     static public bool hidePurchasedUpgrades = true;
+    static public bool includeBuildingQuantityStatus = false;
 
     //variables that deal with fading in and out between scenes
     static public bool fadingIntoPuzzleSameSize;
