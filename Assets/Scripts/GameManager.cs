@@ -523,25 +523,23 @@ public class GameManager : MonoBehaviour {
 
     private void IncrementCoinsForWin() {
         //when the player wins the puzzle, add to their coin total, and show the new amount on the win popup
-        int amt = size;
         switch (size) {
             case 3:
-                amt = coinsFor3Win;
+                StaticVariables.AddCoins(coinsFor3Win);
                 break;
             case 4:
-                amt = coinsFor4Win;
+                StaticVariables.AddCoins(coinsFor4Win);
                 break;
             case 5:
-                amt = coinsFor5Win;
+                StaticVariables.AddCoins(coinsFor5Win);
                 break;
             case 6:
-                amt = coinsFor6Win;
+                StaticVariables.AddCoins(coinsFor6Win);
                 break;
             case 7:
-                amt = coinsFor7Win;
+                StaticVariables.AddCoins(coinsFor7Win);
                 break;
         }
-        StaticVariables.coins += amt;
 
         DisplayTotalCoinsAmount();
     }

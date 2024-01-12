@@ -122,4 +122,11 @@ public class StaticVariables{
         DOTween.Kill(fadeImage);
     }
 
+    static public void AddCoins(int amount) {
+        coins += amount;
+        //cap coins at 99,999
+        if (coins > 99999)
+            coins = 99999;
+    }
+
 }

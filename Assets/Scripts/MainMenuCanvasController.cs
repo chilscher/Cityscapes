@@ -232,10 +232,11 @@ public class MainMenuCanvasController : MonoBehaviour {
 
     public void PushStartPuzzleButton(int size) {
         //start fading out, and after the fade-out process is completed, go to the puzzle scene
-        if (GetHighestUnlockedSize() >= size)
-            StaticVariables.size = size;
-            StaticVariables.isTutorial = false;
-            StaticVariables.FadeOutThenLoadScene("InPuzzle");
+        if (size > GetHighestUnlockedSize())
+            return;
+        StaticVariables.size = size;
+        StaticVariables.isTutorial = false;
+        StaticVariables.FadeOutThenLoadScene("InPuzzle");
     }
     
     public void PushStartTutorialButton() {

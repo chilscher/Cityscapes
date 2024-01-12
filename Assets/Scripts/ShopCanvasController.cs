@@ -24,10 +24,8 @@ public class ShopCanvasController : MonoBehaviour {
     public int clearPrice = 10;
     public int highlightBuildingsPrice = 10;
     public int buildingQuantityStatusPrice = 10;
-    
-    //the cost of different skins based on their tiers
-    public int skinTier1Price = 10;
-    public int skinTier2Price = 20;
+
+    public int skinPrice = 200;
 
     //the gameobjects used to display the player's coin amounts
     public GameObject coinsBox1s;
@@ -251,7 +249,7 @@ public class ShopCanvasController : MonoBehaviour {
         UpdateButton(expandMedButton, StaticVariables.unlockedMedium, medCityPrice);
         UpdateButton(expandLargeButton, StaticVariables.unlockedLarge, largeCityPrice, StaticVariables.unlockedMedium);
         UpdateButton(expandHugeButton, StaticVariables.unlockedHuge, hugeCityPrice, StaticVariables.unlockedLarge);
-        UpdateButton(expandMassiveButton, StaticVariables.unlockedMassive, massiveCityPrice, StaticVariables.unlockedMassive);
+        UpdateButton(expandMassiveButton, StaticVariables.unlockedMassive, massiveCityPrice, StaticVariables.unlockedHuge);
         UpdateButton(expandNotes1Button, StaticVariables.unlockedNotes1, notes1Price);
         UpdateButton(expandNotes2Button, StaticVariables.unlockedNotes2, notes2Price, StaticVariables.unlockedNotes1);
         UpdateButton(expandResidentColorButton, StaticVariables.unlockedResidentsChangeColor, residentColorPrice);
@@ -566,14 +564,9 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     private int GetSkinPrice(Skin skin) {
-        //gets the price in coins for a skin, based on the skinTier from the skin's script and the corresponding price from the inspector in the shop
-        switch (skin.skinTier) {
-            case 1:
-                return skinTier1Price;
-            case 2:
-                return skinTier2Price;
-        }
-        return 0;
+        //returns the price to unlock a skin in the shop
+        //currently is the same for all skins, but could be modified on an individual skin basis
+        return skinPrice;
     }
 
     // ---------------------------------------------------
@@ -811,7 +804,7 @@ public class ShopCanvasController : MonoBehaviour {
 
     public void PushAddCoinsButton() {
         //addCoins is also only used during testing
-        StaticVariables.coins += 400;
+        StaticVariables.AddCoins(40000);
         DisplayCoinsAmount();
         UpdateButtons();
     }

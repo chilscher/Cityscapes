@@ -10,7 +10,6 @@ public class Skin: MonoBehaviour{
 
     [Header("Metadata")]
     public string skinName;
-    public int skinTier; //price tier, for use in the shop
 
     [Header("Sprites")]
     public Sprite mainMenuBackground;

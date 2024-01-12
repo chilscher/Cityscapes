@@ -276,6 +276,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushUnlockUndoRedoButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8884811563829328428, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
@@ -416,7 +421,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &40645919
 RectTransform:
   m_ObjectHideFlags: 0
@@ -432,10 +437,10 @@ RectTransform:
   - {fileID: 1434235675}
   m_Father: {fileID: 543574046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 442.4, y: -6291.2764}
-  m_SizeDelta: {x: 770, y: 300}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 770, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &40645920
 MonoBehaviour:
@@ -1125,16 +1130,28 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 5514969415740452101, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_Text
+      value: REQUIRES MEDIUM CITY
+      objectReference: {fileID: 0}
     - target: {fileID: 5980298238379016318, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
-      value: ALLOWS YOU TO PLAY 5x5 PUZZLES.
+      value: 'ALLOWS YOU TO PLAY
+
+        5x5 PUZZLES.'
       objectReference: {fileID: 0}
     - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushUnlockLargeButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8884811563829328428, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
@@ -2120,8 +2137,7 @@ MonoBehaviour:
   clearPrice: 6
   highlightBuildingsPrice: 2
   buildingQuantityStatusPrice: 8
-  skinTier1Price: 30
-  skinTier2Price: 150
+  skinPrice: 200
   coinsBox1s: {fileID: 1892856175}
   coinsBox10s: {fileID: 244372326}
   coinsBox100s: {fileID: 818284098}
@@ -2241,16 +2257,28 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 5514969415740452101, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_Text
+      value: REQUIRES LARGE CITY
+      objectReference: {fileID: 0}
     - target: {fileID: 5980298238379016318, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
-      value: ALLOWS YOU TO PLAY 6x6 PUZZLES.
+      value: 'ALLOWS YOU TO PLAY
+
+        6x6 PUZZLES.'
       objectReference: {fileID: 0}
     - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushUnlockHugeButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8884811563829328428, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
@@ -2636,8 +2664,8 @@ RectTransform:
   - {fileID: 1672995960}
   m_Father: {fileID: 1246089422}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 770, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3065,6 +3093,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushUnlockNotes1Button
+      objectReference: {fileID: 0}
     - target: {fileID: 8884811563829328428, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
@@ -3333,18 +3366,18 @@ RectTransform:
   - {fileID: 1824737963}
   - {fileID: 928122641}
   - {fileID: 885338906}
-  - {fileID: 153841865}
-  - {fileID: 1793398095}
-  - {fileID: 989717342}
-  - {fileID: 1902608547}
   - {fileID: 945919097}
-  - {fileID: 1279496566}
   - {fileID: 1576191088}
-  - {fileID: 288033931}
+  - {fileID: 1902608547}
   - {fileID: 1363456592}
   - {fileID: 72531531}
-  - {fileID: 623716128}
+  - {fileID: 1279496566}
+  - {fileID: 153841865}
   - {fileID: 1097874407}
+  - {fileID: 1793398095}
+  - {fileID: 288033931}
+  - {fileID: 989717342}
+  - {fileID: 623716128}
   - {fileID: 1279014193}
   m_Father: {fileID: 606241563}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3934,6 +3967,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushUnlockHighlightBuildingsButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8884811563829328428, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
@@ -4106,6 +4144,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushUnlockNotes2Button
+      objectReference: {fileID: 0}
     - target: {fileID: 8884811563829328428, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
@@ -4313,6 +4356,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 543574046}
     m_Modifications:
+    - target: {fileID: 12337592788148064, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_Name
+      value: Requires UndoRedo
+      objectReference: {fileID: 0}
     - target: {fileID: 135942019097233253, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Name
@@ -4343,6 +4391,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 5514969415740452101, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_Text
+      value: REQUIRES UNDO / REDO
+      objectReference: {fileID: 0}
     - target: {fileID: 5980298238379016318, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
@@ -4354,6 +4407,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushUnlockClearPuzzleButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8884811563829328428, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
@@ -4968,16 +5026,28 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 5514969415740452101, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_Text
+      value: REQUIRES HUGE CITY
+      objectReference: {fileID: 0}
     - target: {fileID: 5980298238379016318, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
-      value: ALLOWS YOU TO PLAY 7x7 PUZZLES.
+      value: 'ALLOWS YOU TO PLAY
+
+        7x7 PUZZLES.'
       objectReference: {fileID: 0}
     - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushUnlockMassiveButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8884811563829328428, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
@@ -6361,6 +6431,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 543574046}
     m_Modifications:
+    - target: {fileID: 12337592788148064, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_Name
+      value: Requires UndoRedo
+      objectReference: {fileID: 0}
     - target: {fileID: 135942019097233253, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Name
@@ -6391,6 +6466,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 5514969415740452101, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_Text
+      value: REQUIRES UNDO / REDO
+      objectReference: {fileID: 0}
     - target: {fileID: 5980298238379016318, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
@@ -6402,6 +6482,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushUnlockRemoveAllButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8884811563829328428, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
@@ -7159,7 +7244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1246089422
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7175,10 +7260,10 @@ RectTransform:
   - {fileID: 470317316}
   m_Father: {fileID: 543574046}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 442.4, y: -5964.556}
-  m_SizeDelta: {x: 770, y: 300}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 770, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1246089423
 MonoBehaviour:
@@ -8257,8 +8342,8 @@ RectTransform:
   - {fileID: 1468594194}
   m_Father: {fileID: 40645919}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 770, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -9097,13 +9182,20 @@ PrefabInstance:
     - target: {fileID: 5980298238379016318, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
-      value: YOU CAN PLAY 4x4 PUZZLES.
+      value: 'ALLOWS TO YOU PLAY
+
+        4x4 PUZZLES.'
       objectReference: {fileID: 0}
     - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 291615877}
+    - target: {fileID: 6063937566237777252, guid: 68249cd1fef6c9c4db67870433a5625c,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushUnlockMediumButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8884811563829328428, guid: 68249cd1fef6c9c4db67870433a5625c,
         type: 3}
       propertyPath: m_Text
