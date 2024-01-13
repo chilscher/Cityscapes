@@ -142,6 +142,8 @@ public class GameManager : MonoBehaviour {
             //hide menu button if it is your first time playing the tutorial
             tutorialParent.transform.Find("Menu").gameObject.SetActive(StaticVariables.hasBeatenTutorial);
             tutorialParent.transform.Find("Background").GetComponent<Image>().sprite = skin.puzzleBackground;
+            tutorialParent.transform.Find("Tutorial Text Box").Find("Interior").GetComponent<Image>().color = skin.popupInside;
+            tutorialParent.transform.Find("Tutorial Text Box").Find("Border").GetComponent<Image>().color = skin.popupBorder;
 
             tutorialManager = new TutorialManager();
             tutorialManager.gameManager = this;

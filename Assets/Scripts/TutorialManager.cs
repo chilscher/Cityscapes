@@ -51,7 +51,7 @@ public class TutorialManager{
         //Debug.Log(tutorialStage);
         int i = 0;
         if (++i == tutorialStage){
-            text = "Welcome to Cityscapes! You are a city designer, and your job is to build a city to fit its new residents' wishes.";
+            text = "Welcome to Cityscapes!\n\nIn Cityscapes, you are an urban planner, and your job is to build a city to fit its new residents' wishes.";
             continueText = "Tap to continue...";
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -268,25 +268,16 @@ public class TutorialManager{
             puzzle = "213132321";
             DeleteOldCity();
             gameManager.puzzleGenerator.predeterminedSolution = puzzle;
-            gameManager.puzzleGenerator.predeterminedPermanentBuilding = 7;
+            gameManager.puzzleGenerator.predeterminedPermanentBuilding = 0;
             gameManager.puzzleGenerator.CreatePuzzle(3);
             gameManager.puzzleGenerator.AutofillPermanentBuildings();
             gameManager.DrawFullPuzzle();
             gameManager.HideHints();
-            AddRedBoxAroundTile(7);
+            AddRedBoxAroundTile(0);
             tutorialText.text = text;
             continueClue.text = continueText;
             advanceRequirement = "tap screen";
         }
-        /*
-        else if (++i == tutorialStage){
-            text = "From now on, every city will have at least one building already in place.\n\nThese darker buildings are permanent and cannot be removed.";
-            continueText = "Tap to continue...";
-            tutorialText.text = text;
-            continueClue.text = continueText;
-            advanceRequirement = "tap screen";
-        }
-        */
         else if (++i == tutorialStage){
             text = "Additionally, you can now see all residents from the start!";
             continueText = "Tap to continue...";
@@ -317,7 +308,7 @@ public class TutorialManager{
             skipToStage = tutorialStage + 2;
         }
         else if (++i == tutorialStage){
-            text = "These four residents only want to see one building...\n\nso you know the spaces next to them have to have three-story buildings.";
+            text = "These four residents only want to see one building...\n\nso you know the buildings next to them have to be three stories tall.";
             continueText = "Place the correct buildings...";
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -340,52 +331,37 @@ public class TutorialManager{
             advanceRequirement = "add building of height 3 to tile 4";
         }
         else if (++i == tutorialStage){
-            text = "Now, you know enough to place a two-story building!";
+            text = "Now, let's take a look at this street.";
+            AddRedBoxAroundStreet("vertical", 2);
             continueText = "Tap to continue...";
             tutorialText.text = text;
             continueClue.text = continueText;
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "This resident only wants to see two buildings on their street...";
+            text = "This resident wants to see all three buildings on\ntheir street...";
             continueText = "Tap to continue...";
-            AddRedBoxAroundResident("left", 0);
+            AddRedBoxAroundResident("bottom", 2);
             tutorialText.text = text;
             continueClue.text = continueText;
             advanceRequirement = "tap screen";
-            skipRequirement = "add building of height 2 to tile 0";
-            skipToStage = tutorialStage + 3;
+            skipRequirement = "finish rightmost street";
+            skipToStage = tutorialStage + 2;
         }
-        else if (++i == tutorialStage){
-            text = "This resident only wants to see two buildings on their street...\nTherefore, we know that this building...";
-            continueText = "Tap to continue...";
-            AddRedBoxAroundTile(0);
+        else if (++i == tutorialStage) {
+            text = "This resident wants to see all three buildings on\ntheir street...\nThe only way to satisfy the resident is to line up all three buildings from shortest to tallest!";
+            continueText = "Place the correct buildings...";
+            //AddRedBoxAroundTile(0);
             tutorialText.text = text;
             continueClue.text = continueText;
-            advanceRequirement = "tap screen";
-        }
-        else if (++i == tutorialStage){
-            text = "This resident only wants to see two buildings on their street...\nTherefore, we know that this building...\nhas to be the second-tallest building in the street!";
-            continueText = "Place the correct building...";
-            tutorialText.text = text;
-            continueClue.text = continueText;
-            advanceRequirement = "add building of height 2 to tile 0";
+            advanceRequirement = "finish rightmost street";
             skipRequirement = "";
         }
         else if (++i == tutorialStage){
-            text = "And now you know enough to completely fill the top street!";
-            continueText = "Place the correct building...";
-            RemoveRedBoxesAroundResidents();
-            RemoveRedBoxesAroundTiles();
-            AddRedBoxAroundTile(1);
-            tutorialText.text = text;
-            continueClue.text = continueText;
-            advanceRequirement = "add building of height 1 to tile 1";
-        }
-        else if (++i == tutorialStage){
-            text = "Try to finish building the rest of the city!";
+            text = "Great job!\n\nNow you know enough to complete the rest of the city!";
             continueText = "Complete the city!";
-            RemoveRedBoxesAroundTiles();
+            RemoveRedBoxesAroundResidents();
+            RemoveRedBoxesAroundStreets();
             tutorialText.text = text;
             continueClue.text = continueText;
             advanceRequirement = "complete the city";
@@ -465,6 +441,16 @@ public class TutorialManager{
             if (gameManager.puzzleGenerator.CheckPuzzle())
                 AdvanceStage();
         }
+        if (advanceRequirement == "finish rightmost street") {
+            PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
+            if (ts[2, 2].shownNumber == 1 && ts[1, 2].shownNumber == 2)
+                AdvanceStage();
+        }
+        if (skipRequirement == "finish rightmost street") {
+            PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
+            if (ts[2, 2].shownNumber == 1 && ts[1, 2].shownNumber == 2)
+                SkipStage();
+        }
     }
 
     private void FillInSpace(int spaceNum, int value) {
@@ -511,6 +497,20 @@ public class TutorialManager{
             PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
             if (gameManager.selectedNumber == 3) {
                 if (ts[0, 2] == t || ts[2, 0] == t)
+                    return true;
+            }
+        }
+        if (advanceRequirement == "finish rightmost street") {
+            PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
+            if ((gameManager.selectedNumber == 1) || (gameManager.selectedNumber == 2)) {
+                if (ts[2, 2] == t || ts[1, 2] == t)
+                    return true;
+            }
+        }
+        if (skipRequirement == "finish rightmost street") {
+            PuzzleTile[,] ts = gameManager.puzzleGenerator.tilesArray;
+            if ((gameManager.selectedNumber == 1) || (gameManager.selectedNumber == 2)) {
+                if (ts[2, 2] == t || ts[1, 2] == t)
                     return true;
             }
         }

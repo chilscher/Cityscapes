@@ -29,9 +29,9 @@ public class Puzzle{
         this.size = (int)Mathf.Sqrt(predeterminedSolution.Length);
         solution = predeterminedSolution;
         GenerateSideNumbers();
-        if (predeterminedPermanentBuilding == 7){
+        if (predeterminedPermanentBuilding == 0){
             startingSolution = new int[size, size];
-            startingSolution[2,1] = solution[2,1];
+            startingSolution[0,0] = solution[0,0];
         }
     }
 
