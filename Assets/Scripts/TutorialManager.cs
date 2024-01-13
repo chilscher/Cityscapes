@@ -51,7 +51,7 @@ public class TutorialManager{
         //Debug.Log(tutorialStage);
         int i = 0;
         if (++i == tutorialStage){
-            text = "Welcome to Cityscapes! This is a number-placement puzzle game. In Cityscapes, you are a city designer, and your job is to build a city to fit its new residents' wishes.";
+            text = "Welcome to Cityscapes! You are a city designer, and your job is to build a city to fit its new residents' wishes.";
             continueText = "Tap to continue...";
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -65,7 +65,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "The buildings you place will either be one story...";
+            text = "The buildings you place will either be one story tall...";
             continueText = "Tap to continue...";
             FillInSpace(6, 1);
             tutorialText.text = text;
@@ -73,7 +73,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "The buildings you place will either be one story...\ntwo stories...";
+            text = "The buildings you place will either be one story tall...\ntwo stories tall...";
             continueText = "Tap to continue...";
             FillInSpace(7, 2);
             tutorialText.text = text;
@@ -81,7 +81,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "The buildings you place will either be one story...\ntwo stories...\nor three stories tall.";
+            text = "The buildings you place will either be one story tall...\ntwo stories tall...\nor three stories tall.";
             continueText = "Tap to continue...";
             FillInSpace(8, 3);
             tutorialText.text = text;
@@ -89,7 +89,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "To place a building, tap the building size you would like to place...";
+            text = "To place a building, first you must tap a building size to select it...";
             continueText = "Choose the right building size...";
             gameManager.tutorialParent.transform.Find("Numbers").gameObject.SetActive(true);
             AddRedBoxAroundNumButton(2);
@@ -98,7 +98,7 @@ public class TutorialManager{
             advanceRequirement = "tap number button 2";
         }
         else if (++i == tutorialStage){
-            text = "To place a building, tap the building size you would like to place...\n\nthen tap the space you would like to build on.";
+            text = "To place a building, first you must tap a building size to select it...\n\nthen tap the space you would like to build on.";
             continueText = "Place the building...";
             RemoveRedBoxesAroundNums();
             AddRedBoxAroundTile(0);
@@ -156,7 +156,7 @@ public class TutorialManager{
             skipRequirement = "";
         }
         else if (++i == tutorialStage){
-            text = "Great! The second building requirement involves the residents of the city...";
+            text = "Well done! The second building requirement involves the residents of the city...";
             continueText = "Tap to continue...";
             RemoveRedBoxesAroundStreets();
             tutorialText.text = text;
@@ -164,7 +164,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "Great! The second building requirement involves the residents of the city...\n\nwho are now standing at the ends of every street!";
+            text = "Well done! The second building requirement involves the residents of the city...\n\nwho are now standing at the ends of every street!";
             continueText = "Tap to continue...";
             gameManager.ShowHints();
             tutorialText.text = text;
@@ -189,7 +189,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "This resident...\nis looking down this street...\nand only wants to be able to see one building.";
+            text = "This resident...\nis looking down this street...\nand wants to see only one building.";
             continueText = "Tap to continue...";
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -198,7 +198,7 @@ public class TutorialManager{
             skipToStage = 21;
         }
         else if (++i == tutorialStage){
-            text = "This resident...\nis looking down this street...\nand only wants to be able to see one building.\nSo we know that the building closest to them has to be the tallest one on the whole street!";
+            text = "This resident...\nis looking down this street...\nand wants to see only one building.\nTherefore, the building closest to them has to be the tallest one on the street!";
             continueText = "Tap to continue...";
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -263,7 +263,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "Welcome to another city. From now on, you will find cities that already have buildings in place.";
+            text = "From now on, every city will have at least one building already in place.";
             continueText = "Tap to continue...";
             puzzle = "213132321";
             DeleteOldCity();
@@ -278,13 +278,15 @@ public class TutorialManager{
             continueClue.text = continueText;
             advanceRequirement = "tap screen";
         }
+        /*
         else if (++i == tutorialStage){
-            text = "Welcome to another city. From now on, you will find cities that already have buildings in place.\n\nThese darker buildings are permanent and cannot be removed.";
+            text = "From now on, every city will have at least one building already in place.\n\nThese darker buildings are permanent and cannot be removed.";
             continueText = "Tap to continue...";
             tutorialText.text = text;
             continueClue.text = continueText;
             advanceRequirement = "tap screen";
         }
+        */
         else if (++i == tutorialStage){
             text = "Additionally, you can now see all residents from the start!";
             continueText = "Tap to continue...";
@@ -331,7 +333,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "Well done!\nNow, you know enough to figure out where the final three-story building has to go! Remember, only one of each building size can go in each street!";
+            text = "Well done!\nNow, you can figure out where the final three-story building has to go! Remember, only one building of each size can go on each street!";
             continueText = "Place the correct building...";
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -345,7 +347,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "This resident only wants to see two buildings down their street...";
+            text = "This resident only wants to see two buildings on their street...";
             continueText = "Tap to continue...";
             AddRedBoxAroundResident("left", 0);
             tutorialText.text = text;
@@ -355,7 +357,7 @@ public class TutorialManager{
             skipToStage = tutorialStage + 3;
         }
         else if (++i == tutorialStage){
-            text = "This resident only wants to see two buildings down their street...\nTherefore, we know that this building...";
+            text = "This resident only wants to see two buildings on their street...\nTherefore, we know that this building...";
             continueText = "Tap to continue...";
             AddRedBoxAroundTile(0);
             tutorialText.text = text;
@@ -363,7 +365,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "This resident only wants to see two buildings down their street...\nTherefore, we know that this building...\nhas to be the second-tallest building in the street!";
+            text = "This resident only wants to see two buildings on their street...\nTherefore, we know that this building...\nhas to be the second-tallest building in the street!";
             continueText = "Place the correct building...";
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -398,7 +400,7 @@ public class TutorialManager{
             SaveSystem.SaveGame();
         }
         else if (++i == tutorialStage){
-            text = "Congratulations! You have completed the tutorial for Cityscapes.\n\nGo try a puzzle on your own! You can redo this tutorial at any time.";
+            text = "Congratulations! You have completed the tutorial for Cityscapes.\n\nGo try a puzzle on your own! You can revisit this tutorial at any time.";
             continueText = "Tap to exit...";
             tutorialText.text = text;
             continueClue.text = continueText;
