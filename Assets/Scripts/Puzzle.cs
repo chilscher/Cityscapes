@@ -1,4 +1,4 @@
-//for Cityscapes, copyright Cole Hilscher 2020
+//for Cityscapes, copyright Cole Hilscher 2024
 
 using System.Collections;
 using System.Collections.Generic;
