@@ -52,6 +52,8 @@ public class GameManager : MonoBehaviour {
     public GameObject specialButtonsUndoRedo;
     [HideInInspector]
     public GameObject[] numberButtons;
+    public GameObject[] numberButtonCorrectQuantities;
+    public GameObject[] numberButtonTooManyQuantities;
     public GameObject numbers1to3;
     public GameObject numbers1to4;
     public GameObject numbers1to5;
@@ -265,6 +267,8 @@ public class GameManager : MonoBehaviour {
         //show the correct number buttons depending on the puzzle size, and hide the rest
         HideNumberButtons();
         numberButtons = new GameObject[size];
+        numberButtonCorrectQuantities = new GameObject[size];
+        numberButtonTooManyQuantities = new GameObject[size];
         switch (size) {
             case 3:
                 SetNBs(numbers1to3);
@@ -289,6 +293,8 @@ public class GameManager : MonoBehaviour {
         nB.SetActive(true);
         for (int i = 0; i < size; i++) {
             numberButtons[i] = nB.transform.GetChild(i).gameObject;
+            numberButtonCorrectQuantities[i] = numberButtons[i].transform.Find("Quantity Icon - Correct Quantity").gameObject;
+            numberButtonTooManyQuantities[i] = numberButtons[i].transform.Find("Quantity Icon - Too Many").gameObject;
             DisselectNumber(numberButtons[i]);
         }
     }
@@ -868,32 +874,29 @@ public class GameManager : MonoBehaviour {
     public void UpdateAllBuildingQuantities() {
         if (!StaticVariables.unlockedBuildingQuantityStatus || !StaticVariables.includeBuildingQuantityStatus || StaticVariables.isTutorial)
             return;
+        //get the quantity of each building
+        int[] quantities = new int[size];
+        foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+            if (t.shownNumber != 0)
+                quantities[t.shownNumber - 1]++;
+        }
+
+        //update the quantity display for each building size
         for (int i = 0; i< size; i++) {
             int buildingSize = i + 1;
-            UpdateBuildingQuantity(buildingSize, GetBuildingSizeCountInPuzzle(buildingSize));
+            UpdateBuildingQuantity(buildingSize, quantities[i]);
         }
     }
 
     private void UpdateBuildingQuantity(int buildingSize, int quantity) {
-        GameObject numberButton = numberButtons[buildingSize - 1];
-        GameObject correct = numberButton.transform.Find("Quantity Icon - Correct Quantity").gameObject;
-        GameObject tooMany = numberButton.transform.Find("Quantity Icon - Too Many").gameObject;
+        GameObject correct = numberButtonCorrectQuantities[buildingSize - 1];
+        GameObject tooMany = numberButtonTooManyQuantities[buildingSize - 1];
         correct.SetActive(false);
         tooMany.SetActive(false);
         if (quantity > size)
             tooMany.SetActive(true);
         else if (quantity == size)
             correct.SetActive(true);
-    }
-
-    private int GetBuildingSizeCountInPuzzle(int buildingSize) {
-        //returns the number of buildings of size buildingSize in the entire puzzle
-        int count = 0;
-        foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
-            if (t.shownNumber == buildingSize)
-                count++;
-        }
-        return count;
     }
 
     // ---------------------------------------------------
