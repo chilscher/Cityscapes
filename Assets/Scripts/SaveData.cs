@@ -204,6 +204,8 @@ public class SaveData{
             foreach (string str in strings)
                 skins.Add(InterfaceFunctions.GetSkinFromName(str));
         }
+        if (!skins.Contains(InterfaceFunctions.GetSkinFromName("Rural")))
+            skins.Add(InterfaceFunctions.GetSkinFromName("Rural"));
         return skins;
     }
 
