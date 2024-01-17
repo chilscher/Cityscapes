@@ -75,7 +75,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         }
 
         //skip this temporarily for development
-        /*
+        
         if (!StaticVariables.hasBeatenTutorial){
             StaticVariables.StopFade();
 
@@ -84,7 +84,7 @@ public class MainMenuCanvasController : MonoBehaviour {
             SceneManager.LoadScene("InPuzzle");
             return;
         }
-        */
+        
 
         //apply the current skin
         if (StaticVariables.skin)
@@ -184,7 +184,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         }
 
         //skip this temporarily for development
-        /*
+        
         if (!StaticVariables.hasBeatenTutorial) {
             returnOrAbandonButtons.SetActive(false);
             shopButton.SetActive(false);
@@ -194,7 +194,7 @@ public class MainMenuCanvasController : MonoBehaviour {
             puzzleButtons.SetActive(false);
             largeCenterTutorialButton.SetActive(true);            
         }
-        */
+        
     }
 
     public void AutoStartTutorial(){
