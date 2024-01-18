@@ -47,6 +47,7 @@ public class PuzzleState {
     public PuzzleState(string str, int s) {
         //generates a Puzzle State from a string containing the puzzle's data, and an int with the puzzle's size
         //used in the SaveData loading process
+        //permanent buildings should probably not go in the state string, because they do not change as the puzzle progresses. but it works
         size = s;
         string[] split1 = str.Split(' ');
         string buildingString = split1[0];
@@ -140,6 +141,7 @@ public class PuzzleState {
     public string ReturnStateAsString() {
         //takes the PuzzleState and represents it as a string, used in the SaveData saving process
         //every tile is separated by a dash, building/notes1/notes2 is separated by a space
+        //permanent buildings should probably not go in the state string, because they do not change as the puzzle progresses. but it works
         string buildingsString = "";
         string notes1String = "";
         string notes2String = "";
