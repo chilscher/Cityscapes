@@ -52,7 +52,9 @@ public class PuzzleState {
         string buildingString = split1[0];
         string notes1String = split1[1];
         string notes2String = split1[2];
-        string permanentBuildingsString = split1[3];
+        string permanentBuildingsString = "";
+        if (split1.Length >= 4)
+            permanentBuildingsString = split1[3];
 
         string[] buildingList = buildingString.Split('-');
         string[] permanentBuildingsList = permanentBuildingsString.Split('-');
