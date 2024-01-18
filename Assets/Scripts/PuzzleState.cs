@@ -53,9 +53,11 @@ public class PuzzleState {
         string buildingString = split1[0];
         string notes1String = split1[1];
         string notes2String = split1[2];
-        string permanentBuildingsString = "";
+        string permanentBuildingsString;
         if (split1.Length >= 4)
             permanentBuildingsString = split1[3];
+        else
+            permanentBuildingsString = GenerateNoPermanentBuildingsString(s);
 
         string[] buildingList = buildingString.Split('-');
         string[] permanentBuildingsList = permanentBuildingsString.Split('-');
@@ -102,6 +104,15 @@ public class PuzzleState {
                 notes2[i, j] = ToList(numbersList);
             }
         }
+    }
+
+    private string GenerateNoPermanentBuildingsString(int puzzleSize){
+        string s = "";
+        int iterations = puzzleSize * puzzleSize;
+        for (int i = 0; i < iterations - 1; i++)
+            s += "F-";
+        s += "F";
+        return s;
     }
 
     public int[] ToList(List<int> array) {
