@@ -66,9 +66,13 @@ public class GameManager : MonoBehaviour {
     //variables used in the tutorial
     public TutorialManager tutorialManager;
     public GameObject screenTappedMonitor;
-    public GameObject tutorialTextBox;
+    public Text tutorialTextBox;
+    public Text tutorialContinueClue;
     public GameObject redStreetBorder;
     public Skin basicSkin; //the basic skin, used for loading the tutorial with the basic skin no matter what skin is currently selected
+    public Transform tutorialHighlightsParent;
+    public Text tutorialProgressText;
+    public RectTransform tutorialProgressBar;
 
     //UI elements
     public GameObject streetCorner;
@@ -142,8 +146,8 @@ public class GameManager : MonoBehaviour {
             tutorialParent.SetActive(true);
             puzzleParent.SetActive(false);
             //hide menu button if it is your first time playing the tutorial
-            tutorialParent.transform.Find("Menu").gameObject.SetActive(StaticVariables.hasBeatenTutorial);
-            tutorialParent.transform.Find("Background").GetComponent<Image>().sprite = skin.puzzleBackground;
+            //tutorialParent.transform.Find("Menu").gameObject.SetActive(StaticVariables.hasBeatenTutorial);
+            //tutorialParent.transform.Find("Background").GetComponent<Image>().sprite = skin.puzzleBackground;
             tutorialParent.transform.Find("Tutorial Text Box").Find("Interior").GetComponent<Image>().color = skin.popupInside;
             tutorialParent.transform.Find("Tutorial Text Box").Find("Border").GetComponent<Image>().color = skin.popupBorder;
 
