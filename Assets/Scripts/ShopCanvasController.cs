@@ -56,7 +56,6 @@ public class ShopCanvasController : MonoBehaviour {
     private GameObject[] skinButtons; // a list of all skins. This will expand as more skins are added, and can be done entirely within the inspector
 
     //the following text elements appear when the player has purchased all upgrades of a specific category
-    public GameObject unlockedEverythingText;
     public GameObject unlockedAllFeaturesText;
     public GameObject unlockedAllSkinsText;
 
@@ -265,20 +264,13 @@ public class ShopCanvasController : MonoBehaviour {
         //also update text shown when all upgrades of a single type have been purchased.
         //these texts should only appear if the player chooses to hide purchased upgrades
         bool allCities = StaticVariables.unlockedMedium && StaticVariables.unlockedLarge && StaticVariables.unlockedHuge && StaticVariables.unlockedMassive;
-        bool allFeatures = StaticVariables.unlockedNotes1 && StaticVariables.unlockedNotes2 && StaticVariables.unlockedResidentsChangeColor && StaticVariables.unlockedUndoRedo && StaticVariables.unlockedRemoveAllOfNumber && StaticVariables.unlockedClearPuzzle && StaticVariables.unlockedHighlightBuildings;
-        bool allSkins = StaticVariables.unlockedSkins.Count + 1 == StaticVariables.allSkins.Length;
-        bool allContent = allCities && allFeatures && allSkins;
-        unlockedAllFeaturesText.SetActive(allFeatures && allCities && StaticVariables.hidePurchasedUpgrades);
-        unlockedAllSkinsText.SetActive(allSkins && StaticVariables.hidePurchasedUpgrades);
-        unlockedEverythingText.SetActive(allContent);
+        bool allFeatures = StaticVariables.unlockedNotes1 && StaticVariables.unlockedNotes2 && StaticVariables.unlockedResidentsChangeColor && StaticVariables.unlockedUndoRedo && StaticVariables.unlockedRemoveAllOfNumber && StaticVariables.unlockedClearPuzzle && StaticVariables.unlockedHighlightBuildings && StaticVariables.unlockedBuildingQuantityStatus;
+        bool allSkins = StaticVariables.unlockedSkins.Count == StaticVariables.allSkins.Length;
+
         newFeaturesText.SetActive(true);
+        unlockedAllFeaturesText.SetActive(allCities && allFeatures);
         cosmeticsText.SetActive(true);
-        if (allContent && StaticVariables.hidePurchasedUpgrades) {
-            unlockedAllFeaturesText.SetActive(false);
-            unlockedAllSkinsText.SetActive(false);
-            newFeaturesText.SetActive(false);
-            cosmeticsText.SetActive(false);
-        }
+        unlockedAllSkinsText.SetActive(allSkins);
     }
 
     private void UpdateButton(GameObject button, bool condition, int cost, bool uniqueUnlockCondition = true) {
@@ -516,14 +508,7 @@ public class ShopCanvasController : MonoBehaviour {
         }
     }
 
-    //private void AdjustAllButtonDimensions(){
-    //    AdjustButtonDimensions(expandResidentColorButton.transform.parent);
-        //UpdateButton(expandResidentColorButton, StaticVariables.unlockedResidentsChangeColor, residentColorPrice);
-
-    //}
-
     private void AdjustButtonDimensions(Transform button){
-        //bool isSkinButton = false;
         bool isSkinButton = button.Find("Dropdown").Find("Preview") != null;
         if (!isSkinButton){
             RectTransform dropdown = button.Find("Dropdown").GetComponent<RectTransform>();
@@ -537,14 +522,11 @@ public class ShopCanvasController : MonoBehaviour {
 
             float unlockPos = -((spacing * 2) + descriptionHeight);
             float dropdownHeight = (spacing * 3) + descriptionHeight + unlockHeight;
-            //print(dropdownHeight);
-            //print(dropdown1.sizeDelta);
             unlock.anchoredPosition =new Vector3(unlock.anchoredPosition.x, unlockPos, 0);
             dropdown1.sizeDelta = new Vector2(dropdown1.rect.width, dropdownHeight);
             dropdown2.sizeDelta = new Vector2(dropdown2.rect.width, dropdownHeight);
             dropdown.sizeDelta = new Vector2(dropdown2.rect.width, dropdownHeight);
         }
-        //print(dropdown1.sizeDelta);
     }
 
     // ---------------------------------------------------
@@ -752,6 +734,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeBuildingQuantityStatus = false;
 
         StaticVariables.unlockedSkins = new List<Skin>();
+        StaticVariables.unlockedSkins.Add(InterfaceFunctions.GetDefaultSkin());
         StaticVariables.skin = InterfaceFunctions.GetDefaultSkin();
         background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
         InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
