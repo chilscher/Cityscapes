@@ -25,8 +25,6 @@ public class ShopCanvasController : MonoBehaviour {
     public int highlightBuildingsPrice = 10;
     public int buildingQuantityStatusPrice = 10;
 
-    public int skinPrice = 200;
-
     //the gameobjects used to display the player's coin amounts
     public GameObject coinsBox1s;
     public GameObject coinsBox10s;
@@ -58,6 +56,7 @@ public class ShopCanvasController : MonoBehaviour {
     //the following text elements appear when the player has purchased all upgrades of a specific category
     public GameObject unlockedAllFeaturesText;
     public GameObject unlockedAllSkinsText;
+    public GameObject skinPriceDisclaimerText;
 
     //the following are headers placed above the "new features" (upgrades) category, and the "cosmetics" (skins) category.
     //they are dynamically hidden if the player purchased all items of their category
@@ -100,6 +99,7 @@ public class ShopCanvasController : MonoBehaviour {
     public Image skinPreviewImage;
     public Text skinPreviewText;
     private Color previewBackgroundColor;
+    public Transform skinPreviewBackButton;
 
 
     private void Start() {
@@ -182,6 +182,8 @@ public class ShopCanvasController : MonoBehaviour {
         popupInside.color = StaticVariables.skin.popupInside;
         skinPreviewBorder.color = StaticVariables.skin.popupBorder;
         skinPreviewInside.color = StaticVariables.skin.popupInside;
+        skinPreviewBackButton.Find("Borders").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
+        skinPreviewBackButton.Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
 
         ColorShopButton(expandResidentColorButton);
         ColorShopButton(expandHighlightBuildingsButton);
@@ -271,6 +273,7 @@ public class ShopCanvasController : MonoBehaviour {
         unlockedAllFeaturesText.SetActive(allCities && allFeatures);
         cosmeticsText.SetActive(true);
         unlockedAllSkinsText.SetActive(allSkins);
+        skinPriceDisclaimerText.SetActive(!allSkins);
     }
 
     private void UpdateButton(GameObject button, bool condition, int cost, bool uniqueUnlockCondition = true) {
@@ -547,8 +550,19 @@ public class ShopCanvasController : MonoBehaviour {
 
     private int GetSkinPrice(Skin skin) {
         //returns the price to unlock a skin in the shop
-        //currently is the same for all skins, but could be modified on an individual skin basis
-        return skinPrice;
+        int ownedSkins = StaticVariables.unlockedSkins.Count;
+        int price = 0; //price if you only own one skin (rural)
+        int i = ownedSkins - 1;
+        while (i > 0){
+            price += i * 10;
+            i --;
+        }
+        return price;
+    }
+
+    private void UpdateAllSkinCosts(){
+        foreach (GameObject parent in skinButtons)
+            DisplayCoinsOnButton(parent.transform.Find("Expand Button").gameObject, GetSkinPrice((InterfaceFunctions.GetSkinFromName(parent.name))));
     }
 
     // ---------------------------------------------------
@@ -674,12 +688,12 @@ public class ShopCanvasController : MonoBehaviour {
     public void PushUnlockSkinButton(GameObject parent) {
         Skin skin = InterfaceFunctions.GetSkinFromName(parent.name);
         if (CanPurchase(StaticVariables.unlockedSkins.Contains(skin), GetSkinPrice(skin))){
+            DoPurchase(GetSkinPrice(skin));
             StaticVariables.unlockedSkins.Add(skin);
             StaticVariables.skin = skin;
-            background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
-            InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
-            InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
-            DoPurchase(GetSkinPrice(skin));
+            ApplySkin();
+            UpdateAllSkinCosts();
+            UpdateButtons();
         }
 
     }
