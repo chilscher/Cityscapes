@@ -110,7 +110,7 @@ public class SettingsCanvasController : MonoBehaviour {
 
     public void ShowAndHideText() {
         //shows any header text if the player has any of the relevant unlocks purchased
-        bool anyCosmetics = StaticVariables.unlockedSkins.Count > 0;
+        bool anyCosmetics = StaticVariables.unlockedSkins.Count > 1;
         bool anyVisuals = residentColorButton.activeSelf || highlightBuildingsButton.activeSelf;
         bool anyButtons = notes1Button.activeSelf || notes2Button.activeSelf || undoRedoButton.activeSelf || removeNumbersButton.activeSelf || clearPuzzleButton.activeSelf;
         bool anyCities = medCityButton.activeSelf || largeCityButton.activeSelf || hugeCityButton.activeSelf || massiveCityButton.activeSelf;
