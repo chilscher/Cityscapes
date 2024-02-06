@@ -62,6 +62,9 @@ public class MainMenuCanvasController : MonoBehaviour {
 
     public GameObject updatePopup;
     public Text updatePopupText;
+    public GameObject confirmUpdateButton;
+    public Image updatePopupBorder;
+    public Image updatePopupInside;
 
     public Skin defaultSkin; //the default skin used when the player boots up the game for the first time
 
@@ -93,7 +96,7 @@ public class MainMenuCanvasController : MonoBehaviour {
 
         //apply the current skin
         if (StaticVariables.skin)
-        background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
+            background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
         ColorButtons();
 
         if (!updatePopup.activeSelf){
@@ -120,6 +123,10 @@ public class MainMenuCanvasController : MonoBehaviour {
 
         progressPopupBorder.color = StaticVariables.skin.popupBorder;
         progressPopupInside.color = StaticVariables.skin.popupInside;
+
+        InterfaceFunctions.ColorMenuButton(confirmUpdateButton, StaticVariables.skin);
+        updatePopupBorder.color = StaticVariables.skin.popupBorder;
+        updatePopupInside.color = StaticVariables.skin.popupInside;
 
         InterfaceFunctions.ColorMenuButton(shopButton, StaticVariables.skin);
         InterfaceFunctions.ColorMenuButton(tutorialButton, StaticVariables.skin);
@@ -281,8 +288,7 @@ public class MainMenuCanvasController : MonoBehaviour {
     // ---------------------------------------------------
     
     private void CheckForVersionUpdate(){
-        
-        //StaticVariables.gameVersionNumber = 0f;
+        updatePopup.SetActive(false);
         if (StaticVariables.gameVersionNumber == 0){
             //this happens when the save data has no version number recorded
             //update to 2.1 immediately, then keep checking version numbers after that
