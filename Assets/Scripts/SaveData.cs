@@ -88,7 +88,10 @@ public class SaveData{
         unlockedHighlightBuildings = StaticVariables.unlockedHighlightBuildings;
         unlockedBuildingQuantityStatus = StaticVariables.unlockedBuildingQuantityStatus;
 
-        skinName = StaticVariables.skin.skinName;
+        if (StaticVariables.skin == null)
+            skinName = "Rural";
+        else
+            skinName = StaticVariables.skin.skinName;
         unlockedSkinNames = GetUnlockedSkinNames();
         hidePurchasedUpgrades = StaticVariables.hidePurchasedUpgrades;
 

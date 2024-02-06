@@ -1,4 +1,4 @@
-﻿//for Cityscapes, copyright Cole Hilscher 2024
+//for Cityscapes, copyright Cole Hilscher 2024
 
 using UnityEngine;
 using System.IO;
@@ -10,7 +10,6 @@ public static class SaveSystem{
     static private string path = Application.persistentDataPath + "/save.chh";
 
     public static void SaveGame() {
-
         BinaryFormatter formatter = new BinaryFormatter();
 
         FileStream stream = new FileStream(path, FileMode.Create);
@@ -19,18 +18,15 @@ public static class SaveSystem{
 
         formatter.Serialize(stream, data);
         stream.Close();
-
     }
 
     public static void LoadGame() {
         if (File.Exists(path)) {
-
             BinaryFormatter formatter = new BinaryFormatter();
             FileStream stream = new FileStream(path, FileMode.Open);
             if (stream.Length == 0) {
                 stream.Close();
                 FirstTimePlayingEver();
-
             }
             else {
                 SaveData data = formatter.Deserialize(stream) as SaveData;
@@ -38,10 +34,8 @@ public static class SaveSystem{
                 data.LoadData();
             }
         }
-        else {
+        else
             FirstTimePlayingEver();
-        }
-
     }
 
     private static void FirstTimePlayingEver() {
@@ -52,7 +46,4 @@ public static class SaveSystem{
         SaveGame();
         LoadGame();
     }
-
-
-
 }

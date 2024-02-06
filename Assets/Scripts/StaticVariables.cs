@@ -67,7 +67,7 @@ public class StaticVariables{
 
 
     static public System.Random rand = new System.Random();
-    static public int coins = 80;
+    static public int coins = 0;
     static public bool isApplicationLaunchingFirstTime = true;
     static private string sceneName = "";
     static public float sceneFadeDuration = 0.3f;

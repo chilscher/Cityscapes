@@ -1,12 +1,10 @@
 ﻿//for Cityscapes, copyright Cole Hilscher 2024
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using System;
 using DG.Tweening;
+//using UnityEngine.Diagnostics;  //for testing crash behavior
 
 public class ShopCanvasController : MonoBehaviour {
     //controls the shop canvas. Only one is used, and only on the shop scene.
@@ -160,6 +158,7 @@ public class ShopCanvasController : MonoBehaviour {
     // ---------------------------------------------------
 
     public void PushMainMenuButton() {
+        //Utils.ForceCrash(ForcedCrashCategory.FatalError);  //for testing crash behavior
         StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
     public void PushSettingsButton() {
@@ -688,10 +687,10 @@ public class ShopCanvasController : MonoBehaviour {
     public void PushUnlockSkinButton(GameObject parent) {
         Skin skin = InterfaceFunctions.GetSkinFromName(parent.name);
         if (CanPurchase(StaticVariables.unlockedSkins.Contains(skin), GetSkinPrice(skin))){
+            StaticVariables.skin = skin;
+            ApplySkin(); //apply skin before doing purchase, because purchasing includes saving game data
             DoPurchase(GetSkinPrice(skin));
             StaticVariables.unlockedSkins.Add(skin);
-            StaticVariables.skin = skin;
-            ApplySkin();
             UpdateAllSkinCosts();
             UpdateButtons();
         }
