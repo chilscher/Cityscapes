@@ -60,9 +60,13 @@ public class MainMenuCanvasController : MonoBehaviour {
     public GameObject abandonHuge;
     public GameObject abandonMassive;
 
+    public GameObject updatePopup;
+    public Text updatePopupText;
+
     public Skin defaultSkin; //the default skin used when the player boots up the game for the first time
 
     public Skin[] skins; //a list of all skins. To work effectively, any new skin must be added to this list in the inspector
+
 
 
     private void Start() {
@@ -71,6 +75,7 @@ public class MainMenuCanvasController : MonoBehaviour {
             StaticVariables.allSkins = skins;
             StaticVariables.unlockedSkins = new List<Skin> {skins[0]}; //set up the current unlocked skin list to only include the basic skin (now called "rural")
             SaveSystem.LoadGame();
+            CheckForVersionUpdate();
             StaticVariables.isApplicationLaunchingFirstTime = false;
         }
 
@@ -90,10 +95,12 @@ public class MainMenuCanvasController : MonoBehaviour {
         if (StaticVariables.skin)
         background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
         ColorButtons();
-        ShowReturnAbandon();
 
-        //update the puzzle buttons based on what puzzle sizes the player has unlocked
-        ShowCityButtons();
+        if (!updatePopup.activeSelf){
+            ShowReturnAbandon();
+            //update the puzzle buttons based on what puzzle sizes the player has unlocked
+            ShowCityButtons();
+        }
     }
     
     // ---------------------------------------------------
@@ -267,4 +274,78 @@ public class MainMenuCanvasController : MonoBehaviour {
         SaveSystem.SaveGame();
         StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
+
+    
+    // ---------------------------------------------------
+    //ALL OF THE FUNCTIONS THAT ARE USED TO UPDATE GAME VERSION
+    // ---------------------------------------------------
+    
+    private void CheckForVersionUpdate(){
+        
+        //StaticVariables.gameVersionNumber = 0f;
+        if (StaticVariables.gameVersionNumber == 0){
+            //this happens when the save data has no version number recorded
+            //update to 2.1 immediately, then keep checking version numbers after that
+            UpdateToVersion2_1();
+        }
+        //if (StaticVariables.gameVersionNumber == 2.1f){
+            //UpdateToVersion2_2();
+        //}
+    }
+
+    private void UpdateToVersion2_1(){
+        print("updating version number! Old version " + StaticVariables.gameVersionNumber + ", new version 2.1");
+        StaticVariables.gameVersionNumber = 2.1f;
+
+        //add up the coins that the player spent on skins minus the new cost of each skin
+        //(meaning, count up how many coins the player is owed due to the changed cost of skins in the shop)
+        int skinPurchasedCount = StaticVariables.unlockedSkins.Count - 1;
+        int coinRefund = 0;
+        if (skinPurchasedCount >= 1)
+            coinRefund += (200 - 0);
+        if (skinPurchasedCount >= 2)
+            coinRefund += (200 - 10);
+        if (skinPurchasedCount >= 3)
+            coinRefund += (200 - 30);
+        if (skinPurchasedCount >= 4)
+            coinRefund += (200 - 60);
+        if (skinPurchasedCount >= 5)
+            coinRefund += (200 - 100);
+        if (skinPurchasedCount >= 6)
+            coinRefund += (200 - 150);
+        //below are all the skins that cost more after the version update
+        if (skinPurchasedCount >= 7)
+            coinRefund += (200 - 210);
+        if (skinPurchasedCount >= 8)
+            coinRefund += (200 - 280);
+        if (skinPurchasedCount >= 9)
+            coinRefund += (200 - 360);
+        if (skinPurchasedCount >= 10)
+            coinRefund += (200 - 450);
+        if (skinPurchasedCount >= 11)
+            coinRefund += (200 - 550);
+        if (skinPurchasedCount >= 12)
+            coinRefund += (200 - 660);
+        if (coinRefund > 0){
+            StaticVariables.AddCoins(coinRefund);
+            ShowUpdatePopup("CITYSCAPES HAS UPDATED TO VERSION 2.1!\n\nTHE COST OF SKINS IN THE SHOP HAS CHANGED, AND YOU HAVE BEEN REFUNDED " + coinRefund + " COINS FOR THE PURCHASES YOU HAVE PREVIOUSLY MADE.");
+        }
+
+    }
+
+    private void ShowUpdatePopup(string text){
+        updatePopupText.text = text.ToUpper();
+        updatePopup.SetActive(true);
+        
+        puzzleButtons.SetActive(false);
+        returnOrAbandonButtons.SetActive(false);
+        shopButton.SetActive(false);
+        tutorialButton.SetActive(false);
+        settingsButton.SetActive(false);
+    }
+
+    public void PushedConfirmUpdateButton(){
+        StaticVariables.FadeOutThenLoadScene("MainMenu");
+    }
+
 }

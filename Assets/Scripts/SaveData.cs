@@ -52,6 +52,7 @@ public class SaveData{
     public bool hasBeatenTutorial;
     public bool unlockedMassive;
     public bool showMassive;
+    public float gameVersionNumber;
 
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT ARE USED TO SAVE PLAYER DATA
@@ -108,6 +109,7 @@ public class SaveData{
             savedBuildNumber = StaticVariables.savedBuildNumber;
             savedBuildType = StaticVariables.savedBuildType;
         }
+        gameVersionNumber = StaticVariables.gameVersionNumber;
     }
 
     private string GetPuzzleStateStringsFromList(List<PuzzleState> list) {
@@ -184,6 +186,7 @@ public class SaveData{
             StaticVariables.savedBuildNumber = savedBuildNumber;
             StaticVariables.savedBuildType = savedBuildType;
         }
+        StaticVariables.gameVersionNumber = gameVersionNumber; //if there is no saved version number, it defaults to 0
     }
     
     private List<PuzzleState> GetPuzzleStateListFromString(string s, int size) {
