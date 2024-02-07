@@ -334,9 +334,9 @@ public class MainMenuCanvasController : MonoBehaviour {
             coinRefund += (200 - 660);
         if (coinRefund > 0){
             StaticVariables.AddCoins(coinRefund);
-            ShowUpdatePopup("CITYSCAPES HAS UPDATED TO VERSION 2.1!\n\nTHE COST OF SKINS IN THE SHOP HAS CHANGED, AND YOU HAVE BEEN REFUNDED " + coinRefund + " COINS FOR THE PURCHASES YOU HAVE PREVIOUSLY MADE.");
+            ShowUpdatePopup("CITYSCAPES HAS\nBEEN UPDATED!\n\nTHE COST OF SKINS IN THE SHOP HAS CHANGED, AND YOU HAVE BEEN REFUNDED " + coinRefund + " COINS FOR THE SKINS YOU PREVIOUSLY PURCHASED.");
         }
-
+        SaveSystem.SaveGame();
     }
 
     private void ShowUpdatePopup(string text){
