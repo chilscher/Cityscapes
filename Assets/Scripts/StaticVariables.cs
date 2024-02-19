@@ -73,7 +73,7 @@ public class StaticVariables{
     static public float sceneFadeDuration = 0.3f;
     static public Transform tweenDummy;
     static public Image fadeImage;
-    static public float gameVersionNumber = 2.1f;
+    static public float gameVersionNumber = 2.2f;
     
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {

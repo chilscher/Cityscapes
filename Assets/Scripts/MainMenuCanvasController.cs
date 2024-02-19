@@ -294,9 +294,9 @@ public class MainMenuCanvasController : MonoBehaviour {
             //update to 2.1 immediately, then keep checking version numbers after that
             UpdateToVersion2_1();
         }
-        //if (StaticVariables.gameVersionNumber == 2.1f){
-            //UpdateToVersion2_2();
-        //}
+        if (StaticVariables.gameVersionNumber == 2.1f){
+            UpdateToVersion2_2();
+        }
     }
 
     private void UpdateToVersion2_1(){
@@ -337,6 +337,11 @@ public class MainMenuCanvasController : MonoBehaviour {
             ShowUpdatePopup("CITYSCAPES HAS\nBEEN UPDATED!\n\nTHE COST OF SKINS IN THE SHOP HAS CHANGED, AND YOU HAVE BEEN REFUNDED " + coinRefund + " COINS FOR THE SKINS YOU PREVIOUSLY PURCHASED.");
         }
         SaveSystem.SaveGame();
+    }
+
+    private void UpdateToVersion2_2(){
+        print("updating version number! Old version " + StaticVariables.gameVersionNumber + ", new version 2.2");
+        StaticVariables.gameVersionNumber = 2.2f;
     }
 
     private void ShowUpdatePopup(string text){
