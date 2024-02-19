@@ -233,6 +233,7 @@ public class PuzzleTile : Tile {
         building.color = permanentBuildingColor;
         number.color = permanentNumberColor;
         permanentBuildingBackground.SetActive(true);
+        HighlightIfBuildingNumber(gameManager.selectedNumber);
     }
 
     public void AddNumberToTile(int num) {
