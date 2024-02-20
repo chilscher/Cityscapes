@@ -71,7 +71,6 @@ public class MainMenuCanvasController : MonoBehaviour {
     public Skin[] skins; //a list of all skins. To work effectively, any new skin must be added to this list in the inspector
 
 
-
     private void Start() {
         //check to see if the game is being opened, or if the game is transitioning from another menu
         if (StaticVariables.isApplicationLaunchingFirstTime) {
@@ -208,7 +207,6 @@ public class MainMenuCanvasController : MonoBehaviour {
             puzzleButtons.SetActive(false);
             largeCenterTutorialButton.SetActive(true);            
         }
-        
     }
 
     public void AutoStartTutorial(){
@@ -268,7 +266,6 @@ public class MainMenuCanvasController : MonoBehaviour {
         StaticVariables.FadeOutThenLoadScene("Settings");
     }
 
-
     public void PushReturnToPuzzleButton() {
         StaticVariables.size = StaticVariables.savedPuzzleSize;
         StaticVariables.isTutorial = false;
@@ -294,14 +291,12 @@ public class MainMenuCanvasController : MonoBehaviour {
             //update to 2.1 immediately, then keep checking version numbers after that
             UpdateToVersion2_1();
         }
-        if (StaticVariables.gameVersionNumber == 2.1f){
-            UpdateToVersion2_2();
-        }
+        if (StaticVariables.gameVersionNumber == 2.1f)
+            ChangeVersionNumber(2.2f);
     }
 
     private void UpdateToVersion2_1(){
-        print("updating version number! Old version " + StaticVariables.gameVersionNumber + ", new version 2.1");
-        StaticVariables.gameVersionNumber = 2.1f;
+        ChangeVersionNumber(2.1f);
 
         //add up the coins that the player spent on skins minus the new cost of each skin
         //(meaning, count up how many coins the player is owed due to the changed cost of skins in the shop)
@@ -339,9 +334,9 @@ public class MainMenuCanvasController : MonoBehaviour {
         SaveSystem.SaveGame();
     }
 
-    private void UpdateToVersion2_2(){
-        print("updating version number! Old version " + StaticVariables.gameVersionNumber + ", new version 2.2");
-        StaticVariables.gameVersionNumber = 2.2f;
+    private void ChangeVersionNumber(float newVersionNum){
+        print("updating version number! Old version " + StaticVariables.gameVersionNumber + ", new version " + newVersionNum);
+        StaticVariables.gameVersionNumber = newVersionNum;
     }
 
     private void ShowUpdatePopup(string text){
@@ -358,5 +353,4 @@ public class MainMenuCanvasController : MonoBehaviour {
     public void PushedConfirmUpdateButton(){
         StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
-
 }
