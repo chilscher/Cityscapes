@@ -113,6 +113,7 @@ public class GameManager : MonoBehaviour {
     public Image winPopupBorder;
     public Image winPopupInterior;
     public Image winBlackSprite;
+    public GameObject winPopup;
 
 
     //storing puzzle states
@@ -234,8 +235,8 @@ public class GameManager : MonoBehaviour {
             winBlackSprite.gameObject.SetActive(true);
             winBlackSprite.DOColor(nextColor, 0.5f);
 
-            winParent.transform.localScale = Vector3.zero;
-            winParent.transform.DOScale(Vector3.one, 0.5f);
+            winPopup.transform.localScale = Vector3.zero;
+            winPopup.transform.DOScale(Vector3.one, 0.5f);
 
             StaticVariables.hasSavedPuzzleState = false;
             Save();
