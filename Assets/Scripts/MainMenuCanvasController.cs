@@ -295,6 +295,8 @@ public class MainMenuCanvasController : MonoBehaviour {
             ChangeVersionNumber(2.2f);
         if (StaticVariables.gameVersionNumber == 2.2f)
             ChangeVersionNumber(2.3f);
+        if (StaticVariables.gameVersionNumber == 2.3f)
+            ChangeVersionNumber(2.4f);
     }
 
     private void UpdateToVersion2_1(){

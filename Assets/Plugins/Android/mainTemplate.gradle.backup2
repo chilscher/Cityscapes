@@ -29,10 +29,7 @@ dependencies {
 **DEPS**}
 
 android {
-    namespace "com.unity3d.player"
-    ndkPath "**NDKPATH**"
-    ndkVersion "**NDKVERSION**"
-    compileSdk **APIVERSION**
+    compileSdkVersion **APIVERSION**
     buildToolsVersion '**BUILDTOOLS**'
 
     compileOptions {
@@ -42,23 +39,23 @@ android {
 
     defaultConfig {
 consumerProguardFiles 'proguard-unity.txt'**USER_PROGUARD**
-        minSdk **MINSDK**
-        targetSdk **TARGETSDK**
+        minSdkVersion **MINSDKVERSION**
+        targetSdkVersion **TARGETSDKVERSION**
         
         ndk {
-            debugSymbolLevel **DEBUGSYMBOLLEVEL**
             abiFilters **ABIFILTERS**
         }
         versionCode **VERSIONCODE**
         versionName '**VERSIONNAME**'
     }
 
-    lint {
+    lintOptions {
         abortOnError false
     }
 
-    androidResources {
-    noCompress = **BUILTIN_NOCOMPRESS** + unityStreamingAssets.tokenize(', ')
+    aaptOptions {
+
+      noCompress = ['.ress', '.resource', '.obb'] + unityStreamingAssets.tokenize(', ')
 
       ignoreAssetsPattern = "!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~"
 
@@ -76,7 +73,7 @@ consumerProguardFiles 'proguard-unity.txt'**USER_PROGUARD**
             
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-unity.txt'**USER_PROGUARD****SIGNCONFIG**
         }
-    }**PACKAGING**
+    }**PACKAGING_OPTIONS**
 **BUILT_APK_LOCATION**
 **EXTERNAL_SOURCES**
     
