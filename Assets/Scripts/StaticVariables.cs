@@ -124,9 +124,10 @@ public class StaticVariables{
 
     static public void AddCoins(int amount) {
         coins += amount;
-        //cap coins at 99,999
-        if (coins > 99999)
-            coins = 99999;
+        //cap coins at 9,999,999
+        if (coins > 9999999)
+            coins = 9999999;
+        coins = 10;
     }
 
 }

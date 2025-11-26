@@ -24,17 +24,13 @@ public class ShopCanvasController : MonoBehaviour {
     public int buildingQuantityStatusPrice = 10;
 
     //the gameobjects used to display the player's coin amounts
-    public GameObject coinsBox1s;
-    public GameObject coinsBox10s;
-    public GameObject coinsBox100s;
-    public GameObject coinsBox1000s;
-    public GameObject coinsBox10000s;
-    //the sprites below are derived from the coins box gameObjects
-    private Image sprite1s;
-    private Image sprite10s;
-    private Image sprite100s;
-    private Image sprite1000s;
-    private Image sprite10000s;
+    public Image coin1;
+    public Image coin10;
+    public Image coin100;
+    public Image coin1k;
+    public Image coin10k;
+    public Image coin100k;
+    public Image coin1m;
     
     //the following are the buttons that expand to show purchasable upgrades
     public GameObject expandMedButton;
@@ -108,11 +104,6 @@ public class ShopCanvasController : MonoBehaviour {
         ColorUtility.TryParseHtmlString(purchaseButtonInterior, out purchaseButtonInteriorColor);
         ColorUtility.TryParseHtmlString(noPurchaseButtonExterior, out noPurchaseButtonExteriorColor);
         ColorUtility.TryParseHtmlString(noPurchaseButtonInterior, out noPurchaseButtonInteriorColor);
-        sprite1s = coinsBox1s.GetComponent<Image>();
-        sprite10s = coinsBox10s.GetComponent<Image>();
-        sprite100s = coinsBox100s.GetComponent<Image>();
-        sprite1000s = coinsBox1000s.GetComponent<Image>();
-        sprite10000s = coinsBox10000s.GetComponent<Image>();
 
         //show the amount of coins the player has, and also the cost of various upgrades
         DisplayCoinsAmount();
@@ -211,35 +202,28 @@ public class ShopCanvasController : MonoBehaviour {
     }
     public void DisplayCoinsAmount() {
         //show the amount of coins the player has in the top-right corner of the shop screen
-        int value1s = StaticVariables.coins % 10;
-        int value10s = (StaticVariables.coins / 10) % 10;
-        int value100s = (StaticVariables.coins / 100) % 10;
-        int value1000s = (StaticVariables.coins / 1000) % 10;
-        int value10000s = (StaticVariables.coins / 10000) % 10;
-        sprite1s.sprite = numbers[value1s];
-        sprite10s.sprite = numbers[value10s];
-        sprite100s.sprite = numbers[value100s];
-        sprite1000s.sprite = numbers[value1000s];
-        sprite10000s.sprite = numbers[value10000s];
+        int value1 = StaticVariables.coins % 10;
+        int value10 = (StaticVariables.coins / 10) % 10;
+        int value100 = (StaticVariables.coins / 100) % 10;
+        int value1k = (StaticVariables.coins / 1000) % 10;
+        int value10k = (StaticVariables.coins / 10000) % 10;
+        int value100k = (StaticVariables.coins / 100000) % 10;
+        int value1m = (StaticVariables.coins / 100000) % 10;
+        coin1.sprite = numbers[value1];
+        coin10.sprite = numbers[value10];
+        coin100.sprite = numbers[value100];
+        coin1k.sprite = numbers[value1k];
+        coin10k.sprite = numbers[value10k];
+        coin100k.sprite = numbers[value100k];
+        coin1m.sprite = numbers[value1m];
 
-        coinsBox1s.SetActive(true);
-        coinsBox10s.SetActive(true);
-        coinsBox100s.SetActive(true);
-        coinsBox1000s.SetActive(true);
-        coinsBox10000s.SetActive(true);
-
-        if (value10000s == 0) {
-            coinsBox10000s.SetActive(false);
-            if (value1000s == 0) {
-                coinsBox1000s.SetActive(false);
-                if (value100s == 0) {
-                    coinsBox100s.SetActive(false);
-                    if (value10s == 0) {
-                        coinsBox10s.SetActive(false);
-                    }
-                }
-            }
-        }
+        coin1.gameObject.SetActive(true);
+        coin10.gameObject.SetActive(StaticVariables.coins > 9);
+        coin100.gameObject.SetActive(StaticVariables.coins > 99);
+        coin1k.gameObject.SetActive(StaticVariables.coins > 999);
+        coin10k.gameObject.SetActive(StaticVariables.coins > 9999);
+        coin100k.gameObject.SetActive(StaticVariables.coins > 99999);
+        coin1m.gameObject.SetActive(StaticVariables.coins > 999999);
     }
     
     private void UpdateButtons() {

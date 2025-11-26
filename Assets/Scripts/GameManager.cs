@@ -93,11 +93,13 @@ public class GameManager : MonoBehaviour {
     private bool hasWonYet = false;
     public GameObject coinsBox1s;
     public GameObject coinsBox10s;
-    public GameObject totalCoinsBox1s;
-    public GameObject totalCoinsBox10s;
-    public GameObject totalCoinsBox100s;
-    public GameObject totalCoinsBox1000s;
-    public GameObject totalCoinsBox10000s;
+    public Image totalCoin1;
+    public Image totalCoin10;
+    public Image totalCoin100;
+    public Image totalCoin1k;
+    public Image totalCoin10k;
+    public Image totalCoin100k;
+    public Image totalCoin1m;
     public GameObject smallCityArt;
     public GameObject mediumCityArt;
     public GameObject largeCityArt;
@@ -482,56 +484,28 @@ public class GameManager : MonoBehaviour {
 
     public void DisplayTotalCoinsAmount() {
         //show the player's total coins on the win popup screen
-        int value1s = StaticVariables.coins % 10;
-        int value10s = (StaticVariables.coins / 10) % 10;
-        int value100s = (StaticVariables.coins / 100) % 10;
-        int value1000s = (StaticVariables.coins / 1000) % 10;
-        int value10000s = (StaticVariables.coins / 10000) % 10;
-        totalCoinsBox1s.GetComponent<Image>().sprite = numberSprites[value1s];
-        totalCoinsBox10s.GetComponent<Image>().sprite = numberSprites[value10s];
-        totalCoinsBox100s.GetComponent<Image>().sprite = numberSprites[value100s];
-        totalCoinsBox1000s.GetComponent<Image>().sprite = numberSprites[value1000s];
-        totalCoinsBox10000s.GetComponent<Image>().sprite = numberSprites[value10000s];
+        int value1 = StaticVariables.coins % 10;
+        int value10 = (StaticVariables.coins / 10) % 10;
+        int value100 = (StaticVariables.coins / 100) % 10;
+        int value1k = (StaticVariables.coins / 1000) % 10;
+        int value10k = (StaticVariables.coins / 10000) % 10;
+        int value100k = (StaticVariables.coins / 100000) % 10;
+        int value1m = (StaticVariables.coins / 100000) % 10;
+        totalCoin1.sprite = numberSprites[value1];
+        totalCoin10.sprite = numberSprites[value10];
+        totalCoin100.sprite = numberSprites[value100];
+        totalCoin1k.sprite = numberSprites[value1k];
+        totalCoin10k.sprite = numberSprites[value10k];
+        totalCoin100k.sprite = numberSprites[value100k];
+        totalCoin1m.sprite = numberSprites[value1m];
 
-        totalCoinsBox1s.SetActive(true);
-        totalCoinsBox10s.SetActive(true);
-        totalCoinsBox100s.SetActive(true);
-        totalCoinsBox1000s.SetActive(true);
-        totalCoinsBox10000s.SetActive(true);
-
-        if (value10000s == 0) {
-            totalCoinsBox10000s.SetActive(false);
-            if (value1000s == 0) {
-                totalCoinsBox1000s.SetActive(false);
-                if (value100s == 0) {
-                    totalCoinsBox100s.SetActive(false);
-                    if (value10s == 0) {
-                        totalCoinsBox10s.SetActive(false);
-                    }
-                }
-            }
-        }
-
-        // shift the coins images over so that they are next to the text
-        int shiftAmount = 0;
-        if (!totalCoinsBox10000s.activeSelf) { shiftAmount++; }
-        if (!totalCoinsBox1000s.activeSelf) { shiftAmount++; }
-        if (!totalCoinsBox100s.activeSelf) { shiftAmount++; }
-        if (!totalCoinsBox10s.activeSelf) { shiftAmount++; }
-
-        float shiftPer = totalCoinsBox10000s.transform.position.x - totalCoinsBox1000s.transform.position.x;
-        float totalShift = shiftAmount * shiftPer;
-
-        Transform parentTransform = totalCoinsBox1s.transform.parent;
-        Vector3 pos = parentTransform.position;
-        pos.x += totalShift;
-        parentTransform.position = pos;
-
-        //shift the coins image and associated text over so they are centered
-        Transform parent2Transform = parentTransform.parent;
-        pos = parent2Transform.position;
-        pos.x -= totalShift / 2;
-        parent2Transform.position = pos;
+        totalCoin1.gameObject.SetActive(true);
+        totalCoin10.gameObject.SetActive(StaticVariables.coins > 9);
+        totalCoin100.gameObject.SetActive(StaticVariables.coins > 99);
+        totalCoin1k.gameObject.SetActive(StaticVariables.coins > 999);
+        totalCoin10k.gameObject.SetActive(StaticVariables.coins > 9999);
+        totalCoin100k.gameObject.SetActive(StaticVariables.coins > 99999);
+        totalCoin1m.gameObject.SetActive(StaticVariables.coins > 999999);
     }
 
 
