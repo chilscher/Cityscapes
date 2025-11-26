@@ -45,10 +45,6 @@ public class StaticVariables{
     static public bool includeRemoveAllOfNumber = false;
     static public bool includeClearPuzzle = false;
     static public bool includeHighlightBuildings = false;
-    static public bool showMed = false;
-    static public bool showLarge = false;
-    static public bool showHuge = false;
-    static public bool showMassive = false;
     static public bool hidePurchasedUpgrades = true;
     static public bool includeBuildingQuantityStatus = false;
 
@@ -127,7 +123,6 @@ public class StaticVariables{
         //cap coins at 9,999,999
         if (coins > 9999999)
             coins = 9999999;
-        coins = 10;
     }
 
 }

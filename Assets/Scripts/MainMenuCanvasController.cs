@@ -219,16 +219,16 @@ public class MainMenuCanvasController : MonoBehaviour {
     public int GetHighestUnlockedSize() {
         //gets the highest size puzzle that the player has unlocked as an int
         int highestUnlockedSize = 3;
-        if (StaticVariables.showMed) {
+        if (StaticVariables.unlockedMedium) {
             highestUnlockedSize = 4;
         }
-        if (StaticVariables.showLarge) {
+        if (StaticVariables.unlockedLarge) {
             highestUnlockedSize = 5;
         }
-        if (StaticVariables.showHuge) {
+        if (StaticVariables.unlockedHuge) {
             highestUnlockedSize = 6;
         }
-        if (StaticVariables.showMassive) {
+        if (StaticVariables.unlockedMassive) {
             highestUnlockedSize = 7;
         }
         return highestUnlockedSize;

@@ -582,7 +582,6 @@ public class ShopCanvasController : MonoBehaviour {
         if (CanPurchase(StaticVariables.unlockedMedium,medCityPrice)) {
             StaticVariables.unlockedMedium = true;
             StaticVariables.highestUnlockedSize = 4;
-            StaticVariables.showMed = true;
             DoPurchase(medCityPrice);
         }
     }
@@ -590,8 +589,6 @@ public class ShopCanvasController : MonoBehaviour {
         if (CanPurchase(StaticVariables.unlockedLarge, largeCityPrice) && StaticVariables.unlockedMedium) {
             StaticVariables.unlockedLarge = true;
             StaticVariables.highestUnlockedSize = 5;
-            StaticVariables.showMed = true;
-            StaticVariables.showLarge = true;
             DoPurchase(largeCityPrice);
         }
     }
@@ -599,9 +596,6 @@ public class ShopCanvasController : MonoBehaviour {
         if (CanPurchase(StaticVariables.unlockedHuge, hugeCityPrice) && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
             StaticVariables.unlockedHuge = true;
             StaticVariables.highestUnlockedSize = 6;
-            StaticVariables.showMed = true;
-            StaticVariables.showLarge = true;
-            StaticVariables.showHuge = true;
             DoPurchase(hugeCityPrice);
         }
     }
@@ -609,10 +603,6 @@ public class ShopCanvasController : MonoBehaviour {
         if (CanPurchase(StaticVariables.unlockedMassive, massiveCityPrice) && StaticVariables.unlockedHuge && StaticVariables.unlockedLarge && StaticVariables.unlockedMedium) {
             StaticVariables.unlockedMassive = true;
             StaticVariables.highestUnlockedSize = 7;
-            StaticVariables.showMed = true;
-            StaticVariables.showLarge = true;
-            StaticVariables.showHuge = true;
-            StaticVariables.showMassive = true;
             DoPurchase(massiveCityPrice);
         }
     }
@@ -707,10 +697,6 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.unlockedHuge = false;
         StaticVariables.unlockedMassive = false;
         StaticVariables.highestUnlockedSize = 3;
-        StaticVariables.showMed = false;
-        StaticVariables.showLarge = false;
-        StaticVariables.showHuge = false;
-        StaticVariables.showMassive = false;
 
         StaticVariables.unlockedNotes1 = false;
         StaticVariables.unlockedNotes2 = false;
@@ -746,10 +732,6 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.unlockedHuge = true;
         StaticVariables.unlockedMassive = true;
         StaticVariables.highestUnlockedSize = 7;
-        StaticVariables.showMed = true;
-        StaticVariables.showLarge = true;
-        StaticVariables.showHuge = true;
-        StaticVariables.showMassive = true;
 
         StaticVariables.unlockedNotes1 = true;
         StaticVariables.unlockedNotes2 = true;

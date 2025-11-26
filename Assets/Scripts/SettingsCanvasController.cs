@@ -6,19 +6,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SettingsCanvasController : MonoBehaviour {
-    
-    //public GameObject blackForeground; //used to transition to/from the puzzle menu
-    //private Image blackSprite; //derived from the blackForeground gameObject
-    //public float fadeOutTime; //total time for fade-out, from complete light to complete darkness
-    //public float fadeInTime; //total time for fade-in, from complete darkness to complete light
-    //private float fadeTimer; //the timer on which the fadeout and fadein mechanics operate
     public GameObject scrollView; //the gameobject that is used to hide all buttons and text outside of the scrollable shop window
-
-    //the toggle buttons for the different upgrades
-    public GameObject medCityButton;
-    public GameObject largeCityButton;
-    public GameObject hugeCityButton;
-    public GameObject massiveCityButton;
     public GameObject notes1Button;
     public GameObject notes2Button;
     public GameObject residentColorButton;
@@ -48,7 +36,6 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject cosmeticsTitle;
     public GameObject visualTitle;
     public GameObject buttonsTitle;
-    public GameObject citiesTitle;
     public GameObject othersTitle;
 
     private void Start() {
@@ -91,10 +78,6 @@ public class SettingsCanvasController : MonoBehaviour {
     
     public void ShowAndHideButtons() {
         //shows all of the upgrades that the player has purchased, except for skins
-        medCityButton.SetActive(StaticVariables.unlockedMedium);
-        largeCityButton.SetActive(StaticVariables.unlockedLarge);
-        hugeCityButton.SetActive(StaticVariables.unlockedHuge);
-        massiveCityButton.SetActive(StaticVariables.unlockedMassive);
         notes1Button.SetActive(StaticVariables.unlockedNotes1);
         notes2Button.SetActive(StaticVariables.unlockedNotes2);
         residentColorButton.SetActive(StaticVariables.unlockedResidentsChangeColor);
@@ -113,23 +96,17 @@ public class SettingsCanvasController : MonoBehaviour {
         bool anyCosmetics = StaticVariables.unlockedSkins.Count > 1;
         bool anyVisuals = residentColorButton.activeSelf || highlightBuildingsButton.activeSelf;
         bool anyButtons = notes1Button.activeSelf || notes2Button.activeSelf || undoRedoButton.activeSelf || removeNumbersButton.activeSelf || clearPuzzleButton.activeSelf;
-        bool anyCities = medCityButton.activeSelf || largeCityButton.activeSelf || hugeCityButton.activeSelf || massiveCityButton.activeSelf;
-        bool anyUpgrades = anyCosmetics || anyVisuals || anyButtons || anyCities;
+        bool anyUpgrades = anyCosmetics || anyVisuals || anyButtons;
 
         cosmeticsTitle.SetActive(anyCosmetics);
         visualTitle.SetActive(anyVisuals);
         buttonsTitle.SetActive(anyButtons);
-        citiesTitle.SetActive(anyCities);
         othersTitle.SetActive(anyUpgrades);
 }
 
     public void SetCurrentToggleTexts() {
         //changes the text and text-color of the buttons that toggle settings
-        //ex: the MedCityButton will either have CURRENTLY: ON in green, or CURRENTLY: OFF in red displayed
-        ToggleText(medCityButton, StaticVariables.showMed);
-        ToggleText(largeCityButton, StaticVariables.showLarge);
-        ToggleText(hugeCityButton, StaticVariables.showHuge);
-        ToggleText(massiveCityButton, StaticVariables.showMassive);
+        //ex: the Notes1Button will either have CURRENTLY: ON in green, or CURRENTLY: OFF in red displayed
         ToggleText(notes1Button, StaticVariables.includeNotes1Button);
         ToggleText(notes2Button, StaticVariables.includeNotes2Button);
         ToggleText(residentColorButton, StaticVariables.changeResidentColorOnCorrectRows);
@@ -151,51 +128,6 @@ public class SettingsCanvasController : MonoBehaviour {
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT GET CALLED WHEN A SETTING-TOGGLE BUTTON GETS PUSHED
     // ---------------------------------------------------
-
-    public void PushMedButton() {
-        StaticVariables.showMed = !StaticVariables.showMed;
-        if (!StaticVariables.showMed) {
-            StaticVariables.showLarge = false;
-            StaticVariables.showHuge = false;
-            StaticVariables.showMassive = false;
-        }
-        SetCurrentToggleTexts();
-        SaveSystem.SaveGame();
-    }
-
-    public void PushLargeButton() {
-        StaticVariables.showLarge = !StaticVariables.showLarge;
-        if (StaticVariables.showLarge)
-            StaticVariables.showMed = true;
-        else {
-            StaticVariables.showHuge = false;
-            StaticVariables.showMassive = false;
-        }
-        SetCurrentToggleTexts();
-        SaveSystem.SaveGame();
-    }
-
-    public void PushHugeButton() {
-        StaticVariables.showHuge = !StaticVariables.showHuge;
-        if (StaticVariables.showHuge) {
-            StaticVariables.showMed = true;
-            StaticVariables.showLarge = true;
-        }
-        else 
-            StaticVariables.showMassive = false;
-        SetCurrentToggleTexts();
-        SaveSystem.SaveGame();
-    }
-    public void PushMassiveButton() {
-        StaticVariables.showMassive = !StaticVariables.showMassive;
-        if (StaticVariables.showMassive) {
-            StaticVariables.showHuge = true;
-            StaticVariables.showMed = true;
-            StaticVariables.showLarge = true;
-        }
-        SetCurrentToggleTexts();
-        SaveSystem.SaveGame();
-    }
 
     public void PushNotes1Button() {
         StaticVariables.includeNotes1Button = !StaticVariables.includeNotes1Button;
@@ -286,10 +218,6 @@ public class SettingsCanvasController : MonoBehaviour {
         ColorSettingsButton(undoRedoButton);
         ColorSettingsButton(removeNumbersButton);
         ColorSettingsButton(clearPuzzleButton);
-        ColorSettingsButton(medCityButton);
-        ColorSettingsButton(largeCityButton);
-        ColorSettingsButton(hugeCityButton);
-        ColorSettingsButton(massiveCityButton);
         ColorSettingsButton(hidePurchasedUpgradesButton);
         ColorSettingsButton(buildingQuantityStatusButton);
         ColorSettingsButton(creditsButton, false);

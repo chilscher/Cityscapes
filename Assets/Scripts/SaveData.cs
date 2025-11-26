@@ -16,9 +16,9 @@ public class SaveData{
     public bool changeResidentColorOnCorrectRows;
     public bool includeUndoRedo;
     public int highestUnlockedSize;
-    public bool showMed;
-    public bool showLarge;
-    public bool showHuge;
+    public bool showMed; //deprecated
+    public bool showLarge; //deprecated
+    public bool showHuge; //deprecated
     public bool includeRemoveAllOfNumber;
     public bool includeClearPuzzle;
     public bool includeHighlightBuildings;
@@ -51,7 +51,7 @@ public class SaveData{
 
     public bool hasBeatenTutorial;
     public bool unlockedMassive;
-    public bool showMassive;
+    public bool showMassive; //deprecated
     public float gameVersionNumber;
 
     // ---------------------------------------------------
@@ -71,10 +71,10 @@ public class SaveData{
         includeHighlightBuildings = StaticVariables.includeHighlightBuildings;
         includeBuildingQuantityStatus = StaticVariables.includeBuildingQuantityStatus;
 
-        showMed = StaticVariables.showMed;
-        showLarge = StaticVariables.showLarge;
-        showHuge = StaticVariables.showHuge;
-        showMassive = StaticVariables.showMassive;
+        showMed = true;
+        showLarge = true;
+        showHuge = true;
+        showMassive = true;
 
         unlockedMed = StaticVariables.unlockedMedium;
         unlockedLarge = StaticVariables.unlockedLarge;
@@ -151,10 +151,6 @@ public class SaveData{
         StaticVariables.includeClearPuzzle = includeClearPuzzle;
         StaticVariables.includeHighlightBuildings = includeHighlightBuildings;
         StaticVariables.includeBuildingQuantityStatus = includeBuildingQuantityStatus;
-        StaticVariables.showMed = showMed;
-        StaticVariables.showLarge = showLarge;
-        StaticVariables.showHuge = showHuge;
-        StaticVariables.showMassive = showMassive;
 
         StaticVariables.unlockedMedium = unlockedMed;
         StaticVariables.unlockedLarge = unlockedLarge;
