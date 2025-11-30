@@ -84,6 +84,7 @@ public class MainMenuCanvasController : MonoBehaviour {
         //skip this temporarily for development
         
         if (!StaticVariables.hasBeatenTutorial){
+            //StaticVariables.coins = 1200;
             StaticVariables.StopFade();
 
             StaticVariables.size = 3;

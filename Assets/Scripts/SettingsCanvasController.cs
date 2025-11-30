@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class SettingsCanvasController : MonoBehaviour {
     public GameObject scrollView; //the gameobject that is used to hide all buttons and text outside of the scrollable shop window
+    [Header("Toggle Unlocked Features")]
+    private bool expandedTogglesButton = false;
+    public GameObject expandTogglesButton;
     public GameObject notes1Button;
     public GameObject notes2Button;
     public GameObject residentColorButton;
@@ -16,36 +19,28 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject highlightBuildingsButton;
     public GameObject buildingQuantityStatusButton;
 
-    //the following deal with switching between different skins
+    [Header("Skin Selection")]
     private bool expandedSkinButton = false;
     public GameObject expandSkinButton;
     public GameObject currentSkinText;
 
-    //the buttons that are not related to any upgrades
+    [Header("Misc Settings")]
     public GameObject hidePurchasedUpgradesButton;
     public GameObject creditsButton;
 
-    //the following are properties taken from the skin
+    [Header("UI Elements")]
     public GameObject background;
     public GameObject menuButton;
     public GameObject shopButton;
     public Image popupBorder;
     public Image popupInside;
-    
-    //headers for the different types of buttons you can interact with in the setting scene
-    public GameObject cosmeticsTitle;
-    public GameObject visualTitle;
-    public GameObject buttonsTitle;
-    public GameObject othersTitle;
 
     private void Start() {
-        //show the buttons and headers based on what upgrades you have purchased
-        //update the visuals for the buttons based on what is toggled on or off at the current time
-        ShowAndHideButtons();
-        ShowAndHideText();
         SetCurrentToggleTexts();
+        ContractToggleButtons();
         UpdateCurrentSkinText();
         ShowChooseSkinButton();
+        ShowToggleUnlocksButton();
         LoadSkin();
     }
     
@@ -73,36 +68,8 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     // ---------------------------------------------------
-    //ALL OF THE FUNCTIONS THAT ARE USED TO CHANGE WHAT THE BUTTONS, TEXT, AND COLORS OF THE SETTINGS MENU LOOK LIKE, EXCEPT FOR THE ONES THAT DEAL WITH SKIN SELECTION
+    //ALL OF THE FUNCTIONS THAT RELATE TO TOGGLING AN ALREADY-UNLOCKED UPGRADE
     // ---------------------------------------------------
-    
-    public void ShowAndHideButtons() {
-        //shows all of the upgrades that the player has purchased, except for skins
-        notes1Button.SetActive(StaticVariables.unlockedNotes1);
-        notes2Button.SetActive(StaticVariables.unlockedNotes2);
-        residentColorButton.SetActive(StaticVariables.unlockedResidentsChangeColor);
-        undoRedoButton.SetActive(StaticVariables.unlockedUndoRedo);
-        removeNumbersButton.SetActive(StaticVariables.unlockedRemoveAllOfNumber);
-        clearPuzzleButton.SetActive(StaticVariables.unlockedClearPuzzle);
-        highlightBuildingsButton.SetActive(StaticVariables.unlockedHighlightBuildings);
-        buildingQuantityStatusButton.SetActive(StaticVariables.unlockedBuildingQuantityStatus);
-
-        hidePurchasedUpgradesButton.SetActive(true);
-        
-    }
-
-    public void ShowAndHideText() {
-        //shows any header text if the player has any of the relevant unlocks purchased
-        bool anyCosmetics = StaticVariables.unlockedSkins.Count > 1;
-        bool anyVisuals = residentColorButton.activeSelf || highlightBuildingsButton.activeSelf;
-        bool anyButtons = notes1Button.activeSelf || notes2Button.activeSelf || undoRedoButton.activeSelf || removeNumbersButton.activeSelf || clearPuzzleButton.activeSelf;
-        bool anyUpgrades = anyCosmetics || anyVisuals || anyButtons;
-
-        cosmeticsTitle.SetActive(anyCosmetics);
-        visualTitle.SetActive(anyVisuals);
-        buttonsTitle.SetActive(anyButtons);
-        othersTitle.SetActive(anyUpgrades);
-}
 
     public void SetCurrentToggleTexts() {
         //changes the text and text-color of the buttons that toggle settings
@@ -115,7 +82,6 @@ public class SettingsCanvasController : MonoBehaviour {
         ToggleText(clearPuzzleButton, StaticVariables.includeClearPuzzle);
         ToggleText(highlightBuildingsButton, StaticVariables.includeHighlightBuildings);
         ToggleText(buildingQuantityStatusButton, StaticVariables.includeBuildingQuantityStatus);
-
         ToggleText(hidePurchasedUpgradesButton, StaticVariables.hidePurchasedUpgrades);
     }
 
@@ -125,9 +91,61 @@ public class SettingsCanvasController : MonoBehaviour {
         button.transform.Find("Button").Find("Off").gameObject.SetActive(!cond);
     }
 
-    // ---------------------------------------------------
-    //ALL OF THE FUNCTIONS THAT GET CALLED WHEN A SETTING-TOGGLE BUTTON GETS PUSHED
-    // ---------------------------------------------------
+    public void PushExpandTogglesButton() {
+        //expands or contracts the toggle feature button's dropdown
+        if (!expandedTogglesButton)
+            ExpandToggleButtons();
+        else
+            ContractToggleButtons();
+        expandedTogglesButton = !expandedTogglesButton;
+    }
+
+
+    private void ExpandToggleButtons() {
+        //expands the dropdowns beneath the "Toggle Unlocked Features" button    public GameObject notes1Button;
+        notes1Button.SetActive(StaticVariables.unlockedNotes1);
+        notes2Button.SetActive(StaticVariables.unlockedNotes2);
+        residentColorButton.SetActive(StaticVariables.unlockedResidentsChangeColor);
+        undoRedoButton.SetActive(StaticVariables.unlockedUndoRedo);
+        removeNumbersButton.SetActive(StaticVariables.unlockedRemoveAllOfNumber);
+        clearPuzzleButton.SetActive(StaticVariables.unlockedClearPuzzle);
+        highlightBuildingsButton.SetActive(StaticVariables.unlockedHighlightBuildings);
+        buildingQuantityStatusButton.SetActive(StaticVariables.unlockedBuildingQuantityStatus);
+    }
+
+    private void ContractToggleButtons() {
+        //contracts the dropdowns beneath the "Toggle Unlocked Features" button
+        notes1Button.SetActive(false);
+        notes2Button.SetActive(false);
+        residentColorButton.SetActive(false);
+        undoRedoButton.SetActive(false);
+        removeNumbersButton.SetActive(false);
+        clearPuzzleButton.SetActive(false);
+        highlightBuildingsButton.SetActive(false);
+        buildingQuantityStatusButton.SetActive(false);
+    }
+
+    private void ShowToggleUnlocksButton() {
+        //only shows the "toggle unlocks" button if the player has purchased at least one unlock.
+        bool hasUnlockedAny = false;
+        if (StaticVariables.unlockedNotes1)
+            hasUnlockedAny = true;
+        if (StaticVariables.unlockedNotes2)
+            hasUnlockedAny = true;
+        if (StaticVariables.unlockedResidentsChangeColor)
+            hasUnlockedAny = true;
+        if (StaticVariables.unlockedUndoRedo)
+            hasUnlockedAny = true;
+        if (StaticVariables.unlockedRemoveAllOfNumber)
+            hasUnlockedAny = true;
+        if (StaticVariables.unlockedClearPuzzle)
+            hasUnlockedAny = true;
+        if (StaticVariables.unlockedHighlightBuildings)
+            hasUnlockedAny = true;
+        if (StaticVariables.unlockedBuildingQuantityStatus)
+            hasUnlockedAny = true;
+        expandTogglesButton.transform.parent.gameObject.SetActive(hasUnlockedAny);
+    }
 
     public void PushNotes1Button() {
         StaticVariables.includeNotes1Button = !StaticVariables.includeNotes1Button;
@@ -211,15 +229,8 @@ public class SettingsCanvasController : MonoBehaviour {
         popupBorder.color = StaticVariables.skin.popupBorder;
         popupInside.color = StaticVariables.skin.popupInside;
         ColorSkinButtons();
-        ColorSettingsButton(residentColorButton);
-        ColorSettingsButton(highlightBuildingsButton);
-        ColorSettingsButton(notes1Button);
-        ColorSettingsButton(notes2Button);
-        ColorSettingsButton(undoRedoButton);
-        ColorSettingsButton(removeNumbersButton);
-        ColorSettingsButton(clearPuzzleButton);
+        ColorToggleFeatureButtons();
         ColorSettingsButton(hidePurchasedUpgradesButton);
-        ColorSettingsButton(buildingQuantityStatusButton);
         ColorSettingsButton(creditsButton, false);
     }
 
@@ -244,16 +255,26 @@ public class SettingsCanvasController : MonoBehaviour {
         }
     }
 
+    private void ColorToggleFeatureButtons(){
+        InterfaceFunctions.ColorMenuButton(expandTogglesButton, StaticVariables.skin);
+        //expandTogglesButton.transform.Find("On").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
+        GameObject parentBox = expandTogglesButton.transform.parent.gameObject;
+        for (int i = 1; i < parentBox.transform.childCount; i++) {
+            Transform button = parentBox.transform.GetChild(i).transform.Find("Button");
+            button.Find("Dropdown Image").Find("Exterior").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
+            button.Find("Dropdown Image").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
+            button.Find("On").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
+            button.Find("Off").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
+        }
+    }
+
     public void PushExpandSkinsButton() {
         //expands or contracts the selected skin button's dropdown
-        if (!expandedSkinButton) {
+        if (!expandedSkinButton)
             ExpandSkinButtons();
-            expandedSkinButton = true;
-        }
-        else {
+        else 
             ContractSkinButtons();
-            expandedSkinButton = false;
-        }
+        expandedSkinButton = !expandedSkinButton;
     }
 
     private void ExpandSkinButtons() {
