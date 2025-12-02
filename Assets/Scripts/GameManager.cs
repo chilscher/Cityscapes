@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using System;
 
 public class GameManager : MonoBehaviour {
     //controls the puzzle canvas and gameplay. Only one is used, and only on the InPuzzle scene.
@@ -105,8 +106,10 @@ public class GameManager : MonoBehaviour {
 
     
     //storing what the player is trying to do
+    public enum ClickTileActions {Build, ToggleNote1, ToggleNote2, Erase};
     [HideInInspector]
-    public string clickTileAction = "Apply Selected"; //what happens when you click a building tile - either toggle a building, toggle a note1, toggle a note2, or clear the tile
+    public ClickTileActions clickTileAction;
+    //public string clickTileAction = "Apply Selected"; //what happens when you click a building tile - either toggle a building, toggle a note1, toggle a note2, or clear the tile
     [HideInInspector]
     public int selectedNumber = 0; //the number to place, either as a building or note
     private GameObject prevClickedNumButton; //when the player clicks the erase button, the selected number button is disselected. When they click any other tool, the previous number is selected again
@@ -157,14 +160,14 @@ public class GameManager : MonoBehaviour {
                 puzzleGenerator.CreatePuzzle(size);
                 puzzleGenerator.AutofillPermanentBuildings();
                 selectedNumber = size; //you automatically start with the highest building size selected
-                clickTileAction = "Apply Selected";
+                clickTileAction = ClickTileActions.Build;
             }
             //set up the visuals of the screen based on the puzzle size and what tools you have unlocked
             DrawFullPuzzle();
             SetNumberButtons();
             SetAllButtonAvailability();
             HighlightSelectedNumber(); 
-            if (clickTileAction == "Clear Tile") { DisselectNumber(prevClickedNumButton); }
+            if (clickTileAction == ClickTileActions.Erase) { DisselectNumber(prevClickedNumButton); }
             HighlightBuildType();
             puzzleBackground.GetComponent<Image>().sprite = skin.puzzleBackground;
             InterfaceFunctions.ColorMenuButton(winPopupMenuButton, skin);
@@ -538,11 +541,11 @@ public class GameManager : MonoBehaviour {
 
     public void PushBuildButton() {
         //choose the build selection mode
-        if (clickTileAction == "Clear Tile") {
+        if (clickTileAction == ClickTileActions.Erase) {
             SelectNumber(prevClickedNumButton);
             foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.HighlightIfBuildingNumber(selectedNumber); }
         }
-        clickTileAction = "Apply Selected";
+        clickTileAction = ClickTileActions.Build;
         DisselectBuildNotesAndEraseButtons();
         InterfaceFunctions.ColorPuzzleButtonOn(buildButton, skin);
         UpdateRemoveSelectedNumber();
@@ -551,11 +554,11 @@ public class GameManager : MonoBehaviour {
 
     public void PushNote1Button() {
         //choose the note 1 selection mode
-        if (clickTileAction == "Clear Tile") {
+        if (clickTileAction == ClickTileActions.Erase) {
             SelectNumber(prevClickedNumButton);
             foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.HighlightIfBuildingNumber(selectedNumber); }
         }
-        clickTileAction = "Toggle Note 1";
+        clickTileAction = ClickTileActions.ToggleNote1;
         DisselectBuildNotesAndEraseButtons();
         InterfaceFunctions.ColorPuzzleButtonOn(note1Button, skin);
         UpdateRemoveSelectedNumber();
@@ -564,11 +567,11 @@ public class GameManager : MonoBehaviour {
 
     public void PushNote2Button() {
         //choose the note 2 selection mode
-        if (clickTileAction == "Clear Tile") {
+        if (clickTileAction == ClickTileActions.Erase) {
             SelectNumber(prevClickedNumButton);
             foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.HighlightIfBuildingNumber(selectedNumber); }
         }
-        clickTileAction = "Toggle Note 2";
+        clickTileAction = ClickTileActions.ToggleNote2;
         DisselectBuildNotesAndEraseButtons();
 
         InterfaceFunctions.ColorPuzzleButtonOn(note2Button, skin);
@@ -578,7 +581,7 @@ public class GameManager : MonoBehaviour {
     
     public void PushEraseButton() {
         //choose the clear tile selection mode
-        clickTileAction = "Clear Tile";
+        clickTileAction = ClickTileActions.Erase;
         DisselectNumber(prevClickedNumButton);
         DisselectBuildNotesAndEraseButtons();
         foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.UnhighlightBuildingNumber(); }
@@ -663,8 +666,8 @@ public class GameManager : MonoBehaviour {
         //when the player taps a number selection button, highlight it and make it the currently-selected number
         SwitchNumber(num);
         ShowNumberButtonClicked(numberButtons[num - 1]);
-        if (clickTileAction == "Clear Tile") {
-            clickTileAction = "Apply Selected";
+        if (clickTileAction == ClickTileActions.Erase) {
+            clickTileAction = ClickTileActions.Build;
             HighlightBuildType();
             UpdateRemoveSelectedNumber();
         }
@@ -681,45 +684,45 @@ public class GameManager : MonoBehaviour {
         DisselectBuildNotesAndEraseButtons();
 
         GameObject button;
-        if (clickTileAction == "Toggle Note 1" && StaticVariables.includeNotes1Button)
+        if (clickTileAction == ClickTileActions.ToggleNote1 && StaticVariables.includeNotes1Button)
             button = note1Button;
-        else if (clickTileAction == "Toggle Note 2" && StaticVariables.includeNotes2Button)
+        else if (clickTileAction == ClickTileActions.ToggleNote2 && StaticVariables.includeNotes2Button)
             button = note2Button;
-        else if (clickTileAction == "Clear Tile")
+        else if (clickTileAction == ClickTileActions.Erase)
             button = clearTileButton;
         else {
-            clickTileAction = "Apply Selected";
+            clickTileAction = ClickTileActions.Build;
             button = buildButton;
         }
         InterfaceFunctions.ColorPuzzleButtonOn(button, skin);
     }
     
     public void PushRemoveAllButton() {
-        //clear the entire puzzle of aall of the currently-selected number of the currently-selected type.
+        //clear the entire puzzle of all of the currently-selected number of the currently-selected type.
         //for example, when #3 and "red notes" are selected, this function clears all red 3's from the puzzle
-        if (clickTileAction != "Clear Tile") {
+        if ((clickTileAction != ClickTileActions.Erase) && (selectedNumber != 0)) {
             bool foundAnything = false;
-            int num = selectedNumber;
-            int colorNum = 0; // 0 is build, 1 is note 1, 2 is note 2
-            if (clickTileAction == "Apply Selected") { colorNum = 0; }
-            else if (clickTileAction == "Toggle Note 1") { colorNum = 1; }
-            else if (clickTileAction == "Toggle Note 2") { colorNum = 2; }
-            if (colorNum != 0 && num != 0) {
+            if (clickTileAction == ClickTileActions.Build){
                 foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
-                    if (t.DoesTileContainColoredNote(colorNum, num)) {
-                        if (colorNum == 1)
-                            t.ToggleNote1(num); 
-                        else
-                            t.ToggleNote2(num);
+                    if ((t.shownNumber == selectedNumber) && (!t.isPermanentBuilding)) {
+                        foundAnything = true;
+                        t.RemoveNumberFromTile();
+                    }
+                }
+            }
+            else if (clickTileAction == ClickTileActions.ToggleNote1){
+                foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+                    if (t.DoesTileContainColoredNote(1, selectedNumber)){
+                        t.ToggleNote1(selectedNumber); 
                         foundAnything = true;
                     }
                 }
             }
-            if (colorNum == 0 && num != 0) {
+            else if (clickTileAction == ClickTileActions.ToggleNote2){
                 foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
-                    if ((t.shownNumber == num) && (!t.isPermanentBuilding)) {
+                    if (t.DoesTileContainColoredNote(2, selectedNumber)){
+                        t.ToggleNote2(selectedNumber); 
                         foundAnything = true;
-                        t.RemoveNumberFromTile();
                     }
                 }
             }
@@ -754,13 +757,13 @@ public class GameManager : MonoBehaviour {
             removeAllOfNumberButton.transform.Find("Number").gameObject.SetActive(true);
             removeAllOfNumberButton.transform.Find("Number").GetComponent<Image>().sprite = numberSprites[selectedNumber];
             Color c = Color.white;
-            if (clickTileAction == "Toggle Note 1")
+            if (clickTileAction == ClickTileActions.ToggleNote1)
                 c = StaticVariables.skin.note1;
-            else if (clickTileAction == "Toggle Note 2")
+            else if (clickTileAction == ClickTileActions.ToggleNote2)
                 c = StaticVariables.skin.note2;
             removeAllOfNumberButton.transform.Find("Number").GetComponent<Image>().color = c;
 
-            if (clickTileAction == "Clear Tile") {
+            if (clickTileAction == ClickTileActions.Erase) {
                 removeAllOfNumberButton.transform.Find("Dash").gameObject.SetActive(true);
                 removeAllOfNumberButton.transform.Find("Number").gameObject.SetActive(false);
 

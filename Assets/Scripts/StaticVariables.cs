@@ -20,7 +20,7 @@ public class StaticVariables{
     static public string puzzleSolution;
     static public int savedPuzzleSize;
     static public int savedBuildNumber;
-    static public string savedBuildType;
+    static public GameManager.ClickTileActions savedBuildType;
 
     //if the player has purchased various upgrades, not including skins
     static public bool unlockedMedium = false;

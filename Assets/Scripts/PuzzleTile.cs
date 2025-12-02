@@ -77,23 +77,23 @@ public class PuzzleTile : Tile {
         //when the PuzzleTile is clicked, do whatever the GameManger.clickTileAction says to do
         if (isPermanentBuilding) //do nothing, cannot edit starting tiles
             return;   
-        if(gameManager.clickTileAction == "Apply Selected") {
+        if(gameManager.clickTileAction == GameManager.ClickTileActions.Build) {
             int selectedNumber = gameManager.selectedNumber;
             ToggleNumber(selectedNumber);
             gameManager.UpdateAllBuildingQuantities();
             gameManager.AddToPuzzleHistory();
         }
-        else if (gameManager.clickTileAction == "Toggle Note 1") {
+        else if (gameManager.clickTileAction == GameManager.ClickTileActions.ToggleNote1) {
             int selectedNumber = gameManager.selectedNumber;
             ToggleNote1(selectedNumber);
             gameManager.AddToPuzzleHistory();
         }
-        else if (gameManager.clickTileAction == "Toggle Note 2") {
+        else if (gameManager.clickTileAction == GameManager.ClickTileActions.ToggleNote2) {
             int selectedNumber = gameManager.selectedNumber;
             ToggleNote2(selectedNumber);
             gameManager.AddToPuzzleHistory();
         }
-        else if(gameManager.clickTileAction == "Clear Tile") {
+        else if(gameManager.clickTileAction == GameManager.ClickTileActions.Erase) {
             if (DoesTileContainAnything()) {
                 ClearColoredNotes();
                 RemoveNumberFromTile();

@@ -107,7 +107,13 @@ public class SaveData{
             puzzleSolution = StaticVariables.puzzleSolution;
             savedPuzzleSize = StaticVariables.savedPuzzleSize;
             savedBuildNumber = StaticVariables.savedBuildNumber;
-            savedBuildType = StaticVariables.savedBuildType;
+            savedBuildType = StaticVariables.savedBuildType switch {
+                (GameManager.ClickTileActions.Build) => "Apply Selected",
+                (GameManager.ClickTileActions.ToggleNote1) => "Toggle Note 1",
+                (GameManager.ClickTileActions.ToggleNote2) => "Toggle Note 2",
+                (GameManager.ClickTileActions.Erase) => "Clear Tile",
+                _ => "Apply Selected",
+            };
         }
         gameVersionNumber = StaticVariables.gameVersionNumber;
     }
@@ -180,7 +186,13 @@ public class SaveData{
             StaticVariables.puzzleSolution = puzzleSolution;
             StaticVariables.savedPuzzleSize = savedPuzzleSize;
             StaticVariables.savedBuildNumber = savedBuildNumber;
-            StaticVariables.savedBuildType = savedBuildType;
+            StaticVariables.savedBuildType = savedBuildType switch {
+                ("Apply Selected") => GameManager.ClickTileActions.Build,
+                ("Toggle Note 1") => GameManager.ClickTileActions.ToggleNote1,
+                ("Toggle Note 2") => GameManager.ClickTileActions.ToggleNote2,
+                ("Clear Tile") => GameManager.ClickTileActions.Erase,
+                _ => GameManager.ClickTileActions.Build,
+            };
         }
         StaticVariables.gameVersionNumber = gameVersionNumber; //if there is no saved version number, it defaults to 0
     }
