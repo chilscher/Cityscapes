@@ -28,6 +28,9 @@ public class SettingsCanvasController : MonoBehaviour {
     [Header("Misc Settings")]
     public GameObject hidePurchasedUpgradesButton;
     public GameObject creditsButton;
+    public GameObject discordButton;
+    public GameObject inviteButton;
+    public string inviteLink = "https://discord.gg/KtARNGgaC8";
 
     [Header("UI Elements")]
     public GameObject background;
@@ -66,6 +69,12 @@ public class SettingsCanvasController : MonoBehaviour {
     }
     public void PushShopButton(){
         StaticVariables.FadeOutThenLoadScene("Shop");
+    }
+    public void PushDiscordButton(){
+        inviteButton.SetActive(!inviteButton.activeSelf);
+    }
+    public void PushInviteButton(){
+        System.Diagnostics.Process.Start(inviteLink);
     }
 
     // ---------------------------------------------------
@@ -250,7 +259,14 @@ public class SettingsCanvasController : MonoBehaviour {
         ColorSkinButtons();
         ColorToggleFeatureButtons();
         ColorSettingsButton(hidePurchasedUpgradesButton);
+        ColorSettingsButton(discordButton, false);   
+        ColorInviteButton();
         ColorSettingsButton(creditsButton, false);
+    }
+
+    private void ColorInviteButton(){
+        inviteButton.transform.Find("Dropdown").Find("Dropdown Image").Find("Exterior").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
+        inviteButton.transform.Find("Dropdown").Find("Dropdown Image").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
     }
 
     private void ColorSkinButtons(){
