@@ -19889,11 +19889,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1174595103}
     m_Modifications:
+    - target: {fileID: 1692016927990742431, guid: 89b2644fc305ae44889e4bccc766db06,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3754707165068407601, guid: 89b2644fc305ae44889e4bccc766db06,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1357166982}
+    - target: {fileID: 4570688834944883223, guid: 89b2644fc305ae44889e4bccc766db06,
+        type: 3}
+      propertyPath: m_Name
+      value: Clear Text
+      objectReference: {fileID: 0}
+    - target: {fileID: 4570688834944883223, guid: 89b2644fc305ae44889e4bccc766db06,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5509601341026536241, guid: 89b2644fc305ae44889e4bccc766db06,
         type: 3}
       propertyPath: m_Pivot.x
@@ -20023,6 +20038,36 @@ RectTransform:
 --- !u!1 &1237495845 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9121914070508040472, guid: 89b2644fc305ae44889e4bccc766db06,
+    type: 3}
+  m_PrefabInstance: {fileID: 1237495843}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1237495846 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1692016927990742431, guid: 89b2644fc305ae44889e4bccc766db06,
+    type: 3}
+  m_PrefabInstance: {fileID: 1237495843}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1237495847 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4570688834944883223, guid: 89b2644fc305ae44889e4bccc766db06,
+    type: 3}
+  m_PrefabInstance: {fileID: 1237495843}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1237495848 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7564347928474832788, guid: 89b2644fc305ae44889e4bccc766db06,
+    type: 3}
+  m_PrefabInstance: {fileID: 1237495843}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &1237495849 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 429315605709902889, guid: 89b2644fc305ae44889e4bccc766db06,
     type: 3}
   m_PrefabInstance: {fileID: 1237495843}
   m_PrefabAsset: {fileID: 0}
@@ -22355,6 +22400,10 @@ MonoBehaviour:
   undoButton: {fileID: 1158046013}
   redoButton: {fileID: 1442749297}
   removeAllOfNumberButton: {fileID: 1237495845}
+  removeAllOfNumberButtonDash: {fileID: 1237495849}
+  removeAllOfNumberButtonNumber: {fileID: 1237495848}
+  removeAllOfNumberButtonClearText: {fileID: 1237495847}
+  removeAllOfNumberButtonFillText: {fileID: 1237495846}
   clearPuzzleButton: {fileID: 2112340578}
   numbers1to3: {fileID: 1354143423}
   numbers1to4: {fileID: 2023972869}
@@ -22410,7 +22459,7 @@ MonoBehaviour:
   notEnoughQuantity: {r: 1, g: 1, b: 1, a: 1}
   rightAmountQuantity: {r: 0.16862746, g: 0.5568628, b: 0.16862746, a: 1}
   tooMuchQuantity: {r: 0.6320754, g: 0.15145956, b: 0.15145956, a: 1}
-  clickTileAction: Apply Selected
+  clickTileAction: 0
   selectedNumber: 0
 --- !u!114 &1357166983
 MonoBehaviour:

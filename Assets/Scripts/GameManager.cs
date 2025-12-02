@@ -37,6 +37,10 @@ public class GameManager : MonoBehaviour {
     public GameObject undoButton;
     public GameObject redoButton;
     public GameObject removeAllOfNumberButton;
+    public GameObject removeAllOfNumberButtonDash;
+    public Image removeAllOfNumberButtonNumber;
+    public GameObject removeAllOfNumberButtonClearText;
+    public GameObject removeAllOfNumberButtonFillText;
     public GameObject clearPuzzleButton;
     public GameObject numbers1to3;
     public GameObject numbers1to4;
@@ -701,33 +705,52 @@ public class GameManager : MonoBehaviour {
         //clear the entire puzzle of all of the currently-selected number of the currently-selected type.
         //for example, when #3 and "red notes" are selected, this function clears all red 3's from the puzzle
         if ((clickTileAction != ClickTileActions.Erase) && (selectedNumber != 0)) {
-            bool foundAnything = false;
+            bool somethingChanged = false;
             if (clickTileAction == ClickTileActions.Build){
                 foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
                     if ((t.shownNumber == selectedNumber) && (!t.isPermanentBuilding)) {
-                        foundAnything = true;
+                        somethingChanged = true;
                         t.RemoveNumberFromTile();
                     }
                 }
             }
             else if (clickTileAction == ClickTileActions.ToggleNote1){
+                bool foundAnything = false;
                 foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
                     if (t.DoesTileContainColoredNote(1, selectedNumber)){
                         t.ToggleNote1(selectedNumber); 
+                        somethingChanged = true;
                         foundAnything = true;
+                    }
+                }
+                if (!foundAnything && StaticVariables.includeRemoveButtonFillsNotes){
+                    somethingChanged = true;
+                    foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+                    if (t.shownNumber == 0)
+                        t.ToggleNote1(selectedNumber); 
                     }
                 }
             }
             else if (clickTileAction == ClickTileActions.ToggleNote2){
+                bool foundAnything = false;
                 foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
                     if (t.DoesTileContainColoredNote(2, selectedNumber)){
                         t.ToggleNote2(selectedNumber); 
+                        somethingChanged = true;
                         foundAnything = true;
                     }
                 }
+                if (!foundAnything && StaticVariables.includeRemoveButtonFillsNotes){
+                    somethingChanged = true;
+                    foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+                    if (t.shownNumber == 0)
+                        t.ToggleNote2(selectedNumber); 
+                    }
+                }
             }
-            if (foundAnything) {
+            if (somethingChanged) {
                 UpdateAllBuildingQuantities();
+                UpdateRemoveSelectedNumber();
                 AddToPuzzleHistory();
             }
         }
@@ -751,22 +774,45 @@ public class GameManager : MonoBehaviour {
     }
     
     public void UpdateRemoveSelectedNumber() {
-        //when the player changes their tool type or their selecred number, update the color and number displayed on the "remove all of type" button
+        //when the player changes their tool type or their selected number, update the color and number displayed on the "remove all of type" button
         if (!StaticVariables.isTutorial && StaticVariables.includeRemoveAllOfNumber) {
-            removeAllOfNumberButton.transform.Find("Dash").gameObject.SetActive(false);
-            removeAllOfNumberButton.transform.Find("Number").gameObject.SetActive(true);
-            removeAllOfNumberButton.transform.Find("Number").GetComponent<Image>().sprite = numberSprites[selectedNumber];
+            removeAllOfNumberButtonDash.SetActive(false);
+            removeAllOfNumberButtonNumber.gameObject.SetActive(true);
+            removeAllOfNumberButtonNumber.sprite = numberSprites[selectedNumber];
+            removeAllOfNumberButtonClearText.SetActive(true);
+            removeAllOfNumberButtonFillText.SetActive(false);
             Color c = Color.white;
             if (clickTileAction == ClickTileActions.ToggleNote1)
                 c = StaticVariables.skin.note1;
             else if (clickTileAction == ClickTileActions.ToggleNote2)
                 c = StaticVariables.skin.note2;
-            removeAllOfNumberButton.transform.Find("Number").GetComponent<Image>().color = c;
+            removeAllOfNumberButtonNumber.color = c;
 
             if (clickTileAction == ClickTileActions.Erase) {
-                removeAllOfNumberButton.transform.Find("Dash").gameObject.SetActive(true);
-                removeAllOfNumberButton.transform.Find("Number").gameObject.SetActive(false);
-
+                removeAllOfNumberButtonDash.SetActive(true);
+                removeAllOfNumberButtonNumber.gameObject.SetActive(false);
+            }
+            else if ((clickTileAction == ClickTileActions.ToggleNote1) && (StaticVariables.includeRemoveButtonFillsNotes)){
+                bool foundAnything = false;
+                foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+                    if (t.DoesTileContainColoredNote(1, selectedNumber))
+                        foundAnything = true;
+                }
+                if (!foundAnything){
+                    removeAllOfNumberButtonClearText.SetActive(false);
+                    removeAllOfNumberButtonFillText.SetActive(true);
+                }
+            }
+            else if ((clickTileAction == ClickTileActions.ToggleNote2) && (StaticVariables.includeRemoveButtonFillsNotes)){
+                bool foundAnything = false;
+                foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
+                    if (t.DoesTileContainColoredNote(2, selectedNumber))
+                        foundAnything = true;
+                }
+                if (!foundAnything){
+                    removeAllOfNumberButtonClearText.SetActive(false);
+                    removeAllOfNumberButtonFillText.SetActive(true);
+                }
             }
         }
     }

@@ -87,11 +87,13 @@ public class PuzzleTile : Tile {
             int selectedNumber = gameManager.selectedNumber;
             ToggleNote1(selectedNumber);
             gameManager.AddToPuzzleHistory();
+            gameManager.UpdateRemoveSelectedNumber();
         }
         else if (gameManager.clickTileAction == GameManager.ClickTileActions.ToggleNote2) {
             int selectedNumber = gameManager.selectedNumber;
             ToggleNote2(selectedNumber);
             gameManager.AddToPuzzleHistory();
+            gameManager.UpdateRemoveSelectedNumber();
         }
         else if(gameManager.clickTileAction == GameManager.ClickTileActions.Erase) {
             if (DoesTileContainAnything()) {

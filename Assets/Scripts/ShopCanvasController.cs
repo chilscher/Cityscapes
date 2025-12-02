@@ -22,6 +22,7 @@ public class ShopCanvasController : MonoBehaviour {
     public int clearPrice = 10;
     public int highlightBuildingsPrice = 10;
     public int buildingQuantityStatusPrice = 10;
+    public int fillNotesPrice = 50;
 
     //the gameobjects used to display the player's coin amounts
     public Image coin1;
@@ -45,6 +46,7 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject expandClearButton;
     public GameObject expandHighlightBuildingsButton;
     public GameObject expandBuildingQuantityStatusButton;
+    public GameObject expandFillNotesButton;
     private GameObject[] skinButtons; // a list of all skins. This will expand as more skins are added, and can be done entirely within the inspector
 
     //the following text elements appear when the player has purchased all upgrades of a specific category
@@ -119,6 +121,7 @@ public class ShopCanvasController : MonoBehaviour {
         DisplayCoinsOnButton(expandClearButton, clearPrice);
         DisplayCoinsOnButton(expandHighlightBuildingsButton, highlightBuildingsPrice);
         DisplayCoinsOnButton(expandBuildingQuantityStatusButton, buildingQuantityStatusPrice);
+        DisplayCoinsOnButton(expandFillNotesButton, fillNotesPrice);
 
         //show the cost of the various skins
         FindSkinButtons();
@@ -187,6 +190,7 @@ public class ShopCanvasController : MonoBehaviour {
         ColorShopButton(expandHugeButton);
         ColorShopButton(expandMassiveButton);
         ColorShopButton(expandBuildingQuantityStatusButton);
+        ColorShopButton(expandFillNotesButton);
 
         foreach(GameObject go in skinButtons)
             ColorShopButton(go.transform.GetChild(0).gameObject);
@@ -242,6 +246,7 @@ public class ShopCanvasController : MonoBehaviour {
         UpdateButton(expandClearButton, StaticVariables.unlockedClearPuzzle, clearPrice, StaticVariables.unlockedUndoRedo);
         UpdateButton(expandHighlightBuildingsButton, StaticVariables.unlockedHighlightBuildings, highlightBuildingsPrice);
         UpdateButton(expandBuildingQuantityStatusButton, StaticVariables.unlockedBuildingQuantityStatus, buildingQuantityStatusPrice);
+        UpdateButton(expandFillNotesButton, StaticVariables.unlockedRemoveButtonFillsNotes, fillNotesPrice, (StaticVariables.unlockedRemoveAllOfNumber && StaticVariables.unlockedNotes1));
 
         foreach (GameObject parent in skinButtons)
             UpdateButton(parent.transform.Find("Expand Button").gameObject, StaticVariables.unlockedSkins.Contains(InterfaceFunctions.GetSkinFromName(parent.name)), GetSkinPrice((InterfaceFunctions.GetSkinFromName(parent.name))));
@@ -638,6 +643,7 @@ public class ShopCanvasController : MonoBehaviour {
         if (CanPurchase(StaticVariables.unlockedRemoveAllOfNumber, removeAllPrice) && StaticVariables.unlockedUndoRedo) {
             StaticVariables.unlockedRemoveAllOfNumber = true;
             StaticVariables.includeRemoveAllOfNumber = true;
+            StaticVariables.includeUndoRedo = true;
             DoPurchase(removeAllPrice);
         }
     }
@@ -645,6 +651,7 @@ public class ShopCanvasController : MonoBehaviour {
         if (CanPurchase(StaticVariables.unlockedClearPuzzle, clearPrice) && StaticVariables.unlockedUndoRedo) {
             StaticVariables.unlockedClearPuzzle = true;
             StaticVariables.includeClearPuzzle = true;
+            StaticVariables.includeUndoRedo = true;
             DoPurchase(clearPrice);
         }
     }
@@ -654,6 +661,15 @@ public class ShopCanvasController : MonoBehaviour {
             StaticVariables.unlockedHighlightBuildings = true;
             StaticVariables.includeHighlightBuildings = true;
             DoPurchase(highlightBuildingsPrice);
+        }
+    }
+    public void PushUnlockFillNotesButton() {
+        if (CanPurchase(StaticVariables.unlockedRemoveButtonFillsNotes, fillNotesPrice) && StaticVariables.unlockedRemoveAllOfNumber && StaticVariables.unlockedNotes1) {
+            StaticVariables.unlockedRemoveButtonFillsNotes = true;
+            StaticVariables.includeRemoveButtonFillsNotes = true;
+            StaticVariables.includeRemoveAllOfNumber = true;
+            StaticVariables.includeUndoRedo = true;
+            DoPurchase(fillNotesPrice);
         }
     }
 
@@ -706,6 +722,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.unlockedClearPuzzle = false;
         StaticVariables.unlockedHighlightBuildings = false;
         StaticVariables.unlockedBuildingQuantityStatus = false;
+        StaticVariables.unlockedRemoveButtonFillsNotes = false;
 
         StaticVariables.includeNotes1Button = false;
         StaticVariables.includeNotes2Button = false;
@@ -715,6 +732,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeClearPuzzle = false;
         StaticVariables.includeHighlightBuildings = false;
         StaticVariables.includeBuildingQuantityStatus = false;
+        StaticVariables.includeRemoveButtonFillsNotes = false;
 
         StaticVariables.unlockedSkins = new List<Skin>();
         StaticVariables.unlockedSkins.Add(InterfaceFunctions.GetDefaultSkin());
@@ -741,6 +759,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.unlockedClearPuzzle = true;
         StaticVariables.unlockedHighlightBuildings = true;
         StaticVariables.unlockedBuildingQuantityStatus = true;
+        StaticVariables.unlockedRemoveButtonFillsNotes = true;
 
         StaticVariables.includeNotes1Button = true;
         StaticVariables.includeNotes2Button = true;
@@ -750,6 +769,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeClearPuzzle = true;
         StaticVariables.includeHighlightBuildings = true;
         StaticVariables.includeBuildingQuantityStatus = true;
+        StaticVariables.includeRemoveButtonFillsNotes = true;
 
         PushUnlockAllSkinsButton();
         UpdateButtons();

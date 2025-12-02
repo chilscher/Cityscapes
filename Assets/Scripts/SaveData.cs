@@ -53,6 +53,8 @@ public class SaveData{
     public bool unlockedMassive;
     public bool showMassive; //deprecated
     public float gameVersionNumber;
+    public bool unlockedRemoveButtonFillsNotes;
+    public bool includeRemoveButtonFillsNotes;
 
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT ARE USED TO SAVE PLAYER DATA
@@ -70,6 +72,7 @@ public class SaveData{
         includeClearPuzzle = StaticVariables.includeClearPuzzle;
         includeHighlightBuildings = StaticVariables.includeHighlightBuildings;
         includeBuildingQuantityStatus = StaticVariables.includeBuildingQuantityStatus;
+        includeRemoveButtonFillsNotes = StaticVariables.includeRemoveButtonFillsNotes;
 
         showMed = true;
         showLarge = true;
@@ -88,6 +91,7 @@ public class SaveData{
         unlockedClearPuzzle = StaticVariables.unlockedClearPuzzle;
         unlockedHighlightBuildings = StaticVariables.unlockedHighlightBuildings;
         unlockedBuildingQuantityStatus = StaticVariables.unlockedBuildingQuantityStatus;
+        unlockedRemoveButtonFillsNotes = StaticVariables.unlockedRemoveButtonFillsNotes;
 
         if (StaticVariables.skin == null)
             skinName = "Rural";
@@ -157,6 +161,7 @@ public class SaveData{
         StaticVariables.includeClearPuzzle = includeClearPuzzle;
         StaticVariables.includeHighlightBuildings = includeHighlightBuildings;
         StaticVariables.includeBuildingQuantityStatus = includeBuildingQuantityStatus;
+        StaticVariables.includeRemoveButtonFillsNotes = includeRemoveButtonFillsNotes;
 
         StaticVariables.unlockedMedium = unlockedMed;
         StaticVariables.unlockedLarge = unlockedLarge;
@@ -170,6 +175,7 @@ public class SaveData{
         StaticVariables.unlockedClearPuzzle = unlockedClearPuzzle;
         StaticVariables.unlockedHighlightBuildings = unlockedHighlightBuildings;
         StaticVariables.unlockedBuildingQuantityStatus = unlockedBuildingQuantityStatus;
+        StaticVariables.unlockedRemoveButtonFillsNotes = unlockedRemoveButtonFillsNotes;
         
         StaticVariables.skin = InterfaceFunctions.GetSkinFromName(skinName);
         StaticVariables.unlockedSkins = GetUnlockedSkins();

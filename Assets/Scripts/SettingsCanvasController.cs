@@ -18,6 +18,7 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject clearPuzzleButton;
     public GameObject highlightBuildingsButton;
     public GameObject buildingQuantityStatusButton;
+    public GameObject fillNotesButton;
 
     [Header("Skin Selection")]
     private bool expandedSkinButton = false;
@@ -82,6 +83,7 @@ public class SettingsCanvasController : MonoBehaviour {
         ToggleText(clearPuzzleButton, StaticVariables.includeClearPuzzle);
         ToggleText(highlightBuildingsButton, StaticVariables.includeHighlightBuildings);
         ToggleText(buildingQuantityStatusButton, StaticVariables.includeBuildingQuantityStatus);
+        ToggleText(fillNotesButton, StaticVariables.includeRemoveButtonFillsNotes);
         ToggleText(hidePurchasedUpgradesButton, StaticVariables.hidePurchasedUpgrades);
     }
 
@@ -111,6 +113,7 @@ public class SettingsCanvasController : MonoBehaviour {
         clearPuzzleButton.SetActive(StaticVariables.unlockedClearPuzzle);
         highlightBuildingsButton.SetActive(StaticVariables.unlockedHighlightBuildings);
         buildingQuantityStatusButton.SetActive(StaticVariables.unlockedBuildingQuantityStatus);
+        fillNotesButton.SetActive(StaticVariables.unlockedRemoveButtonFillsNotes);
     }
 
     private void ContractToggleButtons() {
@@ -123,6 +126,7 @@ public class SettingsCanvasController : MonoBehaviour {
         clearPuzzleButton.SetActive(false);
         highlightBuildingsButton.SetActive(false);
         buildingQuantityStatusButton.SetActive(false);
+        fillNotesButton.SetActive(false);
     }
 
     private void ShowToggleUnlocksButton() {
@@ -143,6 +147,8 @@ public class SettingsCanvasController : MonoBehaviour {
         if (StaticVariables.unlockedHighlightBuildings)
             hasUnlockedAny = true;
         if (StaticVariables.unlockedBuildingQuantityStatus)
+            hasUnlockedAny = true;
+        if (StaticVariables.includeRemoveButtonFillsNotes)
             hasUnlockedAny = true;
         expandTogglesButton.transform.parent.gameObject.SetActive(hasUnlockedAny);
     }
@@ -170,6 +176,7 @@ public class SettingsCanvasController : MonoBehaviour {
         if (!StaticVariables.includeUndoRedo) {
             StaticVariables.includeRemoveAllOfNumber = false;
             StaticVariables.includeClearPuzzle = false;
+            StaticVariables.includeRemoveButtonFillsNotes = false;
         }
         SetCurrentToggleTexts();
         SaveSystem.SaveGame();
@@ -179,6 +186,8 @@ public class SettingsCanvasController : MonoBehaviour {
         StaticVariables.includeRemoveAllOfNumber = !StaticVariables.includeRemoveAllOfNumber;
         if (StaticVariables.includeRemoveAllOfNumber)
             StaticVariables.includeUndoRedo = true;
+        else
+            StaticVariables.includeRemoveButtonFillsNotes = false;
         SetCurrentToggleTexts();
         SaveSystem.SaveGame();
     }
@@ -193,6 +202,16 @@ public class SettingsCanvasController : MonoBehaviour {
 
     public void PushHighlightBuildingsButton() {
         StaticVariables.includeHighlightBuildings = !StaticVariables.includeHighlightBuildings;
+        SetCurrentToggleTexts();
+        SaveSystem.SaveGame();
+    }
+    
+    public void PushFillNotesButton() {
+        StaticVariables.includeRemoveButtonFillsNotes = !StaticVariables.includeRemoveButtonFillsNotes;
+        if (StaticVariables.includeRemoveButtonFillsNotes){
+            StaticVariables.includeUndoRedo = true;
+            StaticVariables.includeRemoveAllOfNumber = true;
+        }
         SetCurrentToggleTexts();
         SaveSystem.SaveGame();
     }

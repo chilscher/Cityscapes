@@ -21,6 +21,7 @@ public class StaticVariables{
     static public int savedPuzzleSize;
     static public int savedBuildNumber;
     static public GameManager.ClickTileActions savedBuildType;
+    static public bool unlockedRemoveButtonFillsNotes = false;
 
     //if the player has purchased various upgrades, not including skins
     static public bool unlockedMedium = false;
@@ -36,6 +37,7 @@ public class StaticVariables{
     static public bool unlockedHighlightBuildings = false;
     static public int highestUnlockedSize = 3;
     static public bool unlockedBuildingQuantityStatus = false;
+    static public bool includeRemoveButtonFillsNotes = false;
     
     //if the player has any of the various upgrades toggled active, which is changed in settings
     static public bool includeNotes1Button = false;
