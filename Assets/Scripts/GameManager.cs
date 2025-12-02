@@ -9,51 +9,34 @@ using DG.Tweening;
 
 public class GameManager : MonoBehaviour {
     //controls the puzzle canvas and gameplay. Only one is used, and only on the InPuzzle scene.
-
-    //variables used to store what the player is trying to do
-    [HideInInspector]
-    public string clickTileAction = "Apply Selected"; //what happens when you click a building tile - either toggle a building, toggle a note1, toggle a note2, or clear the tile
-    [HideInInspector]
-    public int selectedNumber = 0; //the number to place, either as a building or note
-    private GameObject prevClickedNumButton; //when the player clicks the erase button, the selected number button is disselected. When they click any other tool, the previous number is selected again
-
-
-    //variables used in setting up the game
+    [Header("Puzzle Setup")]
     [HideInInspector]
     public int size; //puzzle size
-    [HideInInspector]
-    public bool includeNote1Btn;
-    [HideInInspector]
-    public bool includeNote2Btn;
     public PuzzleGenerator puzzleGenerator; //the PuzzleGenerator object that will create the puzzle's solution
     public GameObject puzzlePositioning; //determines where the puzzle is going to go
-    public GameObject selectionModeButtons0;
-    public GameObject selectionModeButtons1;
-    public GameObject selectionModeButtons2;
-    public GameObject selectionModeButtons3;
     private float originalPuzzleScale;
 
-    //game canvases
+    [Header("UI Elements")]
     public GameObject canvas;
     public GameObject winParent; //the canvas that is used when the player beats a puzzle
     public GameObject puzzleParent;
     public GameObject tutorialParent;
+    public GameObject streetCorner;
+    public Sprite[] numberSprites;
+    [HideInInspector]
+    public Skin skin;
+    public GameObject puzzleBackground;
 
     //the tools that the player can choose from
-    private GameObject buildButton;
-    private GameObject note1Button;
-    private GameObject note2Button;
-    private GameObject clearTileButton;
-    private GameObject removeAllOfNumberButton;
-
-    public GameObject specialButtonsAll;
-    public GameObject specialButtonsUndoRedoRemove;
-    public GameObject specialButtonsUndoRedoClear;
-    public GameObject specialButtonsUndoRedo;
-    [HideInInspector]
-    public GameObject[] numberButtons;
-    public GameObject[] numberButtonCorrectQuantities;
-    public GameObject[] numberButtonTooManyQuantities;
+    [Header("Buttons")]
+    public GameObject buildButton;
+    public GameObject note1Button;
+    public GameObject note2Button;
+    public GameObject clearTileButton;
+    public GameObject undoButton;
+    public GameObject redoButton;
+    public GameObject removeAllOfNumberButton;
+    public GameObject clearPuzzleButton;
     public GameObject numbers1to3;
     public GameObject numbers1to4;
     public GameObject numbers1to5;
@@ -62,8 +45,15 @@ public class GameManager : MonoBehaviour {
     public GameObject menuButton;
     public GameObject shopButton;
     public GameObject settingsButton;
+
+    [Header("Building Quantity Alerts")]
+
+    [HideInInspector]
+    public GameObject[] numberButtons;
+    public GameObject[] numberButtonCorrectQuantities;
+    public GameObject[] numberButtonTooManyQuantities;
     
-    //variables used in the tutorial
+    [Header("Tutorial Stuff")]
     public TutorialManager tutorialManager;
     public GameObject screenTappedMonitor;
     public Text tutorialTextBox;
@@ -74,15 +64,8 @@ public class GameManager : MonoBehaviour {
     public Text tutorialProgressText;
     public RectTransform tutorialProgressBar;
 
-    //UI elements
-    public GameObject streetCorner;
-    public Sprite[] numberSprites;
-
-    //properties of the current skin
-    public Skin skin;
-    public GameObject puzzleBackground;
-
     //variables used in determining a win, and handling the win pop-up
+    [Header("Win Popup Stuff")]
     public int coinsFor3Win = 3;
     public int coinsFor4Win = 5;
     public int coinsFor5Win = 10;
@@ -106,8 +89,6 @@ public class GameManager : MonoBehaviour {
     public GameObject hugeCityArt;
     public GameObject massiveCityArt;
     public Text anotherPuzzleText;
-
-    //win popup stuff
     public GameObject winPopupMenuButton;
     public GameObject winPopupShopButton;
     public GameObject winPopupSettingsButton;
@@ -116,28 +97,33 @@ public class GameManager : MonoBehaviour {
     public Image winPopupInterior;
     public Image winBlackSprite;
     public GameObject winPopup;
+    [Header("Misc")]
+    public bool showBuildings;
+    public Color notEnoughQuantity;
+    public Color rightAmountQuantity;
+    public Color tooMuchQuantity;
 
+    
+    //storing what the player is trying to do
+    [HideInInspector]
+    public string clickTileAction = "Apply Selected"; //what happens when you click a building tile - either toggle a building, toggle a note1, toggle a note2, or clear the tile
+    [HideInInspector]
+    public int selectedNumber = 0; //the number to place, either as a building or note
+    private GameObject prevClickedNumButton; //when the player clicks the erase button, the selected number button is disselected. When they click any other tool, the previous number is selected again
 
     //storing puzzle states
     private List<PuzzleState> previousPuzzleStates = new List<PuzzleState>(); // the list of puzzle states to be restored by the undo button
     private PuzzleState currentPuzzleState;
     private List<PuzzleState> nextPuzzleStates = new List<PuzzleState>();// the list of puzzle states to be restored by the redo button
-    
-    public bool showBuildings;
-    public Color notEnoughQuantity;
-    public Color rightAmountQuantity;
-    public Color tooMuchQuantity;
+
     
     private void Start() {
         //choose which skin to use
         skin = StaticVariables.skin;
         if (StaticVariables.isTutorial)
             skin = basicSkin;
-        //winPopupScale = winParent.transform.GetChild(1).localScale.x;
 
         size = StaticVariables.size;
-        includeNote1Btn = StaticVariables.includeNotes1Button;
-        includeNote2Btn = StaticVariables.includeNotes2Button;
 
         HideNumberButtons();
 
@@ -153,7 +139,6 @@ public class GameManager : MonoBehaviour {
             tutorialParent.transform.Find("Background").GetComponent<Image>().sprite = skin.puzzleBackground;
             tutorialParent.transform.Find("Tutorial Text Box").Find("Interior").GetComponent<Image>().color = skin.popupInside;
             InterfaceFunctions.ColorMenuButton(tutorialParent.transform.Find("Menu").gameObject, skin);
-            //tutorialParent.transform.Find("Tutorial Text Box").Find("Border").GetComponent<Image>().color = skin.popupBorder;
 
             tutorialManager = new TutorialManager();
             tutorialManager.gameManager = this;
@@ -177,8 +162,7 @@ public class GameManager : MonoBehaviour {
             //set up the visuals of the screen based on the puzzle size and what tools you have unlocked
             DrawFullPuzzle();
             SetNumberButtons();
-            SetSelectionModeButtons();
-            SetUndoRedoRemoveClearButtons();
+            SetAllButtonAvailability();
             HighlightSelectedNumber(); 
             if (clickTileAction == "Clear Tile") { DisselectNumber(prevClickedNumButton); }
             HighlightBuildType();
@@ -193,9 +177,6 @@ public class GameManager : MonoBehaviour {
 
             //set up the win popup process
             winParent.SetActive(false);
-            //Color c = winParent.transform.Find("Black Background").GetComponent<Image>().color;
-            //c.a = fadeToWinDarknessRatio;
-            //winParent.transform.Find("Black Background").GetComponent<Image>().color = c;
             ShowCorrectCityArtOnWinScreen();
             int coins = 0;
             switch(size){
@@ -263,12 +244,9 @@ public class GameManager : MonoBehaviour {
     }
 
     private void ColorMenuButton() {
-        //apply the current skin colors to the menu button
-        //if (!StaticVariables.isTutorial) {
-            InterfaceFunctions.ColorMenuButton(menuButton, skin);
-            InterfaceFunctions.ColorMenuButton(shopButton, skin);
-            InterfaceFunctions.ColorMenuButton(settingsButton, skin);
-        //}
+        InterfaceFunctions.ColorMenuButton(menuButton, skin);
+        InterfaceFunctions.ColorMenuButton(shopButton, skin);
+        InterfaceFunctions.ColorMenuButton(settingsButton, skin);
     }
 
     public void SetNumberButtons() {
@@ -307,83 +285,24 @@ public class GameManager : MonoBehaviour {
         }
     }
     
-    public void SetSelectionModeButtons() {
-        //show the appropriate selection mode buttons. Those are build, note1, note2, and erase
-        if (includeNote2Btn && includeNote1Btn) {
-            selectionModeButtons0.SetActive(false);
-            selectionModeButtons1.SetActive(true);
-            selectionModeButtons2.SetActive(false);
-            selectionModeButtons3.SetActive(false);
-            buildButton = selectionModeButtons1.transform.GetChild(0).gameObject;
-            note1Button = selectionModeButtons1.transform.GetChild(1).gameObject;
-            note2Button = selectionModeButtons1.transform.GetChild(2).gameObject;
-            clearTileButton = selectionModeButtons1.transform.Find("Erase").gameObject;
-        }
-        else if (!includeNote2Btn && !includeNote1Btn) {
-            selectionModeButtons0.SetActive(true);
-            selectionModeButtons1.SetActive(false);
-            selectionModeButtons2.SetActive(false);
-            selectionModeButtons3.SetActive(false);
-            buildButton = selectionModeButtons0.transform.Find("Build").gameObject;
-            clearTileButton = selectionModeButtons0.transform.Find("Erase").gameObject;
-        }
-        else if (!includeNote2Btn && includeNote1Btn) {
-            selectionModeButtons0.SetActive(false);
-            selectionModeButtons1.SetActive(false);
-            selectionModeButtons2.SetActive(true);
-            selectionModeButtons3.SetActive(false);
-            buildButton = selectionModeButtons2.transform.GetChild(0).gameObject;
-            note1Button = selectionModeButtons2.transform.GetChild(1).gameObject;
-            clearTileButton = selectionModeButtons2.transform.Find("Erase").gameObject;
-        }
-        else if (includeNote2Btn && !includeNote1Btn) {
-            selectionModeButtons0.SetActive(false);
-            selectionModeButtons1.SetActive(false);
-            selectionModeButtons2.SetActive(false);
-            selectionModeButtons3.SetActive(true);
-            buildButton = selectionModeButtons3.transform.GetChild(0).gameObject;
-            note2Button = selectionModeButtons3.transform.GetChild(1).gameObject;
-            clearTileButton = selectionModeButtons3.transform.Find("Erase").gameObject;
-        }
-    }
-
-    private void SetUndoRedoRemoveClearButtons(){
-        specialButtonsAll.SetActive(false);
-        specialButtonsUndoRedoRemove.SetActive(false);
-        specialButtonsUndoRedoClear.SetActive(false);
-        specialButtonsUndoRedo.SetActive(false);
-
-        if (StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
-            specialButtonsAll.SetActive(true);
-            removeAllOfNumberButton = specialButtonsAll.transform.GetChild(2).gameObject;
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsAll.transform.GetChild(0).gameObject, skin);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsAll.transform.GetChild(1).gameObject, skin);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsAll.transform.GetChild(2).gameObject, skin);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsAll.transform.GetChild(3).gameObject, skin);
-        }
-        else if (StaticVariables.includeUndoRedo && StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
-            specialButtonsUndoRedoRemove.SetActive(true);
-            removeAllOfNumberButton = specialButtonsUndoRedoRemove.transform.GetChild(2).gameObject;
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoRemove.transform.GetChild(0).gameObject, skin);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoRemove.transform.GetChild(1).gameObject, skin);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoRemove.transform.GetChild(2).gameObject, skin);
-        }
-        else if (StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && StaticVariables.includeClearPuzzle){
-            specialButtonsUndoRedoClear.SetActive(true);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoClear.transform.GetChild(0).gameObject, skin);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoClear.transform.GetChild(1).gameObject, skin);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedoClear.transform.GetChild(2).gameObject, skin);
-
-        }
-        else if (StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle){
-            specialButtonsUndoRedo.SetActive(true);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedo.transform.GetChild(0).gameObject, skin);
-            InterfaceFunctions.ColorPuzzleButtonOff(specialButtonsUndoRedo.transform.GetChild(1).gameObject, skin);
-
-        }
-        //there is no way to include remove and clear without undo/redo
-        //else if (!StaticVariables.includeUndoRedo && !StaticVariables.includeRemoveAllOfNumber && !StaticVariables.includeClearPuzzle) nothing has to happen here
-
+    public void SetAllButtonAvailability() {
+        buildButton.SetActive(true);
+        clearTileButton.SetActive(true);
+        note1Button.SetActive(StaticVariables.includeNotes1Button);
+        note2Button.SetActive(StaticVariables.includeNotes2Button);
+        undoButton.SetActive(StaticVariables.includeUndoRedo);
+        redoButton.SetActive(StaticVariables.includeUndoRedo);
+        removeAllOfNumberButton.SetActive(StaticVariables.includeRemoveAllOfNumber);
+        clearPuzzleButton.SetActive(StaticVariables.includeClearPuzzle);
+        
+        InterfaceFunctions.ColorPuzzleButtonOff(buildButton, skin);
+        InterfaceFunctions.ColorPuzzleButtonOff(clearTileButton, skin);
+        InterfaceFunctions.ColorPuzzleButtonOff(note1Button, skin);
+        InterfaceFunctions.ColorPuzzleButtonOff(note2Button, skin);
+        InterfaceFunctions.ColorPuzzleButtonOff(undoButton, skin);
+        InterfaceFunctions.ColorPuzzleButtonOff(redoButton, skin);
+        InterfaceFunctions.ColorPuzzleButtonOff(removeAllOfNumberButton, skin);
+        InterfaceFunctions.ColorPuzzleButtonOff(clearPuzzleButton, skin);
     }
 
     public void DrawFullPuzzle() {
@@ -624,7 +543,7 @@ public class GameManager : MonoBehaviour {
             foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.HighlightIfBuildingNumber(selectedNumber); }
         }
         clickTileAction = "Apply Selected";
-        DisselectBuildAndNotes();
+        DisselectBuildNotesAndEraseButtons();
         InterfaceFunctions.ColorPuzzleButtonOn(buildButton, skin);
         UpdateRemoveSelectedNumber();
         Save();
@@ -637,7 +556,7 @@ public class GameManager : MonoBehaviour {
             foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.HighlightIfBuildingNumber(selectedNumber); }
         }
         clickTileAction = "Toggle Note 1";
-        DisselectBuildAndNotes();
+        DisselectBuildNotesAndEraseButtons();
         InterfaceFunctions.ColorPuzzleButtonOn(note1Button, skin);
         UpdateRemoveSelectedNumber();
         Save();
@@ -650,7 +569,7 @@ public class GameManager : MonoBehaviour {
             foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.HighlightIfBuildingNumber(selectedNumber); }
         }
         clickTileAction = "Toggle Note 2";
-        DisselectBuildAndNotes();
+        DisselectBuildNotesAndEraseButtons();
 
         InterfaceFunctions.ColorPuzzleButtonOn(note2Button, skin);
         UpdateRemoveSelectedNumber();
@@ -661,20 +580,18 @@ public class GameManager : MonoBehaviour {
         //choose the clear tile selection mode
         clickTileAction = "Clear Tile";
         DisselectNumber(prevClickedNumButton);
-        DisselectBuildAndNotes();
+        DisselectBuildNotesAndEraseButtons();
         foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.UnhighlightBuildingNumber(); }
         InterfaceFunctions.ColorPuzzleButtonOn(clearTileButton, skin);
         UpdateRemoveSelectedNumber();
         Save();
     }
 
-    public void DisselectBuildAndNotes() {
+    public void DisselectBuildNotesAndEraseButtons() {
         //select the clear tile button and disselect the others
         InterfaceFunctions.ColorPuzzleButtonOff(buildButton, skin);
-        if (includeNote1Btn)
-            InterfaceFunctions.ColorPuzzleButtonOff(note1Button, skin);
-        if (includeNote2Btn)
-            InterfaceFunctions.ColorPuzzleButtonOff(note2Button, skin);
+        InterfaceFunctions.ColorPuzzleButtonOff(note1Button, skin);
+        InterfaceFunctions.ColorPuzzleButtonOff(note2Button, skin);
         InterfaceFunctions.ColorPuzzleButtonOff(clearTileButton, skin);
     }
     
@@ -761,12 +678,12 @@ public class GameManager : MonoBehaviour {
 
     public void HighlightBuildType() {
         //if the build type is set to be included, then highlight it. otherwise, highlight the build button
-        DisselectBuildAndNotes();
+        DisselectBuildNotesAndEraseButtons();
 
         GameObject button;
-        if (clickTileAction == "Toggle Note 1" && includeNote1Btn)
+        if (clickTileAction == "Toggle Note 1" && StaticVariables.includeNotes1Button)
             button = note1Button;
-        else if (clickTileAction == "Toggle Note 2" && includeNote2Btn)
+        else if (clickTileAction == "Toggle Note 2" && StaticVariables.includeNotes2Button)
             button = note2Button;
         else if (clickTileAction == "Clear Tile")
             button = clearTileButton;

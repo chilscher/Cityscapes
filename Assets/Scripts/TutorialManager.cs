@@ -45,7 +45,7 @@ public class TutorialManager{
         gameManager.puzzleGenerator.CreatePuzzle(3);
         gameManager.DrawFullPuzzle();
         gameManager.HideHints();
-        gameManager.SetSelectionModeButtons();
+        gameManager.SetAllButtonAvailability();
         gameManager.PushBuildButton();
         tutorialText = gameManager.tutorialTextBox;
         continueClue = gameManager.tutorialContinueClue;
