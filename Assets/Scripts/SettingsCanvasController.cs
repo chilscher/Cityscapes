@@ -74,7 +74,7 @@ public class SettingsCanvasController : MonoBehaviour {
         inviteButton.SetActive(!inviteButton.activeSelf);
     }
     public void PushInviteButton(){
-        System.Diagnostics.Process.Start(inviteLink);
+        Application.OpenURL(inviteLink);
     }
 
     // ---------------------------------------------------
