@@ -238,8 +238,10 @@ public class GameManager : MonoBehaviour {
     }
 
     private void CheckForKeyboardInputs(){
-        if (Input.GetKeyDown(KeyCode.Escape)) //not rebindable. also works for pushing the back button on a mobile device
-            PushMainMenuButton();
+        if (Input.GetKeyDown(KeyCode.Escape)){ //not rebindable. also works for pushing the back button on a mobile device
+            if (!StaticVariables.isTutorial || StaticVariables.hasBeatenTutorial)
+                PushMainMenuButton();
+        }
         if (StaticVariables.osType == StaticVariables.OSTypes.PC){
             if (Input.GetKeyDown(StaticVariables.keybindBuilding1)){
                 if (StaticVariables.isTutorial)
