@@ -63,7 +63,24 @@ public class StaticVariables{
     static public string whiteHex = "#ffffff";
     static public bool hasBeatenTutorial = false;
 
+    //keybinds
+    static public KeyCode keybindBuilding1 = KeyCode.Alpha1;
+    static public KeyCode keybindBuilding2 = KeyCode.Alpha2;
+    static public KeyCode keybindBuilding3 = KeyCode.Alpha3;
+    static public KeyCode keybindBuilding4 = KeyCode.Alpha4;
+    static public KeyCode keybindBuilding5 = KeyCode.Alpha5;
+    static public KeyCode keybindBuilding6 = KeyCode.Alpha6;
+    static public KeyCode keybindBuilding7 = KeyCode.Alpha7;
+    static public KeyCode keybindBuild = KeyCode.Q;
+    static public KeyCode keybindNote1 = KeyCode.W;
+    static public KeyCode keybindNote2 = KeyCode.E;
+    static public KeyCode keybindErase = KeyCode.R;
+    static public KeyCode keybindUndo = KeyCode.A;
+    static public KeyCode keybindRedo = KeyCode.S;
+    static public KeyCode keybindRemoveAll = KeyCode.D;
+    static public KeyCode keybindClearPuzzle = KeyCode.F;
 
+    //misc
     static public System.Random rand = new System.Random();
     static public int coins = 0;
     static public bool isApplicationLaunchingFirstTime = true;
@@ -72,6 +89,9 @@ public class StaticVariables{
     static public Transform tweenDummy;
     static public Image fadeImage;
     static public float gameVersionNumber = 2.5f;
+    public enum OSTypes {Mobile, PC};
+
+    static public OSTypes osType;
     
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {

@@ -230,11 +230,60 @@ public class GameManager : MonoBehaviour {
 
             StaticVariables.hasSavedPuzzleState = false;
             Save();
+            return;
         }
 
-        //if the player pushes the back button on their phone, go to the main menu. Identical to pushing the "Menu" button on-screen
-        if (Input.GetKeyDown(KeyCode.Escape))
+        CheckForKeyboardInputs();
+
+    }
+
+    private void CheckForKeyboardInputs(){
+        if (Input.GetKeyDown(KeyCode.Escape)) //not rebindable. also works for pushing the back button on a mobile device
             PushMainMenuButton();
+        if (StaticVariables.osType == StaticVariables.OSTypes.PC){
+            if (Input.GetKeyDown(StaticVariables.keybindBuilding1)){
+                if (StaticVariables.isTutorial)
+                    PushTutorialNumberButton(1);
+                else
+                    PushNumberButton(1);
+            }
+            if (Input.GetKeyDown(StaticVariables.keybindBuilding2)){
+                if (StaticVariables.isTutorial)
+                    PushTutorialNumberButton(2);
+                else
+                    PushNumberButton(2);
+            }
+            if (Input.GetKeyDown(StaticVariables.keybindBuilding3)){
+                if (StaticVariables.isTutorial)
+                    PushTutorialNumberButton(3);
+                else
+                    PushNumberButton(3);
+            }
+            if (Input.GetKeyDown(StaticVariables.keybindBuilding4) && size >= 4)
+                PushNumberButton(4);
+            if (Input.GetKeyDown(StaticVariables.keybindBuilding5) && size >= 5)
+                PushNumberButton(5);
+            if (Input.GetKeyDown(StaticVariables.keybindBuilding6) && size >= 6)
+                PushNumberButton(6);
+            if (Input.GetKeyDown(StaticVariables.keybindBuilding7) && size >= 7)
+                PushNumberButton(7);
+            if (Input.GetKeyDown(StaticVariables.keybindBuild))
+                PushBuildButton();
+            if (Input.GetKeyDown(StaticVariables.keybindNote1) && StaticVariables.includeNotes1Button)
+                PushNote1Button();
+            if (Input.GetKeyDown(StaticVariables.keybindNote2) && StaticVariables.includeNotes2Button)
+                PushNote2Button();
+            if (Input.GetKeyDown(StaticVariables.keybindErase))
+                PushEraseButton();
+            if (Input.GetKeyDown(StaticVariables.keybindUndo) && StaticVariables.includeUndoRedo)
+                PushUndoButton();
+            if (Input.GetKeyDown(StaticVariables.keybindRedo) && StaticVariables.includeUndoRedo)
+                PushRedoButton();
+            if (Input.GetKeyDown(StaticVariables.keybindRemoveAll) && StaticVariables.includeRemoveAllOfNumber)
+                PushRemoveAllButton();
+            if (Input.GetKeyDown(StaticVariables.keybindClearPuzzle) && StaticVariables.includeClearPuzzle)
+                PushClearPuzzleButton();
+        }
     }
 
     // ---------------------------------------------------

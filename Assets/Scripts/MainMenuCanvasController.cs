@@ -78,11 +78,11 @@ public class MainMenuCanvasController : MonoBehaviour {
             StaticVariables.unlockedSkins = new List<Skin> {skins[0]}; //set up the current unlocked skin list to only include the basic skin (now called "rural")
             SaveSystem.LoadGame();
             CheckForVersionUpdate();
+            DetermineOSType();
             StaticVariables.isApplicationLaunchingFirstTime = false;
         }
 
         //skip this temporarily for development
-        
         if (!StaticVariables.hasBeatenTutorial){
             StaticVariables.StopFade();
 
@@ -91,7 +91,6 @@ public class MainMenuCanvasController : MonoBehaviour {
             SceneManager.LoadScene("InPuzzle");
             return;
         }
-        
 
         //apply the current skin
         if (StaticVariables.skin)
@@ -108,6 +107,15 @@ public class MainMenuCanvasController : MonoBehaviour {
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT ARE USED TO UPDATE THE VISUALS FOR THE MAIN MENU SCENE
     // ---------------------------------------------------
+
+    private void DetermineOSType(){
+        StaticVariables.osType = Application.platform switch {
+            RuntimePlatform.Android => StaticVariables.OSTypes.Mobile,
+            RuntimePlatform.IPhonePlayer => StaticVariables.OSTypes.Mobile,
+            _ => StaticVariables.OSTypes.PC,
+        };
+        print("operating system type? " + StaticVariables.osType);
+    }
 
     private void ColorButtons() {
         //color all of the menu buttons to fit the current skin

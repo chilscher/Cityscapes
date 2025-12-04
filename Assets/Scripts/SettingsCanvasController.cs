@@ -31,6 +31,7 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject discordButton;
     public GameObject inviteButton;
     public string inviteLink = "https://discord.gg/KtARNGgaC8";
+    public GameObject keybindsButton;
 
     [Header("UI Elements")]
     public GameObject background;
@@ -45,6 +46,7 @@ public class SettingsCanvasController : MonoBehaviour {
         UpdateCurrentSkinText();
         ShowChooseSkinButton();
         ShowToggleUnlocksButton();
+        ShowKeybindButton();
         LoadSkin();
     }
     
@@ -110,7 +112,6 @@ public class SettingsCanvasController : MonoBehaviour {
             ContractToggleButtons();
         expandedTogglesButton = !expandedTogglesButton;
     }
-
 
     private void ExpandToggleButtons() {
         //expands the dropdowns beneath the "Toggle Unlocked Features" button    public GameObject notes1Button;
@@ -262,6 +263,7 @@ public class SettingsCanvasController : MonoBehaviour {
         ColorSettingsButton(discordButton, false);   
         ColorInviteButton();
         ColorSettingsButton(creditsButton, false);
+        ColorSettingsButton(keybindsButton, false);
     }
 
     private void ColorInviteButton(){
@@ -351,5 +353,13 @@ public class SettingsCanvasController : MonoBehaviour {
     private void ShowChooseSkinButton() {
         //only shows the "current skin" button if the player has purchased at least one skin.
         expandSkinButton.transform.parent.gameObject.SetActive(StaticVariables.unlockedSkins.Count >= 2);
+    }
+
+    // ---------------------------------------------------
+    //ALL OF THE FUNCTIONS THAT LET THE PLAYER CHANGE KEYBINDS
+    // ---------------------------------------------------
+    
+    private void ShowKeybindButton(){
+        keybindsButton.SetActive(StaticVariables.osType == StaticVariables.OSTypes.PC);
     }
 }
