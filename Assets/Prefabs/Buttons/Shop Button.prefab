@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 3989484230588971876}
   - component: {fileID: 5945272075878388477}
   - component: {fileID: 4877447422341854111}
+  - component: {fileID: 1401125867335471864}
   m_Layer: 0
   m_Name: Shop Button
   m_TagString: Untagged
@@ -184,6 +185,26 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1401125867335471864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 135942019097233253}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 6251716991957222727}
+  - {fileID: 7747908573201517590}
+  menuButtonBorders:
+  - {fileID: 5444751579929526520}
+  - {fileID: 7250896353591263883}
+  settingsOnTexts: []
+  settingsOffTexts: []
 --- !u!1 &305760714422721034
 GameObject:
   m_ObjectHideFlags: 0

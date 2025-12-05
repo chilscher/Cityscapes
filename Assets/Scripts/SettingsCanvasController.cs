@@ -1,6 +1,7 @@
 ﻿//for Cityscapes, copyright Cole Hilscher 2024
 
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -22,6 +23,7 @@ public class SettingsCanvasController : MonoBehaviour {
     [Header("Skin Selection")]
     public GameObject expandSkinButton;
     public GameObject currentSkinText;
+    public List<SkinApplicator> skinApplicators;
 
     [Header("Keybind Buttons")]
     public GameObject expandKeybindsButton;
@@ -36,29 +38,19 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject keybindNote1Button;
     public GameObject keybindNote2Button;
     public GameObject keybindEraseButton;
-
     public GameObject keybindUndoButton;
-
     public GameObject keybindRedoButton;
-
     public GameObject keybindRemoveAllButton;
-
     public GameObject keybindClearPuzzleButton;
 
     [Header("Misc Settings")]
     public GameObject hidePurchasedUpgradesButton;
-    public GameObject creditsButton;
-    public GameObject discordButton;
     public GameObject inviteButton;
     public string inviteLink = "https://discord.gg/KtARNGgaC8";
     public GameObject keybindsButton;
 
     [Header("UI Elements")]
     public GameObject background;
-    public GameObject menuButton;
-    public GameObject shopButton;
-    public Image popupBorder;
-    public Image popupInside;
     private bool expandedTogglesButton = false;
     private bool expandedKeybindsButton = false;
     private bool expandedSkinButton = false;
@@ -266,83 +258,15 @@ public class SettingsCanvasController : MonoBehaviour {
     // ---------------------------------------------------
     
     public void ChooseSkin(Skin s) {
-        //changes the selected skin
         StaticVariables.skin = s;
         LoadSkin();
-
         SaveSystem.SaveGame();
     }
     
     private void LoadSkin() {
-        //updates the visuals of the settings scene based on what skin is used
         background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
-        InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(shopButton, StaticVariables.skin);
-        popupBorder.color = StaticVariables.skin.popupBorder;
-        popupInside.color = StaticVariables.skin.popupInside;
-        ColorSkinButtons();
-        ColorToggleFeatureButtons();
-        ColorSettingsButton(hidePurchasedUpgradesButton);
-        ColorSettingsButton(discordButton, false);   
-        ColorInviteButton();
-        ColorSettingsButton(creditsButton, false);
-        //ColorSettingsButton(keybindsButton, false);
-        ColorKeybindButtons();
-    }
-
-    private void ColorInviteButton(){
-        inviteButton.transform.Find("Dropdown").Find("Dropdown Image").Find("Exterior").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
-        inviteButton.transform.Find("Dropdown").Find("Dropdown Image").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
-    }
-
-    private void ColorSkinButtons(){
-        InterfaceFunctions.ColorMenuButton(expandSkinButton, StaticVariables.skin);
-        expandSkinButton.transform.Find("On").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
-        GameObject parentBox = expandSkinButton.transform.parent.gameObject;
-        for (int i = 1; i < parentBox.transform.childCount; i++) {
-            Transform button = parentBox.transform.GetChild(i).transform.Find("Button");
-            button.Find("Dropdown Image").Find("Exterior").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
-            button.Find("Dropdown Image").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
-            button.Find("On").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
-            button.Find("Off").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
-        }
-    }
-
-    private void ColorSettingsButton(GameObject button, bool changeText=true){
-        InterfaceFunctions.ColorMenuButton(button.transform.GetChild(0).gameObject, StaticVariables.skin);
-        if (changeText){
-            button.transform.GetChild(0).Find("On").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
-            button.transform.GetChild(0).Find("Off").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
-        }
-    }
-
-    private void ColorToggleFeatureButtons(){
-        InterfaceFunctions.ColorMenuButton(expandTogglesButton, StaticVariables.skin);
-        //expandTogglesButton.transform.Find("On").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
-        GameObject parentBox = expandTogglesButton.transform.parent.gameObject;
-        for (int i = 1; i < parentBox.transform.childCount; i++) {
-            Transform button = parentBox.transform.GetChild(i).transform.Find("Button");
-            button.Find("Dropdown Image").Find("Exterior").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
-            button.Find("Dropdown Image").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
-            button.Find("On").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
-            button.Find("Off").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
-        }
-    }
-    private void ColorKeybindButtons(){
-        InterfaceFunctions.ColorMenuButton(expandKeybindsButton, StaticVariables.skin);
-        GameObject parentBox = expandKeybindsButton.transform.parent.gameObject;
-        for (int i = 1; i < parentBox.transform.childCount - 1; i++) {
-            Transform button = parentBox.transform.GetChild(i).transform.Find("Button");
-            button.Find("Dropdown Image").Find("Exterior").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
-            button.Find("Dropdown Image").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
-            button.Find("Valid Keybind").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
-            button.Find("No Keybind").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
-            button.Find("Press any key").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
-        }
-        GameObject restoreDefaultsButton = parentBox.transform.Find("Restore Defaults").Find("Button").gameObject;
-        restoreDefaultsButton.transform.Find("Dropdown Image").Find("Exterior").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
-        restoreDefaultsButton.transform.Find("Dropdown Image").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
-        restoreDefaultsButton.transform.Find("Click to change").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
+        foreach (SkinApplicator sa in skinApplicators)
+            sa.ApplySkin(StaticVariables.skin);
     }
 
     public void PushExpandSkinsButton() {

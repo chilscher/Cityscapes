@@ -1,32 +1,22 @@
 ﻿//for Cityscapes, copyright Cole Hilscher 2024
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
-using System;
 
 public class CreditsCanvasController : MonoBehaviour {
     //controls the credits canvas. Only one is used, and only on the credits scene.
 
-    //the following are properties taken from the skin
     public GameObject background;
-    public GameObject menuButton;
-    public GameObject settingsButton;
-    public Image popupBorder;
-    public Image popupInside;
+    public List<SkinApplicator> skinApplicators;
     
     
 
 
     private void Start() {
-        //apply the cosmetics from the current skin
         background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
-        InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
-        popupBorder.color = StaticVariables.skin.popupBorder;
-        popupInside.color = StaticVariables.skin.popupInside;
+        foreach (SkinApplicator sa in skinApplicators)
+            sa.ApplySkin(StaticVariables.skin);
     }
     
     private void Update() {

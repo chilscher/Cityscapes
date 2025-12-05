@@ -9,7 +9,7 @@ using DG.Tweening;
 public class ShopCanvasController : MonoBehaviour {
     //controls the shop canvas. Only one is used, and only on the shop scene.
 
-    //the following are the costs of the various upgrades. The actual values are set in the inspector
+    [Header("Shop Costs")]
     public int medCityPrice = 10;
     public int largeCityPrice = 40;
     public int hugeCityPrice = 100;
@@ -24,7 +24,7 @@ public class ShopCanvasController : MonoBehaviour {
     public int buildingQuantityStatusPrice = 10;
     public int fillNotesPrice = 50;
 
-    //the gameobjects used to display the player's coin amounts
+    [Header("Coin Display")]
     public Image coin1;
     public Image coin10;
     public Image coin100;
@@ -33,7 +33,7 @@ public class ShopCanvasController : MonoBehaviour {
     public Image coin100k;
     public Image coin1m;
     
-    //the following are the buttons that expand to show purchasable upgrades
+    [Header("Expanding Buttons")]
     public GameObject expandMedButton;
     public GameObject expandLargeButton;
     public GameObject expandHugeButton;
@@ -49,20 +49,16 @@ public class ShopCanvasController : MonoBehaviour {
     public GameObject expandFillNotesButton;
     private GameObject[] skinButtons; // a list of all skins. This will expand as more skins are added, and can be done entirely within the inspector
 
-    //the following text elements appear when the player has purchased all upgrades of a specific category
+    [Header("Unlocked All X")]
     public GameObject unlockedAllFeaturesText;
     public GameObject unlockedAllSkinsText;
     public GameObject skinPriceDisclaimerText;
 
-    //the following are headers placed above the "new features" (upgrades) category, and the "cosmetics" (skins) category.
-    //they are dynamically hidden if the player purchased all items of their category
+    [Header("Not Yet Unlocked All X")]
     public GameObject newFeaturesText;
     public GameObject cosmeticsText;
-
-    public GameObject scrollView; //the gameobject that is used to hide all buttons and text outside of the scrollable shop window
-    public Sprite[] numbers = new Sprite[10]; //the sprites for numbers 0-9
-
-    //the following are the various colors used in the shop's scrollable window. These do not vary with skin and are modified in the inspector
+        
+    [Header("Colors")]
     public string affordableCoinColor;
     public string unaffordableCoinColor;
     private Color affordableColor;
@@ -76,27 +72,24 @@ public class ShopCanvasController : MonoBehaviour {
     private Color noPurchaseButtonExteriorColor;
     private Color noPurchaseButtonInteriorColor;
 
-    private GameObject expandedButton; //which button is currently expanded
-    public GameObject skinsStart; //the object right before the first skin's expand-button
-    public GameObject skinsEnd; //the object right after the last skin's expand-button
-
-    //the following are properties taken from the skin
+    [Header("UI Elements")]
     public GameObject background;
-    public GameObject menuButton;
-    public GameObject settingsButton;
     private bool stopScrollRect = false;
-    public Image popupBorder;
-    public Image popupInside;
 
+    [Header("Skin Preview")]
     public GameObject skinPreview;
-    public Image skinPreviewBorder;
-    public Image skinPreviewInside;
     public Image skinPreviewBlackBackground;
     public Image skinPreviewImage;
     public Text skinPreviewText;
     private Color previewBackgroundColor;
-    public Transform skinPreviewBackButton;
 
+    [Header("Misc")]
+    public GameObject scrollView; //the gameobject that is used to hide all buttons and text outside of the scrollable shop window
+    public Sprite[] numbers = new Sprite[10]; //the sprites for numbers 0-9
+    private GameObject expandedButton; //which button is currently expanded
+    public GameObject skinsStart; //the object right before the first skin's expand-button
+    public GameObject skinsEnd; //the object right after the last skin's expand-button
+    public List<SkinApplicator> skinApplicators;
 
     private void Start() {
         //set some private variables based on elements edited by the inspector
@@ -168,42 +161,12 @@ public class ShopCanvasController : MonoBehaviour {
     // ---------------------------------------------------
 
     private void ApplySkin(){
-        background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
-        InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
-        popupBorder.color = StaticVariables.skin.popupBorder;
-        popupInside.color = StaticVariables.skin.popupInside;
-        skinPreviewBorder.color = StaticVariables.skin.popupBorder;
-        skinPreviewInside.color = StaticVariables.skin.popupInside;
-        skinPreviewBackButton.Find("Borders").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
-        skinPreviewBackButton.Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
-
-        ColorShopButton(expandResidentColorButton);
-        ColorShopButton(expandHighlightBuildingsButton);
-        ColorShopButton(expandMedButton);
-        ColorShopButton(expandUndoRedoButton);
-        ColorShopButton(expandNotes1Button);
-        ColorShopButton(expandRemoveAllButton);
-        ColorShopButton(expandClearButton);
-        ColorShopButton(expandLargeButton);
-        ColorShopButton(expandNotes2Button);
-        ColorShopButton(expandHugeButton);
-        ColorShopButton(expandMassiveButton);
-        ColorShopButton(expandBuildingQuantityStatusButton);
-        ColorShopButton(expandFillNotesButton);
-
-        foreach(GameObject go in skinButtons)
-            ColorShopButton(go.transform.GetChild(0).gameObject);
+        background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;        
+        foreach (SkinApplicator sa in skinApplicators)
+            sa.ApplySkin(StaticVariables.skin);
         
     }
 
-    private void ColorShopButton(GameObject button){
-        button.transform.GetChild(0).Find("Borders").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
-        button.transform.GetChild(0).Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
-        Transform dropdown = button.transform.parent.Find("Dropdown");
-        dropdown.Find("Dropdown Image").Find("Exterior").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
-        dropdown.Find("Dropdown Image").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
-    }
     public void DisplayCoinsAmount() {
         //show the amount of coins the player has in the top-right corner of the shop screen
         int value1 = StaticVariables.coins % 10;
@@ -332,11 +295,9 @@ public class ShopCanvasController : MonoBehaviour {
             unlockButton.transform.GetChild(0).Find("Interior").GetComponent<Image>().color = purchaseButtonInteriorColor;
             unlockButton.transform.GetChild(1).gameObject.SetActive(true);
         }
-
     }
 
     public void PushPreviewSkinButton(GameObject parent){
-        //background.GetComponent<Image>().sprite = InterfaceFunctions.GetSkinFromName(parent.name).mainMenuBackground;
         skinPreviewImage.sprite = InterfaceFunctions.GetSkinFromName(parent.name).mainMenuBackground;
         skinPreviewText.text = parent.name.ToUpper() + "\nSKIN PREVIEW";
 
@@ -380,7 +341,6 @@ public class ShopCanvasController : MonoBehaviour {
             ExpandSiblings(button);
         }
     }
-
 
     public void ExpandSiblings(GameObject button) {
         //sets all siblings of the chosen button to be active, and resizes the scroll view
@@ -734,12 +694,9 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.includeBuildingQuantityStatus = false;
         StaticVariables.includeRemoveButtonFillsNotes = false;
 
-        StaticVariables.unlockedSkins = new List<Skin>();
-        StaticVariables.unlockedSkins.Add(InterfaceFunctions.GetDefaultSkin());
+        StaticVariables.unlockedSkins = new List<Skin> { InterfaceFunctions.GetDefaultSkin() };
         StaticVariables.skin = InterfaceFunctions.GetDefaultSkin();
-        background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
-        InterfaceFunctions.ColorMenuButton(menuButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
+        ApplySkin();
         UpdateButtons();
     }
 
@@ -780,7 +737,6 @@ public class ShopCanvasController : MonoBehaviour {
         foreach (Skin skin in StaticVariables.allSkins) {
             if (skin != InterfaceFunctions.GetDefaultSkin() && !StaticVariables.unlockedSkins.Contains(skin))
                 StaticVariables.unlockedSkins.Add(skin);
-
         }
     }
 

@@ -306,6 +306,7 @@ GameObject:
   - component: {fileID: 74863922}
   - component: {fileID: 74863924}
   - component: {fileID: 74863923}
+  - component: {fileID: 74863925}
   m_Layer: 0
   m_Name: Popup Border
   m_TagString: Untagged
@@ -370,6 +371,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 74863921}
   m_CullTransparentMesh: 1
+--- !u!114 &74863925
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 74863921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides: []
+  menuButtonBorders: []
+  settingsOnTexts: []
+  settingsOffTexts: []
+  popupInsides:
+  - {fileID: 664663026}
+  popupBorders:
+  - {fileID: 74863923}
 --- !u!1 &75665620
 GameObject:
   m_ObjectHideFlags: 0
@@ -2130,6 +2151,7 @@ GameObject:
   - component: {fileID: 665290467}
   - component: {fileID: 665290469}
   - component: {fileID: 665290468}
+  - component: {fileID: 665290470}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -2222,6 +2244,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 665290466}
   m_CullTransparentMesh: 0
+--- !u!114 &665290470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665290466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 409316859}
+  menuButtonBorders:
+  - {fileID: 2057957431}
+  settingsOnTexts: []
+  settingsOffTexts: []
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &671683219
 GameObject:
   m_ObjectHideFlags: 0
@@ -3272,6 +3314,10 @@ MonoBehaviour:
   settingsButton: {fileID: 665290466}
   popupBorder: {fileID: 74863923}
   popupInside: {fileID: 664663026}
+  skinApplicators:
+  - {fileID: 1834266189}
+  - {fileID: 665290470}
+  - {fileID: 74863925}
 --- !u!4 &1104659261
 Transform:
   m_ObjectHideFlags: 0
@@ -3734,7 +3780,7 @@ GameObject:
   - component: {fileID: 1223470730}
   - component: {fileID: 1223470729}
   m_Layer: 0
-  m_Name: Icon (1)
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5315,6 +5361,7 @@ GameObject:
   - component: {fileID: 1834266186}
   - component: {fileID: 1834266188}
   - component: {fileID: 1834266187}
+  - component: {fileID: 1834266189}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -5335,7 +5382,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1835447201}
-  - {fileID: 2112997368}
   - {fileID: 1223470728}
   m_Father: {fileID: 1182900866}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5408,6 +5454,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1834266185}
   m_CullTransparentMesh: 0
+--- !u!114 &1834266189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834266185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 686099193}
+  menuButtonBorders:
+  - {fileID: 517673461}
+  settingsOnTexts: []
+  settingsOffTexts: []
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1835447200
 GameObject:
   m_ObjectHideFlags: 0
@@ -6440,85 +6506,6 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2102385500}
-  m_CullTransparentMesh: 0
---- !u!1 &2112997367
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2112997368}
-  - component: {fileID: 2112997370}
-  - component: {fileID: 2112997369}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &2112997368
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2112997367}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1834266186}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2112997369
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2112997367}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 7e8fde4043dcb834b9a9040106e35758, type: 3}
-    m_FontSize: 60
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 5
-    m_MaxSize: 74
-    m_Alignment: 4
-    m_AlignByGeometry: 1
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: H
---- !u!222 &2112997370
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2112997367}
   m_CullTransparentMesh: 0
 --- !u!1 &2125737435
 GameObject:

@@ -1236,6 +1236,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 70920964}
+  - component: {fileID: 70920965}
   m_Layer: 0
   m_Name: Frost
   m_TagString: Untagged
@@ -1264,6 +1265,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -1243.25}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &70920965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70920963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1686107914}
+  menuButtonBorders:
+  - {fileID: 2067154765}
+  settingsOnTexts:
+  - {fileID: 15023592}
+  settingsOffTexts:
+  - {fileID: 25414328}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &75665620
 GameObject:
   m_ObjectHideFlags: 0
@@ -1506,6 +1529,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 88536901}
+  - component: {fileID: 88536902}
   m_Layer: 0
   m_Name: Aurora
   m_TagString: Untagged
@@ -1534,6 +1558,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -434.75}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &88536902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 88536900}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 2113748398}
+  menuButtonBorders:
+  - {fileID: 860575982}
+  settingsOnTexts:
+  - {fileID: 1636903934}
+  settingsOffTexts:
+  - {fileID: 825223935}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &89106279
 GameObject:
   m_ObjectHideFlags: 0
@@ -1545,6 +1591,7 @@ GameObject:
   - component: {fileID: 89106280}
   - component: {fileID: 89106282}
   - component: {fileID: 89106281}
+  - component: {fileID: 89106283}
   m_Layer: 5
   m_Name: Shop
   m_TagString: Untagged
@@ -1637,6 +1684,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 89106279}
   m_CullTransparentMesh: 0
+--- !u!114 &89106283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 89106279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 966569315}
+  menuButtonBorders:
+  - {fileID: 1560654577}
+  settingsOnTexts: []
+  settingsOffTexts: []
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &93580148
 GameObject:
   m_ObjectHideFlags: 0
@@ -2366,6 +2433,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 154960751}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &154960754 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 154960751}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 154960753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &161457089
 GameObject:
   m_ObjectHideFlags: 0
@@ -2627,6 +2706,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 171935884}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &171935887 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 171935884}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 171935886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &174579146
 GameObject:
   m_ObjectHideFlags: 0
@@ -3773,6 +3864,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 251324461}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &251324464 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 251324461}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251324463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &262433140
 GameObject:
   m_ObjectHideFlags: 0
@@ -4484,6 +4587,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 364212859}
+  - component: {fileID: 364212860}
   m_Layer: 0
   m_Name: Rural
   m_TagString: Untagged
@@ -4512,6 +4616,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -2321.25}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &364212860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 364212858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 324100351}
+  menuButtonBorders:
+  - {fileID: 1738731351}
+  settingsOnTexts:
+  - {fileID: 1458969381}
+  settingsOffTexts:
+  - {fileID: 2052184794}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &365829902
 GameObject:
   m_ObjectHideFlags: 0
@@ -5568,85 +5694,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 422523684}
   m_CullTransparentMesh: 0
---- !u!1 &428933314
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 428933315}
-  - component: {fileID: 428933317}
-  - component: {fileID: 428933316}
-  m_Layer: 5
-  m_Name: Text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &428933315
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 428933314}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 645438306}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &428933316
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 428933314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 7e8fde4043dcb834b9a9040106e35758, type: 3}
-    m_FontSize: 60
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 5
-    m_MaxSize: 74
-    m_Alignment: 4
-    m_AlignByGeometry: 1
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: H
---- !u!222 &428933317
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 428933314}
-  m_CullTransparentMesh: 0
 --- !u!1 &443512223
 GameObject:
   m_ObjectHideFlags: 0
@@ -6248,6 +6295,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 504552491}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &504552494 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 504552491}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 504552493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &514955112
 GameObject:
   m_ObjectHideFlags: 0
@@ -6756,6 +6815,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 551720131}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &551720134 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 551720131}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 551720133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &558113597
 GameObject:
   m_ObjectHideFlags: 0
@@ -6919,6 +6990,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 580503492}
+  - component: {fileID: 580503493}
   m_Layer: 0
   m_Name: Cabin
   m_TagString: Untagged
@@ -6947,6 +7019,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -704.25}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &580503493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 580503491}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1468461510}
+  menuButtonBorders:
+  - {fileID: 412726463}
+  settingsOnTexts:
+  - {fileID: 981509060}
+  settingsOffTexts:
+  - {fileID: 245903128}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &589274637
 GameObject:
   m_ObjectHideFlags: 0
@@ -6956,6 +7050,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 589274638}
+  - component: {fileID: 589274639}
   m_Layer: 0
   m_Name: Fill Notes
   m_TagString: Untagged
@@ -6984,6 +7079,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -4397.5}
   m_SizeDelta: {x: 700, y: 565}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &589274639
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 589274637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 443763784}
+  menuButtonBorders:
+  - {fileID: 1047711514}
+  settingsOnTexts:
+  - {fileID: 1623760295}
+  settingsOffTexts:
+  - {fileID: 161457091}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &593258333
 GameObject:
   m_ObjectHideFlags: 0
@@ -6995,6 +7112,7 @@ GameObject:
   - component: {fileID: 593258334}
   - component: {fileID: 593258336}
   - component: {fileID: 593258335}
+  - component: {fileID: 593258337}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -7087,6 +7205,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 593258333}
   m_CullTransparentMesh: 0
+--- !u!114 &593258337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 593258333}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1131361718}
+  menuButtonBorders:
+  - {fileID: 943979579}
+  settingsOnTexts: []
+  settingsOffTexts: []
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &599903647
 GameObject:
   m_ObjectHideFlags: 0
@@ -7098,6 +7236,7 @@ GameObject:
   - component: {fileID: 599903648}
   - component: {fileID: 599903650}
   - component: {fileID: 599903649}
+  - component: {fileID: 599903651}
   m_Layer: 0
   m_Name: Popup Border
   m_TagString: Untagged
@@ -7162,6 +7301,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 599903647}
   m_CullTransparentMesh: 1
+--- !u!114 &599903651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 599903647}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides: []
+  menuButtonBorders: []
+  settingsOnTexts: []
+  settingsOffTexts: []
+  popupInsides:
+  - {fileID: 358445345}
+  popupBorders:
+  - {fileID: 599903649}
 --- !u!1 &601378027
 GameObject:
   m_ObjectHideFlags: 0
@@ -7251,6 +7410,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 603297192}
+  - component: {fileID: 603297193}
   m_Layer: 0
   m_Name: Shoreline
   m_TagString: Untagged
@@ -7279,6 +7439,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -2590.75}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &603297193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603297191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1279247911}
+  menuButtonBorders:
+  - {fileID: 2037443017}
+  settingsOnTexts:
+  - {fileID: 1086182293}
+  settingsOffTexts:
+  - {fileID: 1775998011}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &609469802
 GameObject:
   m_ObjectHideFlags: 0
@@ -7530,6 +7712,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 626868223}
+  - component: {fileID: 626868224}
   m_Layer: 0
   m_Name: Additional Note Type
   m_TagString: Untagged
@@ -7558,6 +7741,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -2767.5}
   m_SizeDelta: {x: 700, y: 535}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &626868224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 626868222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1590386580}
+  menuButtonBorders:
+  - {fileID: 1794523150}
+  settingsOnTexts:
+  - {fileID: 174579148}
+  settingsOffTexts:
+  - {fileID: 381795797}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &633053410
 GameObject:
   m_ObjectHideFlags: 0
@@ -7650,6 +7855,7 @@ GameObject:
   - component: {fileID: 645438306}
   - component: {fileID: 645438309}
   - component: {fileID: 645438307}
+  - component: {fileID: 645438310}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -7670,7 +7876,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1647981024}
-  - {fileID: 428933315}
   - {fileID: 1083272767}
   m_Father: {fileID: 1182900866}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7743,6 +7948,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 645438305}
   m_CullTransparentMesh: 0
+--- !u!114 &645438310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 645438305}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 758177503}
+  menuButtonBorders:
+  - {fileID: 1207502066}
+  settingsOnTexts: []
+  settingsOffTexts: []
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &653601823
 GameObject:
   m_ObjectHideFlags: 0
@@ -8966,6 +9191,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 775333130}
+  - component: {fileID: 775333131}
   m_Layer: 0
   m_Name: Resident Color
   m_TagString: Untagged
@@ -8994,6 +9220,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -542.5}
   m_SizeDelta: {x: 700, y: 485}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &775333131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775333129}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 848763350}
+  menuButtonBorders:
+  - {fileID: 1388427955}
+  settingsOnTexts:
+  - {fileID: 422523686}
+  settingsOffTexts:
+  - {fileID: 1254866441}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &776665681
 GameObject:
   m_ObjectHideFlags: 0
@@ -9564,6 +9812,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 812121252}
+  - component: {fileID: 812121253}
   m_Layer: 0
   m_Name: Castle
   m_TagString: Untagged
@@ -9592,6 +9841,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -973.7501}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &812121253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 812121251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1720691312}
+  menuButtonBorders:
+  - {fileID: 56422368}
+  settingsOnTexts:
+  - {fileID: 893379304}
+  settingsOffTexts:
+  - {fileID: 365829904}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &825223933
 GameObject:
   m_ObjectHideFlags: 0
@@ -10770,6 +11041,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 942867557}
+  - component: {fileID: 942867558}
   m_Layer: 0
   m_Name: Invite
   m_TagString: Untagged
@@ -10798,6 +11070,26 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -560}
   m_SizeDelta: {x: 700, y: 520}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &942867558
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 942867556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1849718267}
+  menuButtonBorders:
+  - {fileID: 2051467613}
+  settingsOnTexts: []
+  settingsOffTexts: []
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &943979577
 GameObject:
   m_ObjectHideFlags: 0
@@ -11442,6 +11734,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 977015026}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &977015029 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 977015026}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 977015028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &981509058
 GameObject:
   m_ObjectHideFlags: 0
@@ -11815,6 +12119,7 @@ GameObject:
   - component: {fileID: 1008842102}
   - component: {fileID: 1008842104}
   - component: {fileID: 1008842103}
+  - component: {fileID: 1008842105}
   m_Layer: 5
   m_Name: Expand Button
   m_TagString: Untagged
@@ -11836,7 +12141,6 @@ RectTransform:
   m_Children:
   - {fileID: 1628837521}
   - {fileID: 1993047772}
-  - {fileID: 2130198564}
   m_Father: {fileID: 1431532197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -11908,6 +12212,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1008842101}
   m_CullTransparentMesh: 0
+--- !u!114 &1008842105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1008842101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1808188820}
+  menuButtonBorders:
+  - {fileID: 1275499631}
+  settingsOnTexts: []
+  settingsOffTexts: []
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1013252000
 GameObject:
   m_ObjectHideFlags: 0
@@ -12369,7 +12693,7 @@ GameObject:
   - component: {fileID: 1083272769}
   - component: {fileID: 1083272768}
   m_Layer: 0
-  m_Name: Icon (1)
+  m_Name: Icon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12520,6 +12844,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1090941157}
+  - component: {fileID: 1090941158}
   m_Layer: 0
   m_Name: Highlight Buildings
   m_TagString: Untagged
@@ -12548,6 +12873,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -1042.5}
   m_SizeDelta: {x: 700, y: 515}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1090941158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1090941156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 2137031238}
+  menuButtonBorders:
+  - {fileID: 833505900}
+  settingsOnTexts:
+  - {fileID: 696057751}
+  settingsOffTexts:
+  - {fileID: 748305826}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1104659259
 GameObject:
   m_ObjectHideFlags: 0
@@ -12591,6 +12938,55 @@ MonoBehaviour:
   fillNotesButton: {fileID: 589274637}
   expandSkinButton: {fileID: 2058504187}
   currentSkinText: {fileID: 1249718426}
+  skinApplicators:
+  - {fileID: 1217099333}
+  - {fileID: 890842139811723796}
+  - {fileID: 1376340329}
+  - {fileID: 1643736546}
+  - {fileID: 1761740627}
+  - {fileID: 1576191140}
+  - {fileID: 1935152000}
+  - {fileID: 504552494}
+  - {fileID: 551720134}
+  - {fileID: 1458511229}
+  - {fileID: 154960754}
+  - {fileID: 1407033961}
+  - {fileID: 171935887}
+  - {fileID: 1943374644}
+  - {fileID: 977015029}
+  - {fileID: 251324464}
+  - {fileID: 7141517514696797448}
+  - {fileID: 2058504191}
+  - {fileID: 88536902}
+  - {fileID: 580503493}
+  - {fileID: 812121253}
+  - {fileID: 70920965}
+  - {fileID: 1558403340}
+  - {fileID: 1850320270}
+  - {fileID: 1286953153}
+  - {fileID: 364212860}
+  - {fileID: 603297193}
+  - {fileID: 1824385559}
+  - {fileID: 1714966195}
+  - {fileID: 1913933652}
+  - {fileID: 1990226241}
+  - {fileID: 1008842105}
+  - {fileID: 775333131}
+  - {fileID: 1090941158}
+  - {fileID: 1696026306}
+  - {fileID: 1126314874}
+  - {fileID: 626868224}
+  - {fileID: 2071245077}
+  - {fileID: 1601060494}
+  - {fileID: 589274639}
+  - {fileID: 1314507550}
+  - {fileID: 1138368697}
+  - {fileID: 1408057724}
+  - {fileID: 942867558}
+  - {fileID: 593258337}
+  - {fileID: 645438310}
+  - {fileID: 89106283}
+  - {fileID: 599903651}
   expandKeybindsButton: {fileID: 1217099329}
   keybindBuild1Button: {fileID: 890842139811723795}
   keybindBuild2Button: {fileID: 1376340328}
@@ -12614,10 +13010,6 @@ MonoBehaviour:
   inviteLink: https://discord.gg/KtARNGgaC8
   keybindsButton: {fileID: 2123844677}
   background: {fileID: 126467184}
-  menuButton: {fileID: 645438305}
-  shopButton: {fileID: 89106279}
-  popupBorder: {fileID: 599903649}
-  popupInside: {fileID: 358445345}
 --- !u!4 &1104659261
 Transform:
   m_ObjectHideFlags: 0
@@ -12974,6 +13366,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1126314873}
+  - component: {fileID: 1126314874}
   m_Layer: 0
   m_Name: Notetaking
   m_TagString: Untagged
@@ -13002,6 +13395,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -2242.5}
   m_SizeDelta: {x: 700, y: 515}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1126314874
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1126314872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1200715473}
+  menuButtonBorders:
+  - {fileID: 59834280}
+  settingsOnTexts:
+  - {fileID: 2032643153}
+  settingsOffTexts:
+  - {fileID: 674065467}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1128917169
 GameObject:
   m_ObjectHideFlags: 0
@@ -13317,6 +13732,7 @@ GameObject:
   - component: {fileID: 1138368694}
   - component: {fileID: 1138368696}
   - component: {fileID: 1138368695}
+  - component: {fileID: 1138368697}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -13411,6 +13827,28 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1138368693}
   m_CullTransparentMesh: 0
+--- !u!114 &1138368697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1138368693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1774448202}
+  menuButtonBorders:
+  - {fileID: 1737994811}
+  settingsOnTexts:
+  - {fileID: 151357336}
+  settingsOffTexts:
+  - {fileID: 830688287}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1139803584
 GameObject:
   m_ObjectHideFlags: 0
@@ -14137,6 +14575,7 @@ GameObject:
   - component: {fileID: 1217099330}
   - component: {fileID: 1217099332}
   - component: {fileID: 1217099331}
+  - component: {fileID: 1217099333}
   m_Layer: 5
   m_Name: Expand Button
   m_TagString: Untagged
@@ -14229,6 +14668,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1217099329}
   m_CullTransparentMesh: 0
+--- !u!114 &1217099333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217099329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 859102544}
+  menuButtonBorders:
+  - {fileID: 2069669696}
+  settingsOnTexts: []
+  settingsOffTexts: []
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1229998289
 GameObject:
   m_ObjectHideFlags: 0
@@ -14741,6 +15200,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1286953152}
+  - component: {fileID: 1286953153}
   m_Layer: 0
   m_Name: Mountains
   m_TagString: Untagged
@@ -14769,6 +15229,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -2051.75}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1286953153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1286953151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1851426803}
+  menuButtonBorders:
+  - {fileID: 249408760}
+  settingsOnTexts:
+  - {fileID: 1417706787}
+  settingsOffTexts:
+  - {fileID: 959129999}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1308570088
 GameObject:
   m_ObjectHideFlags: 0
@@ -14853,6 +15335,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1314507549}
+  - component: {fileID: 1314507550}
   m_Layer: 0
   m_Name: Clear Puzzle
   m_TagString: Untagged
@@ -14881,6 +15364,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -4947.5}
   m_SizeDelta: {x: 700, y: 535}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1314507550
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1314507548}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 394832301}
+  menuButtonBorders:
+  - {fileID: 2127976866}
+  settingsOnTexts:
+  - {fileID: 953822641}
+  settingsOffTexts:
+  - {fileID: 2128788719}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1318010676
 GameObject:
   m_ObjectHideFlags: 0
@@ -15547,6 +16052,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1376340326}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1376340329 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1376340326}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1376340328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &1385516998
 GameObject:
   m_ObjectHideFlags: 0
@@ -15879,6 +16396,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1407033958}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1407033961 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1407033958}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407033960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &1408057720
 GameObject:
   m_ObjectHideFlags: 0
@@ -15890,6 +16419,7 @@ GameObject:
   - component: {fileID: 1408057721}
   - component: {fileID: 1408057723}
   - component: {fileID: 1408057722}
+  - component: {fileID: 1408057724}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -15982,6 +16512,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408057720}
   m_CullTransparentMesh: 0
+--- !u!114 &1408057724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1408057720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 208878249}
+  menuButtonBorders:
+  - {fileID: 262433142}
+  settingsOnTexts: []
+  settingsOffTexts: []
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1417706785
 GameObject:
   m_ObjectHideFlags: 0
@@ -16574,6 +17124,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1458511226}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1458511229 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1458511226}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1458511228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &1458969379
 GameObject:
   m_ObjectHideFlags: 0
@@ -17236,6 +17798,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1558403339}
+  - component: {fileID: 1558403340}
   m_Layer: 0
   m_Name: Future
   m_TagString: Untagged
@@ -17264,6 +17827,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -1512.75}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1558403340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1558403338}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1872143682}
+  menuButtonBorders:
+  - {fileID: 755582596}
+  settingsOnTexts:
+  - {fileID: 809275623}
+  settingsOffTexts:
+  - {fileID: 1325509509}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1558772219
 GameObject:
   m_ObjectHideFlags: 0
@@ -17702,6 +18287,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1576191137}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1576191140 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1576191137}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1576191139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &1577943520
 GameObject:
   m_ObjectHideFlags: 0
@@ -17865,6 +18462,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1601060493}
+  - component: {fileID: 1601060494}
   m_Layer: 0
   m_Name: Remove Numbers
   m_TagString: Untagged
@@ -17893,6 +18491,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -3832.5}
   m_SizeDelta: {x: 700, y: 565}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1601060494
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601060492}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1152056182}
+  menuButtonBorders:
+  - {fileID: 1070115418}
+  settingsOnTexts:
+  - {fileID: 199104747}
+  settingsOffTexts:
+  - {fileID: 384168841}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1616471309
 GameObject:
   m_ObjectHideFlags: 0
@@ -18454,6 +19074,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1643736543}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1643736546 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1643736543}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1643736545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &1647981023
 GameObject:
   m_ObjectHideFlags: 0
@@ -18763,6 +19395,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1696026305}
+  - component: {fileID: 1696026306}
   m_Layer: 0
   m_Name: Building Amounts
   m_TagString: Untagged
@@ -18791,6 +19424,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -1642.5}
   m_SizeDelta: {x: 700, y: 685}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1696026306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1696026304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 480629058}
+  menuButtonBorders:
+  - {fileID: 835521762}
+  settingsOnTexts:
+  - {fileID: 1859679169}
+  settingsOffTexts:
+  - {fileID: 392781956}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1704849883
 GameObject:
   m_ObjectHideFlags: 0
@@ -18875,6 +19530,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1714966194}
+  - component: {fileID: 1714966195}
   m_Layer: 0
   m_Name: Undersea
   m_TagString: Untagged
@@ -18903,6 +19559,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -3129.75}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1714966195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714966193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1616471311}
+  menuButtonBorders:
+  - {fileID: 105148933}
+  settingsOnTexts:
+  - {fileID: 54255639}
+  settingsOffTexts:
+  - {fileID: 548984951}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1720691310
 GameObject:
   m_ObjectHideFlags: 0
@@ -19571,6 +20249,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1761740624}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1761740627 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1761740624}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761740626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &1774448200
 GameObject:
   m_ObjectHideFlags: 0
@@ -20038,6 +20728,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1824385558}
+  - component: {fileID: 1824385559}
   m_Layer: 0
   m_Name: Space
   m_TagString: Untagged
@@ -20066,6 +20757,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -2860.25}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1824385559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824385557}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 514955114}
+  menuButtonBorders:
+  - {fileID: 1358041020}
+  settingsOnTexts:
+  - {fileID: 1925540016}
+  settingsOffTexts:
+  - {fileID: 45717124}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1840522512
 GameObject:
   m_ObjectHideFlags: 0
@@ -20229,6 +20942,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1850320269}
+  - component: {fileID: 1850320270}
   m_Layer: 0
   m_Name: Jungle
   m_TagString: Untagged
@@ -20257,6 +20971,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -1782.25}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1850320270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1850320268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 2026191062}
+  menuButtonBorders:
+  - {fileID: 10011628}
+  settingsOnTexts:
+  - {fileID: 902485821}
+  settingsOffTexts:
+  - {fileID: 728394233}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1851426801
 GameObject:
   m_ObjectHideFlags: 0
@@ -20914,6 +21650,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1913933651}
+  - component: {fileID: 1913933652}
   m_Layer: 0
   m_Name: Urban
   m_TagString: Untagged
@@ -20942,6 +21679,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -3399.25}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1913933652
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913933650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 723323384}
+  menuButtonBorders:
+  - {fileID: 558113599}
+  settingsOnTexts:
+  - {fileID: 1737460520}
+  settingsOffTexts:
+  - {fileID: 3234902}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1925540014
 GameObject:
   m_ObjectHideFlags: 0
@@ -21243,6 +22002,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1935151997}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1935152000 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1935151997}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935151999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1001 &1943374641
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21388,6 +22159,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1943374641}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1943374644 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 1943374641}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1943374643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &1954673027
 GameObject:
   m_ObjectHideFlags: 0
@@ -21706,6 +22489,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1990226240}
+  - component: {fileID: 1990226241}
   m_Layer: 0
   m_Name: Wildflowers
   m_TagString: Untagged
@@ -21734,6 +22518,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -3668.75}
   m_SizeDelta: {x: 700, y: 269.5}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1990226241
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990226239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1139803586}
+  menuButtonBorders:
+  - {fileID: 265753755}
+  settingsOnTexts:
+  - {fileID: 80730836}
+  settingsOffTexts:
+  - {fileID: 104417863}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &1993047771
 GameObject:
   m_ObjectHideFlags: 0
@@ -22897,6 +23703,7 @@ GameObject:
   - component: {fileID: 2058504188}
   - component: {fileID: 2058504190}
   - component: {fileID: 2058504189}
+  - component: {fileID: 2058504191}
   m_Layer: 5
   m_Name: Expand Button
   m_TagString: Untagged
@@ -22990,6 +23797,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2058504187}
   m_CullTransparentMesh: 0
+--- !u!114 &2058504191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2058504187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 609469804}
+  menuButtonBorders:
+  - {fileID: 965824285}
+  settingsOnTexts:
+  - {fileID: 1249718428}
+  settingsOffTexts: []
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &2066641597
 GameObject:
   m_ObjectHideFlags: 0
@@ -23255,6 +24083,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2071245076}
+  - component: {fileID: 2071245077}
   m_Layer: 0
   m_Name: Undo Redo
   m_TagString: Untagged
@@ -23283,6 +24112,28 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -3292.5}
   m_SizeDelta: {x: 700, y: 515}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2071245077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2071245075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 1657619801}
+  menuButtonBorders:
+  - {fileID: 278885773}
+  settingsOnTexts:
+  - {fileID: 1879069723}
+  settingsOffTexts:
+  - {fileID: 2124724427}
+  popupInsides: []
+  popupBorders: []
 --- !u!1 &2075709549
 GameObject:
   m_ObjectHideFlags: 0
@@ -24167,87 +25018,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2128788717}
   m_CullTransparentMesh: 0
---- !u!1 &2130198563
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2130198564}
-  - component: {fileID: 2130198566}
-  - component: {fileID: 2130198565}
-  m_Layer: 5
-  m_Name: On
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!224 &2130198564
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130198563}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1008842102}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.025024414, y: -43.600006}
-  m_SizeDelta: {x: 0, y: -75.3}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2130198565
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130198563}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.10746708, g: 0.3301887, b: 0.13979006, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 12800000, guid: 7e8fde4043dcb834b9a9040106e35758, type: 3}
-    m_FontSize: 40
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 120
-    m_Alignment: 4
-    m_AlignByGeometry: 1
-    m_RichText: 0
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 'CURRENT SKIN:
-
-    MOUNTAINS'
---- !u!222 &2130198566
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130198563}
-  m_CullTransparentMesh: 0
 --- !u!1 &2137031236
 GameObject:
   m_ObjectHideFlags: 0
@@ -24491,6 +25261,18 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 890842139811723794}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &890842139811723796 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
+    type: 3}
+  m_PrefabInstance: {fileID: 890842139811723794}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890842139811723795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!222 &948429368872536806
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -24786,6 +25568,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7141517514696797447}
+  - component: {fileID: 7141517514696797448}
   m_Layer: 0
   m_Name: Restore Defaults
   m_TagString: Untagged
@@ -24840,6 +25623,27 @@ RectTransform:
   m_AnchoredPosition: {x: 385, y: -6655}
   m_SizeDelta: {x: 700, y: 410}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &7141517514696797448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5945702325050401453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 8454704253026636593}
+  menuButtonBorders:
+  - {fileID: 7906372795829326962}
+  settingsOnTexts: []
+  settingsOffTexts:
+  - {fileID: 1023607381182783792}
+  popupInsides: []
+  popupBorders: []
 --- !u!224 &7613634630808129904
 RectTransform:
   m_ObjectHideFlags: 0

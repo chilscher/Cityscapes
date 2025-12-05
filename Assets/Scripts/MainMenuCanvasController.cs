@@ -9,23 +9,13 @@ using UnityEngine.SceneManagement;
 public class MainMenuCanvasController : MonoBehaviour {
     //controls the main menu canvas. Only one is used, and only on the main menu scene.
 
-    //buttons, and children of buttons, that the player interacts with from the main menu
-    [Header("UI Elements to color")]
+    [Header("Non-City Buttons")]
     public GameObject shopButton;
     public GameObject tutorialButton;
     public GameObject largeCenterTutorialButton;
     public GameObject settingsButton;
-    public GameObject smallCityButton;
-    public GameObject mediumCityButton;
-    public GameObject largeCityButton;
-    public GameObject hugeCityButton;
-    public GameObject massiveCityButton;
-    public GameObject returnToPuzzleButton;
-    public GameObject abandonPuzzleButton;
-    public Image progressPopupBorder;
-    public Image progressPopupInside;
 
-    [Header("Everything else")]
+    [Header("Misc")]
     public GameObject smallShadow;
     public GameObject mediumShadow;
     public GameObject largeShadow;
@@ -59,12 +49,9 @@ public class MainMenuCanvasController : MonoBehaviour {
     public GameObject abandonLarge;
     public GameObject abandonHuge;
     public GameObject abandonMassive;
-
     public GameObject updatePopup;
     public Text updatePopupText;
-    public GameObject confirmUpdateButton;
-    public Image updatePopupBorder;
-    public Image updatePopupInside;
+    public List<SkinApplicator> skinApplicators;
 
     public Skin defaultSkin; //the default skin used when the player boots up the game for the first time
 
@@ -92,10 +79,7 @@ public class MainMenuCanvasController : MonoBehaviour {
             return;
         }
 
-        //apply the current skin
-        if (StaticVariables.skin)
-            background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
-        ColorButtons();
+        LoadSkin();
 
         if (!updatePopup.activeSelf){
             ShowReturnAbandon();
@@ -117,28 +101,10 @@ public class MainMenuCanvasController : MonoBehaviour {
         print("operating system type? " + StaticVariables.osType);
     }
 
-    private void ColorButtons() {
-        //color all of the menu buttons to fit the current skin
-        InterfaceFunctions.ColorMenuButton(smallCityButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(mediumCityButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(largeCityButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(hugeCityButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(massiveCityButton, StaticVariables.skin);
-
-        InterfaceFunctions.ColorMenuButton(returnToPuzzleButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(abandonPuzzleButton, StaticVariables.skin);
-
-        progressPopupBorder.color = StaticVariables.skin.popupBorder;
-        progressPopupInside.color = StaticVariables.skin.popupInside;
-
-        InterfaceFunctions.ColorMenuButton(confirmUpdateButton, StaticVariables.skin);
-        updatePopupBorder.color = StaticVariables.skin.popupBorder;
-        updatePopupInside.color = StaticVariables.skin.popupInside;
-
-        InterfaceFunctions.ColorMenuButton(shopButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(tutorialButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(settingsButton, StaticVariables.skin);
-        InterfaceFunctions.ColorMenuButton(largeCenterTutorialButton, StaticVariables.skin);
+    private void LoadSkin() {
+        background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
+        foreach (SkinApplicator sa in skinApplicators)
+            sa.ApplySkin(StaticVariables.skin);
     }
 
     private void ShowReturnAbandon() {

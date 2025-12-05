@@ -289,7 +289,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 385, y: -500}
+  m_AnchoredPosition: {x: 385, y: -480}
   m_SizeDelta: {x: 700, y: 360}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &279132861461963544
@@ -868,6 +868,7 @@ GameObject:
   - component: {fileID: 9004468785262086472}
   - component: {fileID: 632242015646611391}
   - component: {fileID: 4354028912420059510}
+  - component: {fileID: 1621037387143691084}
   m_Layer: 0
   m_Name: Shop Button - Skin
   m_TagString: Untagged
@@ -961,6 +962,26 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &1621037387143691084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3519028815663426378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 927652329389508592}
+  - {fileID: 166817582238024328}
+  menuButtonBorders:
+  - {fileID: 2706657124019576313}
+  - {fileID: 7981027422950869416}
+  settingsOnTexts: []
+  settingsOffTexts: []
 --- !u!1 &3669109545374828852
 GameObject:
   m_ObjectHideFlags: 0

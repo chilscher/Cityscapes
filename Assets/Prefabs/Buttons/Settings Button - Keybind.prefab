@@ -694,6 +694,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4665070477233338190}
+  - component: {fileID: 4337414784264885139}
   m_Layer: 0
   m_Name: Settings Button - Keybind
   m_TagString: Untagged
@@ -722,6 +723,27 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 700, y: 410}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4337414784264885139
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8152936397809645796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
+  menuButtonInsides:
+  - {fileID: 6265430737369893240}
+  menuButtonBorders:
+  - {fileID: 5629350677057900091}
+  settingsOnTexts:
+  - {fileID: 9004910558140638317}
+  settingsOffTexts:
+  - {fileID: 4648979039019163955}
+  - {fileID: 1273067367505927998}
 --- !u!1 &9015019915062274236
 GameObject:
   m_ObjectHideFlags: 0

@@ -52,11 +52,10 @@ public class GameManager : MonoBehaviour {
     public GameObject settingsButton;
 
     [Header("Building Quantity Alerts")]
-
-    [HideInInspector]
-    public GameObject[] numberButtons;
     public GameObject[] numberButtonCorrectQuantities;
     public GameObject[] numberButtonTooManyQuantities;
+    [HideInInspector]
+    public GameObject[] numberButtons;
     
     [Header("Tutorial Stuff")]
     public TutorialManager tutorialManager;
@@ -94,26 +93,17 @@ public class GameManager : MonoBehaviour {
     public GameObject hugeCityArt;
     public GameObject massiveCityArt;
     public Text anotherPuzzleText;
-    public GameObject winPopupMenuButton;
-    public GameObject winPopupShopButton;
-    public GameObject winPopupSettingsButton;
-    public GameObject winPopupPuzzleButton;
-    public Image winPopupBorder;
-    public Image winPopupInterior;
     public Image winBlackSprite;
     public GameObject winPopup;
     [Header("Misc")]
     public bool showBuildings;
-    public Color notEnoughQuantity;
-    public Color rightAmountQuantity;
-    public Color tooMuchQuantity;
+    public List<SkinApplicator> skinApplicators;
 
     
     //storing what the player is trying to do
     public enum ClickTileActions {Build, ToggleNote1, ToggleNote2, Erase};
     [HideInInspector]
     public ClickTileActions clickTileAction;
-    //public string clickTileAction = "Apply Selected"; //what happens when you click a building tile - either toggle a building, toggle a note1, toggle a note2, or clear the tile
     [HideInInspector]
     public int selectedNumber = 0; //the number to place, either as a building or note
     private GameObject prevClickedNumButton; //when the player clicks the erase button, the selected number button is disselected. When they click any other tool, the previous number is selected again
@@ -131,10 +121,9 @@ public class GameManager : MonoBehaviour {
             skin = basicSkin;
 
         size = StaticVariables.size;
-
         HideNumberButtons();
-
-        ColorMenuButton();
+        foreach (SkinApplicator sa in skinApplicators)
+            sa.ApplySkin(skin);
 
         if (StaticVariables.isTutorial) { //set up the tutorial. uses tutorialmanager
             originalPuzzleScale = puzzlePositioning.transform.localScale.x;
@@ -145,7 +134,6 @@ public class GameManager : MonoBehaviour {
             tutorialParent.transform.Find("Menu").gameObject.SetActive(StaticVariables.hasBeatenTutorial);
             tutorialParent.transform.Find("Background").GetComponent<Image>().sprite = skin.puzzleBackground;
             tutorialParent.transform.Find("Tutorial Text Box").Find("Interior").GetComponent<Image>().color = skin.popupInside;
-            InterfaceFunctions.ColorMenuButton(tutorialParent.transform.Find("Menu").gameObject, skin);
 
             tutorialManager = new TutorialManager();
             tutorialManager.gameManager = this;
@@ -174,13 +162,6 @@ public class GameManager : MonoBehaviour {
             if (clickTileAction == ClickTileActions.Erase) { DisselectNumber(prevClickedNumButton); }
             HighlightBuildType();
             puzzleBackground.GetComponent<Image>().sprite = skin.puzzleBackground;
-            InterfaceFunctions.ColorMenuButton(winPopupMenuButton, skin);
-            InterfaceFunctions.ColorMenuButton(winPopupShopButton, skin);
-            InterfaceFunctions.ColorMenuButton(winPopupSettingsButton, skin);
-            InterfaceFunctions.ColorMenuButton(winPopupPuzzleButton, skin);
-            
-            winPopupBorder.color = skin.popupBorder;
-            winPopupInterior.color = skin.popupInside;
 
             //set up the win popup process
             winParent.SetActive(false);
@@ -234,7 +215,6 @@ public class GameManager : MonoBehaviour {
         }
 
         CheckForKeyboardInputs();
-
     }
 
     private void CheckForKeyboardInputs(){
@@ -428,10 +408,7 @@ public class GameManager : MonoBehaviour {
         corner.transform.localScale *= scale;
         corner.transform.Rotate(new Vector3(0, 0, rot));
         corner.transform.SetParent(parent);
-
-
         corner.GetComponent<Image>().color = skin.street;
-
 
         Vector3 pos = corner.transform.localPosition;
         pos.z = 0;
