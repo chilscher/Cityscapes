@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class SettingsCanvasController : MonoBehaviour {
     public GameObject scrollView; //the gameobject that is used to hide all buttons and text outside of the scrollable shop window
     [Header("Toggle Unlocked Features")]
-    private bool expandedTogglesButton = false;
     public GameObject expandTogglesButton;
     public GameObject notes1Button;
     public GameObject notes2Button;
@@ -21,9 +20,30 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject fillNotesButton;
 
     [Header("Skin Selection")]
-    private bool expandedSkinButton = false;
     public GameObject expandSkinButton;
     public GameObject currentSkinText;
+
+    [Header("Keybind Buttons")]
+    public GameObject expandKeybindsButton;
+    public GameObject keybindBuild1Button;
+    public GameObject keybindBuild2Button;
+    public GameObject keybindBuild3Button;
+    public GameObject keybindBuild4Button;
+    public GameObject keybindBuild5Button;
+    public GameObject keybindBuild6Button;
+    public GameObject keybindBuild7Button;
+    public GameObject keybindBuildButton;
+    public GameObject keybindNote1Button;
+    public GameObject keybindNote2Button;
+    public GameObject keybindEraseButton;
+
+    public GameObject keybindUndoButton;
+
+    public GameObject keybindRedoButton;
+
+    public GameObject keybindRemoveAllButton;
+
+    public GameObject keybindClearPuzzleButton;
 
     [Header("Misc Settings")]
     public GameObject hidePurchasedUpgradesButton;
@@ -39,6 +59,9 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject shopButton;
     public Image popupBorder;
     public Image popupInside;
+    private bool expandedTogglesButton = false;
+    private bool expandedKeybindsButton = false;
+    private bool expandedSkinButton = false;
 
     private void Start() {
         SetCurrentToggleTexts();
@@ -263,7 +286,8 @@ public class SettingsCanvasController : MonoBehaviour {
         ColorSettingsButton(discordButton, false);   
         ColorInviteButton();
         ColorSettingsButton(creditsButton, false);
-        ColorSettingsButton(keybindsButton, false);
+        //ColorSettingsButton(keybindsButton, false);
+        ColorKeybindButtons();
     }
 
     private void ColorInviteButton(){
@@ -303,6 +327,22 @@ public class SettingsCanvasController : MonoBehaviour {
             button.Find("On").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
             button.Find("Off").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
         }
+    }
+    private void ColorKeybindButtons(){
+        InterfaceFunctions.ColorMenuButton(expandKeybindsButton, StaticVariables.skin);
+        GameObject parentBox = expandKeybindsButton.transform.parent.gameObject;
+        for (int i = 1; i < parentBox.transform.childCount - 1; i++) {
+            Transform button = parentBox.transform.GetChild(i).transform.Find("Button");
+            button.Find("Dropdown Image").Find("Exterior").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
+            button.Find("Dropdown Image").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
+            button.Find("Valid Keybind").GetComponent<Text>().color = StaticVariables.skin.settingsText_On;
+            button.Find("No Keybind").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
+            button.Find("Press any key").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
+        }
+        GameObject restoreDefaultsButton = parentBox.transform.Find("Restore Defaults").Find("Button").gameObject;
+        restoreDefaultsButton.transform.Find("Dropdown Image").Find("Exterior").GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
+        restoreDefaultsButton.transform.Find("Dropdown Image").Find("Interior").GetComponent<Image>().color = StaticVariables.skin.menuButtonInside;
+        restoreDefaultsButton.transform.Find("Click to change").GetComponent<Text>().color = StaticVariables.skin.settingsText_Off;
     }
 
     public void PushExpandSkinsButton() {
@@ -361,5 +401,27 @@ public class SettingsCanvasController : MonoBehaviour {
     
     private void ShowKeybindButton(){
         keybindsButton.SetActive(StaticVariables.osType == StaticVariables.OSTypes.PC);
+    }
+
+    public void PushExpandKeybindsButton() {
+        if (!expandedKeybindsButton)
+            ExpandKeybindButtons();
+        else 
+            ContractKeybindButtons();
+        expandedKeybindsButton = !expandedKeybindsButton;
+    }
+
+    private void ExpandKeybindButtons() {
+        GameObject parentBox = expandKeybindsButton.transform.parent.gameObject;
+        for (int i = 1; i < parentBox.transform.childCount; i++) {
+            parentBox.transform.GetChild(i).gameObject.SetActive(true);
+        }
+    }
+
+    private void ContractKeybindButtons() {
+        GameObject parentBox = expandKeybindsButton.transform.parent.gameObject;
+        for (int i = 1; i < parentBox.transform.childCount; i++) {
+            parentBox.transform.GetChild(i).gameObject.SetActive(false);
+        }
     }
 }
