@@ -695,6 +695,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4665070477233338190}
   - component: {fileID: 4337414784264885139}
+  - component: {fileID: 3347295197955329597}
   m_Layer: 0
   m_Name: Settings Button - Keybind
   m_TagString: Untagged
@@ -744,6 +745,25 @@ MonoBehaviour:
   settingsOffTexts:
   - {fileID: 4648979039019163955}
   - {fileID: 1273067367505927998}
+  popupInsides: []
+  popupBorders: []
+--- !u!114 &3347295197955329597
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8152936397809645796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
+  currentValidKeybindText: {fileID: 9004910558140638317}
+  validKeybind: {fileID: 5761727110435511934}
+  noKeybind: {fileID: 3222345396722277365}
+  clickToChange: {fileID: 649010224604748634}
+  pressAnyKey: {fileID: 6068034122148815901}
 --- !u!1 &9015019915062274236
 GameObject:
   m_ObjectHideFlags: 0

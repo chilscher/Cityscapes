@@ -2406,6 +2406,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushNote2KeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -2427,19 +2432,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 154960751}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &154960753 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &154960753 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 154960751}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &154960754 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 154960751}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 154960753}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -2679,6 +2690,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushUndoKeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -2700,19 +2716,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 171935884}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &171935886 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &171935886 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 171935884}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &171935887 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 171935884}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 171935886}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -3837,6 +3859,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushClearPuzzleKeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -3858,19 +3885,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 251324461}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &251324463 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &251324463 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 251324461}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &251324464 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 251324461}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 251324463}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -6268,6 +6301,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushBuilding7KeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -6289,19 +6327,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 504552491}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &504552493 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &504552493 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 504552491}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &504552494 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 504552491}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 504552493}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -6788,6 +6832,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushBuildKeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -6809,19 +6858,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 551720131}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &551720133 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &551720133 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 551720131}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &551720134 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 551720131}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 551720133}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -11707,6 +11762,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushRemoveAllKeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -11728,19 +11788,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 977015026}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &977015028 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &977015028 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 977015026}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &977015029 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 977015026}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 977015028}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -13004,8 +13070,6 @@ MonoBehaviour:
   keybindRemoveAllButton: {fileID: 977015028}
   keybindClearPuzzleButton: {fileID: 251324463}
   hidePurchasedUpgradesButton: {fileID: 1558772219}
-  creditsButton: {fileID: 377936064}
-  discordButton: {fileID: 201917975}
   inviteButton: {fileID: 942867556}
   inviteLink: https://discord.gg/KtARNGgaC8
   keybindsButton: {fileID: 2123844677}
@@ -16025,6 +16089,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushBuilding2KeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -16046,19 +16115,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1376340326}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1376340328 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &1376340328 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1376340326}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &1376340329 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1376340326}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1376340328}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -16369,6 +16444,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushEraseKeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -16390,19 +16470,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1407033958}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1407033960 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &1407033960 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1407033958}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &1407033961 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1407033958}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1407033960}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -17097,6 +17183,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushNote1KeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -17118,19 +17209,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1458511226}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1458511228 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &1458511228 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1458511226}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &1458511229 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1458511226}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1458511228}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -18260,6 +18357,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushBuilding5KeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -18281,19 +18383,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1576191137}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1576191139 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &1576191139 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1576191137}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &1576191140 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1576191137}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1576191139}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -19047,6 +19155,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushBuilding3KeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -19068,19 +19181,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1643736543}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1643736545 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &1643736545 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1643736543}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &1643736546 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1643736543}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1643736545}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -20222,6 +20341,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushBuilding4KeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -20243,19 +20367,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1761740624}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1761740626 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &1761740626 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1761740624}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &1761740627 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1761740624}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1761740626}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -21975,6 +22105,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushBuilding6KeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -21996,19 +22131,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1935151997}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1935151999 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &1935151999 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1935151997}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &1935152000 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1935151997}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1935151999}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -22132,6 +22273,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushRedoKeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -22153,19 +22299,25 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1943374641}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1943374643 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &1943374643 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1943374641}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &1943374644 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 1943374641}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1943374643}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -25240,6 +25392,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1104659260}
+    - target: {fileID: 6212935157992159429, guid: a790b6a3555d28a45b553a564c6a20bc,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PushBuilding1KeybindButton
+      objectReference: {fileID: 0}
     - target: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
         type: 3}
       propertyPath: m_Name
@@ -25255,19 +25412,25 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a790b6a3555d28a45b553a564c6a20bc, type: 3}
---- !u!1 &890842139811723795 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8152936397809645796, guid: a790b6a3555d28a45b553a564c6a20bc,
+--- !u!114 &890842139811723795 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3347295197955329597, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 890842139811723794}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bdf69cb3d9440241808ae19913ab13c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KeybindAdjuster
 --- !u!114 &890842139811723796 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4337414784264885139, guid: a790b6a3555d28a45b553a564c6a20bc,
     type: 3}
   m_PrefabInstance: {fileID: 890842139811723794}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 890842139811723795}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
@@ -25801,7 +25964,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1104659260}
         m_TargetAssemblyTypeName: SettingsCanvasController, Assembly-CSharp
-        m_MethodName: PushResidentColorButton
+        m_MethodName: PushResetKeybindsButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

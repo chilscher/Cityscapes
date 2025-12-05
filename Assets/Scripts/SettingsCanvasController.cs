@@ -27,21 +27,21 @@ public class SettingsCanvasController : MonoBehaviour {
 
     [Header("Keybind Buttons")]
     public GameObject expandKeybindsButton;
-    public GameObject keybindBuild1Button;
-    public GameObject keybindBuild2Button;
-    public GameObject keybindBuild3Button;
-    public GameObject keybindBuild4Button;
-    public GameObject keybindBuild5Button;
-    public GameObject keybindBuild6Button;
-    public GameObject keybindBuild7Button;
-    public GameObject keybindBuildButton;
-    public GameObject keybindNote1Button;
-    public GameObject keybindNote2Button;
-    public GameObject keybindEraseButton;
-    public GameObject keybindUndoButton;
-    public GameObject keybindRedoButton;
-    public GameObject keybindRemoveAllButton;
-    public GameObject keybindClearPuzzleButton;
+    public KeybindAdjuster keybindBuild1Button;
+    public KeybindAdjuster keybindBuild2Button;
+    public KeybindAdjuster keybindBuild3Button;
+    public KeybindAdjuster keybindBuild4Button;
+    public KeybindAdjuster keybindBuild5Button;
+    public KeybindAdjuster keybindBuild6Button;
+    public KeybindAdjuster keybindBuild7Button;
+    public KeybindAdjuster keybindBuildButton;
+    public KeybindAdjuster keybindNote1Button;
+    public KeybindAdjuster keybindNote2Button;
+    public KeybindAdjuster keybindEraseButton;
+    public KeybindAdjuster keybindUndoButton;
+    public KeybindAdjuster keybindRedoButton;
+    public KeybindAdjuster keybindRemoveAllButton;
+    public KeybindAdjuster keybindClearPuzzleButton;
 
     [Header("Misc Settings")]
     public GameObject hidePurchasedUpgradesButton;
@@ -337,9 +337,9 @@ public class SettingsCanvasController : MonoBehaviour {
 
     private void ExpandKeybindButtons() {
         GameObject parentBox = expandKeybindsButton.transform.parent.gameObject;
-        for (int i = 1; i < parentBox.transform.childCount; i++) {
+        for (int i = 1; i < parentBox.transform.childCount; i++)
             parentBox.transform.GetChild(i).gameObject.SetActive(true);
-        }
+        ShowKeybinds();
     }
 
     private void ContractKeybindButtons() {
@@ -348,4 +348,109 @@ public class SettingsCanvasController : MonoBehaviour {
             parentBox.transform.GetChild(i).gameObject.SetActive(false);
         }
     }
+
+    private void ShowKeybinds(){
+        keybindBuild1Button.DisplayKeybind(StaticVariables.keybindBuilding1);
+        keybindBuild2Button.DisplayKeybind(StaticVariables.keybindBuilding2);
+        keybindBuild3Button.DisplayKeybind(StaticVariables.keybindBuilding3);
+        keybindBuild4Button.DisplayKeybind(StaticVariables.keybindBuilding4);
+        keybindBuild5Button.DisplayKeybind(StaticVariables.keybindBuilding5);
+        keybindBuild6Button.DisplayKeybind(StaticVariables.keybindBuilding6);
+        keybindBuild7Button.DisplayKeybind(StaticVariables.keybindBuilding7);
+        keybindBuildButton.DisplayKeybind(StaticVariables.keybindBuild);
+        keybindNote1Button.DisplayKeybind(StaticVariables.keybindNote1);
+        keybindNote2Button.DisplayKeybind(StaticVariables.keybindNote2);
+        keybindEraseButton.DisplayKeybind(StaticVariables.keybindErase);
+        keybindUndoButton.DisplayKeybind(StaticVariables.keybindUndo);
+        keybindRedoButton.DisplayKeybind(StaticVariables.keybindRedo);
+        keybindRemoveAllButton.DisplayKeybind(StaticVariables.keybindRemoveAll);
+        keybindClearPuzzleButton.DisplayKeybind(StaticVariables.keybindClearPuzzle);
+    }
+
+    public void PushBuilding1KeybindButton(){
+        StaticVariables.keybindBuilding1 = KeyCode.None;
+        ShowKeybinds();
+    }
+    public void PushBuilding2KeybindButton(){
+        StaticVariables.keybindBuilding2 = KeyCode.None;
+        ShowKeybinds();
+    }
+    public void PushBuilding3KeybindButton(){
+        StaticVariables.keybindBuilding3 = KeyCode.None;
+        ShowKeybinds();
+    }
+    public void PushBuilding4KeybindButton(){
+        StaticVariables.keybindBuilding4 = KeyCode.None;
+        ShowKeybinds();
+    }
+    public void PushBuilding5KeybindButton(){
+        StaticVariables.keybindBuilding5 = KeyCode.None;
+        ShowKeybinds();
+    }
+    public void PushBuilding6KeybindButton(){
+        StaticVariables.keybindBuilding6 = KeyCode.None;
+        ShowKeybinds();
+    }
+    public void PushBuilding7KeybindButton(){
+        StaticVariables.keybindBuilding7 = KeyCode.None;
+        ShowKeybinds();
+    }
+    public void PushBuildKeybindButton(){
+        StaticVariables.keybindBuild = KeyCode.None;
+        ShowKeybinds();
+    }
+    public void PushNote1KeybindButton(){
+        StaticVariables.keybindNote1 = KeyCode.None;
+        ShowKeybinds();
+    }
+
+    public void PushNote2KeybindButton(){
+        StaticVariables.keybindNote2 = KeyCode.None;
+        ShowKeybinds();
+    }
+
+    public void PushEraseKeybindButton(){
+        StaticVariables.keybindErase = KeyCode.None;
+        ShowKeybinds();
+    }
+
+    public void PushUndoKeybindButton(){
+        StaticVariables.keybindUndo = KeyCode.None;
+        ShowKeybinds();
+    }
+
+    public void PushRedoKeybindButton(){
+        StaticVariables.keybindRedo = KeyCode.None;
+        ShowKeybinds();
+    }
+
+    public void PushRemoveAllKeybindButton(){
+        StaticVariables.keybindRemoveAll = KeyCode.None;
+        ShowKeybinds();
+    }
+
+    public void PushClearPuzzleKeybindButton(){
+        StaticVariables.keybindClearPuzzle = KeyCode.None;
+        ShowKeybinds();
+    }
+
+    public void PushResetKeybindsButton(){
+        StaticVariables.keybindBuilding1 = StaticVariables.keybindBuilding1Default;
+        StaticVariables.keybindBuilding2 = StaticVariables.keybindBuilding2Default;
+        StaticVariables.keybindBuilding3 = StaticVariables.keybindBuilding3Default;
+        StaticVariables.keybindBuilding4 = StaticVariables.keybindBuilding4Default;
+        StaticVariables.keybindBuilding5 = StaticVariables.keybindBuilding5Default;
+        StaticVariables.keybindBuilding6 = StaticVariables.keybindBuilding6Default;
+        StaticVariables.keybindBuilding7 = StaticVariables.keybindBuilding7Default;
+        StaticVariables.keybindBuild = StaticVariables.keybindBuildDefault;
+        StaticVariables.keybindNote1 = StaticVariables.keybindNote1Default;
+        StaticVariables.keybindNote2 = StaticVariables.keybindNote2Default;
+        StaticVariables.keybindErase = StaticVariables.keybindEraseDefault;
+        StaticVariables.keybindUndo = StaticVariables.keybindUndoDefault;
+        StaticVariables.keybindRedo = StaticVariables.keybindRedoDefault;
+        StaticVariables.keybindRemoveAll = StaticVariables.keybindRemoveAllDefault;
+        StaticVariables.keybindClearPuzzle = StaticVariables.keybindClearPuzzleDefault;
+        ShowKeybinds();
+    }
+
 }

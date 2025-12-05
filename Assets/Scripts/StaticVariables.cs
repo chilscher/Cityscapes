@@ -80,6 +80,24 @@ public class StaticVariables{
     static public KeyCode keybindRemoveAll = KeyCode.D;
     static public KeyCode keybindClearPuzzle = KeyCode.F;
 
+    //default keybinds
+    
+    static public KeyCode keybindBuilding1Default = KeyCode.Alpha1;
+    static public KeyCode keybindBuilding2Default = KeyCode.Alpha2;
+    static public KeyCode keybindBuilding3Default = KeyCode.Alpha3;
+    static public KeyCode keybindBuilding4Default = KeyCode.Alpha4;
+    static public KeyCode keybindBuilding5Default = KeyCode.Alpha5;
+    static public KeyCode keybindBuilding6Default = KeyCode.Alpha6;
+    static public KeyCode keybindBuilding7Default = KeyCode.Alpha7;
+    static public KeyCode keybindBuildDefault = KeyCode.Q;
+    static public KeyCode keybindNote1Default = KeyCode.W;
+    static public KeyCode keybindNote2Default = KeyCode.E;
+    static public KeyCode keybindEraseDefault = KeyCode.R;
+    static public KeyCode keybindUndoDefault = KeyCode.A;
+    static public KeyCode keybindRedoDefault = KeyCode.S;
+    static public KeyCode keybindRemoveAllDefault = KeyCode.D;
+    static public KeyCode keybindClearPuzzleDefault = KeyCode.F;
+
     //misc
     static public System.Random rand = new System.Random();
     static public int coins = 0;
