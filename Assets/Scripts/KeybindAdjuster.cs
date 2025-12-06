@@ -12,15 +12,17 @@ public class KeybindAdjuster : MonoBehaviour {
     public GameObject clickToChange;
     public GameObject pressAnyKey;
 
-    public void DisplayKeybind(KeyCode keyCode){
-        if (keyCode == KeyCode.None){
-            validKeybind.SetActive(false);
-            noKeybind.SetActive(true);
-            return;
-        }
-        validKeybind.SetActive(true);
-        noKeybind.SetActive(false);
-        currentValidKeybindText.text = "KEYBIND: " + GetCurrentKeybindString(keyCode);
+    public void DisplayKeybind(KeyCode keyCode, bool currentlyEditable){
+        clickToChange.SetActive(!currentlyEditable);
+        pressAnyKey.SetActive(currentlyEditable);
+        //if (keyCode == KeyCode.None){
+        //    validKeybind.SetActive(false);
+        //    noKeybind.SetActive(true);
+        //    return;
+        //}
+        validKeybind.SetActive(keyCode != KeyCode.None);
+        noKeybind.SetActive(keyCode == KeyCode.None);
+        currentValidKeybindText.text = "KEYBIND: " + GetCurrentKeybindString(keyCode).ToUpper();
     }
 
     private string GetCurrentKeybindString(KeyCode kc){

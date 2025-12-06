@@ -48,6 +48,14 @@ public class SettingsCanvasController : MonoBehaviour {
     public GameObject inviteButton;
     public string inviteLink = "https://discord.gg/KtARNGgaC8";
     public GameObject keybindsButton;
+    public enum Keybinds {None, Size1, Size2, Size3, Size4, Size5, Size6, Size7, Build, Note1, Note2, Erase, Undo, Redo, RemoveAll, ClearPuzzle}
+    public Keybinds currentEditableKeybind = Keybinds.None;
+    private List<KeyCode> allowedKeycodes = new() { KeyCode.Alpha0, KeyCode.Alpha1, KeyCode.Alpha2, KeyCode.Alpha3, KeyCode.Alpha4, KeyCode.Alpha5,
+        KeyCode.Alpha6, KeyCode.Alpha7, KeyCode.Alpha8, KeyCode.Alpha9, KeyCode.F1, KeyCode.F2, KeyCode.F3, KeyCode.F4, KeyCode.F5, KeyCode.F6, KeyCode.F7,
+        KeyCode.F8, KeyCode.F9, KeyCode.F10, KeyCode.F11, KeyCode.F12, KeyCode.F13, KeyCode.F14, KeyCode.F15, KeyCode.F16, KeyCode.F17, KeyCode.F18, 
+        KeyCode.F19, KeyCode.F20, KeyCode.F21, KeyCode.F22, KeyCode.F23, KeyCode.F24, KeyCode.A, KeyCode.B, KeyCode.C, KeyCode.D, KeyCode.E, KeyCode.F, 
+        KeyCode.G, KeyCode.H, KeyCode.I, KeyCode.J, KeyCode.K, KeyCode.L, KeyCode.M, KeyCode.N, KeyCode.O, KeyCode.P, KeyCode.Q, KeyCode.R, KeyCode.S, 
+        KeyCode.T, KeyCode.U, KeyCode.V, KeyCode.W, KeyCode.X, KeyCode.Y, KeyCode.Z, KeyCode.Space};
 
     [Header("UI Elements")]
     public GameObject background;
@@ -68,6 +76,8 @@ public class SettingsCanvasController : MonoBehaviour {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape))
             StaticVariables.FadeOutThenLoadScene("MainMenu");
+        else if ((StaticVariables.osType == StaticVariables.OSTypes.PC ) && (currentEditableKeybind != Keybinds.None))
+            CheckForKeybindInput();
     }
     
     // ---------------------------------------------------
@@ -350,87 +360,102 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     private void ShowKeybinds(){
-        keybindBuild1Button.DisplayKeybind(StaticVariables.keybindBuilding1);
-        keybindBuild2Button.DisplayKeybind(StaticVariables.keybindBuilding2);
-        keybindBuild3Button.DisplayKeybind(StaticVariables.keybindBuilding3);
-        keybindBuild4Button.DisplayKeybind(StaticVariables.keybindBuilding4);
-        keybindBuild5Button.DisplayKeybind(StaticVariables.keybindBuilding5);
-        keybindBuild6Button.DisplayKeybind(StaticVariables.keybindBuilding6);
-        keybindBuild7Button.DisplayKeybind(StaticVariables.keybindBuilding7);
-        keybindBuildButton.DisplayKeybind(StaticVariables.keybindBuild);
-        keybindNote1Button.DisplayKeybind(StaticVariables.keybindNote1);
-        keybindNote2Button.DisplayKeybind(StaticVariables.keybindNote2);
-        keybindEraseButton.DisplayKeybind(StaticVariables.keybindErase);
-        keybindUndoButton.DisplayKeybind(StaticVariables.keybindUndo);
-        keybindRedoButton.DisplayKeybind(StaticVariables.keybindRedo);
-        keybindRemoveAllButton.DisplayKeybind(StaticVariables.keybindRemoveAll);
-        keybindClearPuzzleButton.DisplayKeybind(StaticVariables.keybindClearPuzzle);
+        keybindBuild1Button.DisplayKeybind(StaticVariables.keybindBuilding1, currentEditableKeybind == Keybinds.Size1);
+        keybindBuild2Button.DisplayKeybind(StaticVariables.keybindBuilding2, currentEditableKeybind == Keybinds.Size2);
+        keybindBuild3Button.DisplayKeybind(StaticVariables.keybindBuilding3, currentEditableKeybind == Keybinds.Size3);
+        keybindBuild4Button.DisplayKeybind(StaticVariables.keybindBuilding4, currentEditableKeybind == Keybinds.Size4);
+        keybindBuild5Button.DisplayKeybind(StaticVariables.keybindBuilding5, currentEditableKeybind == Keybinds.Size5);
+        keybindBuild6Button.DisplayKeybind(StaticVariables.keybindBuilding6, currentEditableKeybind == Keybinds.Size6);
+        keybindBuild7Button.DisplayKeybind(StaticVariables.keybindBuilding7, currentEditableKeybind == Keybinds.Size7);
+        keybindBuildButton.DisplayKeybind(StaticVariables.keybindBuild, currentEditableKeybind == Keybinds.Build);
+        keybindNote1Button.DisplayKeybind(StaticVariables.keybindNote1, currentEditableKeybind == Keybinds.Note1);
+        keybindNote2Button.DisplayKeybind(StaticVariables.keybindNote2, currentEditableKeybind == Keybinds.Note2);
+        keybindEraseButton.DisplayKeybind(StaticVariables.keybindErase, currentEditableKeybind == Keybinds.Erase);
+        keybindUndoButton.DisplayKeybind(StaticVariables.keybindUndo, currentEditableKeybind == Keybinds.Undo);
+        keybindRedoButton.DisplayKeybind(StaticVariables.keybindRedo, currentEditableKeybind == Keybinds.Redo);
+        keybindRemoveAllButton.DisplayKeybind(StaticVariables.keybindRemoveAll, currentEditableKeybind == Keybinds.RemoveAll);
+        keybindClearPuzzleButton.DisplayKeybind(StaticVariables.keybindClearPuzzle, currentEditableKeybind == Keybinds.ClearPuzzle);
     }
 
     public void PushBuilding1KeybindButton(){
         StaticVariables.keybindBuilding1 = KeyCode.None;
+        currentEditableKeybind = Keybinds.Size1;
         ShowKeybinds();
     }
     public void PushBuilding2KeybindButton(){
         StaticVariables.keybindBuilding2 = KeyCode.None;
+        currentEditableKeybind = Keybinds.Size2;
         ShowKeybinds();
     }
     public void PushBuilding3KeybindButton(){
         StaticVariables.keybindBuilding3 = KeyCode.None;
+        currentEditableKeybind = Keybinds.Size3;
         ShowKeybinds();
     }
     public void PushBuilding4KeybindButton(){
         StaticVariables.keybindBuilding4 = KeyCode.None;
+        currentEditableKeybind = Keybinds.Size4;
         ShowKeybinds();
     }
     public void PushBuilding5KeybindButton(){
         StaticVariables.keybindBuilding5 = KeyCode.None;
+        currentEditableKeybind = Keybinds.Size5;
         ShowKeybinds();
     }
     public void PushBuilding6KeybindButton(){
         StaticVariables.keybindBuilding6 = KeyCode.None;
+        currentEditableKeybind = Keybinds.Size6;
         ShowKeybinds();
     }
     public void PushBuilding7KeybindButton(){
         StaticVariables.keybindBuilding7 = KeyCode.None;
+        currentEditableKeybind = Keybinds.Size7;
         ShowKeybinds();
     }
     public void PushBuildKeybindButton(){
         StaticVariables.keybindBuild = KeyCode.None;
+        currentEditableKeybind = Keybinds.Build;
         ShowKeybinds();
     }
     public void PushNote1KeybindButton(){
         StaticVariables.keybindNote1 = KeyCode.None;
+        currentEditableKeybind = Keybinds.Note1;
         ShowKeybinds();
     }
 
     public void PushNote2KeybindButton(){
         StaticVariables.keybindNote2 = KeyCode.None;
+        currentEditableKeybind = Keybinds.Note2;
         ShowKeybinds();
     }
 
     public void PushEraseKeybindButton(){
         StaticVariables.keybindErase = KeyCode.None;
+        currentEditableKeybind = Keybinds.Erase;
         ShowKeybinds();
     }
 
     public void PushUndoKeybindButton(){
         StaticVariables.keybindUndo = KeyCode.None;
+        currentEditableKeybind = Keybinds.Undo;
         ShowKeybinds();
     }
 
     public void PushRedoKeybindButton(){
         StaticVariables.keybindRedo = KeyCode.None;
+        currentEditableKeybind = Keybinds.Redo;
         ShowKeybinds();
     }
 
     public void PushRemoveAllKeybindButton(){
         StaticVariables.keybindRemoveAll = KeyCode.None;
+        currentEditableKeybind = Keybinds.RemoveAll;
         ShowKeybinds();
     }
 
     public void PushClearPuzzleKeybindButton(){
         StaticVariables.keybindClearPuzzle = KeyCode.None;
+        currentEditableKeybind = Keybinds.ClearPuzzle;
         ShowKeybinds();
     }
 
@@ -450,7 +475,102 @@ public class SettingsCanvasController : MonoBehaviour {
         StaticVariables.keybindRedo = StaticVariables.keybindRedoDefault;
         StaticVariables.keybindRemoveAll = StaticVariables.keybindRemoveAllDefault;
         StaticVariables.keybindClearPuzzle = StaticVariables.keybindClearPuzzleDefault;
+        currentEditableKeybind = Keybinds.None;
         ShowKeybinds();
     }
 
+    
+    private void CheckForKeybindInput(){
+        //these are all of the allowed keybinds btw
+        foreach (KeyCode keycode in allowedKeycodes){
+            if (Input.GetKeyDown(keycode)){
+                NewKeybindSelected(keycode);
+                return;
+            }
+        }
+    }
+
+    private void NewKeybindSelected(KeyCode keycode){
+        if (currentEditableKeybind == Keybinds.None)
+            return;
+        if (StaticVariables.keybindBuilding1 == keycode)
+            StaticVariables.keybindBuilding1 = KeyCode.None;
+        if (StaticVariables.keybindBuilding2 == keycode)
+            StaticVariables.keybindBuilding2 = KeyCode.None;
+        if (StaticVariables.keybindBuilding3 == keycode)
+            StaticVariables.keybindBuilding3 = KeyCode.None;
+        if (StaticVariables.keybindBuilding4 == keycode)
+            StaticVariables.keybindBuilding4 = KeyCode.None;
+        if (StaticVariables.keybindBuilding5 == keycode)
+            StaticVariables.keybindBuilding5 = KeyCode.None;
+        if (StaticVariables.keybindBuilding6 == keycode)
+            StaticVariables.keybindBuilding6 = KeyCode.None;
+        if (StaticVariables.keybindBuilding7 == keycode)
+            StaticVariables.keybindBuilding7 = KeyCode.None;
+        if (StaticVariables.keybindBuild == keycode)
+            StaticVariables.keybindBuild = KeyCode.None;
+        if (StaticVariables.keybindNote1 == keycode)
+            StaticVariables.keybindNote1 = KeyCode.None;
+        if (StaticVariables.keybindNote2 == keycode)
+            StaticVariables.keybindNote2 = KeyCode.None;
+        if (StaticVariables.keybindErase == keycode)
+            StaticVariables.keybindErase = KeyCode.None;
+        if (StaticVariables.keybindUndo == keycode)
+            StaticVariables.keybindUndo = KeyCode.None;
+        if (StaticVariables.keybindRedo == keycode)
+            StaticVariables.keybindRedo = KeyCode.None;
+        if (StaticVariables.keybindRemoveAll == keycode)
+            StaticVariables.keybindRemoveAll = KeyCode.None;
+        if (StaticVariables.keybindClearPuzzle == keycode)
+            StaticVariables.keybindClearPuzzle = KeyCode.None;
+        switch (currentEditableKeybind){
+            case Keybinds.Size1:
+                StaticVariables.keybindBuilding1 = keycode;
+                break;
+            case Keybinds.Size2:
+                StaticVariables.keybindBuilding2 = keycode;
+                break;
+            case Keybinds.Size3:
+                StaticVariables.keybindBuilding3 = keycode;
+                break;
+            case Keybinds.Size4:
+                StaticVariables.keybindBuilding4 = keycode;
+                break;
+            case Keybinds.Size5:
+                StaticVariables.keybindBuilding5 = keycode;
+                break;
+            case Keybinds.Size6:
+                StaticVariables.keybindBuilding6 = keycode;
+                break;
+            case Keybinds.Size7:
+                StaticVariables.keybindBuilding7 = keycode;
+                break;
+            case Keybinds.Build:
+                StaticVariables.keybindBuild = keycode;
+                break;
+            case Keybinds.Note1:
+                StaticVariables.keybindNote1 = keycode;
+                break;
+            case Keybinds.Note2:
+                StaticVariables.keybindNote2 = keycode;
+                break;
+            case Keybinds.Erase:
+                StaticVariables.keybindErase = keycode;
+                break;
+            case Keybinds.Undo:
+                StaticVariables.keybindUndo = keycode;
+                break;
+            case Keybinds.Redo:
+                StaticVariables.keybindRedo = keycode;
+                break;
+            case Keybinds.RemoveAll:
+                StaticVariables.keybindRemoveAll = keycode;
+                break;
+            case Keybinds.ClearPuzzle:
+                StaticVariables.keybindClearPuzzle = keycode;
+                break;
+        }
+        currentEditableKeybind = Keybinds.None;
+        ShowKeybinds();
+    }
 }

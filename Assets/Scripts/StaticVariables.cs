@@ -108,7 +108,6 @@ public class StaticVariables{
     static public Image fadeImage;
     static public float gameVersionNumber = 2.5f;
     public enum OSTypes {Mobile, PC};
-
     static public OSTypes osType;
     
 
