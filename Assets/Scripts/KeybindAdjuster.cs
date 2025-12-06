@@ -15,11 +15,6 @@ public class KeybindAdjuster : MonoBehaviour {
     public void DisplayKeybind(KeyCode keyCode, bool currentlyEditable){
         clickToChange.SetActive(!currentlyEditable);
         pressAnyKey.SetActive(currentlyEditable);
-        //if (keyCode == KeyCode.None){
-        //    validKeybind.SetActive(false);
-        //    noKeybind.SetActive(true);
-        //    return;
-        //}
         validKeybind.SetActive(keyCode != KeyCode.None);
         noKeybind.SetActive(keyCode == KeyCode.None);
         currentValidKeybindText.text = "KEYBIND: " + GetCurrentKeybindString(keyCode).ToUpper();

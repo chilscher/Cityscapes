@@ -43,6 +43,7 @@ public static class SaveSystem{
         StaticVariables.skin = InterfaceFunctions.GetDefaultSkin();
         StaticVariables.coins = 0;
         StaticVariables.highestUnlockedSize = 3;
+        StaticVariables.ApplyDefaultKeybinds();
         SaveGame();
         LoadGame();
     }

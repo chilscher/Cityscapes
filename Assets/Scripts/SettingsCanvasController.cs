@@ -360,13 +360,13 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     private void ShowKeybinds(){
-        keybindBuild1Button.DisplayKeybind(StaticVariables.keybindBuilding1, currentEditableKeybind == Keybinds.Size1);
-        keybindBuild2Button.DisplayKeybind(StaticVariables.keybindBuilding2, currentEditableKeybind == Keybinds.Size2);
-        keybindBuild3Button.DisplayKeybind(StaticVariables.keybindBuilding3, currentEditableKeybind == Keybinds.Size3);
-        keybindBuild4Button.DisplayKeybind(StaticVariables.keybindBuilding4, currentEditableKeybind == Keybinds.Size4);
-        keybindBuild5Button.DisplayKeybind(StaticVariables.keybindBuilding5, currentEditableKeybind == Keybinds.Size5);
-        keybindBuild6Button.DisplayKeybind(StaticVariables.keybindBuilding6, currentEditableKeybind == Keybinds.Size6);
-        keybindBuild7Button.DisplayKeybind(StaticVariables.keybindBuilding7, currentEditableKeybind == Keybinds.Size7);
+        keybindBuild1Button.DisplayKeybind(StaticVariables.keybindSize1, currentEditableKeybind == Keybinds.Size1);
+        keybindBuild2Button.DisplayKeybind(StaticVariables.keybindSize2, currentEditableKeybind == Keybinds.Size2);
+        keybindBuild3Button.DisplayKeybind(StaticVariables.keybindSize3, currentEditableKeybind == Keybinds.Size3);
+        keybindBuild4Button.DisplayKeybind(StaticVariables.keybindSize4, currentEditableKeybind == Keybinds.Size4);
+        keybindBuild5Button.DisplayKeybind(StaticVariables.keybindSize5, currentEditableKeybind == Keybinds.Size5);
+        keybindBuild6Button.DisplayKeybind(StaticVariables.keybindSize6, currentEditableKeybind == Keybinds.Size6);
+        keybindBuild7Button.DisplayKeybind(StaticVariables.keybindSize7, currentEditableKeybind == Keybinds.Size7);
         keybindBuildButton.DisplayKeybind(StaticVariables.keybindBuild, currentEditableKeybind == Keybinds.Build);
         keybindNote1Button.DisplayKeybind(StaticVariables.keybindNote1, currentEditableKeybind == Keybinds.Note1);
         keybindNote2Button.DisplayKeybind(StaticVariables.keybindNote2, currentEditableKeybind == Keybinds.Note2);
@@ -378,110 +378,111 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushBuilding1KeybindButton(){
-        StaticVariables.keybindBuilding1 = KeyCode.None;
+        StaticVariables.keybindSize1 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size1;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
     public void PushBuilding2KeybindButton(){
-        StaticVariables.keybindBuilding2 = KeyCode.None;
+        StaticVariables.keybindSize2 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size2;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
     public void PushBuilding3KeybindButton(){
-        StaticVariables.keybindBuilding3 = KeyCode.None;
+        StaticVariables.keybindSize3 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size3;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
     public void PushBuilding4KeybindButton(){
-        StaticVariables.keybindBuilding4 = KeyCode.None;
+        StaticVariables.keybindSize4 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size4;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
     public void PushBuilding5KeybindButton(){
-        StaticVariables.keybindBuilding5 = KeyCode.None;
+        StaticVariables.keybindSize5 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size5;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
     public void PushBuilding6KeybindButton(){
-        StaticVariables.keybindBuilding6 = KeyCode.None;
+        StaticVariables.keybindSize6 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size6;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
     public void PushBuilding7KeybindButton(){
-        StaticVariables.keybindBuilding7 = KeyCode.None;
+        StaticVariables.keybindSize7 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size7;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
     public void PushBuildKeybindButton(){
         StaticVariables.keybindBuild = KeyCode.None;
         currentEditableKeybind = Keybinds.Build;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
     public void PushNote1KeybindButton(){
         StaticVariables.keybindNote1 = KeyCode.None;
         currentEditableKeybind = Keybinds.Note1;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
 
     public void PushNote2KeybindButton(){
         StaticVariables.keybindNote2 = KeyCode.None;
         currentEditableKeybind = Keybinds.Note2;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
 
     public void PushEraseKeybindButton(){
         StaticVariables.keybindErase = KeyCode.None;
         currentEditableKeybind = Keybinds.Erase;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
 
     public void PushUndoKeybindButton(){
         StaticVariables.keybindUndo = KeyCode.None;
         currentEditableKeybind = Keybinds.Undo;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
 
     public void PushRedoKeybindButton(){
         StaticVariables.keybindRedo = KeyCode.None;
         currentEditableKeybind = Keybinds.Redo;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
 
     public void PushRemoveAllKeybindButton(){
         StaticVariables.keybindRemoveAll = KeyCode.None;
         currentEditableKeybind = Keybinds.RemoveAll;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
 
     public void PushClearPuzzleKeybindButton(){
         StaticVariables.keybindClearPuzzle = KeyCode.None;
         currentEditableKeybind = Keybinds.ClearPuzzle;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
 
     public void PushResetKeybindsButton(){
-        StaticVariables.keybindBuilding1 = StaticVariables.keybindBuilding1Default;
-        StaticVariables.keybindBuilding2 = StaticVariables.keybindBuilding2Default;
-        StaticVariables.keybindBuilding3 = StaticVariables.keybindBuilding3Default;
-        StaticVariables.keybindBuilding4 = StaticVariables.keybindBuilding4Default;
-        StaticVariables.keybindBuilding5 = StaticVariables.keybindBuilding5Default;
-        StaticVariables.keybindBuilding6 = StaticVariables.keybindBuilding6Default;
-        StaticVariables.keybindBuilding7 = StaticVariables.keybindBuilding7Default;
-        StaticVariables.keybindBuild = StaticVariables.keybindBuildDefault;
-        StaticVariables.keybindNote1 = StaticVariables.keybindNote1Default;
-        StaticVariables.keybindNote2 = StaticVariables.keybindNote2Default;
-        StaticVariables.keybindErase = StaticVariables.keybindEraseDefault;
-        StaticVariables.keybindUndo = StaticVariables.keybindUndoDefault;
-        StaticVariables.keybindRedo = StaticVariables.keybindRedoDefault;
-        StaticVariables.keybindRemoveAll = StaticVariables.keybindRemoveAllDefault;
-        StaticVariables.keybindClearPuzzle = StaticVariables.keybindClearPuzzleDefault;
+        StaticVariables.ApplyDefaultKeybinds();
         currentEditableKeybind = Keybinds.None;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
 
     
     private void CheckForKeybindInput(){
-        //these are all of the allowed keybinds btw
         foreach (KeyCode keycode in allowedKeycodes){
             if (Input.GetKeyDown(keycode)){
                 NewKeybindSelected(keycode);
@@ -493,20 +494,20 @@ public class SettingsCanvasController : MonoBehaviour {
     private void NewKeybindSelected(KeyCode keycode){
         if (currentEditableKeybind == Keybinds.None)
             return;
-        if (StaticVariables.keybindBuilding1 == keycode)
-            StaticVariables.keybindBuilding1 = KeyCode.None;
-        if (StaticVariables.keybindBuilding2 == keycode)
-            StaticVariables.keybindBuilding2 = KeyCode.None;
-        if (StaticVariables.keybindBuilding3 == keycode)
-            StaticVariables.keybindBuilding3 = KeyCode.None;
-        if (StaticVariables.keybindBuilding4 == keycode)
-            StaticVariables.keybindBuilding4 = KeyCode.None;
-        if (StaticVariables.keybindBuilding5 == keycode)
-            StaticVariables.keybindBuilding5 = KeyCode.None;
-        if (StaticVariables.keybindBuilding6 == keycode)
-            StaticVariables.keybindBuilding6 = KeyCode.None;
-        if (StaticVariables.keybindBuilding7 == keycode)
-            StaticVariables.keybindBuilding7 = KeyCode.None;
+        if (StaticVariables.keybindSize1 == keycode)
+            StaticVariables.keybindSize1 = KeyCode.None;
+        if (StaticVariables.keybindSize2 == keycode)
+            StaticVariables.keybindSize2 = KeyCode.None;
+        if (StaticVariables.keybindSize3 == keycode)
+            StaticVariables.keybindSize3 = KeyCode.None;
+        if (StaticVariables.keybindSize4 == keycode)
+            StaticVariables.keybindSize4 = KeyCode.None;
+        if (StaticVariables.keybindSize5 == keycode)
+            StaticVariables.keybindSize5 = KeyCode.None;
+        if (StaticVariables.keybindSize6 == keycode)
+            StaticVariables.keybindSize6 = KeyCode.None;
+        if (StaticVariables.keybindSize7 == keycode)
+            StaticVariables.keybindSize7 = KeyCode.None;
         if (StaticVariables.keybindBuild == keycode)
             StaticVariables.keybindBuild = KeyCode.None;
         if (StaticVariables.keybindNote1 == keycode)
@@ -525,25 +526,25 @@ public class SettingsCanvasController : MonoBehaviour {
             StaticVariables.keybindClearPuzzle = KeyCode.None;
         switch (currentEditableKeybind){
             case Keybinds.Size1:
-                StaticVariables.keybindBuilding1 = keycode;
+                StaticVariables.keybindSize1 = keycode;
                 break;
             case Keybinds.Size2:
-                StaticVariables.keybindBuilding2 = keycode;
+                StaticVariables.keybindSize2 = keycode;
                 break;
             case Keybinds.Size3:
-                StaticVariables.keybindBuilding3 = keycode;
+                StaticVariables.keybindSize3 = keycode;
                 break;
             case Keybinds.Size4:
-                StaticVariables.keybindBuilding4 = keycode;
+                StaticVariables.keybindSize4 = keycode;
                 break;
             case Keybinds.Size5:
-                StaticVariables.keybindBuilding5 = keycode;
+                StaticVariables.keybindSize5 = keycode;
                 break;
             case Keybinds.Size6:
-                StaticVariables.keybindBuilding6 = keycode;
+                StaticVariables.keybindSize6 = keycode;
                 break;
             case Keybinds.Size7:
-                StaticVariables.keybindBuilding7 = keycode;
+                StaticVariables.keybindSize7 = keycode;
                 break;
             case Keybinds.Build:
                 StaticVariables.keybindBuild = keycode;
@@ -572,5 +573,6 @@ public class SettingsCanvasController : MonoBehaviour {
         }
         currentEditableKeybind = Keybinds.None;
         ShowKeybinds();
+        SaveSystem.SaveGame();
     }
 }

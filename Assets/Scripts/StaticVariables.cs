@@ -64,13 +64,13 @@ public class StaticVariables{
     static public bool hasBeatenTutorial = false;
 
     //keybinds
-    static public KeyCode keybindBuilding1 = KeyCode.Alpha1;
-    static public KeyCode keybindBuilding2 = KeyCode.Alpha2;
-    static public KeyCode keybindBuilding3 = KeyCode.Alpha3;
-    static public KeyCode keybindBuilding4 = KeyCode.Alpha4;
-    static public KeyCode keybindBuilding5 = KeyCode.Alpha5;
-    static public KeyCode keybindBuilding6 = KeyCode.Alpha6;
-    static public KeyCode keybindBuilding7 = KeyCode.Alpha7;
+    static public KeyCode keybindSize1 = KeyCode.Alpha1;
+    static public KeyCode keybindSize2 = KeyCode.Alpha2;
+    static public KeyCode keybindSize3 = KeyCode.Alpha3;
+    static public KeyCode keybindSize4 = KeyCode.Alpha4;
+    static public KeyCode keybindSize5 = KeyCode.Alpha5;
+    static public KeyCode keybindSize6 = KeyCode.Alpha6;
+    static public KeyCode keybindSize7 = KeyCode.Alpha7;
     static public KeyCode keybindBuild = KeyCode.Q;
     static public KeyCode keybindNote1 = KeyCode.W;
     static public KeyCode keybindNote2 = KeyCode.E;
@@ -81,14 +81,13 @@ public class StaticVariables{
     static public KeyCode keybindClearPuzzle = KeyCode.F;
 
     //default keybinds
-    
-    static public KeyCode keybindBuilding1Default = KeyCode.Alpha1;
-    static public KeyCode keybindBuilding2Default = KeyCode.Alpha2;
-    static public KeyCode keybindBuilding3Default = KeyCode.Alpha3;
-    static public KeyCode keybindBuilding4Default = KeyCode.Alpha4;
-    static public KeyCode keybindBuilding5Default = KeyCode.Alpha5;
-    static public KeyCode keybindBuilding6Default = KeyCode.Alpha6;
-    static public KeyCode keybindBuilding7Default = KeyCode.Alpha7;
+    static public KeyCode keybindSize1Default = KeyCode.Alpha1;
+    static public KeyCode keybindSize2Default = KeyCode.Alpha2;
+    static public KeyCode keybindSize3Default = KeyCode.Alpha3;
+    static public KeyCode keybindSize4Default = KeyCode.Alpha4;
+    static public KeyCode keybindSize5Default = KeyCode.Alpha5;
+    static public KeyCode keybindSize6Default = KeyCode.Alpha6;
+    static public KeyCode keybindSize7Default = KeyCode.Alpha7;
     static public KeyCode keybindBuildDefault = KeyCode.Q;
     static public KeyCode keybindNote1Default = KeyCode.W;
     static public KeyCode keybindNote2Default = KeyCode.E;
@@ -162,6 +161,24 @@ public class StaticVariables{
         //cap coins at 9,999,999
         if (coins > 9999999)
             coins = 9999999;
+    }
+
+    static public void ApplyDefaultKeybinds(){
+        keybindSize1 = keybindSize1Default;
+        keybindSize2 = keybindSize2Default;
+        keybindSize3 = keybindSize3Default;
+        keybindSize4 = keybindSize4Default;
+        keybindSize5 = keybindSize5Default;
+        keybindSize6 = keybindSize6Default;
+        keybindSize7 = keybindSize7Default;
+        keybindBuild = keybindBuildDefault;
+        keybindNote1 = keybindNote1Default;
+        keybindNote2 = keybindNote2Default;
+        keybindErase = keybindEraseDefault;
+        keybindUndo = keybindUndoDefault;
+        keybindRedo = keybindRedoDefault;
+        keybindRemoveAll = keybindRemoveAllDefault;
+        keybindClearPuzzle = keybindClearPuzzleDefault;
     }
 
 }

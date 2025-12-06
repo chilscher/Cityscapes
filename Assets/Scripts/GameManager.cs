@@ -223,31 +223,31 @@ public class GameManager : MonoBehaviour {
                 PushMainMenuButton();
         }
         if (StaticVariables.osType == StaticVariables.OSTypes.PC){
-            if (Input.GetKeyDown(StaticVariables.keybindBuilding1)){
+            if (Input.GetKeyDown(StaticVariables.keybindSize1)){
                 if (StaticVariables.isTutorial)
                     PushTutorialNumberButton(1);
                 else
                     PushNumberButton(1);
             }
-            if (Input.GetKeyDown(StaticVariables.keybindBuilding2)){
+            if (Input.GetKeyDown(StaticVariables.keybindSize2)){
                 if (StaticVariables.isTutorial)
                     PushTutorialNumberButton(2);
                 else
                     PushNumberButton(2);
             }
-            if (Input.GetKeyDown(StaticVariables.keybindBuilding3)){
+            if (Input.GetKeyDown(StaticVariables.keybindSize3)){
                 if (StaticVariables.isTutorial)
                     PushTutorialNumberButton(3);
                 else
                     PushNumberButton(3);
             }
-            if (Input.GetKeyDown(StaticVariables.keybindBuilding4) && size >= 4)
+            if (Input.GetKeyDown(StaticVariables.keybindSize4) && size >= 4)
                 PushNumberButton(4);
-            if (Input.GetKeyDown(StaticVariables.keybindBuilding5) && size >= 5)
+            if (Input.GetKeyDown(StaticVariables.keybindSize5) && size >= 5)
                 PushNumberButton(5);
-            if (Input.GetKeyDown(StaticVariables.keybindBuilding6) && size >= 6)
+            if (Input.GetKeyDown(StaticVariables.keybindSize6) && size >= 6)
                 PushNumberButton(6);
-            if (Input.GetKeyDown(StaticVariables.keybindBuilding7) && size >= 7)
+            if (Input.GetKeyDown(StaticVariables.keybindSize7) && size >= 7)
                 PushNumberButton(7);
             if (Input.GetKeyDown(StaticVariables.keybindBuild))
                 PushBuildButton();
@@ -482,7 +482,6 @@ public class GameManager : MonoBehaviour {
                 StaticVariables.AddCoins(coinsFor7Win);
                 break;
         }
-
         DisplayTotalCoinsAmount();
     }
 

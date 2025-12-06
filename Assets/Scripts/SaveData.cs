@@ -55,6 +55,22 @@ public class SaveData{
     public float gameVersionNumber;
     public bool unlockedRemoveButtonFillsNotes;
     public bool includeRemoveButtonFillsNotes;
+    public KeyCode keybindSize1;
+    public KeyCode keybindSize2;
+    public KeyCode keybindSize3;
+    public KeyCode keybindSize4;
+    public KeyCode keybindSize5;
+    public KeyCode keybindSize6;
+    public KeyCode keybindSize7;
+    public KeyCode keybindBuild;
+    public KeyCode keybindNote1;
+    public KeyCode keybindNote2;
+    public KeyCode keybindErase;
+    public KeyCode keybindUndo;
+    public KeyCode keybindRedo;
+    public KeyCode keybindRemoveAll;
+    public KeyCode keybindClearPuzzle;
+
 
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT ARE USED TO SAVE PLAYER DATA
@@ -92,6 +108,22 @@ public class SaveData{
         unlockedHighlightBuildings = StaticVariables.unlockedHighlightBuildings;
         unlockedBuildingQuantityStatus = StaticVariables.unlockedBuildingQuantityStatus;
         unlockedRemoveButtonFillsNotes = StaticVariables.unlockedRemoveButtonFillsNotes;
+
+        keybindSize1 = StaticVariables.keybindSize1;
+        keybindSize2 = StaticVariables.keybindSize2;
+        keybindSize3 = StaticVariables.keybindSize3;
+        keybindSize4 = StaticVariables.keybindSize4;
+        keybindSize5 = StaticVariables.keybindSize5;
+        keybindSize6 = StaticVariables.keybindSize6;
+        keybindSize7 = StaticVariables.keybindSize7;
+        keybindBuild = StaticVariables.keybindBuild;
+        keybindNote1 = StaticVariables.keybindNote1;
+        keybindNote2 = StaticVariables.keybindNote2;
+        keybindErase = StaticVariables.keybindErase;
+        keybindUndo = StaticVariables.keybindUndo;
+        keybindRedo = StaticVariables.keybindRedo;
+        keybindRemoveAll = StaticVariables.keybindRemoveAll;
+        keybindClearPuzzle = StaticVariables.keybindClearPuzzle;
 
         if (StaticVariables.skin == null)
             skinName = "Rural";
@@ -176,6 +208,22 @@ public class SaveData{
         StaticVariables.unlockedHighlightBuildings = unlockedHighlightBuildings;
         StaticVariables.unlockedBuildingQuantityStatus = unlockedBuildingQuantityStatus;
         StaticVariables.unlockedRemoveButtonFillsNotes = unlockedRemoveButtonFillsNotes;
+
+        StaticVariables.keybindSize1 = keybindSize1;
+        StaticVariables.keybindSize2 = keybindSize2;
+        StaticVariables.keybindSize3 = keybindSize3;
+        StaticVariables.keybindSize4 = keybindSize4;
+        StaticVariables.keybindSize5 = keybindSize5;
+        StaticVariables.keybindSize6 = keybindSize6;
+        StaticVariables.keybindSize7 = keybindSize7;
+        StaticVariables.keybindBuild = keybindBuild;
+        StaticVariables.keybindNote1 = keybindNote1;
+        StaticVariables.keybindNote2 = keybindNote2;
+        StaticVariables.keybindErase = keybindErase;
+        StaticVariables.keybindUndo = keybindUndo;
+        StaticVariables.keybindRedo = keybindRedo;
+        StaticVariables.keybindRemoveAll = keybindRemoveAll;
+        StaticVariables.keybindClearPuzzle = keybindClearPuzzle;
         
         StaticVariables.skin = InterfaceFunctions.GetSkinFromName(skinName);
         StaticVariables.unlockedSkins = GetUnlockedSkins();
