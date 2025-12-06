@@ -281,12 +281,6 @@ public class GameManager : MonoBehaviour {
         numbers1to7.SetActive(false);
     }
 
-    private void ColorMenuButton() {
-        InterfaceFunctions.ColorMenuButton(menuButton, skin);
-        InterfaceFunctions.ColorMenuButton(shopButton, skin);
-        InterfaceFunctions.ColorMenuButton(settingsButton, skin);
-    }
-
     public void SetNumberButtons() {
         //show the correct number buttons depending on the puzzle size, and hide the rest
         HideNumberButtons();
@@ -579,6 +573,7 @@ public class GameManager : MonoBehaviour {
         clickTileAction = ClickTileActions.Build;
         DisselectBuildNotesAndEraseButtons();
         InterfaceFunctions.ColorPuzzleButtonOn(buildButton, skin);
+        buildButton.GetComponent<ButtonAnimator>().AnimatePress();
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -592,6 +587,7 @@ public class GameManager : MonoBehaviour {
         clickTileAction = ClickTileActions.ToggleNote1;
         DisselectBuildNotesAndEraseButtons();
         InterfaceFunctions.ColorPuzzleButtonOn(note1Button, skin);
+        note1Button.GetComponent<ButtonAnimator>().AnimatePress();
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -604,8 +600,8 @@ public class GameManager : MonoBehaviour {
         }
         clickTileAction = ClickTileActions.ToggleNote2;
         DisselectBuildNotesAndEraseButtons();
-
         InterfaceFunctions.ColorPuzzleButtonOn(note2Button, skin);
+        note2Button.GetComponent<ButtonAnimator>().AnimatePress();
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -617,6 +613,7 @@ public class GameManager : MonoBehaviour {
         DisselectBuildNotesAndEraseButtons();
         foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.UnhighlightBuildingNumber(); }
         InterfaceFunctions.ColorPuzzleButtonOn(clearTileButton, skin);
+        clearTileButton.GetComponent<ButtonAnimator>().AnimatePress();
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -629,13 +626,15 @@ public class GameManager : MonoBehaviour {
         InterfaceFunctions.ColorPuzzleButtonOff(clearTileButton, skin);
     }
     
-    public void ShowNumberButtonClicked(GameObject nB) {
+    public void ShowNumberButtonClicked(GameObject nB, bool showAnimation = true) {
         //when the player clicks a number button, highlight that number, and also highlight all copies of that number in the puzzle (if the player has the highlightBuildings upgrade)
         if (prevClickedNumButton != null)
             DisselectNumber(prevClickedNumButton);
         prevClickedNumButton = nB;
         SelectNumber(nB);
         UpdateRemoveSelectedNumber();
+        if (showAnimation)
+            nB.GetComponent<ButtonAnimator>().AnimatePress();
 
         if (!StaticVariables.isTutorial && StaticVariables.includeHighlightBuildings) {
             foreach (PuzzleTile t in puzzleGenerator.puzzleTiles)
@@ -668,6 +667,7 @@ public class GameManager : MonoBehaviour {
     public void PushUndoButton() {
         //returns the player to a previous puzzle state, and moves the most recent puzzle state to the list of "next puzzle states"
         //used in the undo/redo process
+        undoButton.GetComponent<ButtonAnimator>().AnimatePress();
         if (previousPuzzleStates.Count > 0) {
             nextPuzzleStates.Add(currentPuzzleState);
             PuzzleState currentState = previousPuzzleStates[previousPuzzleStates.Count - 1];
@@ -682,6 +682,7 @@ public class GameManager : MonoBehaviour {
     public void PushRedoButton() {
         //returns the player to a "next" puzzle state, and moves the most recent state to the list of "previous" states
         //used in the undo/redo process
+        redoButton.GetComponent<ButtonAnimator>().AnimatePress();
         if (nextPuzzleStates.Count > 0) {
             previousPuzzleStates.Add(currentPuzzleState);
             PuzzleState currentState = nextPuzzleStates[nextPuzzleStates.Count - 1];
@@ -706,8 +707,8 @@ public class GameManager : MonoBehaviour {
     }
 
     public void HighlightSelectedNumber() {
-        //highlight the currently-selected number button
-        ShowNumberButtonClicked(numberButtons[selectedNumber - 1]);
+        //highlight the currently-selected number button, used at the start of the scene
+        ShowNumberButtonClicked(numberButtons[selectedNumber - 1], false);
     }
 
     public void HighlightBuildType() {
@@ -731,6 +732,7 @@ public class GameManager : MonoBehaviour {
     public void PushRemoveAllButton() {
         //clear the entire puzzle of all of the currently-selected number of the currently-selected type.
         //for example, when #3 and "red notes" are selected, this function clears all red 3's from the puzzle
+        removeAllOfNumberButton.GetComponent<ButtonAnimator>().AnimatePress();
         if ((clickTileAction != ClickTileActions.Erase) && (selectedNumber != 0)) {
             bool somethingChanged = false;
             if (clickTileAction == ClickTileActions.Build){
@@ -785,6 +787,7 @@ public class GameManager : MonoBehaviour {
     
     public void PushClearPuzzleButton() {
         //removes all buildings and notes of all types from the puzzle
+        clearPuzzleButton.GetComponent<ButtonAnimator>().AnimatePress();
         bool changedAnything = false;
         foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
             if ((t.DoesTileContainAnything()) && (!t.isPermanentBuilding))

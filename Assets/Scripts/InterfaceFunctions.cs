@@ -9,14 +9,6 @@ public static class InterfaceFunctions{
     //here are several functions, used to color various objects in various scenes and various scripts
     //also, here are some useful functions for getting a specific skin object
 
-
-    public static void ColorMenuButton(GameObject button, Skin skin) {
-        //colors the interior and exterior components of the provided button to match the current skin
-        //the button is assumed to be on one of the menu scenes, which use a specific color set per skin
-        button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = skin.menuButtonBorder;
-        button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = skin.menuButtonInside;
-    }
-
     public static void ColorPuzzleButtonOff(GameObject button, Skin skin) {
         button.transform.Find("Button Image").Find("Borders").GetComponent<Image>().color = skin.puzzleButtonBorder_Off;
         button.transform.Find("Button Image").Find("Interior").GetComponent<Image>().color = skin.puzzleButtonInside_Off;
