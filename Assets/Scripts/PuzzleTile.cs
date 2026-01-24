@@ -79,19 +79,37 @@ public class PuzzleTile : Tile {
             return;   
         if(gameManager.clickTileAction == GameManager.ClickTileActions.Build) {
             int selectedNumber = gameManager.selectedNumber;
+            bool hadNumBefore = (selectedNumber == shownNumber);
             ToggleNumber(selectedNumber);
+            bool hasNumNow = (selectedNumber == shownNumber);
+            if (hasNumNow && !hadNumBefore)
+                AudioManager.PlaySound(AudioManager.IDs.Build);
+            if (!hasNumNow && hadNumBefore)
+                AudioManager.PlaySound(AudioManager.IDs.Erase);
             gameManager.UpdateAllBuildingQuantities();
             gameManager.AddToPuzzleHistory();
         }
         else if (gameManager.clickTileAction == GameManager.ClickTileActions.ToggleNote1) {
             int selectedNumber = gameManager.selectedNumber;
+            bool hadNoteBefore = noteGroup1.Contains(selectedNumber);
             ToggleNote1(selectedNumber);
+            bool hasNoteNow = noteGroup1.Contains(selectedNumber);
+            if (hasNoteNow && !hadNoteBefore)
+                AudioManager.PlaySound(AudioManager.IDs.Note);
+            if (!hasNoteNow && hadNoteBefore)
+                AudioManager.PlaySound(AudioManager.IDs.Erase);
             gameManager.AddToPuzzleHistory();
             gameManager.UpdateRemoveSelectedNumber();
         }
         else if (gameManager.clickTileAction == GameManager.ClickTileActions.ToggleNote2) {
             int selectedNumber = gameManager.selectedNumber;
+            bool hadNoteBefore = noteGroup2.Contains(selectedNumber);
             ToggleNote2(selectedNumber);
+            bool hasNoteNow = noteGroup2.Contains(selectedNumber);
+            if (hasNoteNow && !hadNoteBefore)
+                AudioManager.PlaySound(AudioManager.IDs.Note);
+            if (!hasNoteNow && hadNoteBefore)
+                AudioManager.PlaySound(AudioManager.IDs.Erase);
             gameManager.AddToPuzzleHistory();
             gameManager.UpdateRemoveSelectedNumber();
         }
@@ -99,6 +117,7 @@ public class PuzzleTile : Tile {
             if (DoesTileContainAnything()) {
                 ClearColoredNotes();
                 RemoveNumberFromTile();
+                AudioManager.PlaySound(AudioManager.IDs.Erase);
                 gameManager.UpdateAllBuildingQuantities();
                 gameManager.AddToPuzzleHistory();
             }

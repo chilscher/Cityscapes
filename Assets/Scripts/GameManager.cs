@@ -574,6 +574,7 @@ public class GameManager : MonoBehaviour {
         DisselectBuildNotesAndEraseButtons();
         InterfaceFunctions.ColorPuzzleButtonOn(buildButton, skin);
         buildButton.GetComponent<ButtonAnimator>().AnimatePress();
+        AudioManager.PlaySound(AudioManager.IDs.Selection);
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -588,6 +589,7 @@ public class GameManager : MonoBehaviour {
         DisselectBuildNotesAndEraseButtons();
         InterfaceFunctions.ColorPuzzleButtonOn(note1Button, skin);
         note1Button.GetComponent<ButtonAnimator>().AnimatePress();
+        AudioManager.PlaySound(AudioManager.IDs.Selection);
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -602,6 +604,7 @@ public class GameManager : MonoBehaviour {
         DisselectBuildNotesAndEraseButtons();
         InterfaceFunctions.ColorPuzzleButtonOn(note2Button, skin);
         note2Button.GetComponent<ButtonAnimator>().AnimatePress();
+        AudioManager.PlaySound(AudioManager.IDs.Selection);
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -614,6 +617,7 @@ public class GameManager : MonoBehaviour {
         foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.UnhighlightBuildingNumber(); }
         InterfaceFunctions.ColorPuzzleButtonOn(clearTileButton, skin);
         clearTileButton.GetComponent<ButtonAnimator>().AnimatePress();
+        AudioManager.PlaySound(AudioManager.IDs.Selection);
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -633,8 +637,10 @@ public class GameManager : MonoBehaviour {
         prevClickedNumButton = nB;
         SelectNumber(nB);
         UpdateRemoveSelectedNumber();
-        if (showAnimation)
+        if (showAnimation){
             nB.GetComponent<ButtonAnimator>().AnimatePress();
+            AudioManager.PlaySound(AudioManager.IDs.Selection);
+        }
 
         if (!StaticVariables.isTutorial && StaticVariables.includeHighlightBuildings) {
             foreach (PuzzleTile t in puzzleGenerator.puzzleTiles)
@@ -668,6 +674,7 @@ public class GameManager : MonoBehaviour {
         //returns the player to a previous puzzle state, and moves the most recent puzzle state to the list of "next puzzle states"
         //used in the undo/redo process
         undoButton.GetComponent<ButtonAnimator>().AnimatePress();
+        AudioManager.PlaySound(AudioManager.IDs.Undo);
         if (previousPuzzleStates.Count > 0) {
             nextPuzzleStates.Add(currentPuzzleState);
             PuzzleState currentState = previousPuzzleStates[previousPuzzleStates.Count - 1];
@@ -683,6 +690,7 @@ public class GameManager : MonoBehaviour {
         //returns the player to a "next" puzzle state, and moves the most recent state to the list of "previous" states
         //used in the undo/redo process
         redoButton.GetComponent<ButtonAnimator>().AnimatePress();
+        AudioManager.PlaySound(AudioManager.IDs.Redo);
         if (nextPuzzleStates.Count > 0) {
             previousPuzzleStates.Add(currentPuzzleState);
             PuzzleState currentState = nextPuzzleStates[nextPuzzleStates.Count - 1];
@@ -733,6 +741,7 @@ public class GameManager : MonoBehaviour {
         //clear the entire puzzle of all of the currently-selected number of the currently-selected type.
         //for example, when #3 and "red notes" are selected, this function clears all red 3's from the puzzle
         removeAllOfNumberButton.GetComponent<ButtonAnimator>().AnimatePress();
+        //AudioManager.PlaySound(AudioManager.IDs.Erase);
         if ((clickTileAction != ClickTileActions.Erase) && (selectedNumber != 0)) {
             bool somethingChanged = false;
             if (clickTileAction == ClickTileActions.Build){
@@ -742,6 +751,8 @@ public class GameManager : MonoBehaviour {
                         t.RemoveNumberFromTile();
                     }
                 }
+                if (somethingChanged)
+                    AudioManager.PlaySound(AudioManager.IDs.Erase);
             }
             else if (clickTileAction == ClickTileActions.ToggleNote1){
                 bool foundAnything = false;
@@ -752,12 +763,16 @@ public class GameManager : MonoBehaviour {
                         foundAnything = true;
                     }
                 }
+                if (somethingChanged)
+                    AudioManager.PlaySound(AudioManager.IDs.Erase);
                 if (!foundAnything && StaticVariables.includeRemoveButtonFillsNotes){
                     somethingChanged = true;
                     foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
                     if (t.shownNumber == 0)
                         t.ToggleNote1(selectedNumber); 
                     }
+                    if (somethingChanged)
+                        AudioManager.PlaySound(AudioManager.IDs.Note);
                 }
             }
             else if (clickTileAction == ClickTileActions.ToggleNote2){
@@ -769,12 +784,16 @@ public class GameManager : MonoBehaviour {
                         foundAnything = true;
                     }
                 }
+                if (somethingChanged)
+                    AudioManager.PlaySound(AudioManager.IDs.Erase);
                 if (!foundAnything && StaticVariables.includeRemoveButtonFillsNotes){
                     somethingChanged = true;
                     foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) {
                     if (t.shownNumber == 0)
                         t.ToggleNote2(selectedNumber); 
                     }
+                    if (somethingChanged)
+                        AudioManager.PlaySound(AudioManager.IDs.Note);
                 }
             }
             if (somethingChanged) {
@@ -798,6 +817,7 @@ public class GameManager : MonoBehaviour {
 
         }
         if (changedAnything) {
+            AudioManager.PlaySound(AudioManager.IDs.Clear);
             UpdateAllBuildingQuantities();
             AddToPuzzleHistory();
         }
