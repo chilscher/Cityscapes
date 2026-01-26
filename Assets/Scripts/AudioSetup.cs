@@ -10,7 +10,8 @@ public class AudioSetup : MonoBehaviour {
     public AudioSource audioSource;
     public List<SoundEffect> soundEffects;
 
-    void Start(){
+    public void Setup(){
+        print("setting up");
         DontDestroyOnLoad(gameObject);
         AudioManager.audioSource = audioSource;
         AudioManager.allSoundEffects = soundEffects;

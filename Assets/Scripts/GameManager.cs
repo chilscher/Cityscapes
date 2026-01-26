@@ -552,6 +552,7 @@ public class GameManager : MonoBehaviour {
     public void PushTutorialNumberButton(int num) {
         //when the player pushes a number button on the tutorial, select it, and maybe advance some tutorial dialogue
         SwitchNumber(num);
+        AudioManager.PlaySound(AudioManager.IDs.Generic);
         ShowNumberButtonClicked(numberButtons[num - 1]);
         if (StaticVariables.isTutorial)
             tutorialManager.TappedNumberButton(num);
@@ -642,7 +643,7 @@ public class GameManager : MonoBehaviour {
         UpdateRemoveSelectedNumber();
         if (showAnimation){
             nB.GetComponent<ButtonAnimator>().AnimatePress();
-            AudioManager.PlaySound(AudioManager.IDs.Selection);
+            //AudioManager.PlaySound(AudioManager.IDs.Build);
         }
 
         if (!StaticVariables.isTutorial && StaticVariables.includeHighlightBuildings) {
@@ -708,6 +709,7 @@ public class GameManager : MonoBehaviour {
     public void PushNumberButton(int num) {
         //when the player taps a number selection button, highlight it and make it the currently-selected number
         SwitchNumber(num);
+        AudioManager.PlaySound(AudioManager.IDs.Generic);
         ShowNumberButtonClicked(numberButtons[num - 1]);
         if (clickTileAction == ClickTileActions.Erase) {
             clickTileAction = ClickTileActions.Build;

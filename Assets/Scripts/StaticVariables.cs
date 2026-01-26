@@ -108,6 +108,7 @@ public class StaticVariables{
     static public float gameVersionNumber = 2.5f;
     public enum OSTypes {Mobile, PC};
     static public OSTypes osType;
+    static public int globalVolume = 10; //out of 20
     
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {

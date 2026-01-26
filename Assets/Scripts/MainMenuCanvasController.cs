@@ -56,11 +56,13 @@ public class MainMenuCanvasController : MonoBehaviour {
     public Skin defaultSkin; //the default skin used when the player boots up the game for the first time
 
     public Skin[] skins; //a list of all skins. To work effectively, any new skin must be added to this list in the inspector
+    public AudioSetup audioSetup;
 
 
     private void Start() {
         //check to see if the game is being opened, or if the game is transitioning from another menu
         if (StaticVariables.isApplicationLaunchingFirstTime) {
+            audioSetup.Setup();
             StaticVariables.allSkins = skins;
             StaticVariables.unlockedSkins = new List<Skin> {skins[0]}; //set up the current unlocked skin list to only include the basic skin (now called "rural")
             SaveSystem.LoadGame();
@@ -273,6 +275,8 @@ public class MainMenuCanvasController : MonoBehaviour {
             ChangeVersionNumber(2.4f);
         if (StaticVariables.gameVersionNumber == 2.4f)
             UpdateToVersion2_5();
+        if (StaticVariables.gameVersionNumber == 2.5f)
+            UpdateToVersion3_0();
     }
 
     private void UpdateToVersion2_1(){
@@ -317,6 +321,11 @@ public class MainMenuCanvasController : MonoBehaviour {
     private void UpdateToVersion2_5(){
         ChangeVersionNumber(2.5f);
         StaticVariables.ApplyDefaultKeybinds();
+        SaveSystem.SaveGame();
+    }
+    private void UpdateToVersion3_0(){
+        ChangeVersionNumber(3.0f);
+        StaticVariables.globalVolume = 10;
         SaveSystem.SaveGame();
     }
 

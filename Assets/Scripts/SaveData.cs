@@ -70,6 +70,7 @@ public class SaveData{
     public KeyCode keybindRedo;
     public KeyCode keybindRemoveAll;
     public KeyCode keybindClearPuzzle;
+    public int globalVolume;
 
 
     // ---------------------------------------------------
@@ -133,6 +134,7 @@ public class SaveData{
         hidePurchasedUpgrades = StaticVariables.hidePurchasedUpgrades;
 
         hasBeatenTutorial = StaticVariables.hasBeatenTutorial;
+        globalVolume = StaticVariables.globalVolume;
 
         //stores the player's puzzle states
         hasSavedPuzzleState = StaticVariables.hasSavedPuzzleState;
@@ -230,6 +232,7 @@ public class SaveData{
         StaticVariables.hidePurchasedUpgrades = hidePurchasedUpgrades;
 
         StaticVariables.hasBeatenTutorial = hasBeatenTutorial;
+        StaticVariables.globalVolume = globalVolume;
 
         //loads the player's puzzle states
         StaticVariables.hasSavedPuzzleState = hasSavedPuzzleState;

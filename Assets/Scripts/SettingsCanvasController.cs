@@ -577,4 +577,9 @@ public class SettingsCanvasController : MonoBehaviour {
         ShowKeybinds();
         SaveSystem.SaveGame();
     }
+
+    public void SetVolume(int vol){
+        StaticVariables.globalVolume = vol;
+        SaveSystem.SaveGame();
+    }
 }

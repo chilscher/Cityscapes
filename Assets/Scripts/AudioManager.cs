@@ -13,13 +13,17 @@ public class AudioManager{
     static public List<AllSoundsWithID> soundsSortedByID = new();
 
     static public void PlaySound(IDs ID){
+        //Debug.Log("playing sound" + ID.ToString());
         SoundEffect se = allSoundEffects[0];
         foreach (AllSoundsWithID list in soundsSortedByID){
             if (list.ID == ID)
                 se = list.GetRandomSoundFromList();
         }
         audioSource.clip = se.audioClip;
-        audioSource.volume = (float)(se.volumePercentage / 100.0); //x staticvariables global volume scale / 20
+        audioSource.volume = (float)(se.volumePercentage / 100.0) * (float)(StaticVariables.globalVolume / 20.0);
+        //Debug.Log(audioSource.volume);
+        //if (ID == IDs.Generic)
+        //    audioSource.pitch = (float)(StaticVariables.rand.Next(10, 13) / 10.0);
         audioSource.Play();
     }
 }
