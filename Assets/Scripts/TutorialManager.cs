@@ -617,4 +617,10 @@ public class TutorialManager{
         }
         return false;
     }
+
+    public void DisplayMenuButtons(GameObject tutorialMenuButton, GameObject tutorialSettingsButtonLeft, GameObject tutorialSettingsButtonRight){
+        tutorialMenuButton.SetActive(StaticVariables.hasBeatenTutorial);
+        tutorialSettingsButtonRight.SetActive(StaticVariables.hasBeatenTutorial);
+        tutorialSettingsButtonLeft.SetActive(!StaticVariables.hasBeatenTutorial);
+    }
 }

@@ -58,7 +58,6 @@ public class GameManager : MonoBehaviour {
     public GameObject[] numberButtons;
     
     [Header("Tutorial Stuff")]
-    public TutorialManager tutorialManager;
     public GameObject screenTappedMonitor;
     public Text tutorialTextBox;
     public Text tutorialContinueClue;
@@ -66,7 +65,11 @@ public class GameManager : MonoBehaviour {
     public Skin basicSkin; //the basic skin, used for loading the tutorial with the basic skin no matter what skin is currently selected
     public Transform tutorialHighlightsParent;
     public Text tutorialProgressText;
-    public RectTransform tutorialProgressBar;
+    public RectTransform tutorialProgressBar;    
+    public GameObject tutorialMenuButton;
+    public GameObject tutorialSettingsButtonLeft;
+    public GameObject tutorialSettingsButtonRight;
+    public TutorialManager tutorialManager;
 
     //variables used in determining a win, and handling the win pop-up
     [Header("Win Popup Stuff")]
@@ -131,12 +134,12 @@ public class GameManager : MonoBehaviour {
             tutorialParent.SetActive(true);
             puzzleParent.SetActive(false);
             //hide menu button if it is your first time playing the tutorial
-            tutorialParent.transform.Find("Menu").gameObject.SetActive(StaticVariables.hasBeatenTutorial);
             tutorialParent.transform.Find("Background").GetComponent<Image>().sprite = skin.puzzleBackground;
             tutorialParent.transform.Find("Tutorial Text Box").Find("Interior").GetComponent<Image>().color = skin.popupInside;
 
             tutorialManager = new TutorialManager();
             tutorialManager.gameManager = this;
+            tutorialManager.DisplayMenuButtons(tutorialMenuButton, tutorialSettingsButtonLeft, tutorialSettingsButtonRight);
             tutorialManager.StartTutorial();
         }
 

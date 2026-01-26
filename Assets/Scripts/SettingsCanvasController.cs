@@ -62,8 +62,10 @@ public class SettingsCanvasController : MonoBehaviour {
     private bool expandedTogglesButton = false;
     private bool expandedKeybindsButton = false;
     private bool expandedSkinButton = false;
+    public GameObject shopButton;
 
     private void Start() {
+        shopButton.SetActive(StaticVariables.hasBeatenTutorial);
         SetCurrentToggleTexts();
         ContractToggleButtons();
         UpdateCurrentSkinText();
