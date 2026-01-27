@@ -20,7 +20,7 @@ public class AudioManager{
                 se = list.GetRandomSoundFromList();
         }
         audioSource.clip = se.audioClip;
-        audioSource.volume = (float)(se.volumePercentage / 100.0) * (float)(StaticVariables.globalVolume / 20.0);
+        audioSource.volume = (float)(se.volumePercentage / 100.0) * (float)(StaticVariables.globalVolume / 100.0);
         //Debug.Log(audioSource.volume);
         //if (ID == IDs.Generic)
         //    audioSource.pitch = (float)(StaticVariables.rand.Next(10, 13) / 10.0);

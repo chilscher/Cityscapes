@@ -1,4 +1,4 @@
-﻿//for Cityscapes, copyright Cole Hilscher 2024
+﻿//for Cityscapes, copyright Fancy Bus Games 2026
 
 using System.Collections.Generic;
 using UnityEngine;

@@ -1,4 +1,4 @@
-﻿//for Cityscapes, copyright Cole Hilscher 2024
+﻿//for Cityscapes, copyright Fancy Bus Games 2026
 
 using System.Collections;
 using System.Collections.Generic;
@@ -325,7 +325,7 @@ public class MainMenuCanvasController : MonoBehaviour {
     }
     private void UpdateToVersion3_0(){
         ChangeVersionNumber(3.0f);
-        StaticVariables.globalVolume = 10;
+        StaticVariables.globalVolume = 50;
         SaveSystem.SaveGame();
     }
 

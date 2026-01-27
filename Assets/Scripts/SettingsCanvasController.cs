@@ -1,4 +1,4 @@
-﻿//for Cityscapes, copyright Cole Hilscher 2024
+﻿//for Cityscapes, copyright Fancy Bus Games 2026
 
 using System;
 using System.Collections.Generic;
@@ -43,6 +43,9 @@ public class SettingsCanvasController : MonoBehaviour {
     public KeybindAdjuster keybindRemoveAllButton;
     public KeybindAdjuster keybindClearPuzzleButton;
 
+    [Header("Volume Selection")]
+    public List<VolumeSelector> volumeSelectors;
+
     [Header("Misc Settings")]
     public GameObject hidePurchasedUpgradesButton;
     public GameObject inviteButton;
@@ -72,6 +75,7 @@ public class SettingsCanvasController : MonoBehaviour {
         ShowChooseSkinButton();
         ShowToggleUnlocksButton();
         ShowKeybindButton();
+        ShowVolume();
         LoadSkin();
     }
     
@@ -580,6 +584,12 @@ public class SettingsCanvasController : MonoBehaviour {
 
     public void SetVolume(int vol){
         StaticVariables.globalVolume = vol;
+        ShowVolume();
         SaveSystem.SaveGame();
+    }
+
+    private void ShowVolume(){
+        foreach (VolumeSelector s in volumeSelectors)
+            s.ShowSelected();
     }
 }

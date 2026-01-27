@@ -1,3 +1,5 @@
+//for Cityscapes, copyright Fancy Bus Games 2026
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;

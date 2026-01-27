@@ -1,4 +1,4 @@
-﻿//for Cityscapes, copyright Cole Hilscher 2024
+﻿//for Cityscapes, copyright Fancy Bus Games 2026
 
 using System.Collections;
 using System.Collections.Generic;
@@ -108,7 +108,7 @@ public class StaticVariables{
     static public float gameVersionNumber = 2.5f;
     public enum OSTypes {Mobile, PC};
     static public OSTypes osType;
-    static public int globalVolume = 10; //out of 20
+    static public int globalVolume = 50; //out of 100
     
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {
