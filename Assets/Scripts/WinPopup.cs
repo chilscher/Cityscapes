@@ -17,8 +17,11 @@ public class WinPopup : MonoBehaviour {
     public int coinsFor6Win = 30;
     public int coinsFor7Win = 60;
     [Header("Coin Display")]
-    public GameObject coinsBox1s;
-    public GameObject coinsBox10s;
+    public RectTransform addedCoinParent;
+    public Image addedCoin1;
+    public Image addedCoin10;
+    public Image addedCoinPlus1;
+    public Image addedCoinPlus10;
     public Image totalCoin1;
     public Image totalCoin10;
     public Image totalCoin100;
@@ -37,12 +40,15 @@ public class WinPopup : MonoBehaviour {
     public Image transparentBackground;
     public Transform mainPopup;
     private Color transparentBackgroundColor;
+    private int previousCoins;
 
     public void Start(){
         ShowCityArt();
         IncreaseCoins();
         StaticVariables.WaitTimeThenCallFunction(0.5f, PlayVictoryCheer);
         StaticVariables.WaitTimeThenCallFunction(1.5f, ShowWinPopup);
+        StaticVariables.WaitTimeThenCallFunction(2.5f, ShowCoinIncrease);
+        StaticVariables.WaitTimeThenCallFunction(3.25f, FadeOutCoinIncrease);
         transparentBackgroundColor = transparentBackground.color;
         Color tempColor = transparentBackgroundColor;
         tempColor.a = 0;
@@ -51,6 +57,7 @@ public class WinPopup : MonoBehaviour {
     }
     
     private void IncreaseCoins(){
+        previousCoins = StaticVariables.coins;
         int amt = gameManager.size switch {
             3 => coinsFor3Win,
             4 => coinsFor4Win,
@@ -62,16 +69,44 @@ public class WinPopup : MonoBehaviour {
         
         int onesDigit = amt % 10;
         int tensDigit = (amt / 10) % 10;
+        addedCoin10.gameObject.SetActive(tensDigit != 0);
+        addedCoinPlus1.gameObject.SetActive(tensDigit == 0);
+        addedCoinPlus10.gameObject.SetActive(tensDigit != 0);
 
-        coinsBox1s.GetComponent<Image>().sprite = gameManager.numberSprites[onesDigit];
-        coinsBox10s.GetComponent<Image>().sprite = gameManager.numberSprites[tensDigit];
+        addedCoin1.sprite = gameManager.numberSprites[onesDigit];
+        addedCoin10.sprite = gameManager.numberSprites[tensDigit];
+        Color c = Color.white;
+        c.a = 0;
+        addedCoin1.color = c;
+        addedCoin10.color = c;
+        addedCoinPlus1.color = c;
+        addedCoinPlus10.color = c;
+
         StaticVariables.AddCoins(amt);
-        DisplayTotalCoinsAmount();
+        DisplayTotalCoins(previousCoins, StaticVariables.coins);
+    }
+
+    private void ShowCoinIncrease(){
+        addedCoin1.DOColor(Color.white, 0.5f);
+        addedCoin10.DOColor(Color.white, 0.5f);
+        addedCoinPlus1.DOColor(Color.white, 0.5f);
+        addedCoinPlus10.DOColor(Color.white, 0.5f);
+        addedCoinParent.position = totalCoin1.transform.position;
+        //addedCoinParent.DOLocalMoveY(addedCoinParent.localPosition.y + 110f, 0.5f);
+        addedCoinParent.DOLocalMoveY(addedCoinParent.localPosition.y + 160f, 1f);
+        DisplayTotalCoins(StaticVariables.coins);
+    }
+    private void FadeOutCoinIncrease(){
+        Color c = Color.white;
+        c.a = 0;
+        addedCoin1.DOColor(c, 1f);
+        addedCoin10.DOColor(c, 1f);
+        addedCoinPlus1.DOColor(c, 1f);
+        addedCoinPlus10.DOColor(c, 1f);
     }
 
 
     private void ShowCityArt() {
-        //shows the "city art" on the win popup, depending on which skin and which city size the player is using
         smallCityArt.SetActive(gameManager.size == 3);
         mediumCityArt.SetActive(gameManager.size == 4);
         largeCityArt.SetActive(gameManager.size == 5);
@@ -88,16 +123,18 @@ public class WinPopup : MonoBehaviour {
         };
     }
 
-    private void DisplayTotalCoinsAmount() {
-        //show the player's total coins on the win popup screen
-        int value1 = StaticVariables.coins % 10;
-        int value10 = (StaticVariables.coins / 10) % 10;
-        int value100 = (StaticVariables.coins / 100) % 10;
-        int value1k = (StaticVariables.coins / 1000) % 10;
-        int value10k = (StaticVariables.coins / 10000) % 10;
-        int value100k = (StaticVariables.coins / 100000) % 10;
-        int value1m = (StaticVariables.coins / 100000) % 10;
-        
+    private void DisplayTotalCoins(int amt, int amtToShowDigits = -1) {
+        if (amtToShowDigits == -1)
+            amtToShowDigits = amt;
+
+        int value1 = amt % 10;
+        int value10 = (amt / 10) % 10;
+        int value100 = (amt / 100) % 10;
+        int value1k = (amt / 1000) % 10;
+        int value10k = (amt / 10000) % 10;
+        int value100k = (amt / 100000) % 10;
+        int value1m = (amt / 100000) % 10;
+
         totalCoin1.sprite = gameManager.numberSprites[value1];
         totalCoin10.sprite = gameManager.numberSprites[value10];
         totalCoin100.sprite = gameManager.numberSprites[value100];
@@ -107,12 +144,12 @@ public class WinPopup : MonoBehaviour {
         totalCoin1m.sprite = gameManager.numberSprites[value1m];
 
         totalCoin1.gameObject.SetActive(true);
-        totalCoin10.gameObject.SetActive(StaticVariables.coins > 9);
-        totalCoin100.gameObject.SetActive(StaticVariables.coins > 99);
-        totalCoin1k.gameObject.SetActive(StaticVariables.coins > 999);
-        totalCoin10k.gameObject.SetActive(StaticVariables.coins > 9999);
-        totalCoin100k.gameObject.SetActive(StaticVariables.coins > 99999);
-        totalCoin1m.gameObject.SetActive(StaticVariables.coins > 999999);
+        totalCoin10.gameObject.SetActive(amtToShowDigits > 9);
+        totalCoin100.gameObject.SetActive(amtToShowDigits > 99);
+        totalCoin1k.gameObject.SetActive(amtToShowDigits > 999);
+        totalCoin10k.gameObject.SetActive(amtToShowDigits > 9999);
+        totalCoin100k.gameObject.SetActive(amtToShowDigits > 99999);
+        totalCoin1m.gameObject.SetActive(amtToShowDigits > 999999);
     }
 
     private void PlayVictoryCheer(){
@@ -121,7 +158,7 @@ public class WinPopup : MonoBehaviour {
 
     private void ShowWinPopup(){
         transparentBackground.DOColor(transparentBackgroundColor, 0.4f);
-        mainPopup.DOScale(Vector3.one * 1.1f, 0.4f).OnComplete(ScaleWinPopupToNormalSize);
+        mainPopup.DOScale(Vector3.one * 1.05f, 0.4f).OnComplete(ScaleWinPopupToNormalSize);
     }
 
     private void ScaleWinPopupToNormalSize(){
