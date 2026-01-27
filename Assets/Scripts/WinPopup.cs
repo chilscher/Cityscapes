@@ -9,7 +9,6 @@ using DG.Tweening;
 using System;
 
 public class WinPopup : MonoBehaviour {
-    public GameManager gameManager;
     [Header("Coin Amounts")]
     public int coinsFor3Win = 1;
     public int coinsFor4Win = 3;
@@ -36,6 +35,7 @@ public class WinPopup : MonoBehaviour {
     public GameObject hugeCityArt;
     public GameObject massiveCityArt;
     [Header("Misc")]
+    public GameManager gameManager;
     public Text anotherPuzzleText;
     public Image transparentBackground;
     public Transform mainPopup;
@@ -92,10 +92,11 @@ public class WinPopup : MonoBehaviour {
         addedCoinPlus1.DOColor(Color.white, 0.5f);
         addedCoinPlus10.DOColor(Color.white, 0.5f);
         addedCoinParent.position = totalCoin1.transform.position;
-        //addedCoinParent.DOLocalMoveY(addedCoinParent.localPosition.y + 110f, 0.5f);
         addedCoinParent.DOLocalMoveY(addedCoinParent.localPosition.y + 160f, 1f);
         DisplayTotalCoins(StaticVariables.coins);
+        AudioManager.PlaySound(AudioManager.IDs.GotCoins);
     }
+
     private void FadeOutCoinIncrease(){
         Color c = Color.white;
         c.a = 0;
@@ -104,7 +105,6 @@ public class WinPopup : MonoBehaviour {
         addedCoinPlus1.DOColor(c, 1f);
         addedCoinPlus10.DOColor(c, 1f);
     }
-
 
     private void ShowCityArt() {
         smallCityArt.SetActive(gameManager.size == 3);
