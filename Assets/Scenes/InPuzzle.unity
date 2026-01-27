@@ -719,6 +719,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Small City Art
       objectReference: {fileID: 0}
+    - target: {fileID: 7771066585347695329, guid: 4f02244f38c7e4043832e1390ca4e57c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14650,8 +14655,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1357166982}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 1480447003}
+        m_TargetAssemblyTypeName: WinPopup, Assembly-CSharp
         m_MethodName: PushAnotherPuzzleButton
         m_Mode: 1
         m_Arguments:
@@ -22261,30 +22266,9 @@ MonoBehaviour:
   tutorialMenuButton: {fileID: 968297647}
   tutorialSettingsButtonLeft: {fileID: 1746804447}
   tutorialSettingsButtonRight: {fileID: 1525111228}
-  coinsFor3Win: 1
-  coinsFor4Win: 3
-  coinsFor5Win: 10
-  coinsFor6Win: 30
-  coinsFor7Win: 60
   canClick: 1
-  coinsBox1s: {fileID: 1699990252}
-  coinsBox10s: {fileID: 406255819}
-  totalCoin1: {fileID: 1738731762}
-  totalCoin10: {fileID: 1111741512}
-  totalCoin100: {fileID: 140465866}
-  totalCoin1k: {fileID: 511508311}
-  totalCoin10k: {fileID: 595646616}
-  totalCoin100k: {fileID: 150488514}
-  totalCoin1m: {fileID: 1292593119}
-  smallCityArt: {fileID: 35606656}
-  mediumCityArt: {fileID: 1738964097}
-  largeCityArt: {fileID: 769723857}
-  hugeCityArt: {fileID: 1056157232}
-  massiveCityArt: {fileID: 997971176}
-  anotherPuzzleText: {fileID: 1637186135}
-  winBlackSprite: {fileID: 1830224955}
-  winPopup: {fileID: 215712797}
   showBuildings: 1
+  winPopup: {fileID: 1480447003}
   skinApplicators:
   - {fileID: 703456350}
   - {fileID: 1696399469}
@@ -24714,6 +24698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1480447001}
+  - component: {fileID: 1480447003}
   - component: {fileID: 1480447002}
   m_Layer: 5
   m_Name: Win Stuff
@@ -24763,6 +24748,41 @@ MonoBehaviour:
   - {fileID: 1699400065}
   popupBorders:
   - {fileID: 2012327572}
+--- !u!114 &1480447003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1480447000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c3d1593da1069c47b85e93c8cfdfab3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WinPopup
+  gameManager: {fileID: 1357166982}
+  coinsFor3Win: 1
+  coinsFor4Win: 3
+  coinsFor5Win: 10
+  coinsFor6Win: 30
+  coinsFor7Win: 60
+  coinsBox1s: {fileID: 1699990252}
+  coinsBox10s: {fileID: 406255819}
+  totalCoin1: {fileID: 1738731762}
+  totalCoin10: {fileID: 1111741512}
+  totalCoin100: {fileID: 140465866}
+  totalCoin1k: {fileID: 511508311}
+  totalCoin10k: {fileID: 595646616}
+  totalCoin100k: {fileID: 150488514}
+  totalCoin1m: {fileID: 1292593119}
+  smallCityArt: {fileID: 35606656}
+  mediumCityArt: {fileID: 1738964097}
+  largeCityArt: {fileID: 769723857}
+  hugeCityArt: {fileID: 1056157232}
+  massiveCityArt: {fileID: 997971176}
+  anotherPuzzleText: {fileID: 1637186135}
+  transparentBackground: {fileID: 1830224955}
+  mainPopup: {fileID: 215712798}
 --- !u!1001 &1485176268
 PrefabInstance:
   m_ObjectHideFlags: 0

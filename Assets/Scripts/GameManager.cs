@@ -70,36 +70,12 @@ public class GameManager : MonoBehaviour {
     public GameObject tutorialSettingsButtonLeft;
     public GameObject tutorialSettingsButtonRight;
     public TutorialManager tutorialManager;
-
-    //variables used in determining a win, and handling the win pop-up
-    [Header("Win Popup Stuff")]
-    public int coinsFor3Win = 3;
-    public int coinsFor4Win = 5;
-    public int coinsFor5Win = 10;
-    public int coinsFor6Win = 20;
-    public int coinsFor7Win = 50;
     [HideInInspector]
     public bool canClick = true;
     private bool hasWonYet = false;
-    public GameObject coinsBox1s;
-    public GameObject coinsBox10s;
-    public Image totalCoin1;
-    public Image totalCoin10;
-    public Image totalCoin100;
-    public Image totalCoin1k;
-    public Image totalCoin10k;
-    public Image totalCoin100k;
-    public Image totalCoin1m;
-    public GameObject smallCityArt;
-    public GameObject mediumCityArt;
-    public GameObject largeCityArt;
-    public GameObject hugeCityArt;
-    public GameObject massiveCityArt;
-    public Text anotherPuzzleText;
-    public Image winBlackSprite;
-    public GameObject winPopup;
     [Header("Misc")]
     public bool showBuildings;
+    public WinPopup winPopup;
     public List<SkinApplicator> skinApplicators;
 
     
@@ -166,23 +142,6 @@ public class GameManager : MonoBehaviour {
             HighlightBuildType();
             puzzleBackground.GetComponent<Image>().sprite = skin.puzzleBackground;
 
-            //set up the win popup process
-            winParent.SetActive(false);
-            ShowCorrectCityArtOnWinScreen();
-            int coins = 0;
-            switch(size){
-                case 3: coins = coinsFor3Win; break;
-                case 4: coins = coinsFor4Win; break;
-                case 5: coins = coinsFor5Win; break;
-                case 6: coins = coinsFor6Win; break;
-                case 7: coins = coinsFor7Win; break;
-            }
-            int onesDigit = coins % 10;
-            int tensDigit = (coins / 10) % 10;
-
-            coinsBox1s.GetComponent<Image>().sprite = numberSprites[onesDigit];
-            coinsBox10s.GetComponent<Image>().sprite = numberSprites[tensDigit];
-
             //set the first puzzle state, and you are ready to start playing!
             currentPuzzleState = new PuzzleState(puzzleGenerator);
             UpdateAllBuildingQuantities();
@@ -203,29 +162,10 @@ public class GameManager : MonoBehaviour {
             
             winParent.SetActive(true);
             canClick = false;
-            IncrementCoinsForWin();
-            StaticVariables.WaitTimeThenCallFunction(0.5f, PlayVictoryCheer);
-            StaticVariables.WaitTimeThenCallFunction(1.5f, ShowWinPopup);
-
-            winBackgroundColor = winBlackSprite.color;
-            Color tempColor = winBlackSprite.color;
-            tempColor.a = 0;
-            winBlackSprite.color = tempColor;
-
-            winPopup.transform.localScale = Vector3.zero;
-
+            winPopup.gameObject.SetActive(true);
             StaticVariables.hasSavedPuzzleState = false;
             Save();
         }
-    }
-
-    private void PlayVictoryCheer(){
-        AudioManager.PlaySound(AudioManager.IDs.VictoryCheer);
-    }
-
-    private void ShowWinPopup(){
-            winBlackSprite.DOColor(winBackgroundColor, 0.5f);
-            winPopup.transform.DOScale(Vector3.one, 0.5f);
     }
 
     private void CheckForKeyboardInputs(){
@@ -420,76 +360,6 @@ public class GameManager : MonoBehaviour {
         Vector3 pos = corner.transform.localPosition;
         pos.z = 0;
         corner.transform.localPosition = pos;
-    }
-
-    // ---------------------------------------------------
-    //ALL OF THE FUNCTIONS THAT INTERACT WITH AND SET UP THE WIN POPUP
-    // ---------------------------------------------------
-
-    private void ShowCorrectCityArtOnWinScreen() {
-        //shows the "city art" on the win popup, depending on which skin and which city size the player is using
-        smallCityArt.SetActive(size == 3);
-        mediumCityArt.SetActive(size == 4);
-        largeCityArt.SetActive(size == 5);
-        hugeCityArt.SetActive(size == 6);
-        massiveCityArt.SetActive(size == 7);
-
-        switch (size) {
-            case 3: anotherPuzzleText.text = "ANOTHER SMALL CITY"; break;
-            case 4: anotherPuzzleText.text = "ANOTHER MEDIUM CITY"; break;
-            case 5: anotherPuzzleText.text = "ANOTHER LARGE CITY"; break;
-            case 6: anotherPuzzleText.text = "ANOTHER HUGE CITY"; break;
-            case 7: anotherPuzzleText.text = "ANOTHER MASSIVE CITY"; break;
-        }
-    }
-
-    public void DisplayTotalCoinsAmount() {
-        //show the player's total coins on the win popup screen
-        int value1 = StaticVariables.coins % 10;
-        int value10 = (StaticVariables.coins / 10) % 10;
-        int value100 = (StaticVariables.coins / 100) % 10;
-        int value1k = (StaticVariables.coins / 1000) % 10;
-        int value10k = (StaticVariables.coins / 10000) % 10;
-        int value100k = (StaticVariables.coins / 100000) % 10;
-        int value1m = (StaticVariables.coins / 100000) % 10;
-        totalCoin1.sprite = numberSprites[value1];
-        totalCoin10.sprite = numberSprites[value10];
-        totalCoin100.sprite = numberSprites[value100];
-        totalCoin1k.sprite = numberSprites[value1k];
-        totalCoin10k.sprite = numberSprites[value10k];
-        totalCoin100k.sprite = numberSprites[value100k];
-        totalCoin1m.sprite = numberSprites[value1m];
-
-        totalCoin1.gameObject.SetActive(true);
-        totalCoin10.gameObject.SetActive(StaticVariables.coins > 9);
-        totalCoin100.gameObject.SetActive(StaticVariables.coins > 99);
-        totalCoin1k.gameObject.SetActive(StaticVariables.coins > 999);
-        totalCoin10k.gameObject.SetActive(StaticVariables.coins > 9999);
-        totalCoin100k.gameObject.SetActive(StaticVariables.coins > 99999);
-        totalCoin1m.gameObject.SetActive(StaticVariables.coins > 999999);
-    }
-
-
-    private void IncrementCoinsForWin() {
-        //when the player wins the puzzle, add to their coin total, and show the new amount on the win popup
-        switch (size) {
-            case 3:
-                StaticVariables.AddCoins(coinsFor3Win);
-                break;
-            case 4:
-                StaticVariables.AddCoins(coinsFor4Win);
-                break;
-            case 5:
-                StaticVariables.AddCoins(coinsFor5Win);
-                break;
-            case 6:
-                StaticVariables.AddCoins(coinsFor6Win);
-                break;
-            case 7:
-                StaticVariables.AddCoins(coinsFor7Win);
-                break;
-        }
-        DisplayTotalCoinsAmount();
     }
 
     // ---------------------------------------------------
@@ -976,10 +846,10 @@ public class GameManager : MonoBehaviour {
         clickTileAction = StaticVariables.savedBuildType;
     }
 
-    public void PushAnotherPuzzleButton() {
-        StaticVariables.fadingIntoPuzzleSameSize = false;
-        StaticVariables.FadeOutThenLoadScene("InPuzzle");
-    }
+    //public void PushAnotherPuzzleButton() {
+    //    StaticVariables.fadingIntoPuzzleSameSize = false;
+    //    StaticVariables.FadeOutThenLoadScene("InPuzzle");
+    //}
     
     private void OnApplicationQuit() {
         Save();
