@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour {
     private List<PuzzleState> previousPuzzleStates = new List<PuzzleState>(); // the list of puzzle states to be restored by the undo button
     private PuzzleState currentPuzzleState;
     private List<PuzzleState> nextPuzzleStates = new List<PuzzleState>();// the list of puzzle states to be restored by the redo button
-
+    private Color winBackgroundColor;
     
     private void Start() {
         //choose which skin to use
@@ -194,33 +194,43 @@ public class GameManager : MonoBehaviour {
         foreach(SideHintTile h in puzzleGenerator.allHints) {
             h.SetAppropriateColor();
         }
-        //check for a win
+        CheckForKeyboardInputs();
+    }
+
+    public void CheckForWin(){
         if (!hasWonYet && puzzleGenerator.CheckPuzzle() && !StaticVariables.isTutorial) {
             hasWonYet = true;
             
             winParent.SetActive(true);
             canClick = false;
             IncrementCoinsForWin();
+            StaticVariables.WaitTimeThenCallFunction(0.5f, PlayVictoryCheer);
+            StaticVariables.WaitTimeThenCallFunction(1.5f, ShowWinPopup);
 
-            Color nextColor = winBlackSprite.color;
-            Color currentColor = Color.black;
-            currentColor.a = 0;
-            winBlackSprite.color = currentColor;
-            winBlackSprite.gameObject.SetActive(true);
-            winBlackSprite.DOColor(nextColor, 0.5f);
+            winBackgroundColor = winBlackSprite.color;
+            Color tempColor = winBlackSprite.color;
+            tempColor.a = 0;
+            winBlackSprite.color = tempColor;
 
             winPopup.transform.localScale = Vector3.zero;
-            winPopup.transform.DOScale(Vector3.one, 0.5f);
 
             StaticVariables.hasSavedPuzzleState = false;
             Save();
-            return;
         }
+    }
 
-        CheckForKeyboardInputs();
+    private void PlayVictoryCheer(){
+        AudioManager.PlaySound(AudioManager.IDs.VictoryCheer);
+    }
+
+    private void ShowWinPopup(){
+            winBlackSprite.DOColor(winBackgroundColor, 0.5f);
+            winPopup.transform.DOScale(Vector3.one, 0.5f);
     }
 
     private void CheckForKeyboardInputs(){
+        if (hasWonYet)
+            return;
         if (Input.GetKeyDown(KeyCode.Escape)){ //not rebindable. also works for pushing the back button on a mobile device
             if (!StaticVariables.isTutorial || StaticVariables.hasBeatenTutorial)
                 PushMainMenuButton();
@@ -873,6 +883,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void UpdateAllBuildingQuantities() {
+        CheckForWin();
         if (!StaticVariables.unlockedBuildingQuantityStatus || !StaticVariables.includeBuildingQuantityStatus || StaticVariables.isTutorial)
             return;
         //get the quantity of each building
