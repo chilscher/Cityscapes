@@ -159,7 +159,6 @@ public class GameManager : MonoBehaviour {
     public void CheckForWin(){
         if (!hasWonYet && puzzleGenerator.CheckPuzzle() && !StaticVariables.isTutorial) {
             hasWonYet = true;
-            
             winParent.SetActive(true);
             canClick = false;
             winPopup.gameObject.SetActive(true);
@@ -753,7 +752,11 @@ public class GameManager : MonoBehaviour {
     }
 
     public void UpdateAllBuildingQuantities() {
-        CheckForWin();
+        //these can probably get moved somewhere else soon
+        CheckForWin();  
+        foreach(SideHintTile h in puzzleGenerator.allHints)
+            h.SetAppropriateColor();
+
         if (!StaticVariables.unlockedBuildingQuantityStatus || !StaticVariables.includeBuildingQuantityStatus || StaticVariables.isTutorial)
             return;
         //get the quantity of each building
@@ -845,11 +848,6 @@ public class GameManager : MonoBehaviour {
         selectedNumber = StaticVariables.savedBuildNumber;
         clickTileAction = StaticVariables.savedBuildType;
     }
-
-    //public void PushAnotherPuzzleButton() {
-    //    StaticVariables.fadingIntoPuzzleSameSize = false;
-    //    StaticVariables.FadeOutThenLoadScene("InPuzzle");
-    //}
     
     private void OnApplicationQuit() {
         Save();

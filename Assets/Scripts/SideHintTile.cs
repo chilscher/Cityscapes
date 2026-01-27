@@ -2,6 +2,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,8 @@ public class SideHintTile : Tile {
     //the colors that the numbers in the SideHintTiles can be
     private Color correctColor;
     private Color incorrectColor;
+
+    private bool isSatisfied = false;
 
     public void Initialize(int hintValue) {
         //creates the sideHintTile. Here goes all of the code that defines the private variables used later
@@ -83,28 +86,29 @@ public class SideHintTile : Tile {
     }
 
     public void AddHint() {
-        //shows the number on the tile
         AddNumberToTile(hintValue);
     }
     
 
-    public void AddNumberToTile(int num) {
-        //shows the number on the tile
+    private void AddNumberToTile(int num) {
         number.sprite = whiteSprites[num - 1];
-        number.color = incorrectColor;
-
+        SetAppropriateColor();
     }
 
     public void SetAppropriateColor() {
-        //colors the SideHintTile number based on if its building criterion is satisfied
-        //does nothing if the relevant upgrade is not toggled, or if this is the tutorial
-        number.color = incorrectColor;
-        arrow.color = incorrectColor;
-        if (StaticVariables.changeResidentColorOnCorrectRows && !StaticVariables.isTutorial) {
-            if ((NumBuildingsCurrentlyVisible() == hintValue) && (row[0].shownNumber != 0)) {
-                number.color = correctColor;
-                arrow.color = correctColor;
-            }
+        if (!StaticVariables.changeResidentColorOnCorrectRows)
+            return;
+        if (StaticVariables.isTutorial)
+            return;
+
+        bool wasSatisfied = isSatisfied;
+        isSatisfied = ((NumBuildingsCurrentlyVisible() == hintValue) && (row[0].shownNumber != 0));
+        if (isSatisfied != wasSatisfied){
+            Color c = incorrectColor;
+            if (isSatisfied)
+                c = correctColor;
+            number.DOColor(c, 0.25f);
+            arrow.DOColor(c, 0.25f);
         }
     }
 
