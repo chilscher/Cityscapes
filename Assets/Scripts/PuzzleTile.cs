@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class PuzzleTile : Tile {
     //a Puzzle Tile object which holds the notes and building for one specific square of the Cityscapes Puzzle
@@ -36,7 +37,6 @@ public class PuzzleTile : Tile {
     private Color highlightBuildingColor;
 
     private bool randomRotation = false; //if this is true, each tile will be generated with a random rotation (90, 180, 270, 0 deg) rotation applied to it for visual variety
-    private bool scaleBuildingSizes = true; //if this is true, building sizes are scaled dynamically based on the number placed in the tile. Then the skin only needs to apply one building design
     private float minBuildingScale = 0.5f; //the smallest size that a building will be relative to the highest size. So if this is 0.5, then a #1 building will be half the dimensions of a #3 building on a small city (where the max building size is 3)
    
     public bool isPermanentBuilding = false; //if hasStartingValue is true, the tile's building size cannot be overwritten or removed.
@@ -117,6 +117,7 @@ public class PuzzleTile : Tile {
             if (DoesTileContainAnything()) {
                 ClearColoredNotes();
                 RemoveNumberFromTile();
+                DisplayBuildingSize(0);
                 AudioManager.PlaySound(AudioManager.IDs.Erase);
                 gameManager.UpdateAllBuildingQuantities();
                 gameManager.AddToPuzzleHistory();
@@ -142,16 +143,8 @@ public class PuzzleTile : Tile {
     }
 
     public void RemoveNumberFromTile() {
-        //removes the building number from the PuzzleTile
-        if (scaleBuildingSizes && shownNumber != 0) {
-            float scale1 = ((float)shownNumber - 1) / (maxValue - 1);
-            float scale2 = scale1 * minBuildingScale;
-            float scale3 = scale2 + minBuildingScale;
-            building.transform.localScale /= (scale3);
-        }
         shownNumber = 0;
-        building.enabled = false;
-        number.enabled = false;
+        DisplayBuildingSize(0);
     }
 
     public void ToggleNumber(int num) {
@@ -250,6 +243,7 @@ public class PuzzleTile : Tile {
     public void AddPermanentBuildingToTile(int num){
         shownNumber = num;
         AddNumberToTile(num);
+        //DisplayBuildingSize(num);
         isPermanentBuilding = true;
         building.color = permanentBuildingColor;
         number.color = permanentNumberColor;
@@ -258,26 +252,12 @@ public class PuzzleTile : Tile {
     }
 
     public void AddNumberToTile(int num) {
-        //sets the number on this tile to be num. Also displays the building and sets it to the appropriate scale based on the puzzle size
-        if (num == 0) {
-            building.enabled = false;
-            number.enabled = false;
-        }
-
+        building.enabled = true;
+        number.enabled = true;
+        DisplayBuildingSize(num);
         if (num != 0) {
-            if (scaleBuildingSizes) {
-                building.transform.localScale = new Vector3(1,1,1); //reset the building size, so when it is redrawn the building size does not exponentially diminish
-                float scale1 = ((float)num - 1) / (maxValue - 1);
-                float scale2 = scale1 * minBuildingScale;
-                float scale3 = scale2 + minBuildingScale;
-                building.transform.localScale *= (scale3);
-            }
             number.sprite = whiteSprites[num - 1];
             number.color = numberColor;
-
-            building.enabled = true;
-            number.enabled = true;
-
             HighlightIfBuildingNumber(gameManager.selectedNumber);
         }
     }
@@ -323,6 +303,22 @@ public class PuzzleTile : Tile {
         number.color = numberColor;
         if (isPermanentBuilding)
             number.color = permanentNumberColor;
+    }
+
+    private void DisplayBuildingSize(int num){
+        float scalar;
+        Vector2 numScalar;
+        if (num == 0){
+            scalar = 0f;
+            numScalar = Vector2.zero;
+        }
+        else{
+            float scalePerSize = (float)(1 - minBuildingScale) / (maxValue - 1);
+            scalar = minBuildingScale + ((num - 1) * scalePerSize);
+            numScalar = Vector2.one * 0.66f;
+        }
+        building.transform.DOScale(new Vector2(scalar, scalar), 0.25f);
+        number.transform.DOScale(numScalar, 0.25f);
     }
 
 }
