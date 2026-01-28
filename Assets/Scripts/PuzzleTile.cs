@@ -83,7 +83,7 @@ public class PuzzleTile : Tile {
             ToggleNumber(selectedNumber);
             bool hasNumNow = (selectedNumber == shownNumber);
             if (hasNumNow && !hadNumBefore)
-                AudioManager.PlaySound(AudioManager.IDs.Build);
+                AudioManager.PlaySound(AudioManager.IDs.PlaceBuilding);
             if (!hasNumNow && hadNumBefore)
                 AudioManager.PlaySound(AudioManager.IDs.Erase);
             gameManager.UpdateAllBuildingQuantities();
@@ -95,7 +95,7 @@ public class PuzzleTile : Tile {
             ToggleNote1(selectedNumber);
             bool hasNoteNow = noteGroup1.Contains(selectedNumber);
             if (hasNoteNow && !hadNoteBefore)
-                AudioManager.PlaySound(AudioManager.IDs.Note);
+                AudioManager.PlaySound(AudioManager.IDs.PlaceNote);
             if (!hasNoteNow && hadNoteBefore)
                 AudioManager.PlaySound(AudioManager.IDs.Erase);
             gameManager.AddToPuzzleHistory();
@@ -107,7 +107,7 @@ public class PuzzleTile : Tile {
             ToggleNote2(selectedNumber);
             bool hasNoteNow = noteGroup2.Contains(selectedNumber);
             if (hasNoteNow && !hadNoteBefore)
-                AudioManager.PlaySound(AudioManager.IDs.Note);
+                AudioManager.PlaySound(AudioManager.IDs.PlaceNote);
             if (!hasNoteNow && hadNoteBefore)
                 AudioManager.PlaySound(AudioManager.IDs.Erase);
             gameManager.AddToPuzzleHistory();

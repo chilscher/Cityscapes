@@ -48,7 +48,6 @@ public class TutorialManager{
         gameManager.DrawFullPuzzle();
         gameManager.HideHints();
         gameManager.SetAllButtonAvailability();
-        gameManager.PushBuildButton();
         tutorialText = gameManager.tutorialTextBox;
         continueClue = gameManager.tutorialContinueClue;
         number2Highlight = gameManager.tutorialHighlightsParent.GetChild(0).gameObject;

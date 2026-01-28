@@ -433,7 +433,7 @@ public class GameManager : MonoBehaviour {
     public void PushTutorialNumberButton(int num) {
         //when the player pushes a number button on the tutorial, select it, and maybe advance some tutorial dialogue
         SwitchNumber(num);
-        AudioManager.PlaySound(AudioManager.IDs.Generic);
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         ShowNumberButtonClicked(numberButtons[num - 1]);
         if (StaticVariables.isTutorial)
             tutorialManager.TappedNumberButton(num);
@@ -459,7 +459,7 @@ public class GameManager : MonoBehaviour {
         DisselectBuildNotesAndEraseButtons();
         InterfaceFunctions.ColorPuzzleButtonOn(buildButton, skin);
         buildButton.GetComponent<ButtonAnimator>().AnimatePress();
-        AudioManager.PlaySound(AudioManager.IDs.Selection);
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -474,7 +474,7 @@ public class GameManager : MonoBehaviour {
         DisselectBuildNotesAndEraseButtons();
         InterfaceFunctions.ColorPuzzleButtonOn(note1Button, skin);
         note1Button.GetComponent<ButtonAnimator>().AnimatePress();
-        AudioManager.PlaySound(AudioManager.IDs.Selection);
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -489,7 +489,7 @@ public class GameManager : MonoBehaviour {
         DisselectBuildNotesAndEraseButtons();
         InterfaceFunctions.ColorPuzzleButtonOn(note2Button, skin);
         note2Button.GetComponent<ButtonAnimator>().AnimatePress();
-        AudioManager.PlaySound(AudioManager.IDs.Selection);
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -502,7 +502,7 @@ public class GameManager : MonoBehaviour {
         foreach (PuzzleTile t in puzzleGenerator.puzzleTiles) { t.UnhighlightBuildingNumber(); }
         InterfaceFunctions.ColorPuzzleButtonOn(clearTileButton, skin);
         clearTileButton.GetComponent<ButtonAnimator>().AnimatePress();
-        AudioManager.PlaySound(AudioManager.IDs.Selection);
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         UpdateRemoveSelectedNumber();
         Save();
     }
@@ -590,7 +590,7 @@ public class GameManager : MonoBehaviour {
     public void PushNumberButton(int num) {
         //when the player taps a number selection button, highlight it and make it the currently-selected number
         SwitchNumber(num);
-        AudioManager.PlaySound(AudioManager.IDs.Generic);
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         ShowNumberButtonClicked(numberButtons[num - 1]);
         if (clickTileAction == ClickTileActions.Erase) {
             clickTileAction = ClickTileActions.Build;
@@ -658,7 +658,7 @@ public class GameManager : MonoBehaviour {
                         t.ToggleNote1(selectedNumber); 
                     }
                     if (somethingChanged)
-                        AudioManager.PlaySound(AudioManager.IDs.Note);
+                        AudioManager.PlaySound(AudioManager.IDs.PlaceNote);
                 }
             }
             else if (clickTileAction == ClickTileActions.ToggleNote2){
@@ -679,7 +679,7 @@ public class GameManager : MonoBehaviour {
                         t.ToggleNote2(selectedNumber); 
                     }
                     if (somethingChanged)
-                        AudioManager.PlaySound(AudioManager.IDs.Note);
+                        AudioManager.PlaySound(AudioManager.IDs.PlaceNote);
                 }
             }
             if (somethingChanged) {
@@ -703,7 +703,7 @@ public class GameManager : MonoBehaviour {
 
         }
         if (changedAnything) {
-            AudioManager.PlaySound(AudioManager.IDs.Clear);
+            AudioManager.PlaySound(AudioManager.IDs.ClearPuzzle);
             UpdateAllBuildingQuantities();
             AddToPuzzleHistory();
         }
