@@ -61,7 +61,8 @@ public class SettingsCanvasController : MonoBehaviour {
         KeyCode.T, KeyCode.U, KeyCode.V, KeyCode.W, KeyCode.X, KeyCode.Y, KeyCode.Z, KeyCode.Space};
 
     [Header("UI Elements")]
-    public GameObject background;
+    public Image background;
+    public Image logo;
     private bool expandedTogglesButton = false;
     private bool expandedKeybindsButton = false;
     private bool expandedSkinButton = false;
@@ -280,7 +281,8 @@ public class SettingsCanvasController : MonoBehaviour {
     }
     
     private void LoadSkin() {
-        background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
+        background.sprite = StaticVariables.skin.mainMenuBackground;
+        logo.sprite = StaticVariables.skin.logo;
         foreach (SkinApplicator sa in skinApplicators)
             sa.ApplySkin(StaticVariables.skin);
     }

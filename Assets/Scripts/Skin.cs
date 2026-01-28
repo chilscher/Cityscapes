@@ -14,6 +14,7 @@ public class Skin: MonoBehaviour{
     [Header("Sprites")]
     public Sprite mainMenuBackground;
     public Sprite puzzleBackground;
+    public Sprite logo;
     
     [Header("Main Menu Button Colors")]
     public Color menuButtonInside; //ex: the buttons on the home screen or in puzzle scene
