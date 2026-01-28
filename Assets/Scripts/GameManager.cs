@@ -333,8 +333,10 @@ public class GameManager : MonoBehaviour {
             leftTile.RotateHint(90, (totalSize / size));
             rightTile.RotateHint(270, (totalSize / size));
         }
-        foreach (SideHintTile h in puzzleGenerator.allHints)
+        foreach (SideHintTile h in puzzleGenerator.allHints){
             h.AddHint();
+            h.SetAppropriateColorImmediate();
+        }
 
         //draw street corners
         Vector2 topLeftPos = new Vector2(leftx, topy);

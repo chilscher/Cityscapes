@@ -86,7 +86,10 @@ public class SideHintTile : Tile {
     }
 
     public void AddHint() {
+        //called at the start of a puzzle
         AddNumberToTile(hintValue);
+        //number.color = incorrectColor;
+        //arrow.color = incorrectColor;
     }
     
 
@@ -110,6 +113,12 @@ public class SideHintTile : Tile {
             number.DOColor(c, 0.25f);
             arrow.DOColor(c, 0.25f);
         }
+    }
+
+    public void SetAppropriateColorImmediate(){
+        number.color = incorrectColor;
+        arrow.color = incorrectColor;
+        SetAppropriateColor();
     }
 
     public void RotateHint(int amt, float tileSize) {

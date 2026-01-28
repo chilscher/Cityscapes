@@ -35,6 +35,8 @@ public class TutorialManager{
     private GameObject resident5Highlight;
     private GameObject street5Highlight;
     private GameObject residentAndStreet2Highlight;
+    private string hts = "<color=#003DFF>"; //highlight text start
+    private string hte = "</color>"; //highlight text end
 
 
     public void StartTutorial() {
@@ -120,9 +122,9 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "To place a building, first you must tap a building size to select it...";
+            text = "To place a building, first you must tap a " + hts + "building size" + hte + " to select it...";
             if (StaticVariables.osType == StaticVariables.OSTypes.PC)
-                text = "To place a building, first you must click a building size to select it...";
+                text = "To place a building, first you must click a " + hts + "building size" + hte + " to select it...";
             continueText = "Choose the right building size...";
             gameManager.tutorialParent.transform.Find("Numbers").gameObject.SetActive(true);
             number2Highlight.SetActive(true);
@@ -132,9 +134,9 @@ public class TutorialManager{
             ShowTutorailCompletionPercentage(3);
         }
         else if (++i == tutorialStage){
-            text = "To place a building, first you must tap a building size to select it...\n\nthen tap the space you would like to build on.";
+            text = "To place a building, first you must tap a building size to select it...\n\nthen tap the " + hts + "space" + hte + " you would like to build on.";
             if (StaticVariables.osType == StaticVariables.OSTypes.PC)
-            text = "To place a building, first you must click a building size to select it...\n\nthen click the space you would like to build on.";
+            text = "To place a building, first you must click a building size to select it...\n\nthen click the " + hts + "space" + hte + " you would like to build on.";
             continueText = "Place the building...";
             number2Highlight.SetActive(false);
             tile1Highlight.SetActive(true);
@@ -170,7 +172,7 @@ public class TutorialManager{
             ShowTutorailCompletionPercentage(6);
         }
         else if (++i == tutorialStage){
-            text = "Firstly, every street has to contain exactly one building of each height.\n\nThese three buildings form a street and already satisfy this rule.";
+            text = "Firstly, every street has to contain exactly one building of each height.\n\nThese " + hts + "three buildings" + hte + " form a " + hts + "street" + hte + " and already satisfy this rule.";
             continueText = GetTapToContinueText();
             street1Highlight.SetActive(true);
             tutorialText.text = text;
@@ -178,7 +180,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "However, this street does not yet have one of every building!";
+            text = "However, " + hts + "this street" + hte + " does not yet have one of every building!";
             continueText = GetTapToContinueText();
             street1Highlight.SetActive(false);
             street2Highlight.SetActive(true);
@@ -188,7 +190,7 @@ public class TutorialManager{
             ShowTutorailCompletionPercentage(7);
         }
         else if (++i == tutorialStage){
-            text = "However, this street does not yet have one of every building!\n\nIt still needs a three-story building in the middle.";
+            text = "However, " + hts + "this street" + hte + " does not yet have one of every building!\n\nIt still needs a three-story building in the middle.";
             continueText = "Place the correct building...";
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -213,7 +215,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "This resident...";
+            text = "This " + hts + "resident" + hte + "...";
             continueText = GetTapToContinueText();
             resident1Highlight.SetActive(true);
             tutorialText.text = text;
@@ -222,7 +224,7 @@ public class TutorialManager{
             ShowTutorailCompletionPercentage(9);
         }
         else if (++i == tutorialStage){
-            text = "This resident...\nis looking down this street...";
+            text = "This " + hts + "resident" + hte + "...\nis looking down " + hts + "this street" + hte + "...";
             continueText = GetTapToContinueText();
             resident1Highlight.SetActive(false);
             residentAndStreet1Highlight.SetActive(true);
@@ -231,7 +233,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "This resident...\nis looking down this street...\nand wants to see only one building.";
+            text = "This " + hts + "resident" + hte + "...\nis looking down " + hts + "this street" + hte + "...\nand wants to see only one building.";
             continueText = GetTapToContinueText();
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -240,14 +242,14 @@ public class TutorialManager{
             skipToStage = 21;
         }
         else if (++i == tutorialStage){
-            text = "This resident...\nis looking down this street...\nand wants to see only one building.\nTherefore, the building closest to them has to be the tallest one on the street!";
+            text = "This " + hts + "resident" + hte + "...\nis looking down " + hts + "this street" + hte + "...\nand wants to see only one building.\nTherefore, the building closest to them has to be the tallest one on the street!";
             continueText = GetTapToContinueText();
             tutorialText.text = text;
             continueClue.text = continueText;
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "Place the tallest building on the street closest to the resident.";
+            text = "Place the tallest building on the " + hts + "street" + hte + " closest to the " + hts + "resident" + hte + ".";
             continueText = "Place the correct building...";
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -265,7 +267,7 @@ public class TutorialManager{
             ShowTutorailCompletionPercentage(11);
         }
         else if (++i == tutorialStage){
-            text = "Awesome!\n\nNow, you can fill in the last missing building on the topmost street.";
+            text = "Awesome!\n\nNow, you can fill in the last missing building on the " + hts + "topmost street" + hte + ".";
             continueText = "Place the correct building...";
             street3Highlight.SetActive(true);
             tutorialText.text = text;
@@ -273,7 +275,7 @@ public class TutorialManager{
             advanceRequirement = "add building of height 1 to tile 2";
         }
         else if (++i == tutorialStage){
-            text = "And now you can fill in the missing building on the middle street.";
+            text = "And now you can fill in the missing building on the " + hts + "middle street" + hte + ".";
             continueText = "Place the correct building...";
             street3Highlight.SetActive(false);
             street4Highlight.SetActive(true);
@@ -307,7 +309,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "From now on, every city will have at least one building already in place.";
+            text = "From now on, every city will have at least " + hts + "one building already in place" + hte + ".";
             continueText = GetTapToContinueText();
             puzzle = "213132321";
             DeleteOldCity();
@@ -342,7 +344,7 @@ public class TutorialManager{
             ShowTutorailCompletionPercentage(17);
         }
         else if (++i == tutorialStage){
-            text = "These four residents only want to see one building...";
+            text = "These " + hts + "four residents" + hte + " only want to see one building...";
             continueText = GetTapToContinueText();
             resident2Highlight.SetActive(true);
             resident3Highlight.SetActive(true);
@@ -356,7 +358,7 @@ public class TutorialManager{
             ShowTutorailCompletionPercentage(18);
         }
         else if (++i == tutorialStage){
-            text = "These four residents only want to see one building...\n\nso you know the buildings next to them have to be three stories tall.";
+            text = "These " + hts + "four residents" + hte + " only want to see one building...\n\nso you know the buildings next to them have to be three stories tall.";
             continueText = "Place the correct buildings...";
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -391,7 +393,7 @@ public class TutorialManager{
             ShowTutorailCompletionPercentage(20);
         }
         else if (++i == tutorialStage){
-            text = "Good work!\nNow, let's take a look at this street.";
+            text = "Good work!\nNow, let's take a look at " + hts + "this street" + hte + ".";
             street5Highlight.SetActive(true);
             continueText = GetTapToContinueText();
             tutorialText.text = text;
@@ -399,7 +401,7 @@ public class TutorialManager{
             advanceRequirement = "tap screen";
         }
         else if (++i == tutorialStage){
-            text = "The resident wants to see all three buildings on their street...";
+            text = "The " + hts + "resident" + hte + " wants to see all three buildings on " + hts + "their street" + hte + "...";
             continueText = GetTapToContinueText();
             street5Highlight.SetActive(false);
             residentAndStreet2Highlight.SetActive(true);
@@ -411,7 +413,7 @@ public class TutorialManager{
             ShowTutorailCompletionPercentage(21);
         }
         else if (++i == tutorialStage) {
-            text = "The resident wants to see all three buildings on their street...\nThe only way to satisfy the resident is to line up all three buildings from shortest to tallest!";
+            text = "The " + hts + "resident" + hte + " wants to see all three buildings on " + hts + "their street" + hte + "...\nThe only way to satisfy the " + hts + "resident" + hte + " is to line up all three buildings from shortest to tallest!";
             continueText = "Place the correct buildings...";
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -496,8 +498,10 @@ public class TutorialManager{
     
     public void TappedScreen() {
         //when the player taps the screen, sometimes that is enough to advance to another dialogue box, or stage
-        if (advanceRequirement == "tap screen")
+        if (advanceRequirement == "tap screen"){
+            AudioManager.PlaySound(AudioManager.IDs.ClickedTutorial);
             AdvanceStage();
+        }
     }
 
     public void TappedNumberButton(int num) {

@@ -8,7 +8,7 @@ using DG.Tweening;
 public class AudioManager{
 
     static public AudioSource audioSource;
-    public enum IDs {Generic, Selection, Note, Build, Erase, Undo, Redo, Clear, VictoryCheer, GotCoins}
+    public enum IDs {Generic, Selection, Note, Build, Erase, Undo, Redo, Clear, VictoryCheer, GotCoins, ClickedTutorial}
     static public List<SoundEffect> allSoundEffects = new();
     static public List<AllSoundsWithID> soundsSortedByID = new();
 
