@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour {
     private PuzzleState currentPuzzleState;
     private List<PuzzleState> nextPuzzleStates = new List<PuzzleState>();// the list of puzzle states to be restored by the redo button
     private Color winBackgroundColor;
+    private int autoSolveProgress = 0;
     
     private void Start() {
         //choose which skin to use
@@ -437,6 +438,14 @@ public class GameManager : MonoBehaviour {
         ShowNumberButtonClicked(numberButtons[num - 1]);
         if (StaticVariables.isTutorial)
             tutorialManager.TappedNumberButton(num);
+    }
+
+    public void PushSkipTutorialButton(){
+        StaticVariables.hasBeatenTutorial = true;
+        SaveSystem.SaveGame();
+        if (StaticVariables.highestUnlockedSize < 3)
+            StaticVariables.highestUnlockedSize = 3;
+        PushMainMenuButton();
     }
 
 
@@ -853,5 +862,27 @@ public class GameManager : MonoBehaviour {
     
     private void OnApplicationQuit() {
         Save();
+    }
+
+    public void PushAutoSolveButton(){
+        NextAutoSolveStep();
+    }
+
+    private void NextAutoSolveStep(){
+        if (autoSolveProgress < puzzleGenerator.puzzleTiles.Count){
+            if (puzzleGenerator.puzzleTiles[autoSolveProgress].isPermanentBuilding){
+                autoSolveProgress++;
+                NextAutoSolveStep();
+                return;
+            }
+            if (puzzleGenerator.puzzleTiles[autoSolveProgress].solution == selectedNumber){
+                puzzleGenerator.puzzleTiles[autoSolveProgress].Clicked();
+                autoSolveProgress ++;
+            }
+            else
+                PushNumberButton(puzzleGenerator.puzzleTiles[autoSolveProgress].solution);
+            if (!hasWonYet)
+                StaticVariables.WaitTimeThenCallFunction(0.5f, NextAutoSolveStep);
+        }
     }
 }

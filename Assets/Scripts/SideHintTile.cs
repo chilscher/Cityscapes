@@ -28,6 +28,9 @@ public class SideHintTile : Tile {
     private Color incorrectColor;
 
     private bool isSatisfied = false;
+    private float danceMaximum = 0;
+    private float danceMinimum = 0;
+    private float danceOrigin;
 
     public void Initialize(int hintValue) {
         //creates the sideHintTile. Here goes all of the code that defines the private variables used later
@@ -160,5 +163,22 @@ public class SideHintTile : Tile {
     public void RemoveRedBorder() {
         //removes the border around the SideHintTile number. Used in the tutorial
         redBorder.gameObject.SetActive(false);
+    }
+
+    public void MakeResidentDance(){
+        danceOrigin = number.transform.localPosition.y;
+        danceMaximum = danceOrigin + 0.05f;
+        danceMinimum = danceOrigin - 0.05f;
+        float startPos = StaticVariables.rand.Next(-4, 5) * 0.2f * 0.01f;
+        float time = Mathf.Abs(startPos * 2f);
+        number.transform.DOLocalMoveY(danceOrigin + startPos, time).OnComplete(OscillateNumber);
+    }
+
+    private void OscillateNumber(){
+        float time = StaticVariables.rand.Next(80, 100) * 0.01f * 0.2f;
+        float newPos = danceMinimum;
+        if (number.transform.localPosition.y < danceOrigin)
+            newPos = danceMaximum;
+        number.transform.DOLocalMoveY(newPos, time).OnComplete(OscillateNumber);
     }
 }

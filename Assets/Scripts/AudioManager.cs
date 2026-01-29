@@ -13,7 +13,6 @@ public class AudioManager{
     static public List<AllSoundsWithID> soundsSortedByID = new();
 
     static public void PlaySound(IDs ID){
-        Debug.Log("playing sound " + ID.ToString());
         SoundEffect se = allSoundEffects[0];
         foreach (AllSoundsWithID list in soundsSortedByID){
             if (list.ID == ID)
@@ -21,6 +20,9 @@ public class AudioManager{
         }
         audioSource.clip = se.audioClip;
         audioSource.volume = (float)(se.volumePercentage / 100.0) * (float)(StaticVariables.globalVolume / 100.0);
+        
+        Debug.Log("playing ID " + ID.ToString() + " (" + audioSource.clip.name + ")");
+
         audioSource.Play();
     }
 }

@@ -46,8 +46,9 @@ public class WinPopup : MonoBehaviour {
         ShowCityArt();
         IncreaseCoins();
         StaticVariables.WaitTimeThenCallFunction(0.5f, PlayVictoryCheer);
+        StaticVariables.WaitTimeThenCallFunction(0.5f, MakeResidentsDance);
         StaticVariables.WaitTimeThenCallFunction(1.5f, ShowWinPopup);
-        StaticVariables.WaitTimeThenCallFunction(2.5f, ShowCoinIncrease);
+        StaticVariables.WaitTimeThenCallFunction(3f, ShowCoinIncrease);
         StaticVariables.WaitTimeThenCallFunction(3.25f, FadeOutCoinIncrease);
         transparentBackgroundColor = transparentBackground.color;
         Color tempColor = transparentBackgroundColor;
@@ -156,9 +157,16 @@ public class WinPopup : MonoBehaviour {
         AudioManager.PlaySound(AudioManager.IDs.VictoryCheer);
     }
 
+    private void MakeResidentsDance(){
+        foreach (SideHintTile sht in gameManager.puzzleGenerator.allHints)
+            sht.MakeResidentDance();
+    }
+
     private void ShowWinPopup(){
+        //transparentBackground.DOColor(transparentBackgroundColor, 2f);
         transparentBackground.DOColor(transparentBackgroundColor, 0.4f);
         mainPopup.DOScale(Vector3.one * 1.05f, 0.4f).OnComplete(ScaleWinPopupToNormalSize);
+        //mainPopup.DOScale(Vector3.one, 2f);
     }
 
     private void ScaleWinPopupToNormalSize(){
