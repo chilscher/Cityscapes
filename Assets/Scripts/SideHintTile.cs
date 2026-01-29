@@ -1,5 +1,6 @@
 ﻿//for Cityscapes, copyright Fancy Bus Games 2026
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
@@ -31,6 +32,7 @@ public class SideHintTile : Tile {
     private float danceMaximum = 0;
     private float danceMinimum = 0;
     private float danceOrigin;
+    private bool dance = false;
 
     public void Initialize(int hintValue) {
         //creates the sideHintTile. Here goes all of the code that defines the private variables used later
@@ -166,6 +168,7 @@ public class SideHintTile : Tile {
     }
 
     public void MakeResidentDance(){
+        dance = true;
         danceOrigin = number.transform.localPosition.y;
         danceMaximum = danceOrigin + 0.05f;
         danceMinimum = danceOrigin - 0.05f;
@@ -175,10 +178,19 @@ public class SideHintTile : Tile {
     }
 
     private void OscillateNumber(){
+        if (dance == false) 
+            return;
         float time = StaticVariables.rand.Next(80, 100) * 0.01f * 0.2f;
         float newPos = danceMinimum;
         if (number.transform.localPosition.y < danceOrigin)
             newPos = danceMaximum;
         number.transform.DOLocalMoveY(newPos, time).OnComplete(OscillateNumber);
+    }
+
+    public void StopDancing(){
+        dance = false;
+        float dist = MathF.Abs(number.transform.localPosition.y - danceOrigin);
+        number.transform.DOKill();
+        number.transform.DOLocalMoveY(danceOrigin, dist * 2f);
     }
 }

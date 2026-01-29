@@ -88,6 +88,7 @@ public class WinPopup : MonoBehaviour {
     }
 
     private void ShowCoinIncrease(){
+        StopResidentsDancing();
         addedCoin1.DOColor(Color.white, 0.5f);
         addedCoin10.DOColor(Color.white, 0.5f);
         addedCoinPlus1.DOColor(Color.white, 0.5f);
@@ -160,6 +161,11 @@ public class WinPopup : MonoBehaviour {
     private void MakeResidentsDance(){
         foreach (SideHintTile sht in gameManager.puzzleGenerator.allHints)
             sht.MakeResidentDance();
+    }
+
+    private void StopResidentsDancing(){
+        foreach (SideHintTile sht in gameManager.puzzleGenerator.allHints)
+            sht.StopDancing();
     }
 
     private void ShowWinPopup(){
