@@ -11,6 +11,7 @@ public class AudioManager{
     public enum IDs {Select, PlaceNote, PlaceBuilding, Erase, Undo, Redo, ClearPuzzle, VictoryCheer, GotCoins, ClickedTutorial, SpendCoins}
     static public List<SoundEffect> allSoundEffects = new();
     static public List<AllSoundsWithID> soundsSortedByID = new();
+    static public SoundEffect lastSoundPlayed;
 
     static public void PlaySound(IDs ID){
         SoundEffect se = allSoundEffects[0];
@@ -18,6 +19,7 @@ public class AudioManager{
             if (list.ID == ID)
                 se = list.GetRandomSoundFromList();
         }
+        lastSoundPlayed = se;
         audioSource.clip = se.audioClip;
         audioSource.volume = (float)(se.volumePercentage / 100.0) * (float)(StaticVariables.globalVolume / 100.0);
         
@@ -39,6 +41,10 @@ public class AllSoundsWithID{
     public AudioManager.IDs ID;
     public List<SoundEffect> soundEffects = new();
     public SoundEffect GetRandomSoundFromList(){
-        return soundEffects[StaticVariables.rand.Next(0, soundEffects.Count)];
+        SoundEffect se = soundEffects[StaticVariables.rand.Next(0, soundEffects.Count)];
+        if (se == AudioManager.lastSoundPlayed)
+            if (soundEffects.Count > 1)
+                return GetRandomSoundFromList();
+        return se;
     }
 }
