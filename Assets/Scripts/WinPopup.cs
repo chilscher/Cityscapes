@@ -49,7 +49,6 @@ public class WinPopup : MonoBehaviour {
         StaticVariables.WaitTimeThenCallFunction(0.5f, MakeResidentsDance);
         StaticVariables.WaitTimeThenCallFunction(1.5f, ShowWinPopup);
         StaticVariables.WaitTimeThenCallFunction(3f, ShowCoinIncrease);
-        StaticVariables.WaitTimeThenCallFunction(3.25f, FadeOutCoinIncrease);
         transparentBackgroundColor = transparentBackground.color;
         Color tempColor = transparentBackgroundColor;
         tempColor.a = 0;
@@ -89,14 +88,18 @@ public class WinPopup : MonoBehaviour {
 
     private void ShowCoinIncrease(){
         StopResidentsDancing();
+        DisplayTotalCoins(StaticVariables.coins);
+        AudioManager.PlaySound(AudioManager.IDs.GotCoins);
+
         addedCoin1.DOColor(Color.white, 0.5f);
         addedCoin10.DOColor(Color.white, 0.5f);
         addedCoinPlus1.DOColor(Color.white, 0.5f);
         addedCoinPlus10.DOColor(Color.white, 0.5f);
+
+        float endPos = addedCoinParent.localPosition.y;
         addedCoinParent.position = totalCoin1.transform.position;
-        addedCoinParent.DOLocalMoveY(addedCoinParent.localPosition.y + 160f, 1f);
-        DisplayTotalCoins(StaticVariables.coins);
-        AudioManager.PlaySound(AudioManager.IDs.GotCoins);
+        addedCoinParent.DOLocalMoveY(endPos, 1.75f);
+        StaticVariables.WaitTimeThenCallFunction(0.75f, FadeOutCoinIncrease);
     }
 
     private void FadeOutCoinIncrease(){

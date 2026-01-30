@@ -32,6 +32,18 @@ public class ShopCanvasController : MonoBehaviour {
     public Image coin10k;
     public Image coin100k;
     public Image coin1m;
+
+    [Header("Spend Coins")]
+    public Transform spendParent;
+    public Image spend1;
+    public Image spend10;
+    public Image spend100;
+    public Image spend1k;
+    public Image spend10k;
+    public Image spend100k;
+    public Image spend1m;
+    public Image spendMinus;
+    private float spendParentStartPos;
     
     [Header("Expanding Buttons")]
     public GameObject expandMedButton;
@@ -125,6 +137,9 @@ public class ShopCanvasController : MonoBehaviour {
         UpdateButtons();
 
         ApplySkin();
+
+        spendParentStartPos = spendParent.transform.localPosition.y;
+        spendParent.gameObject.SetActive(false);
     }
 
     private void Update() {
@@ -536,7 +551,84 @@ public class ShopCanvasController : MonoBehaviour {
     public void MakePurchase(int cost) {
         //deducts the cost of a purchase from the player's coin total, and displays the new amount
         StaticVariables.coins -= cost;
+        AudioManager.PlaySound(AudioManager.IDs.SpendCoins);
+        ShowCoinDecrease(cost);
         DisplayCoinsAmount();
+    }
+    
+
+    private void ShowCoinDecrease(int amt){
+        spendParent.gameObject.SetActive(true);
+        spendParent.DOKill();
+        spend1.DOKill();
+        spend10.DOKill();
+        spend100.DOKill();
+        spend1k.DOKill();
+        spend10k.DOKill();
+        spend100k.DOKill();
+        spend1m.DOKill();
+        spendMinus.DOKill();
+
+        int value1 = amt % 10;
+        int value10 = (amt / 10) % 10;
+        int value100 = (amt / 100) % 10;
+        int value1k = (amt / 1000) % 10;
+        int value10k = (amt / 10000) % 10;
+        int value100k = (amt / 100000) % 10;
+        int value1m = (amt / 100000) % 10;
+        spend1.sprite = numbers[value1];
+        spend10.sprite = numbers[value10];
+        spend100.sprite = numbers[value100];
+        spend1k.sprite = numbers[value1k];
+        spend10k.sprite = numbers[value10k];
+        spend100k.sprite = numbers[value100k];
+        spend1m.sprite = numbers[value1m];
+
+        spend1.gameObject.SetActive(true);
+        spend10.gameObject.SetActive(amt > 9);
+        spend100.gameObject.SetActive(amt > 99);
+        spend1k.gameObject.SetActive(amt > 999);
+        spend10k.gameObject.SetActive(amt > 9999);
+        spend100k.gameObject.SetActive(amt > 99999);
+        spend1m.gameObject.SetActive(amt > 999999);
+
+        Color c = Color.white;
+        c.a = 0;
+        spend1.color = c;
+        spend10.color = c;
+        spend100.color = c;
+        spend1k.color = c;
+        spend10k.color = c;
+        spend100k.color = c;
+        spend1m.color = c;
+        spendMinus.color = c;
+
+        spend1.DOColor(Color.white, 0.5f);
+        spend10.DOColor(Color.white, 0.5f);
+        spend100.DOColor(Color.white, 0.5f);
+        spend1k.DOColor(Color.white, 0.5f);
+        spend10k.DOColor(Color.white, 0.5f);
+        spend100k.DOColor(Color.white, 0.5f);
+        spend1m.DOColor(Color.white, 0.5f);
+        spendMinus.DOColor(Color.white, 0.5f);
+
+        spendParent.localPosition = new Vector2(spendParent.localPosition.x, coin1.transform.parent.localPosition.y);
+        spendParent.DOLocalMoveY(spendParentStartPos, 1.75f);
+        StaticVariables.WaitTimeThenCallFunction(0.75f, FadeOutCoinDecrease);
+    }
+    
+
+    private void FadeOutCoinDecrease(){
+        Color c = Color.white;
+        c.a = 0;
+        spend1.DOColor(c, 1f);
+        spend10.DOColor(c, 1f);
+        spend100.DOColor(c, 1f);
+        spend1k.DOColor(c, 1f);
+        spend10k.DOColor(c, 1f);
+        spend100k.DOColor(c, 1f);
+        spend1m.DOColor(c, 1f);
+        spendMinus.DOColor(c, 1f);
     }
 
     // ---------------------------------------------------
