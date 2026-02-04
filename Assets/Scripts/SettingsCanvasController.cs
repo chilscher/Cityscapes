@@ -624,8 +624,8 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void SetVolume(int vol){
-        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.globalVolume = vol;
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         ShowVolume();
         SaveSystem.SaveGame();
     }
