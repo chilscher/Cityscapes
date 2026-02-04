@@ -5,14 +5,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class CreditsCanvasController : MonoBehaviour {
-    //controls the credits canvas. Only one is used, and only on the credits scene.
 
     public GameObject background;
     public List<SkinApplicator> skinApplicators;
     
     
-
-
     private void Start() {
         background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
         foreach (SkinApplicator sa in skinApplicators)
@@ -22,17 +19,14 @@ public class CreditsCanvasController : MonoBehaviour {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape))
             SceneChanger.GoMenu();
-            //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 
     public void PushMainMenuButton() {
         SceneChanger.GoMenu();
-        //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 
     public void PushSettingsButton() {
         SceneChanger.GoSettings();
-        //StaticVariables.FadeOutThenLoadScene("Settings");
     }
 
     private void OnApplicationQuit() {

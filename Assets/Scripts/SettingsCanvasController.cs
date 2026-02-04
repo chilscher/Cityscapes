@@ -71,7 +71,6 @@ public class SettingsCanvasController : MonoBehaviour {
     private void Start() {
         shopButton.SetActive(StaticVariables.hasBeatenTutorial);
         SetCurrentToggleTexts();
-        //ContractToggleButtons();
         UpdateCurrentSkinText();
         ShowChooseSkinButton();
         ShowToggleUnlocksButton();
@@ -83,7 +82,6 @@ public class SettingsCanvasController : MonoBehaviour {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape))
             SceneChanger.GoMenu();
-            //StaticVariables.FadeOutThenLoadScene("MainMenu");
         else if ((StaticVariables.osType == StaticVariables.OSTypes.PC ) && (currentEditableKeybind != Keybinds.None))
             CheckForKeybindInput();
     }
@@ -98,15 +96,12 @@ public class SettingsCanvasController : MonoBehaviour {
 
     public void PushMainMenuButton() {
         SceneChanger.GoMenu();
-        //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
     public void PushCreditsButton(){
         SceneChanger.GoCredits();
-        //StaticVariables.FadeOutThenLoadScene("Credits");
     }
     public void PushShopButton(){
         SceneChanger.GoShop();
-        //StaticVariables.FadeOutThenLoadScene("Shop");
     }
     public void PushDiscordButton(){
         if (inviteButton.activeSelf)

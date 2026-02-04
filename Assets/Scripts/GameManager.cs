@@ -802,19 +802,16 @@ public class GameManager : MonoBehaviour {
     public void PushMainMenuButton() {
         Save();
         SceneChanger.GoMenu();
-        //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 
     public void PushShopButton() {
         Save();
         SceneChanger.GoShop();
-        //StaticVariables.FadeOutThenLoadScene("Shop");
     }
     
     public void PushSettingsButton() {
         Save();
         SceneChanger.GoSettings();
-        //StaticVariables.FadeOutThenLoadScene("Settings");
     }
 
     public void Save() {

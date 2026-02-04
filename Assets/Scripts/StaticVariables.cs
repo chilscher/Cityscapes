@@ -51,7 +51,7 @@ public class StaticVariables{
     static public bool includeBuildingQuantityStatus = false;
 
     //variables that deal with fading in and out between scenes
-    static public bool fadingIntoPuzzleSameSize;
+    static public bool goingToPuzzleSameSize;
 
     //variables that remember data about skins - equipped skins, unlocked skins, etc
     static public List<Skin> unlockedSkins = new List<Skin>();
@@ -101,10 +101,7 @@ public class StaticVariables{
     static public System.Random rand = new System.Random();
     static public int coins = 0;
     static public bool isApplicationLaunchingFirstTime = true;
-    static private string sceneName = "";
-    static public float sceneFadeDuration = 0.3f;
     static public Transform tweenDummy;
-    static public Image fadeImage;
     static public float gameVersionNumber = 2.5f;
     public enum OSTypes {Mobile, PC};
     static public OSTypes osType;
@@ -117,46 +114,6 @@ public class StaticVariables{
     static public void WaitTimeThenCallFunction(float delay, TweenCallback<string> function, string param) {
         tweenDummy.DOLocalMove(tweenDummy.transform.localPosition, delay, false).OnComplete(()=>function(param));
     }
-
-
-    //static public void FadeOutThenLoadScene(string name){
-    //    sceneName = name;
-    //    StartFadeDarken(sceneFadeDuration);
-    //    AudioManager.PlaySound(AudioManager.IDs.MenuButton);
-    //    WaitTimeThenCallFunction(sceneFadeDuration, LoadScene);
-    //}
-
-    //static public void FadeIntoScene(){
-    //    StartFadeLighten(sceneFadeDuration);
-    //}
-
-    //static public void StartFadeDarken(float duration){
-    //    Color currentColor = Color.black;
-    //    currentColor.a = 0;
-    //    fadeImage.color = currentColor;
-    //    fadeImage.gameObject.SetActive(true);
-    //    fadeImage.DOColor(Color.black, duration);
-    //}
-
-    //static public void StartFadeLighten(float duration){
-    //    Color nextColor = Color.black;
-    //    nextColor.a = 0;
-    //    fadeImage.color = Color.black;
-    //    fadeImage.gameObject.SetActive(true);
-    //    fadeImage.DOColor(nextColor, duration).OnComplete(HideFadeObject);
-    //}
-
-    //static private void HideFadeObject(){
-    //    fadeImage.gameObject.SetActive(false);
-    //}
-
-    //static private void LoadScene(){
-    //    SceneManager.LoadScene(sceneName);
-    //}
-
-    //static public void StopFade(){
-    //    DOTween.Kill(fadeImage);
-    //}
 
     static public void AddCoins(int amount) {
         coins += amount;

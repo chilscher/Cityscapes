@@ -59,40 +59,6 @@ public class SceneChangerVisuals : MonoBehaviour {
         MovePanelOut(southWestPanel);
         MovePanelOut(westPanel);
         MovePanelOut(northWestPanel);
-
-        /*
-        Vector2 start = southPanel.transform.localPosition;
-        southPanel.transform.localPosition = Vector2.zero;
-        southPanel.transform.DOLocalMove(start, 0.5f).SetEase(Ease.Linear);
-
-        start = southWestPanel.transform.localPosition;
-        southWestPanel.transform.localPosition = Vector2.zero;
-        southWestPanel.transform.DOLocalMove(start, 0.5f).SetEase(Ease.Linear);
-
-        start = westPanel.transform.localPosition;
-        westPanel.transform.localPosition = Vector2.zero;
-        westPanel.transform.DOLocalMove(start, 0.5f).SetEase(Ease.Linear);
-
-        start = northWestPanel.transform.localPosition;
-        northWestPanel.transform.localPosition = Vector2.zero;
-        northWestPanel.transform.DOLocalMove(start, 0.5f).SetEase(Ease.Linear);
-
-        start = northPanel.transform.localPosition;
-        northPanel.transform.localPosition = Vector2.zero;
-        northPanel.transform.DOLocalMove(start, 0.5f).SetEase(Ease.Linear);
-
-        start = northEastPanel.transform.localPosition;
-        northEastPanel.transform.localPosition = Vector2.zero;
-        northEastPanel.transform.DOLocalMove(start, 0.5f).SetEase(Ease.Linear);
-
-        start = eastPanel.transform.localPosition;
-        eastPanel.transform.localPosition = Vector2.zero;
-        eastPanel.transform.DOLocalMove(start, 0.5f).SetEase(Ease.Linear);
-
-        start = southEastPanel.transform.localPosition;
-        southEastPanel.transform.localPosition = Vector2.zero;
-        southEastPanel.transform.DOLocalMove(start, 0.5f).SetEase(Ease.Linear);
-        */
     }
 
     private void MovePanelOut(GameObject panel){
@@ -100,8 +66,4 @@ public class SceneChangerVisuals : MonoBehaviour {
         panel.transform.localPosition = Vector2.zero;
         panel.transform.DOLocalMove(start, 0.5f).SetEase(Ease.Linear);
     }
-
-    //public void Setup(){
-    //    DontDestroyOnLoad(gameObject);
-    //}
 }

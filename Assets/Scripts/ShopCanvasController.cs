@@ -145,7 +145,6 @@ public class ShopCanvasController : MonoBehaviour {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape))
             SceneChanger.GoMenu();
-            //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 
     void LateUpdate(){
@@ -161,13 +160,10 @@ public class ShopCanvasController : MonoBehaviour {
     // ---------------------------------------------------
 
     public void PushMainMenuButton() {
-        //Utils.ForceCrash(ForcedCrashCategory.FatalError);  //for testing crash behavior
         SceneChanger.GoMenu();
-        //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
     public void PushSettingsButton() {
         SceneChanger.GoSettings();
-        //StaticVariables.FadeOutThenLoadScene("Settings");
     }
 
     private void OnApplicationQuit() {
@@ -854,7 +850,6 @@ public class ShopCanvasController : MonoBehaviour {
         PushLockAllButton();
         StaticVariables.hasBeatenTutorial = false;
         SceneChanger.GoMenu();
-        //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 
     public void PushRemoveCoinsButton() {

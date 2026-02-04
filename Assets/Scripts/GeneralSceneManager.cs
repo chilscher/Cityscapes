@@ -7,8 +7,6 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GeneralSceneManager : MonoBehaviour{
-
-    //public Image fadeImage;
     private bool hasStarted = false;
 
     void Start(){
@@ -18,8 +16,6 @@ public class GeneralSceneManager : MonoBehaviour{
     public void Setup(){
         if (!hasStarted){
             StaticVariables.tweenDummy = transform;
-            //StaticVariables.fadeImage = fadeImage;
-            //StaticVariables.FadeIntoScene();
             hasStarted = true;
         }
     }

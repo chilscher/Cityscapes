@@ -227,7 +227,6 @@ public class MainMenuCanvasController : MonoBehaviour {
         StaticVariables.size = size;
         StaticVariables.isTutorial = false;
         SceneChanger.GoPuzzle();
-        //StaticVariables.FadeOutThenLoadScene("InPuzzle");
     }
     
     public void PushStartTutorialButton() {
@@ -235,24 +234,20 @@ public class MainMenuCanvasController : MonoBehaviour {
         StaticVariables.size = 3;
         StaticVariables.isTutorial = true;
         SceneChanger.GoPuzzle();
-        //StaticVariables.FadeOutThenLoadScene("InPuzzle");
     }
 
     public void PushShopButton() {
         SceneChanger.GoShop();
-        //StaticVariables.FadeOutThenLoadScene("Shop");
     }
 
     public void PushSettingsButton() {
         SceneChanger.GoSettings();
-        //StaticVariables.FadeOutThenLoadScene("Settings");
     }
 
     public void PushReturnToPuzzleButton() {
         StaticVariables.size = StaticVariables.savedPuzzleSize;
         StaticVariables.isTutorial = false;
         SceneChanger.GoPuzzle();
-        //StaticVariables.FadeOutThenLoadScene("InPuzzle");
     }
 
     public void PushAbandonPuzzleButton() {
@@ -260,7 +255,6 @@ public class MainMenuCanvasController : MonoBehaviour {
         StaticVariables.hasSavedPuzzleState = false;
         SaveSystem.SaveGame();
         SceneChanger.GoMenu();
-        //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 
     
@@ -355,6 +349,5 @@ public class MainMenuCanvasController : MonoBehaviour {
 
     public void PushedConfirmUpdateButton(){
         SceneChanger.GoMenu();
-        //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 }
