@@ -184,6 +184,7 @@ public class WinPopup : MonoBehaviour {
 
     public void PushAnotherPuzzleButton() {
         StaticVariables.fadingIntoPuzzleSameSize = false;
-        StaticVariables.FadeOutThenLoadScene("InPuzzle");
+        SceneChanger.GoPuzzle();
+        //StaticVariables.FadeOutThenLoadScene("InPuzzle");
     }
 }

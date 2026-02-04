@@ -21,15 +21,18 @@ public class CreditsCanvasController : MonoBehaviour {
     
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape))
-            StaticVariables.FadeOutThenLoadScene("MainMenu");
+            SceneChanger.GoMenu();
+            //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 
     public void PushMainMenuButton() {
-        StaticVariables.FadeOutThenLoadScene("MainMenu");
+        SceneChanger.GoMenu();
+        //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 
     public void PushSettingsButton() {
-        StaticVariables.FadeOutThenLoadScene("Settings");
+        SceneChanger.GoSettings();
+        //StaticVariables.FadeOutThenLoadScene("Settings");
     }
 
     private void OnApplicationQuit() {

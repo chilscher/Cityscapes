@@ -82,7 +82,8 @@ public class SettingsCanvasController : MonoBehaviour {
     
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape))
-            StaticVariables.FadeOutThenLoadScene("MainMenu");
+            SceneChanger.GoMenu();
+            //StaticVariables.FadeOutThenLoadScene("MainMenu");
         else if ((StaticVariables.osType == StaticVariables.OSTypes.PC ) && (currentEditableKeybind != Keybinds.None))
             CheckForKeybindInput();
     }
@@ -96,13 +97,16 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushMainMenuButton() {
-        StaticVariables.FadeOutThenLoadScene("MainMenu");
+        SceneChanger.GoMenu();
+        //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
     public void PushCreditsButton(){
-        StaticVariables.FadeOutThenLoadScene("Credits");
+        SceneChanger.GoCredits();
+        //StaticVariables.FadeOutThenLoadScene("Credits");
     }
     public void PushShopButton(){
-        StaticVariables.FadeOutThenLoadScene("Shop");
+        SceneChanger.GoShop();
+        //StaticVariables.FadeOutThenLoadScene("Shop");
     }
     public void PushDiscordButton(){
         if (inviteButton.activeSelf)

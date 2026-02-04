@@ -11,7 +11,6 @@ public class AudioSetup : MonoBehaviour {
     public List<SoundEffect> soundEffects;
 
     public void Setup(){
-        print("setting up");
         DontDestroyOnLoad(gameObject);
         AudioManager.audioSource = audioSource;
         AudioManager.allSoundEffects = soundEffects;

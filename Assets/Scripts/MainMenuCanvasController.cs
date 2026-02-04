@@ -57,12 +57,14 @@ public class MainMenuCanvasController : MonoBehaviour {
 
     public Skin[] skins; //a list of all skins. To work effectively, any new skin must be added to this list in the inspector
     public AudioSetup audioSetup;
+    public SceneChangerVisuals sceneChangerVisuals;
 
 
     private void Start() {
         //check to see if the game is being opened, or if the game is transitioning from another menu
         if (StaticVariables.isApplicationLaunchingFirstTime) {
             audioSetup.Setup();
+            //sceneChangerVisuals.Setup();
             StaticVariables.allSkins = skins;
             StaticVariables.unlockedSkins = new List<Skin> {skins[0]}; //set up the current unlocked skin list to only include the basic skin (now called "rural")
             SaveSystem.LoadGame();
@@ -73,7 +75,7 @@ public class MainMenuCanvasController : MonoBehaviour {
 
         //skip this temporarily for development
         if (!StaticVariables.hasBeatenTutorial){
-            StaticVariables.StopFade();
+            //StaticVariables.StopFade();
 
             StaticVariables.size = 3;
             StaticVariables.isTutorial = true;
@@ -224,35 +226,41 @@ public class MainMenuCanvasController : MonoBehaviour {
             return;
         StaticVariables.size = size;
         StaticVariables.isTutorial = false;
-        StaticVariables.FadeOutThenLoadScene("InPuzzle");
+        SceneChanger.GoPuzzle();
+        //StaticVariables.FadeOutThenLoadScene("InPuzzle");
     }
     
     public void PushStartTutorialButton() {
         //start fading out, and after the fade-out process is completed, go to the puzzle scene, in tutorial mode
         StaticVariables.size = 3;
         StaticVariables.isTutorial = true;
-        StaticVariables.FadeOutThenLoadScene("InPuzzle");
+        SceneChanger.GoPuzzle();
+        //StaticVariables.FadeOutThenLoadScene("InPuzzle");
     }
 
     public void PushShopButton() {
-        StaticVariables.FadeOutThenLoadScene("Shop");
+        SceneChanger.GoShop();
+        //StaticVariables.FadeOutThenLoadScene("Shop");
     }
 
     public void PushSettingsButton() {
-        StaticVariables.FadeOutThenLoadScene("Settings");
+        SceneChanger.GoSettings();
+        //StaticVariables.FadeOutThenLoadScene("Settings");
     }
 
     public void PushReturnToPuzzleButton() {
         StaticVariables.size = StaticVariables.savedPuzzleSize;
         StaticVariables.isTutorial = false;
-        StaticVariables.FadeOutThenLoadScene("InPuzzle");
+        SceneChanger.GoPuzzle();
+        //StaticVariables.FadeOutThenLoadScene("InPuzzle");
     }
 
     public void PushAbandonPuzzleButton() {
         //start fading out, and after the fade-out process is completed, reload the main menu scene, but without the "return/abandon puzzle" options
         StaticVariables.hasSavedPuzzleState = false;
         SaveSystem.SaveGame();
-        StaticVariables.FadeOutThenLoadScene("MainMenu");
+        SceneChanger.GoMenu();
+        //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 
     
@@ -346,6 +354,7 @@ public class MainMenuCanvasController : MonoBehaviour {
     }
 
     public void PushedConfirmUpdateButton(){
-        StaticVariables.FadeOutThenLoadScene("MainMenu");
+        SceneChanger.GoMenu();
+        //StaticVariables.FadeOutThenLoadScene("MainMenu");
     }
 }
