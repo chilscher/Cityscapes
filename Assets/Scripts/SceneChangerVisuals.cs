@@ -15,6 +15,7 @@ public class SceneChangerVisuals : MonoBehaviour {
     public GameObject southWestPanel;
     public GameObject westPanel;
     public GameObject northWestPanel;
+    public GameObject clickBlocker;
 
 
     public void Start(){
@@ -31,14 +32,16 @@ public class SceneChangerVisuals : MonoBehaviour {
         southWestPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.NorthEast);
         westPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.East);
         northWestPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.SouthEast);
-        southPanel.transform.DOLocalMove(Vector3.zero, 0.5f).SetEase(Ease.Linear);
-        southWestPanel.transform.DOLocalMove(Vector3.zero, 0.5f).SetEase(Ease.Linear);
-        westPanel.transform.DOLocalMove(Vector3.zero, 0.5f).SetEase(Ease.Linear);
-        northWestPanel.transform.DOLocalMove(Vector3.zero, 0.5f).SetEase(Ease.Linear);
-        northPanel.transform.DOLocalMove(Vector3.zero, 0.5f).SetEase(Ease.Linear);
-        northEastPanel.transform.DOLocalMove(Vector3.zero, 0.5f).SetEase(Ease.Linear);
-        eastPanel.transform.DOLocalMove(Vector3.zero, 0.5f).SetEase(Ease.Linear);
-        southEastPanel.transform.DOLocalMove(Vector3.zero, 0.5f).SetEase(Ease.Linear);
+        clickBlocker.SetActive(true);
+
+        MovePanelIn(northPanel);
+        MovePanelIn(northEastPanel);
+        MovePanelIn(eastPanel);
+        MovePanelIn(southEastPanel);
+        MovePanelIn(southPanel);
+        MovePanelIn(southWestPanel);
+        MovePanelIn(westPanel);
+        MovePanelIn(northWestPanel);
     }
 
     public void StartSwipeOut(){
@@ -50,6 +53,7 @@ public class SceneChangerVisuals : MonoBehaviour {
         southWestPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.SouthWest);
         westPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.West);
         northWestPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.NorthWest);
+        clickBlocker.SetActive(SceneChanger.swipeDirection != SceneChanger.SwipeDirection.None);
 
         MovePanelOut(northPanel);
         MovePanelOut(northEastPanel);
@@ -59,11 +63,22 @@ public class SceneChangerVisuals : MonoBehaviour {
         MovePanelOut(southWestPanel);
         MovePanelOut(westPanel);
         MovePanelOut(northWestPanel);
+        
+        if (SceneChanger.swipeDirection != SceneChanger.SwipeDirection.None)
+            StaticVariables.WaitTimeThenCallFunction(SceneChanger.sceneChangeDuration, AllowClicks);
+    }
+
+    private void MovePanelIn(GameObject panel){
+        panel.transform.DOLocalMove(Vector3.zero, SceneChanger.sceneChangeDuration).SetEase(Ease.Linear);
     }
 
     private void MovePanelOut(GameObject panel){
         Vector2 start = panel.transform.localPosition;
         panel.transform.localPosition = Vector2.zero;
-        panel.transform.DOLocalMove(start, 0.5f).SetEase(Ease.Linear);
+        panel.transform.DOLocalMove(start, SceneChanger.sceneChangeDuration).SetEase(Ease.Linear);
+    }
+
+    private void AllowClicks(){
+        clickBlocker.SetActive(false);
     }
 }

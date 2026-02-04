@@ -129,7 +129,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1571374}
   - component: {fileID: 1571373}
-  - component: {fileID: 1571372}
   m_Layer: 0
   m_Name: MainMenuCanvasController
   m_TagString: Untagged
@@ -137,18 +136,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1571372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1571371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67b54781628a9354f99d186adbc4c30c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1571373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -231,6 +218,7 @@ MonoBehaviour:
   - {fileID: 2135032764033575535, guid: 7850e298f17d03042a6b698071e2b285, type: 3}
   audioSetup: {fileID: 2141964617}
   sceneChangerVisuals: {fileID: 0}
+  tweenDummy: {fileID: 40502519}
 --- !u!4 &1571374
 Transform:
   m_ObjectHideFlags: 0
@@ -238,6 +226,37 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1571371}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.22471558, y: -0.30387005, z: -0.671431}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &40502518
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 40502519}
+  m_Layer: 0
+  m_Name: Tween Dummy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &40502519
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40502518}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.22471558, y: -0.30387005, z: -0.671431}
@@ -13226,6 +13245,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1005856050}
   - {fileID: 1571374}
+  - {fileID: 40502519}
   - {fileID: 2141964618}
   - {fileID: 1182900866}
   - {fileID: 283620848}

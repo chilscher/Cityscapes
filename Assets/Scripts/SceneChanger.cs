@@ -13,8 +13,11 @@ public class SceneChanger{
     static public SceneChangerVisuals visuals;
     static public SwipeDirection swipeDirection = SwipeDirection.None;
     static public string nextSceneName;
+    static public float sceneChangeDuration = 0.3f;
+    static public SwipeDirection previousDirection = SwipeDirection.None;
 
     static private void PickRandomSwipeDirection(){
+        previousDirection = swipeDirection;
         int r = StaticVariables.rand.Next(1, 9);
         swipeDirection = r switch        {
             1 => SwipeDirection.North,
@@ -27,42 +30,43 @@ public class SceneChanger{
             8 => SwipeDirection.NorthWest,
             _ => SwipeDirection.North,
         };
-        Debug.Log(swipeDirection.ToString());
+        if (swipeDirection == previousDirection) //guarantee you don't get the same wipe twice in a row
+            PickRandomSwipeDirection();
     }
 
     static public void GoMenu(){
         nextSceneName = "MainMenu";
         PickRandomSwipeDirection();
         visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(0.5f, LoadScene);
+        StaticVariables.WaitTimeThenCallFunction(sceneChangeDuration, LoadScene);
     }
 
     static public void GoSettings(){
         nextSceneName = "Settings";
         PickRandomSwipeDirection();
         visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(0.5f, LoadScene);
+        StaticVariables.WaitTimeThenCallFunction(sceneChangeDuration, LoadScene);
     }
     
     static public void GoPuzzle(){
         nextSceneName = "InPuzzle";
         PickRandomSwipeDirection();
         visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(0.5f, LoadScene);
+        StaticVariables.WaitTimeThenCallFunction(sceneChangeDuration, LoadScene);
     }
 
     static public void GoShop(){
         nextSceneName = "Shop";
         PickRandomSwipeDirection();
         visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(0.5f, LoadScene);
+        StaticVariables.WaitTimeThenCallFunction(sceneChangeDuration, LoadScene);
     }
     
     static public void GoCredits(){
         nextSceneName = "Credits";
         PickRandomSwipeDirection();
         visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(0.5f, LoadScene);
+        StaticVariables.WaitTimeThenCallFunction(sceneChangeDuration, LoadScene);
     }
 
     static private void LoadScene(){

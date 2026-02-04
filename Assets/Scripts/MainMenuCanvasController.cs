@@ -58,11 +58,14 @@ public class MainMenuCanvasController : MonoBehaviour {
     public Skin[] skins; //a list of all skins. To work effectively, any new skin must be added to this list in the inspector
     public AudioSetup audioSetup;
     public SceneChangerVisuals sceneChangerVisuals;
+    public Transform tweenDummy;
 
 
     private void Start() {
         //check to see if the game is being opened, or if the game is transitioning from another menu
         if (StaticVariables.isApplicationLaunchingFirstTime) {
+            StaticVariables.tweenDummy = tweenDummy;
+            DontDestroyOnLoad(tweenDummy);
             audioSetup.Setup();
             //sceneChangerVisuals.Setup();
             StaticVariables.allSkins = skins;
