@@ -24,6 +24,8 @@ public class SceneChangerVisuals : MonoBehaviour {
     }
 
     public void StartSwipeIn(){
+        AudioManager.PlaySound(AudioManager.IDs.SceneChange);
+
         northPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.South);
         northEastPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.SouthWest);
         eastPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.West);
