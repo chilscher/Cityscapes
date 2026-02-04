@@ -60,7 +60,6 @@ public class StaticVariables{
 
     //about the tutorial
     static public bool isTutorial = false;
-    static public string whiteHex = "#ffffff";
     static public bool hasBeatenTutorial = false;
 
     //keybinds
@@ -100,12 +99,13 @@ public class StaticVariables{
     //misc
     static public System.Random rand = new System.Random();
     static public int coins = 0;
-    static public bool isApplicationLaunchingFirstTime = true;
     static public Transform tweenDummy;
     static public float gameVersionNumber = 2.5f;
     public enum OSTypes {Mobile, PC};
     static public OSTypes osType;
     static public int globalVolume = 50; //out of 100
+    static public bool showUpdatePopup = false;
+    static public string updateText = "";
     
 
     static public void WaitTimeThenCallFunction(float delay, TweenCallback function) {

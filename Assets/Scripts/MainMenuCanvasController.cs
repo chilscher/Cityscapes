@@ -53,44 +53,14 @@ public class MainMenuCanvasController : MonoBehaviour {
     public Text updatePopupText;
     public List<SkinApplicator> skinApplicators;
 
-    public Skin defaultSkin; //the default skin used when the player boots up the game for the first time
-
-    public Skin[] skins; //a list of all skins. To work effectively, any new skin must be added to this list in the inspector
-    public AudioSetup audioSetup;
-    public SceneChangerVisuals sceneChangerVisuals;
-    public Transform tweenDummy;
-
 
     private void Start() {
-        //check to see if the game is being opened, or if the game is transitioning from another menu
-        if (StaticVariables.isApplicationLaunchingFirstTime) {
-            StaticVariables.tweenDummy = tweenDummy;
-            DontDestroyOnLoad(tweenDummy);
-            audioSetup.Setup();
-            //sceneChangerVisuals.Setup();
-            StaticVariables.allSkins = skins;
-            StaticVariables.unlockedSkins = new List<Skin> {skins[0]}; //set up the current unlocked skin list to only include the basic skin (now called "rural")
-            SaveSystem.LoadGame();
-            CheckForVersionUpdate();
-            DetermineOSType();
-            StaticVariables.isApplicationLaunchingFirstTime = false;
-        }
-
-        //skip this temporarily for development
-        if (!StaticVariables.hasBeatenTutorial){
-            //StaticVariables.StopFade();
-
-            StaticVariables.size = 3;
-            StaticVariables.isTutorial = true;
-            SceneManager.LoadScene("InPuzzle");
-            return;
-        }
-
         LoadSkin();
 
-        if (!updatePopup.activeSelf){
+        if (StaticVariables.showUpdatePopup)
+            ShowUpdatePopup(StaticVariables.updateText);
+        else{
             ShowReturnAbandon();
-            //update the puzzle buttons based on what puzzle sizes the player has unlocked
             ShowCityButtons();
         }
     }
@@ -98,15 +68,6 @@ public class MainMenuCanvasController : MonoBehaviour {
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT ARE USED TO UPDATE THE VISUALS FOR THE MAIN MENU SCENE
     // ---------------------------------------------------
-
-    private void DetermineOSType(){
-        StaticVariables.osType = Application.platform switch {
-            RuntimePlatform.Android => StaticVariables.OSTypes.Mobile,
-            RuntimePlatform.IPhonePlayer => StaticVariables.OSTypes.Mobile,
-            _ => StaticVariables.OSTypes.PC,
-        };
-        print("operating system type? " + StaticVariables.osType);
-    }
 
     private void LoadSkin() {
         background.GetComponent<Image>().sprite = StaticVariables.skin.mainMenuBackground;
@@ -190,13 +151,6 @@ public class MainMenuCanvasController : MonoBehaviour {
         }
     }
 
-    public void AutoStartTutorial(){
-        if (StaticVariables.hasBeatenTutorial)
-            return;
-        else
-            PushStartTutorialButton();
-    }
-
     public int GetHighestUnlockedSize() {
         //gets the highest size puzzle that the player has unlocked as an int
         int highestUnlockedSize = 3;
@@ -254,90 +208,15 @@ public class MainMenuCanvasController : MonoBehaviour {
     }
 
     public void PushAbandonPuzzleButton() {
-        //start fading out, and after the fade-out process is completed, reload the main menu scene, but without the "return/abandon puzzle" options
+        //reload the main menu scene but without the "return/abandon puzzle" options
         StaticVariables.hasSavedPuzzleState = false;
         SaveSystem.SaveGame();
         SceneChanger.GoMenu();
     }
-
     
     // ---------------------------------------------------
     //ALL OF THE FUNCTIONS THAT ARE USED TO UPDATE GAME VERSION
     // ---------------------------------------------------
-    
-    private void CheckForVersionUpdate(){
-        updatePopup.SetActive(false);
-        if (StaticVariables.gameVersionNumber == 0){
-            //this happens when the save data has no version number recorded
-            //update to 2.1 immediately, then keep checking version numbers after that
-            UpdateToVersion2_1();
-        }
-        if (StaticVariables.gameVersionNumber == 2.1f)
-            ChangeVersionNumber(2.2f);
-        if (StaticVariables.gameVersionNumber == 2.2f)
-            ChangeVersionNumber(2.3f);
-        if (StaticVariables.gameVersionNumber == 2.3f)
-            ChangeVersionNumber(2.4f);
-        if (StaticVariables.gameVersionNumber == 2.4f)
-            UpdateToVersion2_5();
-        if (StaticVariables.gameVersionNumber == 2.5f)
-            UpdateToVersion3_0();
-    }
-
-    private void UpdateToVersion2_1(){
-        ChangeVersionNumber(2.1f);
-
-        //add up the coins that the player spent on skins minus the new cost of each skin
-        //(meaning, count up how many coins the player is owed due to the changed cost of skins in the shop)
-        int skinPurchasedCount = StaticVariables.unlockedSkins.Count - 1;
-        int coinRefund = 0;
-        if (skinPurchasedCount >= 1)
-            coinRefund += (200 - 0);
-        if (skinPurchasedCount >= 2)
-            coinRefund += (200 - 10);
-        if (skinPurchasedCount >= 3)
-            coinRefund += (200 - 30);
-        if (skinPurchasedCount >= 4)
-            coinRefund += (200 - 60);
-        if (skinPurchasedCount >= 5)
-            coinRefund += (200 - 100);
-        if (skinPurchasedCount >= 6)
-            coinRefund += (200 - 150);
-        //below are all the skins that cost more after the version update
-        if (skinPurchasedCount >= 7)
-            coinRefund += (200 - 210);
-        if (skinPurchasedCount >= 8)
-            coinRefund += (200 - 280);
-        if (skinPurchasedCount >= 9)
-            coinRefund += (200 - 360);
-        if (skinPurchasedCount >= 10)
-            coinRefund += (200 - 450);
-        if (skinPurchasedCount >= 11)
-            coinRefund += (200 - 550);
-        if (skinPurchasedCount >= 12)
-            coinRefund += (200 - 660);
-        if (coinRefund > 0){
-            StaticVariables.AddCoins(coinRefund);
-            ShowUpdatePopup("CITYSCAPES HAS\nBEEN UPDATED!\n\nTHE COST OF SKINS IN THE SHOP HAS CHANGED, AND YOU HAVE BEEN REFUNDED " + coinRefund + " COINS FOR THE SKINS YOU PREVIOUSLY PURCHASED.");
-        }
-        SaveSystem.SaveGame();
-    }
-
-    private void UpdateToVersion2_5(){
-        ChangeVersionNumber(2.5f);
-        StaticVariables.ApplyDefaultKeybinds();
-        SaveSystem.SaveGame();
-    }
-    private void UpdateToVersion3_0(){
-        ChangeVersionNumber(3.0f);
-        StaticVariables.globalVolume = 50;
-        SaveSystem.SaveGame();
-    }
-
-    private void ChangeVersionNumber(float newVersionNum){
-        print("updating version number! Old version " + StaticVariables.gameVersionNumber + ", new version " + newVersionNum);
-        StaticVariables.gameVersionNumber = newVersionNum;
-    }
 
     private void ShowUpdatePopup(string text){
         updatePopupText.text = text.ToUpper();
@@ -351,6 +230,7 @@ public class MainMenuCanvasController : MonoBehaviour {
     }
 
     public void PushedConfirmUpdateButton(){
+        StaticVariables.showUpdatePopup = false;
         SceneChanger.GoMenu();
     }
 }
