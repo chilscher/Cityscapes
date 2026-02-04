@@ -313,6 +313,7 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     public void PushPreviewSkinButton(GameObject parent){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         skinPreviewImage.sprite = InterfaceFunctions.GetSkinFromName(parent.name).mainMenuBackground;
         skinPreviewText.text = parent.name.ToUpper() + "\nSKIN PREVIEW";
 
@@ -329,6 +330,7 @@ public class ShopCanvasController : MonoBehaviour {
     }
 
     public void PushClosePreviewButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         Color nextColor = Color.black;
         nextColor.a = 0;
         previewBackgroundColor = skinPreviewBlackBackground.color;
@@ -359,6 +361,8 @@ public class ShopCanvasController : MonoBehaviour {
 
     public void ExpandSiblings(GameObject button) {
         //sets all siblings of the chosen button to be active, and resizes the scroll view
+        AudioManager.PlaySound(AudioManager.IDs.ExpandButton);
+
         expandedButton = button;
 
         //Canvas.ForceUpdateCanvases();
@@ -390,6 +394,8 @@ public class ShopCanvasController : MonoBehaviour {
 
     public void ContractSiblings(GameObject button) {
         //sets all siblings of the chosen button to be inactive, and resizes the scroll view
+        AudioManager.PlaySound(AudioManager.IDs.ContractButton);
+
         if (expandedButton == button)
             expandedButton = null;
         GameObject parentBox = button.transform.parent.gameObject;
@@ -541,9 +547,9 @@ public class ShopCanvasController : MonoBehaviour {
     private void DoPurchase(int price) {
         //purchases an upgrade and contracts the expanded drop-down under the purchased upgrade's title
         //used in the unlock functions
+        ContractPreviousExpansion();
         MakePurchase(price);
         UpdateButtons();
-        ContractPreviousExpansion();
 
         SaveSystem.SaveGame();
     }

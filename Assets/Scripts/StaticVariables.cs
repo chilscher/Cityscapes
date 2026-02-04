@@ -122,6 +122,7 @@ public class StaticVariables{
     static public void FadeOutThenLoadScene(string name){
         sceneName = name;
         StartFadeDarken(sceneFadeDuration);
+        AudioManager.PlaySound(AudioManager.IDs.MenuButton);
         WaitTimeThenCallFunction(sceneFadeDuration, LoadScene);
     }
 

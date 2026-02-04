@@ -71,7 +71,7 @@ public class SettingsCanvasController : MonoBehaviour {
     private void Start() {
         shopButton.SetActive(StaticVariables.hasBeatenTutorial);
         SetCurrentToggleTexts();
-        ContractToggleButtons();
+        //ContractToggleButtons();
         UpdateCurrentSkinText();
         ShowChooseSkinButton();
         ShowToggleUnlocksButton();
@@ -105,9 +105,14 @@ public class SettingsCanvasController : MonoBehaviour {
         StaticVariables.FadeOutThenLoadScene("Shop");
     }
     public void PushDiscordButton(){
+        if (inviteButton.activeSelf)
+            AudioManager.PlaySound(AudioManager.IDs.ContractButton);
+        else
+            AudioManager.PlaySound(AudioManager.IDs.ExpandButton);
         inviteButton.SetActive(!inviteButton.activeSelf);
     }
     public void PushInviteButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         Application.OpenURL(inviteLink);
     }
 
@@ -146,7 +151,8 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     private void ExpandToggleButtons() {
-        //expands the dropdowns beneath the "Toggle Unlocked Features" button    public GameObject notes1Button;
+        //expands the dropdowns beneath the "Toggle Unlocked Features" button
+        AudioManager.PlaySound(AudioManager.IDs.ExpandButton);
         notes1Button.SetActive(StaticVariables.unlockedNotes1);
         notes2Button.SetActive(StaticVariables.unlockedNotes2);
         residentColorButton.SetActive(StaticVariables.unlockedResidentsChangeColor);
@@ -160,6 +166,7 @@ public class SettingsCanvasController : MonoBehaviour {
 
     private void ContractToggleButtons() {
         //contracts the dropdowns beneath the "Toggle Unlocked Features" button
+        AudioManager.PlaySound(AudioManager.IDs.ContractButton);
         notes1Button.SetActive(false);
         notes2Button.SetActive(false);
         residentColorButton.SetActive(false);
@@ -196,24 +203,28 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushNotes1Button() {
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.includeNotes1Button = !StaticVariables.includeNotes1Button;
         SetCurrentToggleTexts();
         SaveSystem.SaveGame();
     }
 
     public void PushNotes2Button() {
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.includeNotes2Button = !StaticVariables.includeNotes2Button;
         SetCurrentToggleTexts();
         SaveSystem.SaveGame();
     }
     
     public void PushResidentColorButton() {
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.changeResidentColorOnCorrectRows = !StaticVariables.changeResidentColorOnCorrectRows;
         SetCurrentToggleTexts();
         SaveSystem.SaveGame();
     }
 
     public void PushUndoRedoButton() {
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.includeUndoRedo = !StaticVariables.includeUndoRedo;
         if (!StaticVariables.includeUndoRedo) {
             StaticVariables.includeRemoveAllOfNumber = false;
@@ -225,6 +236,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushRemoveNumbersButton() {
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.includeRemoveAllOfNumber = !StaticVariables.includeRemoveAllOfNumber;
         if (StaticVariables.includeRemoveAllOfNumber)
             StaticVariables.includeUndoRedo = true;
@@ -235,6 +247,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushClearPuzzleButton() {
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.includeClearPuzzle = !StaticVariables.includeClearPuzzle;
         if (StaticVariables.includeClearPuzzle)
             StaticVariables.includeUndoRedo = true;
@@ -243,12 +256,14 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushHighlightBuildingsButton() {
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.includeHighlightBuildings = !StaticVariables.includeHighlightBuildings;
         SetCurrentToggleTexts();
         SaveSystem.SaveGame();
     }
     
     public void PushFillNotesButton() {
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.includeRemoveButtonFillsNotes = !StaticVariables.includeRemoveButtonFillsNotes;
         if (StaticVariables.includeRemoveButtonFillsNotes){
             StaticVariables.includeUndoRedo = true;
@@ -259,12 +274,14 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushHidePurchasedUpgradesButton() {
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.hidePurchasedUpgrades = !StaticVariables.hidePurchasedUpgrades;
         SetCurrentToggleTexts();
         SaveSystem.SaveGame();
     }
 
     public void PushBuildingQuantityStatusButton() {
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.includeBuildingQuantityStatus = !StaticVariables.includeBuildingQuantityStatus;
         SetCurrentToggleTexts();
         SaveSystem.SaveGame();
@@ -298,6 +315,7 @@ public class SettingsCanvasController : MonoBehaviour {
 
     private void ExpandSkinButtons() {
         //expands the skin details button beneath the "Choose Skin" button
+        AudioManager.PlaySound(AudioManager.IDs.ExpandButton);
         GameObject parentBox = expandSkinButton.transform.parent.gameObject;
         for (int i = 1; i < parentBox.transform.childCount; i++) {
             bool switchTo = StaticVariables.unlockedSkins.Contains(InterfaceFunctions.GetSkinFromName(parentBox.transform.GetChild(i).name));
@@ -308,6 +326,7 @@ public class SettingsCanvasController : MonoBehaviour {
 
     private void ContractSkinButtons() {
         //contracts the dropdowns beneath the "Choose Skin" button
+        AudioManager.PlaySound(AudioManager.IDs.ContractButton);
         GameObject parentBox = expandSkinButton.transform.parent.gameObject;
         for (int i = 1; i < parentBox.transform.childCount; i++) {
             bool switchTo = false;
@@ -317,6 +336,7 @@ public class SettingsCanvasController : MonoBehaviour {
 
     public void PushSkinButton(GameObject button) {
         //equips a particular skin
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         ChooseSkin(InterfaceFunctions.GetSkinFromName(button.transform.parent.gameObject.name));
         UpdateCurrentSkinText();
     }
@@ -354,6 +374,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     private void ExpandKeybindButtons() {
+        AudioManager.PlaySound(AudioManager.IDs.ExpandButton);
         GameObject parentBox = expandKeybindsButton.transform.parent.gameObject;
         for (int i = 1; i < parentBox.transform.childCount; i++)
             parentBox.transform.GetChild(i).gameObject.SetActive(true);
@@ -361,6 +382,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     private void ContractKeybindButtons() {
+        AudioManager.PlaySound(AudioManager.IDs.ContractButton);
         GameObject parentBox = expandKeybindsButton.transform.parent.gameObject;
         for (int i = 1; i < parentBox.transform.childCount; i++) {
             parentBox.transform.GetChild(i).gameObject.SetActive(false);
@@ -386,54 +408,63 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushBuilding1KeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindSize1 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size1;
         ShowKeybinds();
         SaveSystem.SaveGame();
     }
     public void PushBuilding2KeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindSize2 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size2;
         ShowKeybinds();
         SaveSystem.SaveGame();
     }
     public void PushBuilding3KeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindSize3 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size3;
         ShowKeybinds();
         SaveSystem.SaveGame();
     }
     public void PushBuilding4KeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindSize4 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size4;
         ShowKeybinds();
         SaveSystem.SaveGame();
     }
     public void PushBuilding5KeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindSize5 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size5;
         ShowKeybinds();
         SaveSystem.SaveGame();
     }
     public void PushBuilding6KeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindSize6 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size6;
         ShowKeybinds();
         SaveSystem.SaveGame();
     }
     public void PushBuilding7KeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindSize7 = KeyCode.None;
         currentEditableKeybind = Keybinds.Size7;
         ShowKeybinds();
         SaveSystem.SaveGame();
     }
     public void PushBuildKeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindBuild = KeyCode.None;
         currentEditableKeybind = Keybinds.Build;
         ShowKeybinds();
         SaveSystem.SaveGame();
     }
     public void PushNote1KeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindNote1 = KeyCode.None;
         currentEditableKeybind = Keybinds.Note1;
         ShowKeybinds();
@@ -441,6 +472,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushNote2KeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindNote2 = KeyCode.None;
         currentEditableKeybind = Keybinds.Note2;
         ShowKeybinds();
@@ -448,6 +480,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushEraseKeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindErase = KeyCode.None;
         currentEditableKeybind = Keybinds.Erase;
         ShowKeybinds();
@@ -455,6 +488,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushUndoKeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindUndo = KeyCode.None;
         currentEditableKeybind = Keybinds.Undo;
         ShowKeybinds();
@@ -462,6 +496,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushRedoKeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindRedo = KeyCode.None;
         currentEditableKeybind = Keybinds.Redo;
         ShowKeybinds();
@@ -469,6 +504,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushRemoveAllKeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindRemoveAll = KeyCode.None;
         currentEditableKeybind = Keybinds.RemoveAll;
         ShowKeybinds();
@@ -476,6 +512,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushClearPuzzleKeybindButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.keybindClearPuzzle = KeyCode.None;
         currentEditableKeybind = Keybinds.ClearPuzzle;
         ShowKeybinds();
@@ -483,6 +520,7 @@ public class SettingsCanvasController : MonoBehaviour {
     }
 
     public void PushResetKeybindsButton(){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.ApplyDefaultKeybinds();
         currentEditableKeybind = Keybinds.None;
         ShowKeybinds();
@@ -580,11 +618,13 @@ public class SettingsCanvasController : MonoBehaviour {
                 break;
         }
         currentEditableKeybind = Keybinds.None;
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         ShowKeybinds();
         SaveSystem.SaveGame();
     }
 
     public void SetVolume(int vol){
+        AudioManager.PlaySound(AudioManager.IDs.Select);
         StaticVariables.globalVolume = vol;
         ShowVolume();
         SaveSystem.SaveGame();
