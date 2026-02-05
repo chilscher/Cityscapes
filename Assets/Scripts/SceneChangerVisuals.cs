@@ -7,134 +7,184 @@ using DG.Tweening;
 
 public class SceneChangerVisuals : MonoBehaviour {
 
-    public GameObject northPanel;
-    public GameObject northEastPanel;
-    public GameObject eastPanel;
-    public GameObject southEastPanel;
-    public GameObject southPanel;
-    public GameObject southWestPanel;
-    public GameObject westPanel;
-    public GameObject northWestPanel;
-    public GameObject clickBlocker;
+    public RectTransform canvas;
 
-    private Vector2 northPanelPos;
-    private Vector2 northEastPanelPos;
-    private Vector2 eastPanelPos;
-    private Vector2 southEastPanelPos;
-    private Vector2 southPanelPos;
-    private Vector2 southWestPanelPos;
-    private Vector2 westPanelPos;
-    private Vector2 northWestPanelPos;
-    
+    public RectTransform northPanel;
+    public RectTransform eastPanel;
+    public RectTransform southPanel;
+    public RectTransform westPanel;
+    public GameObject clickBlocker;   
 
+    public GameObject northIcons;
+    public GameObject southIcons;
+    public GameObject eastIcons;
+    public GameObject westIcons;
+
+    public List<GameObject> menuIcons;
+    public List<GameObject> settingsIcons;
+    public List<GameObject> shopIcons;
+    public List<GameObject> creditsIcons;
+    public List<GameObject> tutorialIcons;
+    public List<GameObject> smallCityIcons;
+    public List<GameObject> medCityIcons;
+    public List<GameObject> largeCityIcons;
+    public List<GameObject> hugeCityIcons;
+    public List<GameObject> massiveCityIcons;
 
     public void Start(){
         SceneChanger.visuals = this;
-        SetPanelStartingPositions();
-        StartSwipeOut();
+        SetPanelSizes();
+        if (SceneChanger.iconMoveOutDirection == SceneChanger.Direction.None){
+            northIcons.SetActive(false);
+            southIcons.SetActive(false);
+            eastIcons.SetActive(false);
+            westIcons.SetActive(false);
+            clickBlocker.SetActive(false);
+        }
+        else
+            MovePanelsOut();
     }
 
-    public void StartSwipeIn(){
-        AudioManager.PlaySound(AudioManager.IDs.SceneChange);
-        ReturnPanelsToStartingPositions();
+    public void ShowIcons(){
+        foreach (GameObject icon in menuIcons)
+            icon.SetActive(SceneChanger.icon == SceneChanger.Icon.Menu);
+        foreach (GameObject icon in settingsIcons)
+            icon.SetActive(SceneChanger.icon == SceneChanger.Icon.Settings);
+        foreach (GameObject icon in shopIcons)
+            icon.SetActive(SceneChanger.icon == SceneChanger.Icon.Shop);
+        foreach (GameObject icon in creditsIcons)
+            icon.SetActive(SceneChanger.icon == SceneChanger.Icon.Credits);
+        foreach (GameObject icon in tutorialIcons)
+            icon.SetActive(SceneChanger.icon == SceneChanger.Icon.Tutorial);
+        foreach (GameObject icon in smallCityIcons)
+            icon.SetActive(SceneChanger.icon == SceneChanger.Icon.SmallCity);
+        foreach (GameObject icon in medCityIcons)
+            icon.SetActive(SceneChanger.icon == SceneChanger.Icon.MedCity);
+        foreach (GameObject icon in largeCityIcons)
+            icon.SetActive(SceneChanger.icon == SceneChanger.Icon.LargeCity);
+        foreach (GameObject icon in hugeCityIcons)
+            icon.SetActive(SceneChanger.icon == SceneChanger.Icon.HugeCity);
+        foreach (GameObject icon in massiveCityIcons)
+            icon.SetActive(SceneChanger.icon == SceneChanger.Icon.MassiveCity);
+    }
 
-        northPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.South);
-        northEastPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.SouthWest);
-        eastPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.West);
-        southEastPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.NorthWest);
-        southPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.North);
-        southWestPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.NorthEast);
-        westPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.East);
-        northWestPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.SouthEast);
+    public void MovePanelsIn(){
+        AudioManager.PlaySound(AudioManager.IDs.SceneChangeIn);
+        ShowIcons();
+        northIcons.SetActive(SceneChanger.iconMoveInDirection == SceneChanger.Direction.North);
+        southIcons.SetActive(SceneChanger.iconMoveInDirection == SceneChanger.Direction.South);
+        eastIcons.SetActive(SceneChanger.iconMoveInDirection == SceneChanger.Direction.East);
+        westIcons.SetActive(SceneChanger.iconMoveInDirection == SceneChanger.Direction.West);
+
+        bool eastWest = false;
+        bool northSouth = false;
+        switch (SceneChanger.iconMoveInDirection){
+            case (SceneChanger.Direction.North):
+                northSouth = true;
+                northPanel.SetSiblingIndex(3);
+                break;
+            case (SceneChanger.Direction.South):
+                southPanel.SetSiblingIndex(3);
+                northSouth = true;
+                break;
+            case (SceneChanger.Direction.East):
+                eastPanel.SetSiblingIndex(3);
+                eastWest = true;
+                break;
+            case (SceneChanger.Direction.West):
+                westPanel.SetSiblingIndex(3);
+                eastWest = true;
+                break;
+        }
+
+        northPanel.gameObject.SetActive(northSouth);
+        southPanel.gameObject.SetActive(northSouth);
+        eastPanel.gameObject.SetActive(eastWest);
+        westPanel.gameObject.SetActive(eastWest);
         clickBlocker.SetActive(true);
 
-        MovePanelIn(northPanel);
-        MovePanelIn(northEastPanel);
-        MovePanelIn(eastPanel);
-        MovePanelIn(southEastPanel);
-        MovePanelIn(southPanel);
-        MovePanelIn(southWestPanel);
-        MovePanelIn(westPanel);
-        MovePanelIn(northWestPanel);
+        northPanel.DOLocalMove(Vector2.zero, SceneChanger.panelMoveTime).SetEase(Ease.OutSine);
+        southPanel.DOLocalMove(Vector2.zero, SceneChanger.panelMoveTime).SetEase(Ease.OutSine);
+        eastPanel.DOLocalMove(Vector2.zero, SceneChanger.panelMoveTime).SetEase(Ease.OutSine);
+        westPanel.DOLocalMove(Vector2.zero, SceneChanger.panelMoveTime).SetEase(Ease.OutSine);
     }
 
-    public void StartSwipeOut(){
-        northPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.South);
-        northEastPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.SouthWest);
-        eastPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.West);
-        southEastPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.NorthWest);
-        southPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.North);
-        southWestPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.NorthEast);
-        westPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.East);
-        northWestPanel.SetActive(SceneChanger.swipeDirection == SceneChanger.SwipeDirection.SouthEast);
-        clickBlocker.SetActive(SceneChanger.swipeDirection != SceneChanger.SwipeDirection.None);
+    public void MovePanelsOut(){
+        AudioManager.PlaySound(AudioManager.IDs.SceneChangeOut);
+        ShowIcons();
+        northIcons.SetActive(SceneChanger.iconMoveOutDirection == SceneChanger.Direction.North);
+        southIcons.SetActive(SceneChanger.iconMoveOutDirection == SceneChanger.Direction.South);
+        eastIcons.SetActive(SceneChanger.iconMoveOutDirection == SceneChanger.Direction.East);
+        westIcons.SetActive(SceneChanger.iconMoveOutDirection == SceneChanger.Direction.West);
 
+        bool eastWest = false;
+        bool northSouth = false;
+        switch (SceneChanger.iconMoveOutDirection){
+            case (SceneChanger.Direction.North):
+                northSouth = true;
+                northPanel.SetSiblingIndex(3);
+                break;
+            case (SceneChanger.Direction.South):
+                northSouth = true;
+                southPanel.SetSiblingIndex(3);
+                break;
+            case (SceneChanger.Direction.East):
+                eastWest = true;
+                eastPanel.SetSiblingIndex(3);
+                break;
+            case (SceneChanger.Direction.West):
+                eastWest = true;
+                westPanel.SetSiblingIndex(3);
+                break;
+        }
 
-        northPanel.transform.localPosition = Vector2.zero;
-        northPanel.transform.DOLocalMove(-northPanelPos, SceneChanger.totalDuration / 2).SetEase(Ease.Linear);
-        northEastPanel.transform.localPosition = Vector2.zero;
-        northEastPanel.transform.DOLocalMove(-northEastPanelPos, SceneChanger.totalDuration / 2).SetEase(Ease.Linear);
-        eastPanel.transform.localPosition = Vector2.zero;
-        eastPanel.transform.DOLocalMove(-eastPanelPos, SceneChanger.totalDuration / 2).SetEase(Ease.Linear);
-        southEastPanel.transform.localPosition = Vector2.zero;
-        southEastPanel.transform.DOLocalMove(-southEastPanelPos, SceneChanger.totalDuration / 2).SetEase(Ease.Linear);
-        southPanel.transform.localPosition = Vector2.zero;
-        southPanel.transform.DOLocalMove(-southPanelPos, SceneChanger.totalDuration / 2).SetEase(Ease.Linear);
-        southWestPanel.transform.localPosition = Vector2.zero;
-        southWestPanel.transform.DOLocalMove(-southWestPanelPos, SceneChanger.totalDuration / 2).SetEase(Ease.Linear);
-        westPanel.transform.localPosition = Vector2.zero;
-        westPanel.transform.DOLocalMove(-westPanelPos, SceneChanger.totalDuration / 2).SetEase(Ease.Linear);
-        northWestPanel.transform.localPosition = Vector2.zero;
-        northWestPanel.transform.DOLocalMove(-northWestPanelPos, SceneChanger.totalDuration / 2).SetEase(Ease.Linear);
-
-
-        //MovePanelOut(northPanel);
-        //MovePanelOut(northEastPanel);
-        //MovePanelOut(eastPanel);
-        //MovePanelOut(southEastPanel);
-        //MovePanelOut(southPanel);
-        //MovePanelOut(southWestPanel);
-        //MovePanelOut(westPanel);
-        //MovePanelOut(northWestPanel);
+        northPanel.gameObject.SetActive(northSouth);
+        southPanel.gameObject.SetActive(northSouth);
+        eastPanel.gameObject.SetActive(eastWest);
+        westPanel.gameObject.SetActive(eastWest);
+        clickBlocker.SetActive(true);
         
-        if (SceneChanger.swipeDirection != SceneChanger.SwipeDirection.None)
-            StaticVariables.WaitTimeThenCallFunction(SceneChanger.totalDuration / 2, AllowClicks);
+        Vector2 pos = northPanel.localPosition;
+        northPanel.localPosition = Vector2.zero;
+        northPanel.DOLocalMove(pos, SceneChanger.panelMoveTime).SetEase(Ease.InSine);
+        pos = southPanel.localPosition;
+        southPanel.localPosition = Vector2.zero;
+        southPanel.DOLocalMove(pos, SceneChanger.panelMoveTime).SetEase(Ease.InSine);
+        pos = eastPanel.localPosition;
+        eastPanel.localPosition = Vector2.zero;
+        eastPanel.DOLocalMove(pos, SceneChanger.panelMoveTime).SetEase(Ease.InSine);
+        pos = westPanel.localPosition;
+        westPanel.localPosition = Vector2.zero;
+        westPanel.DOLocalMove(pos, SceneChanger.panelMoveTime).SetEase(Ease.InSine);
+
+        StaticVariables.WaitTimeThenCallFunction(SceneChanger.panelMoveTime, FinishedMoveOut);
     }
 
-    private void MovePanelIn(GameObject panel){
-        panel.transform.DOLocalMove(Vector3.zero, SceneChanger.totalDuration / 2).SetEase(Ease.Linear);
-    }
-
-    //private void MovePanelOut(GameObject panel){
-    //    Vector2 start = panel.transform.localPosition;
-    //    panel.transform.localPosition = Vector2.zero;
-    //    panel.transform.DOLocalMove(start, SceneChanger.sceneChangeDuration).SetEase(Ease.Linear);
-    //}
-
-    private void AllowClicks(){
+    private void FinishedMoveOut(){
+        northIcons.SetActive(false);
+        southIcons.SetActive(false);
+        eastIcons.SetActive(false);
+        westIcons.SetActive(false);
         clickBlocker.SetActive(false);
     }
 
-    private void SetPanelStartingPositions(){
-        northPanelPos = northPanel.transform.localPosition;
-        northEastPanelPos = northEastPanel.transform.localPosition;
-        eastPanelPos = eastPanel.transform.localPosition;
-        southEastPanelPos = southEastPanel.transform.localPosition;
-        southPanelPos = southPanel.transform.localPosition;
-        southWestPanelPos = southWestPanel.transform.localPosition;
-        westPanelPos = westPanel.transform.localPosition;
-        northWestPanelPos = northWestPanel.transform.localPosition;
-    }
+    private void SetPanelSizes(){
+        float iconSpaceHeight = 220;
+        float iconSpaceWidth = 500;
 
-    private void ReturnPanelsToStartingPositions(){
-        northPanel.transform.localPosition = northPanelPos;
-        northEastPanel.transform.localPosition = northEastPanelPos;
-        eastPanel.transform.localPosition = eastPanelPos;
-        southEastPanel.transform.localPosition = southEastPanelPos;
-        southPanel.transform.localPosition = southPanelPos;
-        southWestPanel.transform.localPosition = southWestPanelPos;
-        westPanel.transform.localPosition = westPanelPos;
-        northWestPanel.transform.localPosition = northWestPanelPos;
+        float fullHeight = canvas.rect.height;
+        float halfHeight = fullHeight / 2;
+        float fullWidth = canvas.rect.width;
+        float halfWidth = fullWidth / 2;
+        Vector2 vertSize = new(fullWidth, halfHeight);
+        Vector2 horizSize = new(halfWidth, fullHeight);
+        northPanel.sizeDelta = vertSize;
+        southPanel.sizeDelta = vertSize;
+        eastPanel.sizeDelta = horizSize;
+        westPanel.sizeDelta = horizSize;
+        northPanel.localPosition = new Vector2(0, halfHeight + iconSpaceHeight);
+        southPanel.localPosition = new Vector2(0, -halfHeight - iconSpaceHeight);
+        eastPanel.localPosition = new Vector2(halfWidth + iconSpaceWidth, 0);
+        westPanel.localPosition = new Vector2(-halfWidth - iconSpaceWidth, 0);
     }
-
 }

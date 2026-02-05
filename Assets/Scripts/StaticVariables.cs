@@ -139,5 +139,4 @@ public class StaticVariables{
         keybindRemoveAll = keybindRemoveAllDefault;
         keybindClearPuzzle = keybindClearPuzzleDefault;
     }
-
 }

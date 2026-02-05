@@ -112,7 +112,7 @@ public class LaunchGameSetup : MonoBehaviour {
         StaticVariables.ApplyDefaultKeybinds();
         SaveSystem.SaveGame();
     }
-    
+
     private void UpdateToVersion3_0(){
         ChangeVersionNumber(3.0f);
         StaticVariables.globalVolume = 50;

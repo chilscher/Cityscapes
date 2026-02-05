@@ -184,6 +184,6 @@ public class WinPopup : MonoBehaviour {
 
     public void PushAnotherPuzzleButton() {
         StaticVariables.goingToPuzzleSameSize = false;
-        SceneChanger.GoPuzzle();
+        SceneChanger.GoPuzzle(StaticVariables.size);
     }
 }

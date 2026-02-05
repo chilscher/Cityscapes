@@ -139,7 +139,7 @@ public class MainMenuCanvasController : MonoBehaviour {
             massiveText.SetActive(highestUnlockedSize >= 7);
         }
 
-        //skip this temporarily for development
+        //skip this temporarily for development?
         
         if (!StaticVariables.hasBeatenTutorial) {
             returnOrAbandonButtons.SetActive(false);
@@ -184,14 +184,14 @@ public class MainMenuCanvasController : MonoBehaviour {
             return;
         StaticVariables.size = size;
         StaticVariables.isTutorial = false;
-        SceneChanger.GoPuzzle();
+        SceneChanger.GoPuzzle(size);
     }
     
     public void PushStartTutorialButton() {
         //start fading out, and after the fade-out process is completed, go to the puzzle scene, in tutorial mode
         StaticVariables.size = 3;
         StaticVariables.isTutorial = true;
-        SceneChanger.GoPuzzle();
+        SceneChanger.GoTutorial();
     }
 
     public void PushShopButton() {
@@ -205,7 +205,7 @@ public class MainMenuCanvasController : MonoBehaviour {
     public void PushReturnToPuzzleButton() {
         StaticVariables.size = StaticVariables.savedPuzzleSize;
         StaticVariables.isTutorial = false;
-        SceneChanger.GoPuzzle();
+        SceneChanger.GoPuzzle(StaticVariables.size);
     }
 
     public void PushAbandonPuzzleButton() {

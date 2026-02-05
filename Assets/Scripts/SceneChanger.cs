@@ -7,69 +7,93 @@ using DG.Tweening;
 using UnityEngine.SceneManagement;
 
 public class SceneChanger{
-    public enum SwipeDirection {North, NorthEast, East, SouthEast, South, SouthWest, West, NorthWest, None}
 
+    public enum Direction {North, South, East, West, None}
+    static public Direction iconMoveInDirection = Direction.None;
+    static public Direction iconMoveOutDirection = Direction.None;
+    public enum Icon {Menu, Shop, Settings, Credits, Tutorial, SmallCity, MedCity, LargeCity, HugeCity, MassiveCity, None}
+    static public Icon icon = Icon.None;
 
     static public SceneChangerVisuals visuals;
-    static public SwipeDirection swipeDirection = SwipeDirection.None;
     static public string nextSceneName;
-    static public float totalDuration = 1f;
-    static public SwipeDirection previousDirection = SwipeDirection.None;
+    static public float panelMoveTime = 0.5f;
+    static public float waitTime = 0.2f;
 
-    static private void PickRandomSwipeDirection(){
-        swipeDirection = SwipeDirection.West;
-        return;
-
-        previousDirection = swipeDirection;
-        int r = StaticVariables.rand.Next(1, 9);
-        swipeDirection = r switch        {
-            1 => SwipeDirection.North,
-            2 => SwipeDirection.NorthEast,
-            3 => SwipeDirection.East,
-            4 => SwipeDirection.SouthEast,
-            5 => SwipeDirection.South,
-            6 => SwipeDirection.SouthWest,
-            7 => SwipeDirection.West,
-            8 => SwipeDirection.NorthWest,
-            _ => SwipeDirection.North,
+    static private void PickIconMoveDirections(){
+        int inRand = StaticVariables.rand.Next(1, 5);
+        iconMoveInDirection = inRand switch {
+            1 => Direction.North,
+            2 => Direction.East,
+            3 => Direction.South,
+            _ => Direction.West,
         };
-        if (swipeDirection == previousDirection) //guarantee you don't get the same wipe twice in a row
-            PickRandomSwipeDirection();
+        int outRand = StaticVariables.rand.Next(1,3);
+        if (iconMoveInDirection == Direction.North || iconMoveInDirection == Direction.South){
+            iconMoveOutDirection = outRand switch {
+            1 => Direction.East,
+            _ => Direction.West,
+            };
+        }
+        else{
+            iconMoveOutDirection = outRand switch {
+            1 => Direction.North,
+            _ => Direction.South,
+            };
+        }
     }
 
     static public void GoMenu(){
         nextSceneName = "MainMenu";
-        PickRandomSwipeDirection();
-        visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(totalDuration / 2, LoadScene);
+        icon = Icon.Menu;
+        PickIconMoveDirections();
+        visuals.MovePanelsIn();
+        StaticVariables.WaitTimeThenCallFunction(panelMoveTime + waitTime, LoadScene);
     }
 
     static public void GoSettings(){
         nextSceneName = "Settings";
-        PickRandomSwipeDirection();
-        visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(totalDuration / 2, LoadScene);
+        icon = Icon.Settings;
+        PickIconMoveDirections();
+        visuals.MovePanelsIn();
+        StaticVariables.WaitTimeThenCallFunction(panelMoveTime + waitTime, LoadScene);
+    }
+
+    static public void GoTutorial(){
+        nextSceneName = "InPuzzle";
+        icon = Icon.Tutorial;
+        PickIconMoveDirections();
+        visuals.MovePanelsIn();
+        StaticVariables.WaitTimeThenCallFunction(panelMoveTime + waitTime, LoadScene);
     }
     
-    static public void GoPuzzle(){
+    static public void GoPuzzle(int size){
         nextSceneName = "InPuzzle";
-        PickRandomSwipeDirection();
-        visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(totalDuration / 2, LoadScene);
+        icon = size switch {
+            4 => Icon.MedCity,
+            5 => Icon.LargeCity,
+            6 => Icon.HugeCity,
+            7 => Icon.MassiveCity,
+            _ => Icon.SmallCity,
+        };
+        PickIconMoveDirections();
+        visuals.MovePanelsIn();
+        StaticVariables.WaitTimeThenCallFunction(panelMoveTime + waitTime, LoadScene);
     }
 
     static public void GoShop(){
         nextSceneName = "Shop";
-        PickRandomSwipeDirection();
-        visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(totalDuration / 2, LoadScene);
+        icon = Icon.Shop;
+        PickIconMoveDirections();
+        visuals.MovePanelsIn();
+        StaticVariables.WaitTimeThenCallFunction(panelMoveTime + waitTime, LoadScene);
     }
     
     static public void GoCredits(){
         nextSceneName = "Credits";
-        PickRandomSwipeDirection();
-        visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(totalDuration / 2, LoadScene);
+        icon = Icon.Credits;
+        PickIconMoveDirections();
+        visuals.MovePanelsIn();
+        StaticVariables.WaitTimeThenCallFunction(panelMoveTime + waitTime, LoadScene);
     }
 
     static private void LoadScene(){

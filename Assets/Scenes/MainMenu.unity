@@ -199,7 +199,7 @@ MonoBehaviour:
   - {fileID: 1773462559}
   - {fileID: 434550105}
   - {fileID: 1845223493}
-  - {fileID: 778919239}
+  - {fileID: 1540975367756894633}
 --- !u!4 &1571374
 Transform:
   m_ObjectHideFlags: 0
@@ -5262,18 +5262,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1540975367756894632}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &778919239 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7075186179662152557, guid: 09a9645143fd1c648a35476e71a10807,
-    type: 3}
-  m_PrefabInstance: {fileID: 1540975367756894632}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1 &782975139
 GameObject:
   m_ObjectHideFlags: 0
@@ -12903,19 +12891,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1182900866}
     m_Modifications:
+    - target: {fileID: 496337043415543582, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 741744607373665207, guid: 09a9645143fd1c648a35476e71a10807,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 765913323374476228, guid: 09a9645143fd1c648a35476e71a10807,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1736083663364055972, guid: 09a9645143fd1c648a35476e71a10807,
-        type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2039820209050862958, guid: 09a9645143fd1c648a35476e71a10807,
@@ -12928,6 +12911,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3036725866554647663, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
         type: 3}
       propertyPath: m_Pivot.x
@@ -12936,26 +12924,6 @@ PrefabInstance:
     - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
         type: 3}
       propertyPath: m_Pivot.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
-        type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
-        type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
-        type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
-        type: 3}
-      propertyPath: m_AnchorMin.y
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
@@ -13008,6 +12976,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5822254043647707656, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1182900866}
+    - target: {fileID: 6294102306537126378, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6936699402383796660, guid: 09a9645143fd1c648a35476e71a10807,
         type: 3}
       propertyPath: m_Name
@@ -13023,7 +13001,7 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8856761846169235016, guid: 09a9645143fd1c648a35476e71a10807,
+    - target: {fileID: 9041252954708350153, guid: 09a9645143fd1c648a35476e71a10807,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -13038,6 +13016,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 09a9645143fd1c648a35476e71a10807, type: 3}
+--- !u!114 &1540975367756894633 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3718856913712759502, guid: 09a9645143fd1c648a35476e71a10807,
+    type: 3}
+  m_PrefabInstance: {fileID: 1540975367756894632}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36c696adfc4068143a83371bedc01a32, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SkinApplicator
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
