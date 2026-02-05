@@ -13,10 +13,13 @@ public class SceneChanger{
     static public SceneChangerVisuals visuals;
     static public SwipeDirection swipeDirection = SwipeDirection.None;
     static public string nextSceneName;
-    static public float sceneChangeDuration = 0.3f;
+    static public float totalDuration = 1f;
     static public SwipeDirection previousDirection = SwipeDirection.None;
 
     static private void PickRandomSwipeDirection(){
+        swipeDirection = SwipeDirection.West;
+        return;
+
         previousDirection = swipeDirection;
         int r = StaticVariables.rand.Next(1, 9);
         swipeDirection = r switch        {
@@ -38,35 +41,35 @@ public class SceneChanger{
         nextSceneName = "MainMenu";
         PickRandomSwipeDirection();
         visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(sceneChangeDuration, LoadScene);
+        StaticVariables.WaitTimeThenCallFunction(totalDuration / 2, LoadScene);
     }
 
     static public void GoSettings(){
         nextSceneName = "Settings";
         PickRandomSwipeDirection();
         visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(sceneChangeDuration, LoadScene);
+        StaticVariables.WaitTimeThenCallFunction(totalDuration / 2, LoadScene);
     }
     
     static public void GoPuzzle(){
         nextSceneName = "InPuzzle";
         PickRandomSwipeDirection();
         visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(sceneChangeDuration, LoadScene);
+        StaticVariables.WaitTimeThenCallFunction(totalDuration / 2, LoadScene);
     }
 
     static public void GoShop(){
         nextSceneName = "Shop";
         PickRandomSwipeDirection();
         visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(sceneChangeDuration, LoadScene);
+        StaticVariables.WaitTimeThenCallFunction(totalDuration / 2, LoadScene);
     }
     
     static public void GoCredits(){
         nextSceneName = "Credits";
         PickRandomSwipeDirection();
         visuals.StartSwipeIn();
-        StaticVariables.WaitTimeThenCallFunction(sceneChangeDuration, LoadScene);
+        StaticVariables.WaitTimeThenCallFunction(totalDuration / 2, LoadScene);
     }
 
     static private void LoadScene(){

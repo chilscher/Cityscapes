@@ -200,25 +200,6 @@ MonoBehaviour:
   - {fileID: 434550105}
   - {fileID: 1845223493}
   - {fileID: 778919239}
-  defaultSkin: {fileID: 2135032764033575535, guid: 83513b0b1be6dbc4884f648b2c97455a,
-    type: 3}
-  skins:
-  - {fileID: 2135032764033575535, guid: dba4f9a444b002a47b7346f021687d21, type: 3}
-  - {fileID: 2135032764033575535, guid: 0b92125c21674b44da0a398f129e4a43, type: 3}
-  - {fileID: 2135032764033575535, guid: 3ce6c8f571c169e429d025da56ce6654, type: 3}
-  - {fileID: 2135032764033575535, guid: c362d7300470e5348a8f2f004e50da57, type: 3}
-  - {fileID: 2135032764033575535, guid: c702f47222a745442972e5556eac60d8, type: 3}
-  - {fileID: 2135032764033575535, guid: ec6853d3831d29d4c90f46d52a15df5f, type: 3}
-  - {fileID: 2135032764033575535, guid: 43165d08669b76a42949a36de5728c1f, type: 3}
-  - {fileID: 2135032764033575535, guid: 1f8748f3b0b5a6143bb83c1a40d54fdc, type: 3}
-  - {fileID: 2135032764033575535, guid: 22ac46ea64c49d44c9d185eaf1f50ca5, type: 3}
-  - {fileID: 2135032764033575535, guid: 7adc255036e739a449ba692e32ed1eec, type: 3}
-  - {fileID: 2135032764033575535, guid: 8d4103ecfe42a0f4496d9bab07ae22d3, type: 3}
-  - {fileID: 2135032764033575535, guid: ccc9b0dc767377042ba2ca7545cab2f2, type: 3}
-  - {fileID: 2135032764033575535, guid: 7850e298f17d03042a6b698071e2b285, type: 3}
-  audioSetup: {fileID: 0}
-  sceneChangerVisuals: {fileID: 0}
-  tweenDummy: {fileID: 0}
 --- !u!4 &1571374
 Transform:
   m_ObjectHideFlags: 0
@@ -12922,6 +12903,31 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1182900866}
     m_Modifications:
+    - target: {fileID: 741744607373665207, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 765913323374476228, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1736083663364055972, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2039820209050862958, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2915319479435193780, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
         type: 3}
       propertyPath: m_Pivot.x
@@ -12935,22 +12941,22 @@ PrefabInstance:
     - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 3496392646002369215, guid: 09a9645143fd1c648a35476e71a10807,
         type: 3}
@@ -12997,10 +13003,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5756614434793329668, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6936699402383796660, guid: 09a9645143fd1c648a35476e71a10807,
         type: 3}
       propertyPath: m_Name
       value: SceneChangerVisuals
+      objectReference: {fileID: 0}
+    - target: {fileID: 7213735445290516379, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8744149170420661253, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8856761846169235016, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9053855596805828374, guid: 09a9645143fd1c648a35476e71a10807,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
