@@ -106,10 +106,6 @@ public class GameManager : MonoBehaviour {
             sa.ApplySkin(skin);
 
         if (StaticVariables.isTutorial) { //set up the tutorial. uses tutorialmanager
-            SceneChanger.visuals.northPanel.GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
-            SceneChanger.visuals.southPanel.GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
-            SceneChanger.visuals.eastPanel.GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
-            SceneChanger.visuals.westPanel.GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
             originalPuzzleScale = puzzlePositioning.transform.localScale.x;
             SetTutorialNumberButtons();
             tutorialParent.SetActive(true);

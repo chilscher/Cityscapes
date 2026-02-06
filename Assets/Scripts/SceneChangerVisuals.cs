@@ -34,6 +34,12 @@ public class SceneChangerVisuals : MonoBehaviour {
     public void Start(){
         SceneChanger.visuals = this;
         SetPanelSizes();
+        if (StaticVariables.isTutorial){
+            northPanel.GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
+            southPanel.GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
+            eastPanel.GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
+            westPanel.GetComponent<Image>().color = StaticVariables.skin.menuButtonBorder;
+        }
         if (SceneChanger.iconMoveOutDirection == SceneChanger.Direction.None){
             northIcons.SetActive(false);
             southIcons.SetActive(false);

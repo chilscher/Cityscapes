@@ -55,7 +55,6 @@ public class MainMenuCanvasController : MonoBehaviour {
 
 
     private void Start() {
-        print(GameObject.Find("Canvas").GetComponent<RectTransform>().rect.width + ", " + GameObject.Find("Canvas").GetComponent<RectTransform>().rect.height);
         LoadSkin();
 
         if (StaticVariables.showUpdatePopup)
