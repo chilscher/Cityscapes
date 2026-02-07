@@ -178,7 +178,7 @@ public class SideHintTile : Tile {
     }
 
     private void OscillateNumber(){
-        if (dance == false) 
+        if (!dance) 
             return;
         float time = StaticVariables.rand.Next(80, 100) * 0.01f * 0.2f;
         float newPos = danceMinimum;
@@ -188,6 +188,8 @@ public class SideHintTile : Tile {
     }
 
     public void StopDancing(){
+        if (!dance)
+            return;
         dance = false;
         float dist = MathF.Abs(number.transform.localPosition.y - danceOrigin);
         number.transform.DOKill();

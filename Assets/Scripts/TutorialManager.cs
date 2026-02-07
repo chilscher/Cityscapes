@@ -294,6 +294,9 @@ public class TutorialManager{
         }
         else if (++i == tutorialStage){
             text = "Congratulations! You have completed your first city in Cityscapes!";
+            AudioManager.PlaySound(AudioManager.IDs.VictoryCheer);
+            MakeResidentsDance();
+            StaticVariables.WaitTimeThenCallFunction(2.5f, StopResidentsDancing);
             continueText = GetTapToContinueText();
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -302,6 +305,7 @@ public class TutorialManager{
         }
         else if (++i == tutorialStage){
             text = "Congratulations! You have completed your first city in Cityscapes!\n\nNow let's start a new city from scratch!";
+            StopResidentsDancing();
             continueText = GetTapToContinueText();
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -430,6 +434,9 @@ public class TutorialManager{
         }
         else if (++i == tutorialStage){
             text = "Congratulations! You have completed the tutorial for Cityscapes.";
+            AudioManager.PlaySound(AudioManager.IDs.VictoryCheer);
+            MakeResidentsDance();
+            StaticVariables.WaitTimeThenCallFunction(2.5f, StopResidentsDancing);
             continueText = GetTapToContinueText();
             tutorialText.text = text;
             continueClue.text = continueText;
@@ -441,6 +448,7 @@ public class TutorialManager{
         else if (++i == tutorialStage){
             text = "Congratulations! You have completed the tutorial for Cityscapes.\n\nGo try a puzzle on your own! You can revisit this tutorial at any time.";
             continueText = "Tap to exit...";
+            StopResidentsDancing();
             if (StaticVariables.osType == StaticVariables.OSTypes.PC)
                 continueText = "Click to exit...";
             tutorialText.text = text;
@@ -626,4 +634,16 @@ public class TutorialManager{
         tutorialSettingsButtonRight.SetActive(StaticVariables.hasBeatenTutorial);
         tutorialSettingsButtonLeft.SetActive(!StaticVariables.hasBeatenTutorial);
     }
+
+    
+    private void MakeResidentsDance(){
+        foreach (SideHintTile sht in gameManager.puzzleGenerator.allHints)
+            sht.MakeResidentDance();
+    }
+
+    private void StopResidentsDancing(){
+        foreach (SideHintTile sht in gameManager.puzzleGenerator.allHints)
+            sht.StopDancing();
+    }
+
 }
