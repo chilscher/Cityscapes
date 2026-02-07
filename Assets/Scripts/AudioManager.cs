@@ -2,8 +2,6 @@
 
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using DG.Tweening;
 
 public class AudioManager{
 
@@ -23,7 +21,7 @@ public class AudioManager{
         audioSource.clip = se.audioClip;
         audioSource.volume = (float)(se.volumePercentage / 100.0) * (float)(StaticVariables.globalVolume / 100.0);
         
-        Debug.Log("playing ID " + ID.ToString() + " (" + audioSource.clip.name + ")");
+        //Debug.Log("playing ID " + ID.ToString() + " (" + audioSource.clip.name + ")");
 
         audioSource.Play();
     }
