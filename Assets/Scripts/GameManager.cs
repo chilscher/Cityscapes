@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour {
     public GameObject tutorialSettingsButtonLeft;
     public GameObject tutorialSettingsButtonRight;
     public TutorialManager tutorialManager;
+    //public GameObject clickBlocker1and3;
     [HideInInspector]
     public bool canClick = true;
     private bool hasWonYet = false;
@@ -106,6 +107,8 @@ public class GameManager : MonoBehaviour {
             sa.ApplySkin(skin);
 
         if (StaticVariables.isTutorial) { //set up the tutorial. uses tutorialmanager
+            if (SceneChanger.visuals != null)
+                SceneChanger.visuals.ApplyTutorialRecolors();
             originalPuzzleScale = puzzlePositioning.transform.localScale.x;
             SetTutorialNumberButtons();
             tutorialParent.SetActive(true);
@@ -433,6 +436,10 @@ public class GameManager : MonoBehaviour {
 
     public void PushTutorialNumberButton(int num) {
         //when the player pushes a number button on the tutorial, select it, and maybe advance some tutorial dialogue
+        if (tutorialManager.advanceRequirement == "add building of height 2 to tile 0"){
+            if (num != 2)
+                return;
+        }
         SwitchNumber(num);
         AudioManager.PlaySound(AudioManager.IDs.Select);
         ShowNumberButtonClicked(numberButtons[num - 1]);

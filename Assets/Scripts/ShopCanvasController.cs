@@ -795,6 +795,7 @@ public class ShopCanvasController : MonoBehaviour {
         StaticVariables.skin = InterfaceFunctions.GetDefaultSkin();
         ApplySkin();
         UpdateButtons();
+        UpdateAllSkinCosts();
     }
 
     public void PushUnlockAllButton() {

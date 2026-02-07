@@ -6,7 +6,16 @@ using UnityEngine;
 
 
 public class Skin: MonoBehaviour{
-    //used to store all of the information related to a single skin. These variables are only changed in the inspector
+    //to add a new skin:
+    //duplicate a preexisting skin prefab
+    //change the images and colors of the new prefab, and set the skinName in the inspector
+    //in the launchGameSetup scene, add the new skin to the list of all skins
+    //in the shop scene, duplicate a preexisting skin button and move it to the right spot alphabetically
+    //update the button name and the button text
+    //add the skinApplicator of the new button to the shopCanvasController skinApplicators list
+    //in the settings scene, duplicate a preexisting skin button and move it to the right spot alphabetically
+    //update the button name and the button text
+    //add the skinApplicator of the new button to the settingsCanvasController skinApplicators list
 
     [Header("Metadata")]
     public string skinName;
@@ -17,7 +26,7 @@ public class Skin: MonoBehaviour{
     public Sprite logo;
     
     [Header("Main Menu Button Colors")]
-    public Color menuButtonInside; //ex: the buttons on the home screen or in puzzle scene
+    public Color menuButtonInside; //ex: the menu-changing buttons, all buttons on the main menu
     public Color menuButtonBorder;
     public Color popupInside; //ex: the win popup or return to puzzle popup
     public Color popupBorder;
@@ -38,17 +47,4 @@ public class Skin: MonoBehaviour{
     public Color note1;
     public Color note2;
     public Color tileBackground;
-
-
-    /* TO ADD A NEW SKIN, FOLLOW THESE INSTRUCTIONS!
-    
-    I will update these instructions next time I add a new skin :/
-
-    duplicate one of the pre-existing skin prefabs
-    change the images and colors in the skin script attached to the prefab
-    duplicate one of the purchase buttons in the shop scene, and update the button text and dropdown text
-    duplicate one of the skin selection buttons in the settings scene, and update the button text
-
-    */
-
 }

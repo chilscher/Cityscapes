@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &440273601514678775
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8584492471566220470}
+  - component: {fileID: 2135032764033575535}
+  m_Layer: 0
+  m_Name: Lunar
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8584492471566220470
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440273601514678775}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.1508085, y: -4.279265, z: 90}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2135032764033575535
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 440273601514678775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba7fa59bcee1bb94a9c5123c4458fe9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  skinName: Lunar
+  mainMenuBackground: {fileID: 21300000, guid: dedc68a37f0308b4490a5e0b2e8fd163, type: 3}
+  puzzleBackground: {fileID: 21300000, guid: bfb0730993e64094aa3a9a14b40def52, type: 3}
+  logo: {fileID: 21300000, guid: aacb5f3f6f733cc40a4abae34c4d6d3e, type: 3}
+  menuButtonInside: {r: 0.8745098, g: 0.87058824, b: 0.87058824, a: 1}
+  menuButtonBorder: {r: 0.58431375, g: 0.58431375, b: 0.58431375, a: 1}
+  popupInside: {r: 0.95686275, g: 0.95686275, b: 0.95686275, a: 1}
+  popupBorder: {r: 0.44313726, g: 0.44313726, b: 0.44313726, a: 1}
+  settingsText_On: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+  settingsText_Off: {r: 0.5921569, g: 0.5921569, b: 0.5921569, a: 1}
+  puzzleButtonInside_On: {r: 0.44705883, g: 0.44313726, b: 0.44313726, a: 1}
+  puzzleButtonBorder_On: {r: 0.33333334, g: 0.33333334, b: 0.33333334, a: 1}
+  puzzleButtonInside_Off: {r: 0.75686276, g: 0.75686276, b: 0.75686276, a: 1}
+  puzzleButtonBorder_Off: {r: 0.52156866, g: 0.52156866, b: 0.52156866, a: 1}
+  normalCitizen: {r: 0.95686275, g: 0.95686275, b: 0.95686275, a: 1}
+  satisfiedCitizen: {r: 0.44705883, g: 0.44313726, b: 0.44313726, a: 1}
+  street: {r: 0.7647059, g: 0.7647059, b: 0.7647059, a: 1}
+  highlightBuilding: {r: 0.44705886, g: 0.4431373, b: 0.4431373, a: 1}
+  note1: {r: 0.972549, g: 0.37254903, b: 0.39607844, a: 1}
+  note2: {r: 0.6, g: 0.8509804, b: 0.91764706, a: 1}
+  tileBackground: {r: 0.18867922, g: 0.18867922, b: 0.18867922, a: 0.38431373}
